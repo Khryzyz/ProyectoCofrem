@@ -1,5 +1,7 @@
 package com.cofrem.transacciones.Modules.ModuleTransaction.CreditoScreenActivity;
 
+import android.content.Context;
+
 import com.cofrem.transacciones.Modules.ModuleTransaction.CreditoScreenActivity.events.CreditoScreenEvent;
 import com.cofrem.transacciones.Modules.ModuleTransaction.CreditoScreenActivity.ui.CreditoScreenView;
 import com.cofrem.transacciones.lib.EventBus;
@@ -63,9 +65,9 @@ public class CreditoScreenPresenterImpl implements CreditoScreenPresenter {
      * Metodo para la verificacion de los datos
      */
     @Override
-    public void VerifySuccess() {
+    public void VerifySuccess(Context context) {
         if (creditoScreenView != null) {
-            creditoScreenInteractor.validateAccess();
+            creditoScreenInteractor.validateAccess(context);
         }
     }
 

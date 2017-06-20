@@ -1,6 +1,8 @@
 package com.cofrem.transacciones.Modules.ModuleTransaction.CreditoScreenActivity;
 
+import android.content.Context;
+
 public interface CreditoScreenRepository {
 
-    void validateAcces();
+    void validateAcces(Context context);
 }

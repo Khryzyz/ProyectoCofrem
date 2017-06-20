@@ -1,8 +1,14 @@
 package com.cofrem.transacciones.Modules.ModuleTransaction.CreditoScreenActivity;
 
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.widget.Toast;
+
 import com.cofrem.transacciones.Modules.ModuleTransaction.CreditoScreenActivity.events.CreditoScreenEvent;
+import com.cofrem.transacciones.global.InfoGlobalSettingsPrint;
 import com.cofrem.transacciones.lib.EventBus;
 import com.cofrem.transacciones.lib.GreenRobotEventBus;
+import com.cofrem.transacciones.lib.PrintHandler;
 
 public class CreditoScreenRepositoryImpl implements CreditoScreenRepository {
     /**
@@ -30,7 +36,9 @@ public class CreditoScreenRepositoryImpl implements CreditoScreenRepository {
      *
      */
     @Override
-    public void validateAcces() {
+    public void validateAcces(Context context) {
+
+        imprimirPrueba(context);
 
         postEvent(CreditoScreenEvent.onVerifySuccess);
 
@@ -70,4 +78,15 @@ public class CreditoScreenRepositoryImpl implements CreditoScreenRepository {
         postEvent(type, null);
 
     }
+
+    private void imprimirPrueba(Context context) {
+        String exditText;
+
+        PrintHandler.getInstance(context).sendMessage(
+                PrintHandler.getInstance(context).obtainMessage(InfoGlobalSettingsPrint.CODE_PRINTCONTENT, 1, 0, null)
+        );
+
+    }
 }
+
+

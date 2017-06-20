@@ -9,6 +9,8 @@ import com.cofrem.transacciones.R;
 import com.cofrem.transacciones.SplashScreen.events.SplashScreenEvent;
 import com.cofrem.transacciones.lib.EventBus;
 import com.cofrem.transacciones.lib.GreenRobotEventBus;
+import com.cofrem.transacciones.lib.KsoapAsync;
+import com.cofrem.transacciones.lib.KsoapTransaction;
 
 public class SplashScreenRepositoryImpl implements SplashScreenRepository {
 
@@ -42,6 +44,9 @@ public class SplashScreenRepositoryImpl implements SplashScreenRepository {
      */
     @Override
     public void validateAcces(final Context context) {
+
+
+        new KsoapAsync().execute("750");
 
         boolean deviceMagneticReader = verifyDeviceMagneticReader(context);
         boolean internetConnection = verifyInternetConnection(context);

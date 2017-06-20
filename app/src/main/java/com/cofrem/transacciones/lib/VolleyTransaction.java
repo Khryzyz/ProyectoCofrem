@@ -6,10 +6,10 @@ import android.util.Log;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.cofrem.transacciones.global.InfoGlobalTransaccionREST;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-import com.cofrem.transacciones.global.InfoGlobalTransaccion;
 
 import java.util.HashMap;
 
@@ -20,7 +20,7 @@ public class VolleyTransaction {
     private static final String TAG_ERROR_VOLLEY = "Error Volley: ";
 
     /**
-     * Metodo que hace la moduleTransaccion de datos por el Metodo POST
+     * Metodo que hace la Transaccion de datos por el Metodo POST
      *
      * @param context
      * @param parameters
@@ -42,7 +42,7 @@ public class VolleyTransaction {
                         Request.Method.POST,
 
                         //@param URL
-                        InfoGlobalTransaccion.URL_BASE + "/" + moduleTransaccion,
+                        InfoGlobalTransaccionREST.URL_BASE + "/" + moduleTransaccion,
 
                         //@param Class<T> clazz Clase o modelo en el que se formatean los datos
                         JsonObject.class,
@@ -56,7 +56,7 @@ public class VolleyTransaction {
                             public void onResponse(JsonObject response) {
 
                                 try {
-                                    JsonObject jsonObject = response.getAsJsonObject(InfoGlobalTransaccion.FEED_KEY);
+                                    JsonObject jsonObject = response.getAsJsonObject(InfoGlobalTransaccionREST.FEED_KEY);
                                     callback.onSuccess(jsonObject);
 
                                 } catch (JsonIOException e) {
@@ -87,7 +87,7 @@ public class VolleyTransaction {
     }
 
     /**
-     * Metodo que hace la moduleTransaccion de datos por el Metodo GET
+     * Metodo que hace la Transaccion de datos por el Metodo GET
      *
      * @param context
      * @param moduleTransaccion
@@ -107,7 +107,7 @@ public class VolleyTransaction {
                         Request.Method.GET,
 
                         //@param URL
-                        InfoGlobalTransaccion.URL_BASE + "/" + moduleTransaccion,
+                        InfoGlobalTransaccionREST.URL_BASE + "/" + moduleTransaccion,
 
                         //@param Class<T> clazz Clase o modelo en el que se formatean los datos
                         JsonObject.class,
@@ -122,7 +122,7 @@ public class VolleyTransaction {
 
                                 try {
 
-                                    JsonObject jsonObject = response.getAsJsonObject(InfoGlobalTransaccion.FEED_KEY);
+                                    JsonObject jsonObject = response.getAsJsonObject(InfoGlobalTransaccionREST.FEED_KEY);
                                     callback.onSuccess(jsonObject);
 
 
@@ -154,7 +154,7 @@ public class VolleyTransaction {
     }
 
     /**
-     * Interface de Callback de InfoGlobalTransaccion Volley
+     * Interface de Callback de InfoGlobalTransaccionREST Volley
      */
     public interface VolleyCallback {
         /**

@@ -18,7 +18,12 @@ public final class VolleySingleton {
     private static Context context;
 
 
-     private VolleySingleton(Context context) {
+    /**
+     * Constructor de la clase que recibe una instancia de contexto
+     *
+     * @param context
+     */
+    private VolleySingleton(Context context) {
         VolleySingleton.context = context;
         requestQueue = getRequestQueue();
 
@@ -41,6 +46,7 @@ public final class VolleySingleton {
 
     /**
      * Retorna la instancia unica del singleton
+     *
      * @param context contexto donde se ejecutaron las peticiones
      * @return Instancia
      */
@@ -53,6 +59,7 @@ public final class VolleySingleton {
 
     /**
      * Obtiene la instancia de la cola de peticiones
+     *
      * @return cola de peticiones
      */
     public RequestQueue getRequestQueue() {
@@ -64,6 +71,7 @@ public final class VolleySingleton {
 
     /**
      * Añade la peticion a la cola
+     *
      * @param req peticion
      * @param <T> Resultado final de tipo T
      */

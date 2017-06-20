@@ -1,5 +1,7 @@
 package com.cofrem.transacciones.Modules.ModuleTransaction.CreditoScreenActivity;
 
+import android.content.Context;
+
 class CreditoScreenInteractorImpl implements CreditoScreenInteractor {
     /**
      * #############################################################################################
@@ -34,8 +36,8 @@ class CreditoScreenInteractorImpl implements CreditoScreenInteractor {
      *
      */
     @Override
-    public void validateAccess() {
+    public void validateAccess(Context context) {
         //Valida el acceso a la app
-        creditoScreenRepository.validateAcces();
+        creditoScreenRepository.validateAcces(context);
     }
 }
