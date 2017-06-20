@@ -6,6 +6,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.cofrem.transacciones.models.ModelTransaccion;
+
+import java.sql.Timestamp;
+
 /**
  * Clase que maneja:
  * - DML de la base de datos
@@ -13,18 +17,8 @@ import android.database.sqlite.SQLiteOpenHelper;
  */
 public final class AppDatabase extends SQLiteOpenHelper {
 
-    // Mapeado rápido de indices
-    public static final int COLUMN_ID = 0;
-    public static final int COLUMN_COD_DISPOSITIVO = 1;
-    public static final int COLUMN_COD_SERVIDOR = 2;
-    public static final int COLUMN_REGISTRO = 3;
-    public static final int COLUMN_ESTADO = 4;
-
     //Instancia singleton
     private static AppDatabase singleton;
-
-    //Etiqueta de depuración
-    private static final String TAG = AppDatabase.class.getSimpleName();
 
     /**
      * Constructor de la clase
@@ -66,8 +60,10 @@ public final class AppDatabase extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
 
-        // Crear la tabla 'REGISTRO'
-        db.execSQL(DatabaseManager.TableRegistro.CREATE_TABLE_REGISTRO);
+        db.execSQL(DatabaseManager.TableProducto.CREATE_TABLE_PRODUCTO);
+        db.execSQL(DatabaseManager.TableTransacciones.CREATE_TABLE_TRANSACCIONES);
+        db.execSQL(DatabaseManager.TableEstablecimiento.CREATE_TABLE_ESTABLECIMIENTO);
+        db.execSQL(DatabaseManager.TableConfiguracionConexion.CREATE_TABLE_CONFIGURACION_CONEXION);
     }
 
     /**
@@ -79,9 +75,12 @@ public final class AppDatabase extends SQLiteOpenHelper {
      */
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // Añade los cambios que se realizarán en el esquema
 
-        db.execSQL(DatabaseManager.TableRegistro.DROP_TABLE_REGISTRO);
+        // Añade los cambios que se realizarán en el esquema
+        db.execSQL(DatabaseManager.TableProducto.DROP_TABLE_PRODUCTO);
+        db.execSQL(DatabaseManager.TableTransacciones.DROP_TABLE_TRANSACCIONES);
+        db.execSQL(DatabaseManager.TableEstablecimiento.DROP_TABLE_ESTABLECIMIENTO);
+        db.execSQL(DatabaseManager.TableConfiguracionConexion.DROP_TABLE_CONFIGURACION_CONEXION);
 
         onCreate(db);
     }
@@ -89,22 +88,22 @@ public final class AppDatabase extends SQLiteOpenHelper {
     /**
      * Metodo para insertar registro inicial en la Base de Datos
      */
-    public boolean insertRegistroInicial(String cod_dispositivo) {
+    public boolean insertRegistroInicialProductos() {
 
         // Inicializacion de la variable de contenidos del registro
-        ContentValues values = new ContentValues();
+        ContentValues contentValues = new ContentValues();
 
         // Almacena los valores a insertar
-        values.put(DatabaseManager.TableRegistro.COLUMN_COD_DISPOSITIVO, cod_dispositivo);
-        values.put(DatabaseManager.TableRegistro.COLUMN_COD_SERVIDOR, "");
-        values.put(DatabaseManager.TableRegistro.COLUMN_REGISTRO, "time('now')");
-        values.put(DatabaseManager.TableRegistro.COLUMN_ESTADO, true);
+        contentValues.put(DatabaseManager.TableProducto.COLUMN_PRODUCTO_NOMBRE, "CREDITO ROTATIVO");
+        contentValues.put(DatabaseManager.TableProducto.COLUMN_PRODUCTO_DESCRIPCION, "Credito rotativo");
+        contentValues.put(DatabaseManager.TableProducto.COLUMN_PRODUCTO_REGISTRO, "time('now')");
+        contentValues.put(DatabaseManager.TableProducto.COLUMN_PRODUCTO_ESTADO, 1);
 
         // Insercion del registro en la base de datos
-        Long countRegistro = getWritableDatabase().insert(
-                DatabaseManager.TableRegistro.TABLE_NAME_REGISTRO,
+        int countRegistro = (int) getWritableDatabase().insert(
+                DatabaseManager.TableProducto.TABLE_NAME_PRODUCTO,
                 null,
-                values
+                contentValues
         );
         if (countRegistro == 1)
             return true;
@@ -114,25 +113,58 @@ public final class AppDatabase extends SQLiteOpenHelper {
     }
 
     /**
+     * Metodo para insertar registro inicial en la Base de Datos
+     */
+    //TODO: METODO DE PRUEBA HAY QUE BORRAR ESTA VUELTA
+    public boolean insertRegistroPruebaTransaction(int producto_id) {
+
+        // Inicializacion de la variable de contenidos del registro
+        ContentValues contentValues = new ContentValues();
+
+        // Almacena los valores a insertar
+        contentValues.put(DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_PRODUCTO_ID, producto_id);
+        contentValues.put(DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_NUMERO_CARGO, 25639687);
+        contentValues.put(DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_NUMERO_TARJETA, "256389562154");
+        contentValues.put(DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_VALOR, 140000);
+        contentValues.put(DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_REGISTRO, "time('now')");
+        contentValues.put(DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_ESTADO, 1);
+
+        // Insercion del registro en la base de datos
+        int countRegistro = (int) getWritableDatabase().insert(
+                DatabaseManager.TableTransacciones.TABLE_NAME_TRANSACCIONES,
+                null,
+                contentValues
+        );
+        if (countRegistro == 1)
+            return true;
+        else
+            return false;
+
+    }
+
+
+    /**
      * Metodo para Obtener todos los registros de la tabla base_financiera
      *
      * @return cursor con los registros
      */
-    public String obtenerRegistro() {
+    public int obtenerProductoIdByNombre(String NOMBRE_PRODUCTO) {
 
-        String cod_dispositivo;
+        int producto_id;
 
-        Cursor queryCodDispositivo;
+        Cursor queryIdProducto;
 
-        queryCodDispositivo = getWritableDatabase().rawQuery(
-                "SELECT * FROM " + DatabaseManager.TableRegistro.TABLE_NAME_REGISTRO, null
+        queryIdProducto = getWritableDatabase().rawQuery(
+                "SELECT " + DatabaseManager.TableProducto.COLUMN_PRODUCTO_ID + " AS ID " +
+                        " FROM " + DatabaseManager.TableProducto.TABLE_NAME_PRODUCTO +
+                        " WHERE " + DatabaseManager.TableProducto.COLUMN_PRODUCTO_NOMBRE + " = '" + NOMBRE_PRODUCTO + "'", null
         );
 
-        queryCodDispositivo.moveToFirst();
+        queryIdProducto.moveToFirst();
 
-        cod_dispositivo = queryCodDispositivo.getString(COLUMN_COD_DISPOSITIVO);
+        producto_id = queryIdProducto.getInt(0);
 
-        return cod_dispositivo;
+        return producto_id;
     }
 
     /**
@@ -147,7 +179,7 @@ public final class AppDatabase extends SQLiteOpenHelper {
         Cursor queryCount;
 
         queryCount = getWritableDatabase().rawQuery(
-                "SELECT COUNT(1) FROM " + DatabaseManager.TableRegistro.TABLE_NAME_REGISTRO, null
+                "SELECT COUNT(1) FROM " + DatabaseManager.TableProducto.TABLE_NAME_PRODUCTO, null
         );
 
         queryCount.moveToFirst();
@@ -156,4 +188,33 @@ public final class AppDatabase extends SQLiteOpenHelper {
 
         return countRegistro;
     }
+
+    /**
+     * Metodo para Obtener ultima  transaccion
+     */
+    public ModelTransaccion obtenerUltimaTransaccion() {
+
+        int countRegistro;
+
+        ModelTransaccion modelTransaccion = new ModelTransaccion();
+
+        Cursor queryCount;
+
+        queryCount = getWritableDatabase().rawQuery(
+                "SELECT * FROM " + DatabaseManager.TableTransacciones.TABLE_NAME_TRANSACCIONES + " ORDER BY " + DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_REGISTRO + " ASC LIMIT 1", null
+        );
+
+        queryCount.moveToFirst();
+
+        modelTransaccion.setId(queryCount.getInt(0));
+        modelTransaccion.setProducto_id(queryCount.getInt(1));
+        modelTransaccion.setNumero_cargo(queryCount.getInt(2));
+        modelTransaccion.setNumero_tarjeta(queryCount.getString(3));
+        modelTransaccion.setValor(queryCount.getInt(4));
+        modelTransaccion.setRegistro(queryCount.getString(5));
+        modelTransaccion.setEstado(queryCount.getInt(6));
+
+        return modelTransaccion;
+    }
+
 }

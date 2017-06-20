@@ -19,6 +19,8 @@ public class PrintHandler extends Handler {
     private static PrintHandler singleton;
     private static Context context;
 
+    private String messagePrint;
+
     private boolean nopaper = false;
     private boolean LowBattery = false;
     private boolean stop = false;
@@ -52,6 +54,14 @@ public class PrintHandler extends Handler {
             singleton = new PrintHandler(context.getApplicationContext());
         }
         return singleton;
+    }
+
+    public void printMessage(String messagePrint) {
+        this.messagePrint = messagePrint;
+        singleton.sendMessage(singleton.obtainMessage(InfoGlobalSettingsPrint.CODE_PRINTCONTENT, 1, 0, null)
+        );
+
+
     }
 
 
@@ -162,7 +172,7 @@ public class PrintHandler extends Handler {
                     ThermalPrinter.setFontSize(1);
                 }
                 ThermalPrinter.setGray(InfoGlobalSettingsPrint.GRAY_LEVEL);
-                ThermalPrinter.addString("HOLAAAA");
+                ThermalPrinter.addString(messagePrint);
                 ThermalPrinter.printString();
                 ThermalPrinter.clearString();
                 ThermalPrinter.walkPaper(100);

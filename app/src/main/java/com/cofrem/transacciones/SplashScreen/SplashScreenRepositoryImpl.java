@@ -7,10 +7,16 @@ import android.net.NetworkInfo;
 
 import com.cofrem.transacciones.R;
 import com.cofrem.transacciones.SplashScreen.events.SplashScreenEvent;
+import com.cofrem.transacciones.database.AppDatabase;
+import com.cofrem.transacciones.global.InfoGlobalSettingsPrint;
 import com.cofrem.transacciones.lib.EventBus;
 import com.cofrem.transacciones.lib.GreenRobotEventBus;
 import com.cofrem.transacciones.lib.KsoapAsync;
 import com.cofrem.transacciones.lib.KsoapTransaction;
+import com.cofrem.transacciones.lib.PrintHandler;
+import com.cofrem.transacciones.models.ModelTransaccion;
+
+import org.androidannotations.annotations.App;
 
 public class SplashScreenRepositoryImpl implements SplashScreenRepository {
 
@@ -54,7 +60,11 @@ public class SplashScreenRepositoryImpl implements SplashScreenRepository {
         boolean deviceNFC = verifyDeviceNFC(context);
 
         if ((deviceMagneticReader || deviceNFC) && devicePrinter && internetConnection) {
-            postEvent(SplashScreenEvent.onVerifySuccess);
+
+            if (verifyInitialRegister(context))
+                postEvent(SplashScreenEvent.onVerifySuccess);
+            else
+                postEvent(SplashScreenEvent.onVerifyError);
         } else {
             if (!deviceMagneticReader) {
 
@@ -86,6 +96,26 @@ public class SplashScreenRepositoryImpl implements SplashScreenRepository {
      * Metodo propios de la clase
      * #############################################################################################
      */
+    /**
+     * @param context
+     * @return
+     */
+    private boolean verifyInitialRegister(Context context) {
+        if (AppDatabase.getInstance(context).obtenerConteoRegistro() == 0) {
+            if (AppDatabase.getInstance(context).insertRegistroInicialProductos()) {
+                if (AppDatabase.getInstance(context).insertRegistroPruebaTransaction(AppDatabase.getInstance(context).obtenerProductoIdByNombre("CREDITO ROTATIVO"))) {
+                    return true;
+                }
+            }
+        } else {
+            ModelTransaccion modelTransaccion = AppDatabase.getInstance(context).obtenerUltimaTransaccion();
+            PrintHandler.getInstance(context).printMessage(modelTransaccion.getNumero_tarjeta()+"\n"+modelTransaccion.getNumero_cargo());
+
+            return false;
+        }
+        return true;
+    }
+
 
     /**
      * Metodo que verifica la existencia de conexion a internet en el dispositivo
