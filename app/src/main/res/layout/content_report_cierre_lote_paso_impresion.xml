@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/txvReportCierreLoteImpresionTitle"
+        style="@style/StyleTextPrimaryLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/appMarginBottom"
+        android:text="@string/report_text_title_reporte_detalle" />
+
+    <Button
+        android:id="@+id/btnReportCierreLoteImpresionBotonImprimir"
+        style="@style/StyleButtonPrint"
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/txvReportCierreLoteImpresionTitle"
+        android:text="@string/report_text_button_imprimir_reporte" />
+
+    <Button
+        android:id="@+id/btnReportCierreLoteImpresionBotonSalir"
+        style="@style/StyleButtonExit"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/btnReportCierreLoteImpresionBotonImprimir"
+        android:text="@string/general_text_button_salir" />
+
+
+</RelativeLayout>

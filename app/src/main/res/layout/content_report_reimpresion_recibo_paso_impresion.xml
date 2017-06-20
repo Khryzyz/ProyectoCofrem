@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/txvReportReimprimeonReciboImpresionTitle"
+        style="@style/StyleTextPrimaryLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/appMarginBottom"
+        android:text="@string/report_text_title_reimpresion_recibo" />
+
+    <TextView
+        android:id="@+id/txvReportReimprimeonReciboImpresionNumCargo"
+        style="@style/StyleTextPrimaryMedium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txvReportReimprimeonReciboImpresionTitle"
+        android:layout_marginBottom="@dimen/appMarginBottom"
+        android:text="@string/report_text_numero_cargo" />
+
+    <TextView
+        android:id="@+id/txvReportReimprimeonReciboImpresionSaldoCantidad"
+        style="@style/StyleTextPrimaryMedium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/txvReportReimprimeonReciboImpresionNumCargo"
+        android:layout_marginBottom="@dimen/appMarginBottom"
+        android:text="@string/general_text_valor_cero" />
+
+    <Button
+        android:id="@+id/btnReportReimprimeonReciboImpresionBotonImprimir"
+        style="@style/StyleButtonPrint"
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/txvReportReimprimeonReciboImpresionSaldoCantidad"
+        android:text="@string/report_text_button_imprimir_reporte" />
+
+    <Button
+        android:id="@+id/btnReportReimprimeonReciboImpresionBotonSalir"
+        style="@style/StyleButtonExit"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/btnReportReimprimeonReciboImpresionBotonImprimir"
+        android:text="@string/general_text_button_salir" />
+
+
+</RelativeLayout>

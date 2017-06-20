@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/txvReportCierreLoteVerificacionDatosTitle"
+        style="@style/StyleTextPrimaryLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/appMarginBottom"
+        android:text="@string/report_text_title_cierre_lote" />
+
+    <TextView
+        android:id="@+id/txvReportCierreLoteVerificacionDatosSubTitle"
+        style="@style/StyleTextPrimaryMedium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txvReportCierreLoteVerificacionDatosTitle"
+        android:layout_marginBottom="@dimen/appMarginBottom"
+        android:text="@string/transaction_text_subtitle_verificacion_datos" />
+
+    <TextView
+        android:id="@+id/txvReportCierreLoteVerificacionDatosValor"
+        style="@style/StyleTextPrimaryMedium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txvReportCierreLoteVerificacionDatosSubTitle"
+        android:layout_marginBottom="@dimen/appMarginBottom"
+        android:text="@string/report_text_valor_ventas" />
+
+    <TextView
+        android:id="@+id/txvReportCierreLoteVerificacionDatosValorCantidad"
+        style="@style/StyleTextPrimaryMedium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/txvReportCierreLoteVerificacionDatosValor"
+        android:layout_marginBottom="@dimen/appMarginBottom"
+        android:text="@string/general_text_valor_cero" />
+
+    <TextView
+        android:id="@+id/txvReportCierreLoteVerificacionDatosNumero"
+        style="@style/StyleTextPrimaryMedium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txvReportCierreLoteVerificacionDatosValorCantidad"
+        android:layout_marginBottom="@dimen/appMarginBottom"
+        android:text="@string/report_text_valor_anulaciones" />
+
+    <TextView
+        android:id="@+id/txvReportCierreLoteVerificacionDatosNumeroCargo"
+        style="@style/StyleTextPrimaryMedium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/txvReportCierreLoteVerificacionDatosNumero"
+        android:layout_marginBottom="@dimen/appMarginBottom"
+        android:text="@string/general_text_texto_vacio" />
+
+    <Button
+        android:id="@+id/btnReportCierreLoteVerificacionDatosBotonCancelar"
+        style="@style/StyleButtonCancel"
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/txvReportCierreLoteVerificacionDatosNumeroCargo"
+        android:text="@string/general_text_button_cancelar" />
+
+    <Button
+        android:id="@+id/btnReportCierreLoteVerificacionDatosBotonAceptar"
+        style="@style/StyleButtonAccept"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/txvReportCierreLoteVerificacionDatosNumeroCargo"
+        android:text="@string/general_text_button_aceptar" />
+
+
+</RelativeLayout>
