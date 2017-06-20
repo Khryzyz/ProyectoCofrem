@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.widget.Toast;
 
 import com.cofrem.transacciones.Modules.ModuleTransaction.AnulacionScreenActivity.ui.AnulacionScreenActivity_;
+import com.cofrem.transacciones.Modules.ModuleTransaction.CreditoScreenActivity.ui.CreditoScreenActivity_;
+import com.cofrem.transacciones.Modules.ModuleTransaction.SaldoScreenActivity.ui.SaldoScreenActivity_;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
@@ -60,7 +62,23 @@ public class TransactionScreenActivity extends Activity {
     }
 
     /**
-     * Metodo para navegar a la ventana principal
+     * Metodo para navegar a la ventana Credito
+     */
+    @Click(R.id.btnTransactionScreenModuleCredito)
+    public void navigateToCreditoScreen() {
+        Intent intent = new Intent(this, CreditoScreenActivity_.class);
+        startActivity(intent);
+    }
+    /**
+     * Metodo para navegar a la ventana Saldo
+     */
+    @Click(R.id.btnTransactionScreenModuleSaldo)
+    public void navigateToSaldoScreen() {
+        Intent intent = new Intent(this, SaldoScreenActivity_.class);
+        startActivity(intent);
+    }
+    /**
+     * Metodo para navegar a la ventana Anulacion
      */
     @Click(R.id.btnTransactionScreenModuleAnulacion)
     public void navigateToAnulacionScreen() {

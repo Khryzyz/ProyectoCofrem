@@ -43,7 +43,7 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
          * metodo verificar acceso
          */
         //TODO: crear metodos
-        creditoScreenPresenter.VerifySuccess();
+        creditoScreenPresenter.VerifySuccess(this);
 
     }
 

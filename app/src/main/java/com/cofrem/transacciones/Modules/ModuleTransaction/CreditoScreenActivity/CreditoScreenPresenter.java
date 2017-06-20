@@ -1,5 +1,7 @@
 package com.cofrem.transacciones.Modules.ModuleTransaction.CreditoScreenActivity;
 
+import android.content.Context;
+
 import com.cofrem.transacciones.Modules.ModuleTransaction.CreditoScreenActivity.events.CreditoScreenEvent;
 
 public interface CreditoScreenPresenter {
@@ -9,7 +11,7 @@ public interface CreditoScreenPresenter {
     /**
      * metodo presentador
      */
-    void VerifySuccess();
+    void VerifySuccess(Context context);
 
     /**
      * Metodo para la creacion del presentador
