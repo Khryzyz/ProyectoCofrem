@@ -10,4 +10,28 @@
     <string name="report_text_button_general">Reporte General</string>
     <string name="report_text_button_cierre">Cierre de Lote</string>
 
+    <!-- Titulos de vistas -->
+    <string name="report_text_title_reimpresion_recibo">Reimpresion Recibo</string>
+    <string name="report_text_title_reporte_detalle">Reporte Detalle</string>
+    <string name="report_text_title_reporte_general">Reporte General</string>
+    <string name="report_text_title_cierre_lote">Cierre Lote</string>
+
+    <!-- Subtitulos de vistas -->
+    <string name="report_text_subtitle_verificacion_datos">Verifique datos del cierre:</string>
+
+
+    <!-- Textos de botones -->
+    <string name="report_text_button_ultimo_recibo">Ultimo Recibo</string>
+    <string name="report_text_button_numero_de_cargo">Número de Cargo</string>
+    <string name="report_text_button_imprimir_reporte">Imprimir Reporte</string>
+
+    <!-- Textos adicionales -->
+
+    <string name="report_text_ingeresar_numero_cargo">Ingrese el número de cargo:</string>
+    <string name="report_text_numero_cargo">Número de cargo:</string>
+    <string name="report_text_ingeresar_clave_dispositivo">Ingrese contraseña del dispositivo</string>
+    <string name="report_text_valor_ventas">Valor de las ventas</string>
+    <string name="report_text_valor_anulaciones">Valor de las anulaciones</string>
+
+
 </resources>

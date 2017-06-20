@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_splash_screen"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/appColorWhite"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/appPaddingBottom"
+android:paddingLeft="@dimen/appPaddingLeft"
+    android:paddingRight="@dimen/appPaddingRight"
+    android:paddingTop="@dimen/appPaddingTop"
+    tools:context=".Modules.ModuleReports.ReimpresionScreenActivity.ui.ReimpresionScreenActivity">
+
+    <!--Header de los modulos-->
+    <include
+        android:id="@+id/headerContent"
+        layout="@layout/content_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/appMarginBottom" />
+
+    <include
+        android:id="@+id/bodyContentReimpresionRecibo"
+        layout="@layout/content_report_reimpresion_recibo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/headerContent"
+        android:visibility="visible" />
+
+    <include
+        android:id="@+id/bodyContentReimpresionReciboUltimo"
+        layout="@layout/content_report_reimpresion_recibo_paso_ultimo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/headerContent"
+        android:visibility="gone" />
+
+    <include
+        android:id="@+id/bodyContentReimpresionReciboNumeroCargo"
+        layout="@layout/content_report_reimpresion_recibo_paso_numero_cargo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/headerContent"
+        android:visibility="gone" />
+
+    <include
+        android:id="@+id/bodyContentReimpresionReciboImpresion"
+        layout="@layout/content_report_reimpresion_recibo_paso_impresion"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/headerContent"
+        android:visibility="gone" />
+
+    <include
+        android:id="@+id/bodyContentReporteDetallesImpresion"
+        layout="@layout/content_report_reporte_detalles_paso_impresion"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/headerContent"
+        android:visibility="gone" />
+
+    <include
+        android:id="@+id/bodyContentReporteGeneralImpresion"
+        layout="@layout/content_report_reporte_general_paso_impresion"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/headerContent"
+        android:visibility="gone" />
+
+    <include
+        android:id="@+id/bodyContentCierreLoteClaveDispositivo"
+        layout="@layout/content_report_cierre_lote_paso_clave_dispositivo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/headerContent"
+        android:visibility="gone" />
+
+    <include
+        android:id="@+id/bodyContentCierreLoteVerificacion"
+        layout="@layout/content_report_cierre_lote_paso_verificacion"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/headerContent"
+        android:visibility="gone" />
+
+    <include
+        android:id="@+id/bodyContentCierreLoteImpresion"
+        layout="@layout/content_report_cierre_lote_paso_impresion"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/headerContent"
+        android:visibility="gone" />
+
+</RelativeLayout>
