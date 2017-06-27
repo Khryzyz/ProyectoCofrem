@@ -68,22 +68,22 @@ public class SplashScreenRepositoryImpl implements SplashScreenRepository {
         } else {
             if (!deviceMagneticReader) {
 
-                postEvent(SplashScreenEvent.onMagneticReaderDeviceError, Resources.getSystem().getString(R.string.general_message_magnetic_device_error));
+                postEvent(SplashScreenEvent.onMagneticReaderDeviceError);
 
             }
             if (!deviceNFC) {
 
-                postEvent(SplashScreenEvent.onNFCDeviceError, Resources.getSystem().getString(R.string.general_message_nfc_device_error));
+                postEvent(SplashScreenEvent.onNFCDeviceError);
 
             }
             if (!devicePrinter) {
 
-                postEvent(SplashScreenEvent.onPrinterDeviceError, Resources.getSystem().getString(R.string.general_message_printer_device_error));
+                postEvent(SplashScreenEvent.onPrinterDeviceError);
 
             }
             if (!internetConnection) {
 
-                postEvent(SplashScreenEvent.onInternetConnectionError, Resources.getSystem().getString(R.string.general_message_internet_error));
+                postEvent(SplashScreenEvent.onInternetConnectionError);
 
             }
         }
