@@ -3,9 +3,9 @@
 
     <!-- Configuracion margenes de la interfaz de la aplicacion -->
 
-    <dimen name="appMarginBottom">16dp</dimen>
-    <dimen name="appMarginLeft">16dp</dimen>
-    <dimen name="appMarginRight">16dp</dimen>
-    <dimen name="appMarginTop">16dp</dimen>
+    <dimen name="appMarginBottom">10dp</dimen>
+    <dimen name="appMarginLeft">10dp</dimen>
+    <dimen name="appMarginRight">10dp</dimen>
+    <dimen name="appMarginTop">10dp</dimen>
 
 </resources>

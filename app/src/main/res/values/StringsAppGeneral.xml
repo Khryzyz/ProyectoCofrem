@@ -36,6 +36,17 @@
     <string name="main_text_button_reports">Modulo de Reportes</string>
     <string name="main_text_button_configuration">Modulo de Configuraciones</string>
 
+    <!-- Textos usados en el Header -->
+
+    <string name="header_text_id_dispositivo_no_registrado">ID Dispositivo: NO REGISTRADO</string>
+    <string name="header_text_id_dispositivo_registrado">ID Dispositivo: %s</string>
+
+    <string name="header_text_id_punto_no_registrado">ID Punto: NO REGISTRADO</string>
+    <string name="header_text_id_punto_registrado">ID Punto: %s</string>
+
+    <string name="header_text_nombre_establecimiento_no_registrado">Establecimiento: NO REGISTRADO</string>
+    <string name="header_text_nombre_establecimiento_registrado">Establecimiento: %s</string>
+
     <!-- Textos usados recurrentemente en toda la App -->
 
     <string name="general_text_valor_cero">$0.00</string>
@@ -59,6 +70,9 @@
     <string name="general_text_clave_usuario">Clave personal:</string>
 
     <string name="general_message_press_back">Sí deseas volver a la vista anterior, debes presionar el boton</string>
+
+    <string name="general_message_verify_configuration_initial_success">Configuración Inicial existente.</string>
+    <string name="general_message_verify_configuration_initial_error">Configuración Inicial NO existente.</string>
 
     <string name="general_message_verify_success">Verificación exitosa</string>
     <string name="general_message_verify_error">Verificación fallida</string>

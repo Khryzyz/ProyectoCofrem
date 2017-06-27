@@ -3,6 +3,12 @@
 
     <!--Estilos de las imagenes usadas en la aplicacion-->
 
+    <style name="StyleImageCompleto">
+        <item name="android:layout_width">@dimen/appImgSizeComWd</item>
+        <item name="android:layout_height">@dimen/appImgSizeComHg</item>
+        <item name="android:layout_centerHorizontal">true</item>
+    </style>
+
     <style name="StyleImageIso">
         <item name="android:layout_width">@dimen/appImgSizeIsoLg</item>
         <item name="android:layout_height">@dimen/appImgSizeIsoLg</item>

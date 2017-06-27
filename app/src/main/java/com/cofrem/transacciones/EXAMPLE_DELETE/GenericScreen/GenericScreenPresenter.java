@@ -1,6 +1,6 @@
-package com.cofrem.transacciones.GenericScreen;
+package com.cofrem.transacciones.EXAMPLE_DELETE.GenericScreen;
 
-import com.cofrem.transacciones.GenericScreen.events.GenericScreenEvent;
+import com.cofrem.transacciones.EXAMPLE_DELETE.GenericScreen.events.GenericScreenEvent;
 
 public interface GenericScreenPresenter {
 
