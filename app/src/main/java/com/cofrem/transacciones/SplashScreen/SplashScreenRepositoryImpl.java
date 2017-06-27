@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.util.Log;
 
 import com.cofrem.transacciones.R;
 import com.cofrem.transacciones.SplashScreen.events.SplashScreenEvent;
@@ -40,6 +41,18 @@ public class SplashScreenRepositoryImpl implements SplashScreenRepository {
      * Metodos sobrecargados de la interface
      * #############################################################################################
      */
+
+    /**
+     * Metodo que verifica:
+     * - La existencia de la configuración inicial
+     *
+     * @param context
+     */
+    @Override
+    public void validateInitialConfig(Context context) {
+        Log.e("Hola", "repositorio");
+        postEvent(SplashScreenEvent.onVerifyInitialConfigSuccess);
+    }
 
     /**
      * Metodo que verifica:
@@ -109,6 +122,10 @@ public class SplashScreenRepositoryImpl implements SplashScreenRepository {
             }
         } else {
             ModelTransaccion modelTransaccion = AppDatabase.getInstance(context).obtenerUltimaTransaccion();
+<<<<<<< refs/remotes/origin/desarrollo
+=======
+            PrintHandler.getInstance(context).printMessage(modelTransaccion.getNumero_tarjeta() + "\n" + modelTransaccion.getNumero_cargo());
+>>>>>>> Agregado evento de no configuracion
 
             String mensaje = "         COFREM \n" +
                     modelTransaccion.getNumero_tarjeta()+"\n" +

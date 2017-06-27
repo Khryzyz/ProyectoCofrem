@@ -1,9 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
     <ImageView
-        android:id="@+id/imgSplashScreenIso"
-        style="@style/StyleImageIso"
-        android:src="@mipmap/iso_cofrem" />
+        android:id="@+id/imgLogoHeader"
+        style="@style/StyleImageCompleto"
+        android:layout_marginBottom="@dimen/appMarginBottom"
+        android:layout_marginTop="@dimen/appMarginTop"
+        android:src="@mipmap/logo_cofrem_completo" />
+
+    <TextView
+        android:id="@+id/txvHeaderIdDispositivo"
+        style="@style/StyleTextPrimarySmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/imgLogoHeader"
+        android:layout_marginBottom="@dimen/appMarginBottom"
+        android:layout_marginLeft="@dimen/appMarginLeft"
+        android:text="@string/header_text_id_dispositivo_no_registrado" />
+
+    <TextView
+        android:id="@+id/txvHeaderIdPunto"
+        style="@style/StyleTextPrimarySmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txvHeaderIdDispositivo"
+        android:layout_marginBottom="@dimen/appMarginBottom"
+        android:layout_marginLeft="@dimen/appMarginLeft"
+        android:text="@string/header_text_id_punto_no_registrado" />
+
+    <TextView
+        android:id="@+id/txvHeaderIdEstablecimiento"
+        style="@style/StyleTextPrimarySmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txvHeaderIdPunto"
+        android:layout_marginBottom="@dimen/appMarginBottom"
+        android:layout_marginLeft="@dimen/appMarginLeft"
+        android:text="@string/header_text_nombre_establecimiento_no_registrado" />
 </RelativeLayout>

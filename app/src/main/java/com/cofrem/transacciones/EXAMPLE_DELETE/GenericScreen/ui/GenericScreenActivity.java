@@ -1,9 +1,9 @@
-package com.cofrem.transacciones.GenericScreen.ui;
+package com.cofrem.transacciones.EXAMPLE_DELETE.GenericScreen.ui;
 
 import android.app.Activity;
 
-import com.cofrem.transacciones.GenericScreen.GenericScreenPresenter;
-import com.cofrem.transacciones.GenericScreen.GenericScreenPresenterImpl;
+import com.cofrem.transacciones.EXAMPLE_DELETE.GenericScreen.GenericScreenPresenter;
+import com.cofrem.transacciones.EXAMPLE_DELETE.GenericScreen.GenericScreenPresenterImpl;
 import com.cofrem.transacciones.R;
 
 import org.androidannotations.annotations.AfterViews;

@@ -6,11 +6,6 @@ package com.cofrem.transacciones.SplashScreen.ui;
 public interface SplashScreenView {
 
     /**
-     * Metodo para navegar a la ventana inicial
-     */
-    void navigateToMainScreen();
-
-    /**
      * Metodo para mostrar la barra de progreso
      */
     void showProgress();
@@ -19,6 +14,16 @@ public interface SplashScreenView {
      * Metodo para ocultar la barra de progreso
      */
     void hideProgress();
+
+    /**
+     * Metodo para manejar la existencia de la configuracion inicial
+     */
+    void handleVerifyInitialConfigSuccess();
+
+    /**
+     * Metodo para manejar la NO existencia de la configuracion inicial
+     */
+    void handleVerifyInitialConfigError();
 
     /**
      * Metodo para manejar la verificacion exitosa
@@ -69,5 +74,6 @@ public interface SplashScreenView {
      * Metodo para manejar la conexion al dispositivo de impresion erronea
      */
     void handlePrinterDeviceError();
+
 
 }

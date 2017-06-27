@@ -1,4 +1,4 @@
-package com.cofrem.transacciones.GenericScreen.ui;
+package com.cofrem.transacciones.EXAMPLE_DELETE.GenericScreen.ui;
 
 public interface GenericScreenView {
 
