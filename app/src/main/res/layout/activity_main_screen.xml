@@ -18,8 +18,8 @@
         android:layout_below="@id/headerContent"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/appMarginBottom"
-        android:layout_marginLeft="@dimen/appMarginStart"
-        android:layout_marginRight="@dimen/appMarginEnd"
+        android:layout_marginStart="@dimen/appMarginStart"
+        android:layout_marginEnd="@dimen/appMarginEnd"
         android:text="@string/main_text_button_transaction" />
 
     <Button
@@ -28,8 +28,8 @@
         android:layout_below="@id/btnMainScreenModuleTransaction"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/appMarginBottom"
-        android:layout_marginLeft="@dimen/appMarginStart"
-        android:layout_marginRight="@dimen/appMarginEnd"
+        android:layout_marginStart="@dimen/appMarginStart"
+        android:layout_marginEnd="@dimen/appMarginEnd"
         android:text="@string/main_text_button_reports" />
 
     <Button
@@ -38,7 +38,7 @@
         android:layout_below="@id/btnMainScreenModuleReport"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/appMarginBottom"
-        android:layout_marginLeft="@dimen/appMarginStart"
-        android:layout_marginRight="@dimen/appMarginEnd"
+        android:layout_marginStart="@dimen/appMarginStart"
+        android:layout_marginEnd="@dimen/appMarginEnd"
         android:text="@string/main_text_button_configuration" />
 </RelativeLayout>

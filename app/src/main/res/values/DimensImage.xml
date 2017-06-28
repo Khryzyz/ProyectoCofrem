@@ -4,8 +4,8 @@
     <!-- Configuracion dimensiones de las imagenes de la aplicacion -->
 
     <!--Dimensiones ISOTIPO-->
-    <dimen name="appImgSizeComHg">95dp</dimen>
-    <dimen name="appImgSizeComWd">320dp</dimen>
+    <dimen name="appImgSizeComHg">80dp</dimen>
+    <dimen name="appImgSizeComWd">300dp</dimen>
 
     <!--Dimensiones ISOTIPO-->
     <dimen name="appImgSizeIsoSm">60dp</dimen>
