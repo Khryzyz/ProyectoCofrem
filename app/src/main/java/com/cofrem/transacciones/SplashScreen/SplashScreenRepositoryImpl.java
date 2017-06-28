@@ -114,7 +114,7 @@ public class SplashScreenRepositoryImpl implements SplashScreenRepository {
      * @return
      */
     private boolean verifyInitialRegister(Context context) {
-        if (AppDatabase.getInstance(context).obtenerConteoRegistro() == 0) {
+        /*if (AppDatabase.getInstance(context).obtenerConteoRegistro() == 0) {
             if (AppDatabase.getInstance(context).insertRegistroInicialProductos()) {
                 if (AppDatabase.getInstance(context).insertRegistroPruebaTransaction(AppDatabase.getInstance(context).obtenerProductoIdByNombre("CREDITO ROTATIVO"))) {
                     return true;
@@ -123,7 +123,7 @@ public class SplashScreenRepositoryImpl implements SplashScreenRepository {
         } else {
             ModelTransaccion modelTransaccion = AppDatabase.getInstance(context).obtenerUltimaTransaccion();
             return true;
-        }
+        }*/
         return true;
     }
 
