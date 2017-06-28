@@ -6,7 +6,7 @@
     android:background="@color/appColorWhite"
     android:orientation="vertical"
     android:paddingBottom="@dimen/appPaddingBottom"
-android:paddingLeft="@dimen/appPaddingLeft"
+    android:paddingLeft="@dimen/appPaddingLeft"
     android:paddingRight="@dimen/appPaddingRight"
     android:paddingTop="@dimen/appPaddingTop">
 
@@ -19,15 +19,15 @@ android:paddingLeft="@dimen/appPaddingLeft"
         android:layout_marginBottom="@dimen/appMarginBottom" />
 
     <include
-        android:id="@+id/bodyContentReimpresionRecibo"
+        android:id="@+id/bodyContentConfigurationHost"
         layout="@layout/content_configuracion_configuracion_paso_host"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/headerContent"
-        android:visibility="gone" />
+        android:visibility="visible" />
 
     <include
-        android:id="@+id/bodyContentReimpresionRecibo"
+        android:id="@+id/bodyContentConfigurationPort"
         layout="@layout/content_configuracion_configuracion_paso_port"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -35,7 +35,7 @@ android:paddingLeft="@dimen/appPaddingLeft"
         android:visibility="gone" />
 
     <include
-        android:id="@+id/bodyContentReimpresionRecibo"
+        android:id="@+id/bodyContentConfigurationEstablecimiento"
         layout="@layout/content_configuracion_configuracion_paso_establecimiento"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -43,7 +43,7 @@ android:paddingLeft="@dimen/appPaddingLeft"
         android:visibility="gone" />
 
     <include
-        android:id="@+id/bodyContentReimpresionRecibo"
+        android:id="@+id/bodyContentConfigurationLocal"
         layout="@layout/content_configuracion_configuracion_paso_local"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -51,19 +51,11 @@ android:paddingLeft="@dimen/appPaddingLeft"
         android:visibility="gone" />
 
     <include
-        android:id="@+id/bodyContentReimpresionRecibo"
+        android:id="@+id/bodyContentConfigurationExito"
         layout="@layout/content_configuracion_configuracion_paso_exitosa"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/headerContent"
         android:visibility="gone" />
-
-    <include
-        android:id="@+id/bodyContentReimpresionRecibo"
-        layout="@layout/content_configuracion_conexion_paso_prueba"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/headerContent"
-        android:visibility="visible" />
 
 </RelativeLayout>

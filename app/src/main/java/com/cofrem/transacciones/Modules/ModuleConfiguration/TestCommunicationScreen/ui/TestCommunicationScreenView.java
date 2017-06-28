@@ -1,6 +1,6 @@
 package com.cofrem.transacciones.Modules.ModuleConfiguration.TestCommunicationScreen.ui;
 
-public interface GenericScreenView {
+public interface TestCommunicationScreenView {
 
     /**
      * Metodo para manejar la verificacion exitosa

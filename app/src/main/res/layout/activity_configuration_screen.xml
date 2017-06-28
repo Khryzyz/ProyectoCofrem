@@ -21,21 +21,21 @@
         android:layout_margin="@dimen/appMarginBottom" />
 
     <Button
-        android:id="@+id/btnConfigurationScreenModuleConfiguracion"
+        android:id="@+id/btnConfigurationScreenModuleRegisterConfiguration"
         style="@style/StyleButtonStandar"
         android:layout_below="@id/headerContent"
         android:text="@string/configuration_text_button_configuracion" />
 
     <Button
-        android:id="@+id/btnConfigurationScreenModulePrueba"
+        android:id="@+id/btnConfigurationScreenModuleTestCommunication"
         style="@style/StyleButtonStandar"
-        android:layout_below="@id/btnConfigurationScreenModuleConfiguracion"
+        android:layout_below="@id/btnConfigurationScreenModuleRegisterConfiguration"
         android:text="@string/configuration_text_button_prueba" />
 
     <Button
         android:id="@+id/btnConfigurationScreenBack"
         style="@style/StyleButtonBack"
-        android:layout_below="@id/btnConfigurationScreenModulePrueba"
+        android:layout_below="@id/btnConfigurationScreenModuleTestCommunication"
         android:text="@string/general_text_button_regresar" />
 
 </RelativeLayout>

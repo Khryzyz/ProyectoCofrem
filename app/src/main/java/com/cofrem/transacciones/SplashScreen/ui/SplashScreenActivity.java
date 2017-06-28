@@ -8,8 +8,8 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.cofrem.transacciones.ConfigurationScreenActivity_;
 import com.cofrem.transacciones.MainScreenActivity_;
+import com.cofrem.transacciones.Modules.ModuleConfiguration.RegisterConfigurationScreen.ui.RegisterConfigurationScreenActivity_;
 import com.cofrem.transacciones.R;
 import com.cofrem.transacciones.SplashScreen.SplashScreenPresenter;
 import com.cofrem.transacciones.SplashScreen.SplashScreenPresenterImpl;
@@ -329,10 +329,12 @@ public class SplashScreenActivity extends Activity implements SplashScreenView {
      */
     public void navigateToConfigurationScreen() {
         hideProgress();
+
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(SplashScreenActivity.this, ConfigurationScreenActivity_.class);
+
+                Intent intent = new Intent(SplashScreenActivity.this, RegisterConfigurationScreenActivity_.class);
                 //Agregadas banderas para no retorno
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
                         | Intent.FLAG_ACTIVITY_NEW_TASK
@@ -340,7 +342,7 @@ public class SplashScreenActivity extends Activity implements SplashScreenView {
 
                 startActivity(intent);
             }
-        }, 3000);
+        }, 1000);
     }
 
 }

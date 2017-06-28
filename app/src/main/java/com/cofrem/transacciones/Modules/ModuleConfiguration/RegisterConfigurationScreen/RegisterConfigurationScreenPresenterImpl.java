@@ -5,7 +5,7 @@ import com.cofrem.transacciones.Modules.ModuleConfiguration.RegisterConfiguratio
 import com.cofrem.transacciones.lib.EventBus;
 import com.cofrem.transacciones.lib.GreenRobotEventBus;
 
-public class RegisterRegisterConfigurationScreenPresenterImpl implements RegisterConfigurationScreenPresenter {
+public class RegisterConfigurationScreenPresenterImpl implements RegisterConfigurationScreenPresenter {
 
 
     /**
@@ -34,7 +34,7 @@ public class RegisterRegisterConfigurationScreenPresenterImpl implements Registe
      *
      * @param registerConfigurationScreenView
      */
-    public RegisterRegisterConfigurationScreenPresenterImpl(RegisterConfigurationScreenView registerConfigurationScreenView) {
+    public RegisterConfigurationScreenPresenterImpl(RegisterConfigurationScreenView registerConfigurationScreenView) {
         this.registerConfigurationScreenView = registerConfigurationScreenView;
         this.registerConfigurationScreenInteractor = new RegisterConfigurationScreenInteractorImpl();
         this.eventBus = GreenRobotEventBus.getInstance();

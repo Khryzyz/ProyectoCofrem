@@ -1,7 +1,7 @@
 package com.cofrem.transacciones.Modules.ModuleConfiguration.TestCommunicationScreen;
 
 import com.cofrem.transacciones.Modules.ModuleConfiguration.TestCommunicationScreen.events.TestCommunicationScreenEvent;
-import com.cofrem.transacciones.Modules.ModuleConfiguration.TestCommunicationScreen.ui.GenericScreenView;
+import com.cofrem.transacciones.Modules.ModuleConfiguration.TestCommunicationScreen.ui.TestCommunicationScreenView;
 import com.cofrem.transacciones.lib.EventBus;
 import com.cofrem.transacciones.lib.GreenRobotEventBus;
 
@@ -21,8 +21,8 @@ public class TestCommunicationScreenPresenterImpl implements TestCommunicationSc
      * Instanciamientos de las clases
      * #############################################################################################
      */
-    //Instanciamiento de la interface genericScreenView
-    private GenericScreenView genericScreenView;
+    //Instanciamiento de la interface testCommunicationScreenView
+    private TestCommunicationScreenView testCommunicationScreenView;
 
     //Instanciamiento de la interface TestCommunicationScreenInteractor
     private TestCommunicationScreenInteractor testCommunicationScreenInteractor;
@@ -32,10 +32,10 @@ public class TestCommunicationScreenPresenterImpl implements TestCommunicationSc
      * Constructor de la clase
      * #############################################################################################
      *
-     * @param genericScreenView
+     * @param testCommunicationScreenView
      */
-    public TestCommunicationScreenPresenterImpl(GenericScreenView genericScreenView) {
-        this.genericScreenView = genericScreenView;
+    public TestCommunicationScreenPresenterImpl(TestCommunicationScreenView testCommunicationScreenView) {
+        this.testCommunicationScreenView = testCommunicationScreenView;
         this.testCommunicationScreenInteractor = new TestCommunicationScreenInteractorImpl();
         this.eventBus = GreenRobotEventBus.getInstance();
     }
@@ -55,7 +55,7 @@ public class TestCommunicationScreenPresenterImpl implements TestCommunicationSc
      */
     @Override
     public void onDestroy() {
-        genericScreenView = null;
+        testCommunicationScreenView = null;
         eventBus.unregister(this);
     }
 
@@ -64,7 +64,7 @@ public class TestCommunicationScreenPresenterImpl implements TestCommunicationSc
      */
     @Override
     public void VerifySuccess() {
-        if (genericScreenView != null) {
+        if (testCommunicationScreenView != null) {
             testCommunicationScreenInteractor.validateAccess();
         }
     }
@@ -96,8 +96,8 @@ public class TestCommunicationScreenPresenterImpl implements TestCommunicationSc
      * Metodo para manejar la verificacion exitosa
      */
     private void onVerifySuccess() {
-        if (genericScreenView != null) {
-            genericScreenView.handleVerifySuccess();
+        if (testCommunicationScreenView != null) {
+            testCommunicationScreenView.handleVerifySuccess();
         }
     }
 

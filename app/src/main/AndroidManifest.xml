@@ -67,6 +67,14 @@
         <activity
             android:name=".ConfigurationScreenActivity_"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"></activity>
+        <!-- Configuration Screen / Module RegisterConfiguration-->
+        <activity
+            android:name=".Modules.ModuleConfiguration.RegisterConfigurationScreen.ui.RegisterConfigurationScreenActivity_"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"></activity>
+        <!-- Configuration Screen / Module TestCommunication-->
+        <activity
+            android:name=".Modules.ModuleConfiguration.TestCommunicationScreen.ui.TestCommunicationScreenActivity_"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"></activity>
 
     </application>
 
