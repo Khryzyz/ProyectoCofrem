@@ -3,6 +3,9 @@ package com.cofrem.transacciones.Modules.ModuleReports.ReimpresionScreenActivity
 public class ReimpresionScreenEvent {
 
     public final static int onVerifySuccess = 0;
+    public final static int LanzarContentReimpresionUltimo = 1;
+    public final static int LanzarContentReimpresionNumCargo = 2;
+
 
     // Variable que maneja los tipos de eventos
     private int eventType;

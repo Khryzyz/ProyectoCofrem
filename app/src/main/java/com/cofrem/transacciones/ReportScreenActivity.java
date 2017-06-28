@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.widget.Toast;
 
+import com.cofrem.transacciones.Modules.ModuleReports.ReimpresionScreenActivity.ui.ReimpresionScreenActivity;
+import com.cofrem.transacciones.Modules.ModuleReports.ReimpresionScreenActivity.ui.ReimpresionScreenActivity_;
+
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
@@ -47,6 +50,15 @@ public class ReportScreenActivity extends Activity {
      * Metodo propios de la clase
      * #############################################################################################
      */
+
+    /**
+     * Metodo para navegar a la ventana de reportes
+     */
+    @Click(R.id.btnReportScreenModuleReimpresion)
+    public void navigateToReportsReimpresion() {
+        Intent intent = new Intent(this, ReimpresionScreenActivity_.class);
+        startActivity(intent);
+    }
 
     /**
      * Metodo para navegar a la ventana principal

@@ -7,7 +7,7 @@
     android:background="@color/appColorWhite"
     android:orientation="vertical"
     android:paddingBottom="@dimen/appPaddingBottom"
-android:paddingLeft="@dimen/appPaddingLeft"
+    android:paddingLeft="@dimen/appPaddingLeft"
     android:paddingRight="@dimen/appPaddingRight"
     android:paddingTop="@dimen/appPaddingTop"
     tools:context=".Modules.ModuleReports.ReimpresionScreenActivity.ui.ReimpresionScreenActivity">

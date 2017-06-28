@@ -122,9 +122,7 @@ public class SplashScreenRepositoryImpl implements SplashScreenRepository {
             }
         } else {
             ModelTransaccion modelTransaccion = AppDatabase.getInstance(context).obtenerUltimaTransaccion();
-            PrintHandler.getInstance(context).printMessage(modelTransaccion.getNumero_tarjeta() + "\n" + modelTransaccion.getNumero_cargo());
-
-            return false;
+            return true;
         }
         return true;
     }

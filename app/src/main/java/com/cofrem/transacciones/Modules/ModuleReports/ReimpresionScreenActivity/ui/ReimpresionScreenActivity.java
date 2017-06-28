@@ -1,15 +1,20 @@
 package com.cofrem.transacciones.Modules.ModuleReports.ReimpresionScreenActivity.ui;
 
 import android.app.Activity;
+import android.content.Context;
+import android.view.View;
+import android.widget.RelativeLayout;
 
 import com.cofrem.transacciones.Modules.ModuleReports.ReimpresionScreenActivity.ReimpresionScreenPresenter;
 import com.cofrem.transacciones.Modules.ModuleReports.ReimpresionScreenActivity.ReimpresionScreenPresenterImpl;
 import com.cofrem.transacciones.R;
 
 import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.ViewById;
 
-@EActivity(R.layout.activity_main_screen)
+@EActivity(R.layout.activity_report_reimpresion_screen)
 public class ReimpresionScreenActivity extends Activity implements ReimpresionScreenView {
 
     /**
@@ -19,6 +24,25 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
      */
     //Instanciamiento de la interface SaldoScreenPresenter
     private ReimpresionScreenPresenter reimpresionScreenPresenter;
+
+    @ViewById
+    RelativeLayout bodyContentReimpresionRecibo;
+    @ViewById
+    RelativeLayout bodyContentReimpresionReciboUltimo;
+    @ViewById
+    RelativeLayout bodyContentReimpresionReciboNumeroCargo;
+    @ViewById
+    RelativeLayout bodyContentReimpresionReciboImpresion;
+    @ViewById
+    RelativeLayout bodyContentReporteDetallesImpresion;
+    @ViewById
+    RelativeLayout bodyContentReporteGeneralImpresion;
+    @ViewById
+    RelativeLayout bodyContentCierreLoteClaveDispositivo;
+    @ViewById
+    RelativeLayout bodyContentCierreLoteVerificacion;
+    @ViewById
+    RelativeLayout bodyContentCierreLoteImpresion;
 
 
     /**
@@ -68,33 +92,34 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
      */
 
     /**
-     * Metodo para manejar la verificacion exitosa
+     * Metodo para navegar a la ventana reimprecion ultimo recibo Imprimir
      */
-    public void handleVerifySuccess() {
-
+    @Click(R.id.btnReportReimpresionReciboUltimoRecibo)
+    public void navegateToContentReimprimirUltimo() {
+        //reimpresionScreenPresenter.imprimir(this);
+        bodyContentReimpresionRecibo.setVisibility(View.GONE);
+        bodyContentReimpresionReciboUltimo.setVisibility(View.VISIBLE);
     }
 
     /**
-     * Metodo para navegar a la ventana de transacciones
+     * Metodo que se encargara de imprimir el recibo
      */
-    @Override
-    public void navigateTransactionView() {
-
+    @Click(R.id.btnReportReimpresionReciboImprimirRecibo)
+    public void imprimirUltimoRecibo() {
+        reimpresionScreenPresenter.imprimir(this);
     }
 
-    /**
-     * Metodo para navegar a la ventana de reportes
-     */
-    @Override
-    public void navigateToReportsView() {
 
+    @Click(R.id.btnReportReimpresionReciboSalir)
+    public void salirDelContentReimprimirUltimo() {
+        bodyContentReimpresionReciboUltimo.setVisibility(View.GONE);
+        bodyContentReimpresionRecibo.setVisibility(View.VISIBLE);
     }
 
-    /**
-     * Metodo para navegar a la ventana de configuraciones
-     */
-    @Override
-    public void navigateToConfigurationView() {
-
+    @Click(R.id.btnReportReimpresionReciboNumeroDeCargo)
+    public void navegateToContentReimprimirNumCargo() {
+        bodyContentReimpresionRecibo.setVisibility(View.GONE);
+        bodyContentReimpresionReciboNumeroCargo.setVisibility(View.VISIBLE);
     }
+
 }

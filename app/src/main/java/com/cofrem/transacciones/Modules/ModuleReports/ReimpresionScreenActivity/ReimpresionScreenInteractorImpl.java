@@ -1,5 +1,8 @@
 package com.cofrem.transacciones.Modules.ModuleReports.ReimpresionScreenActivity;
 
+import android.content.Context;
+import android.util.Log;
+
 class ReimpresionScreenInteractorImpl implements ReimpresionScreenInteractor {
     /**
      * #############################################################################################
@@ -24,18 +27,18 @@ class ReimpresionScreenInteractorImpl implements ReimpresionScreenInteractor {
         reimpresionScreenRepository = new ReimpresionScreenRepositoryImpl();
 
     }
+
+    @Override
+    public void imprimir(Context context) {
+        reimpresionScreenRepository.imprimirUltimoRecibo(context);
+    }
     /**
      * #############################################################################################
      * Metodos sobrecargados de la interface
      * #############################################################################################
      */
 
-    /**
-     *
-     */
-    @Override
-    public void validateAccess() {
-        //Valida el acceso a la app
-        reimpresionScreenRepository.validateAcces();
-    }
+
+
+
 }

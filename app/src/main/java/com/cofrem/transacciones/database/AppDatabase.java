@@ -9,6 +9,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 import com.cofrem.transacciones.models.ModelTransaccion;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 /**
  * Clase que maneja:
@@ -126,7 +129,7 @@ public final class AppDatabase extends SQLiteOpenHelper {
         contentValues.put(DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_NUMERO_CARGO, 25639687);
         contentValues.put(DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_NUMERO_TARJETA, "256389562154");
         contentValues.put(DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_VALOR, 140000);
-        contentValues.put(DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_REGISTRO, "time('now')");
+        contentValues.put(DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_REGISTRO, getDateTime());
         contentValues.put(DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_ESTADO, 1);
 
         // Insercion del registro en la base de datos
@@ -141,7 +144,6 @@ public final class AppDatabase extends SQLiteOpenHelper {
             return false;
 
     }
-
 
     /**
      * Metodo para Obtener todos los registros de la tabla base_financiera
@@ -216,5 +218,27 @@ public final class AppDatabase extends SQLiteOpenHelper {
 
         return modelTransaccion;
     }
+
+
+    /**
+     * #############################################################################################
+     * Metodos privados auxiliares
+     * #############################################################################################
+     */
+
+
+
+    /**
+     * Metodo para Obtener el String de fecha y hora
+     *
+     * @return String fecha
+     */
+    private String getDateTime() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat(
+                "yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        Date date = new Date();
+        return dateFormat.format(date);
+    }
+
 
 }

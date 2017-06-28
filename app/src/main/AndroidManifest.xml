@@ -59,6 +59,10 @@
         <activity
             android:name=".ReportScreenActivity_"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"></activity>
+        <!--Report Screen Reimpresion activity-->
+        <activity
+            android:name=".Modules.ModuleReports.ReimpresionScreenActivity.ui.ReimpresionScreenActivity_"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"></activity>
         <!--Configuration Screen-->
         <activity
             android:name=".ConfigurationScreenActivity_"
