@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.cofrem.transacciones.ConfigurationScreenActivity_;
 import com.cofrem.transacciones.MainScreenActivity_;
 import com.cofrem.transacciones.R;
 import com.cofrem.transacciones.SplashScreen.SplashScreenPresenter;
@@ -61,13 +62,12 @@ public class SplashScreenActivity extends Activity implements SplashScreenView {
         splashScreenPresenter.onCreate();
 
         /**
-         * Llamada al metodo validateAcces del presentador que valida:
-         *  - Conexion a internet
-         *  - Existencia datos en DB interna
-         *  - Coherencia de datos con el servidor
+         * Llamada al metodo validateInitialConfig del presentador que valida:
+         *  - La existencia de la configuración inicial
+         *  - En caso de no existir mostrará la vista de configuración
+         *  - En caso de existir validara el acceso
          */
-        splashScreenPresenter.validateAccess(this);
-
+        splashScreenPresenter.validateInitialConfig(this);
     }
 
     /**
@@ -92,31 +92,6 @@ public class SplashScreenActivity extends Activity implements SplashScreenView {
      */
 
     /**
-     * Metodo para navegar a la ventana inicial
-     */
-    @Override
-    public void navigateToMainScreen() {
-
-        txvSplashScreenInfo.setText(txvSplashScreenInfo.getText() +
-                "\n Aqui se muestra la pantalla principal"
-        );
-
-        hideProgress();
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Intent intent = new Intent(SplashScreenActivity.this, MainScreenActivity_.class);
-                //Agregadas  ventanas para no retorno
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
-                        | Intent.FLAG_ACTIVITY_NEW_TASK
-                        | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-
-                startActivity(intent);
-            }
-        }, 3000);
-    }
-
-    /**
      * Metodo para mostrar la barra de progreso
      */
     @Override
@@ -132,6 +107,43 @@ public class SplashScreenActivity extends Activity implements SplashScreenView {
     public void hideProgress() {
         //Oculta la barra de progreso
         pgbLoadingSplashScreen.setVisibility(View.GONE);
+    }
+
+    /**
+     * Metodo para manejar la existencia de la configuracion inicial
+     */
+    @Override
+    public void handleVerifyInitialConfigSuccess() {
+
+        //Agregado el texto de error del manejador de verificafcion inicial encontrada
+
+        txvSplashScreenInfo.setText(txvSplashScreenInfo.getText() +
+                "\n " + getString(R.string.general_message_verify_configuration_initial_success)
+        );
+
+        /**
+         * Llamada al metodo validateAcces del presentador que valida:
+         *  - Conexion a internet
+         *  - Existencia datos en DB interna
+         *  - Coherencia de datos con el servidor
+         */
+        splashScreenPresenter.validateAccess(this);
+    }
+
+    /**
+     * Metodo para manejar la NO existencia de la configuracion inicial
+     */
+    @Override
+    public void handleVerifyInitialConfigError() {
+
+        //Agregado el texto de error del manejador de verificafcion inicial no encontrada
+
+        txvSplashScreenInfo.setText(txvSplashScreenInfo.getText() +
+                "\n " + getString(R.string.general_message_verify_configuration_initial_error)
+        );
+
+        //Navegando a la ventana de configuración
+        navigateToConfigurationScreen();
     }
 
     /**
@@ -260,6 +272,49 @@ public class SplashScreenActivity extends Activity implements SplashScreenView {
      */
     private void setOrientation() {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+    }
+
+    /**
+     * Metodo para navegar a la ventana inicial
+     */
+    public void navigateToMainScreen() {
+
+        txvSplashScreenInfo.setText(txvSplashScreenInfo.getText() +
+                "\n Aqui se muestra la pantalla principal"
+        );
+
+        hideProgress();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(SplashScreenActivity.this, MainScreenActivity_.class);
+                //Agregadas  ventanas para no retorno
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
+                        | Intent.FLAG_ACTIVITY_NEW_TASK
+                        | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+                startActivity(intent);
+            }
+        }, 3000);
+    }
+
+    /**
+     * Metodo para navegar a la ventana inicial
+     */
+    public void navigateToConfigurationScreen() {
+        hideProgress();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(SplashScreenActivity.this, ConfigurationScreenActivity_.class);
+                //Agregadas banderas para no retorno
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
+                        | Intent.FLAG_ACTIVITY_NEW_TASK
+                        | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+                startActivity(intent);
+            }
+        }, 3000);
     }
 
 }

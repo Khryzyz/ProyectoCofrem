@@ -36,6 +36,17 @@ public class SplashScreenInteractorImpl implements SplashScreenInteractor {
 
     /**
      * Metodo que verifica:
+     * - La existencia de la configuración inicial
+     *
+     * @param context
+     */
+    @Override
+    public void validateInitialConfig(Context context) {
+
+    }
+
+    /**
+     * Metodo que verifica:
      * - Existencia de datos
      * - Validez de datos
      *

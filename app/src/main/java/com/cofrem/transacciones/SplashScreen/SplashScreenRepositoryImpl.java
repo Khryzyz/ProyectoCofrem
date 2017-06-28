@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.util.Log;
 
 import com.cofrem.transacciones.R;
 import com.cofrem.transacciones.SplashScreen.events.SplashScreenEvent;
@@ -43,6 +44,18 @@ public class SplashScreenRepositoryImpl implements SplashScreenRepository {
 
     /**
      * Metodo que verifica:
+     * - La existencia de la configuración inicial
+     *
+     * @param context
+     */
+    @Override
+    public void validateInitialConfig(Context context) {
+        Log.e("Hola", "repositorio");
+        postEvent(SplashScreenEvent.onVerifyInitialConfigSuccess);
+    }
+
+    /**
+     * Metodo que verifica:
      * - Existencia de datos
      * - Validez de datos
      *
@@ -68,22 +81,22 @@ public class SplashScreenRepositoryImpl implements SplashScreenRepository {
         } else {
             if (!deviceMagneticReader) {
 
-                postEvent(SplashScreenEvent.onMagneticReaderDeviceError, Resources.getSystem().getString(R.string.general_message_magnetic_device_error));
+                postEvent(SplashScreenEvent.onMagneticReaderDeviceError);
 
             }
             if (!deviceNFC) {
 
-                postEvent(SplashScreenEvent.onNFCDeviceError, Resources.getSystem().getString(R.string.general_message_nfc_device_error));
+                postEvent(SplashScreenEvent.onNFCDeviceError);
 
             }
             if (!devicePrinter) {
 
-                postEvent(SplashScreenEvent.onPrinterDeviceError, Resources.getSystem().getString(R.string.general_message_printer_device_error));
+                postEvent(SplashScreenEvent.onPrinterDeviceError);
 
             }
             if (!internetConnection) {
 
-                postEvent(SplashScreenEvent.onInternetConnectionError, Resources.getSystem().getString(R.string.general_message_internet_error));
+                postEvent(SplashScreenEvent.onInternetConnectionError);
 
             }
         }
@@ -109,7 +122,7 @@ public class SplashScreenRepositoryImpl implements SplashScreenRepository {
             }
         } else {
             ModelTransaccion modelTransaccion = AppDatabase.getInstance(context).obtenerUltimaTransaccion();
-            PrintHandler.getInstance(context).printMessage(modelTransaccion.getNumero_tarjeta()+"\n"+modelTransaccion.getNumero_cargo());
+            PrintHandler.getInstance(context).printMessage(modelTransaccion.getNumero_tarjeta() + "\n" + modelTransaccion.getNumero_cargo());
 
             return false;
         }

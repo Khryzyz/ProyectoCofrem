@@ -67,7 +67,22 @@ public class SplashScreenPresenterImpl implements SplashScreenPresenter {
     }
 
     /**
+     * Metodo para la verificacion de la existencia de la configuración inicial
+     *
+     * @param context
+     */
+    @Override
+    public void validateInitialConfig(Context context) {
+        if (splashScreenView != null) {
+            splashScreenView.showProgress();
+            splashScreenInteractor.validateInitialConfig(context);
+        }
+    }
+
+    /**
      * Metodo para la verificacion de los datos
+     *
+     * @param context
      */
     @Override
     public void validateAccess(Context context) {
@@ -85,6 +100,14 @@ public class SplashScreenPresenterImpl implements SplashScreenPresenter {
     @Override
     public void onEventMainThread(SplashScreenEvent splashScreenEvent) {
         switch (splashScreenEvent.getEventType()) {
+
+            case SplashScreenEvent.onVerifyInitialConfigSuccess:
+                onVerifyInitialConfigSuccess();
+                break;
+
+            case SplashScreenEvent.onVerifyInitialConfigError:
+                onVerifyInitialConfigError();
+                break;
 
             case SplashScreenEvent.onVerifySuccess:
                 onVerifySuccess();
@@ -134,6 +157,25 @@ public class SplashScreenPresenterImpl implements SplashScreenPresenter {
      * Metodo propios de la clase
      * #############################################################################################
      */
+
+    /**
+     * Metodo para manejar la verificacion exitosa
+     */
+    private void onVerifyInitialConfigSuccess() {
+        if (splashScreenView != null) {
+            splashScreenView.handleVerifyInitialConfigSuccess();
+        }
+    }
+
+    /**
+     * Metodo para manejar la verificacion exitosa
+     */
+    private void onVerifyInitialConfigError() {
+        if (splashScreenView != null) {
+            splashScreenView.hideProgress();
+            splashScreenView.handleVerifyInitialConfigError();
+        }
+    }
 
     /**
      * Metodo para manejar la verificacion exitosa

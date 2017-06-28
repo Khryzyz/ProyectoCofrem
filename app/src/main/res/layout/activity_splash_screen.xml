@@ -9,8 +9,7 @@
     android:paddingBottom="@dimen/appPaddingBottom"
     android:paddingLeft="@dimen/appPaddingLeft"
     android:paddingRight="@dimen/appPaddingRight"
-    android:paddingTop="@dimen/appPaddingTop"
-    tools:context=".SplashScreen.ui.SplashScreenActivity">
+    android:paddingTop="@dimen/appPaddingTop">
 
     <ImageView
         android:id="@+id/imgSplashScreenIso"

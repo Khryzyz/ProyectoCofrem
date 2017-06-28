@@ -17,7 +17,16 @@ public interface SplashScreenPresenter {
     void onDestroy();
 
     /**
+     * Metodo para la verificacion de la existencia de la configuración inicial
+     *
+     * @param context
+     */
+    void validateInitialConfig(Context context);
+
+    /**
      * Metodo para la verificacion de los datos
+     *
+     * @param context
      */
     void validateAccess(Context context);
 

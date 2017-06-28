@@ -1,4 +1,4 @@
-package com.cofrem.transacciones.GenericScreen.events;
+package com.cofrem.transacciones.EXAMPLE_DELETE.GenericScreen.events;
 
 public class GenericScreenEvent {
 
