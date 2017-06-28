@@ -42,7 +42,7 @@ public class SplashScreenInteractorImpl implements SplashScreenInteractor {
      */
     @Override
     public void validateInitialConfig(Context context) {
-
+        splashScreenRepository.validateInitialConfig(context);
     }
 
     /**

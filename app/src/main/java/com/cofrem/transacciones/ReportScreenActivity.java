@@ -2,9 +2,10 @@ package com.cofrem.transacciones;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
 import android.widget.Toast;
 
-import com.cofrem.transacciones.Modules.ModuleReports.ReimpresionScreenActivity.ui.ReimpresionScreenActivity;
+import com.cofrem.transacciones.Modules.ModuleReports.ReimpresionScreenActivity.ModelReport.Reports;
 import com.cofrem.transacciones.Modules.ModuleReports.ReimpresionScreenActivity.ui.ReimpresionScreenActivity_;
 
 import org.androidannotations.annotations.AfterViews;
@@ -56,7 +57,66 @@ public class ReportScreenActivity extends Activity {
      */
     @Click(R.id.btnReportScreenModuleReimpresion)
     public void navigateToReportsReimpresion() {
+
+        Bundle args = new Bundle();
+
+        args.putInt(Reports.keyReport, Reports.reportReimpresionRecibo);
+
         Intent intent = new Intent(this, ReimpresionScreenActivity_.class);
+
+        intent.putExtras(args);
+
+        startActivity(intent);
+    }
+
+    /**
+     * Metodo para navegar a la ventana de reportes
+     */
+    @Click(R.id.btnReportScreenModuleDetalle)
+    public void navigateToReportsDetalle() {
+
+        Bundle args = new Bundle();
+
+        args.putInt(Reports.keyReport, Reports.reportReporteDetalle);
+
+        Intent intent = new Intent(this, ReimpresionScreenActivity_.class);
+
+        intent.putExtras(args);
+
+        startActivity(intent);
+    }
+
+    /**
+     * Metodo para navegar a la ventana de reportes
+     */
+    @Click(R.id.btnReportScreenModuleGeneral)
+    public void navigateToReportsGeneral() {
+
+        Bundle args = new Bundle();
+
+        args.putInt(Reports.keyReport, Reports.reportReporteGeneral);
+
+        Intent intent = new Intent(this, ReimpresionScreenActivity_.class);
+
+        intent.putExtras(args);
+
+        startActivity(intent);
+    }
+
+    /**
+     * Metodo para navegar a la ventana de reportes
+     */
+    @Click(R.id.btnReportScreenModuleCierreLote)
+    public void navigateToCierreLote() {
+
+        Bundle args = new Bundle();
+
+        args.putInt(Reports.keyReport, Reports.reportCierreLote);
+
+        Intent intent = new Intent(this, ReimpresionScreenActivity_.class);
+
+        intent.putExtras(args);
+
         startActivity(intent);
     }
 
