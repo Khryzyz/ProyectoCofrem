@@ -3,9 +3,10 @@
 
     <!-- Configuracion paddings de la interfaz de la aplicacion -->
 
-    <dimen name="appPaddingBottom">16dp</dimen>
-    <dimen name="appPaddingLeft">16dp</dimen>
-    <dimen name="appPaddingRight">16dp</dimen>
-    <dimen name="appPaddingTop">16dp</dimen>
+    <dimen name="appPadding">10dp</dimen>
+    <dimen name="appPaddingBottom">10dp</dimen>
+    <dimen name="appPaddingStart">10dp</dimen>
+    <dimen name="appPaddingEnd">10dp</dimen>
+    <dimen name="appPaddingTop">10dp</dimen>
 
 </resources>

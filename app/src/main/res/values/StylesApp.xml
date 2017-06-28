@@ -3,7 +3,7 @@
 
     <!-- Configuracion estilos de la interfaz de la aplicacion -->
 
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
 
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
@@ -13,6 +13,15 @@
         <item name="colorAccent">@color/appColorAccent</item>
     </style>
 
+    <style name="AppStyleActivity">
+        <item name="android:background">@color/appColorWhite</item>
+
+        <item name="android:orientation">vertical</item>
+
+        <item name="android:layout_margin">@dimen/appMargin</item>
+    </style>
+
+
     <style name="CustomActionBar" parent="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
         <item name="android:windowActionBarOverlay">true</item>
         <!-- Support library compatibility -->
@@ -20,8 +29,8 @@
     </style>
 
     <style name="Widget.CardContent" parent="android:Widget">
-        <item name="android:paddingLeft">@dimen/appPaddingLeft</item>
-        <item name="android:paddingRight">@dimen/appPaddingRight</item>
+        <item name="android:paddingLeft">@dimen/appPaddingStart</item>
+        <item name="android:paddingRight">@dimen/appPaddingEnd</item>
         <item name="android:paddingTop">@dimen/appPaddingTop</item>
         <item name="android:paddingBottom">@dimen/appPaddingBottom</item>
         <item name="android:orientation">vertical</item>

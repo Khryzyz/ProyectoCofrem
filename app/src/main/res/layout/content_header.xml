@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/imgLogoHeader"
         android:layout_marginBottom="@dimen/appMarginBottom"
-        android:layout_marginLeft="@dimen/appMarginLeft"
+        android:layout_marginLeft="@dimen/appMarginStart"
         android:text="@string/header_text_id_dispositivo_no_registrado" />
 
     <TextView
@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/txvHeaderIdDispositivo"
         android:layout_marginBottom="@dimen/appMarginBottom"
-        android:layout_marginLeft="@dimen/appMarginLeft"
+        android:layout_marginLeft="@dimen/appMarginStart"
         android:text="@string/header_text_id_punto_no_registrado" />
 
     <TextView
@@ -38,6 +38,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/txvHeaderIdPunto"
         android:layout_marginBottom="@dimen/appMarginBottom"
-        android:layout_marginLeft="@dimen/appMarginLeft"
+        android:layout_marginLeft="@dimen/appMarginStart"
         android:text="@string/header_text_nombre_establecimiento_no_registrado" />
 </RelativeLayout>
