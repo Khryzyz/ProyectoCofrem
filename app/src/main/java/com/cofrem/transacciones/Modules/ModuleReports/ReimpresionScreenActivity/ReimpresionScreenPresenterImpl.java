@@ -1,5 +1,7 @@
 package com.cofrem.transacciones.Modules.ModuleReports.ReimpresionScreenActivity;
 
+import android.content.Context;
+
 import com.cofrem.transacciones.Modules.ModuleReports.ReimpresionScreenActivity.events.ReimpresionScreenEvent;
 import com.cofrem.transacciones.Modules.ModuleReports.ReimpresionScreenActivity.ui.ReimpresionScreenView;
 import com.cofrem.transacciones.lib.EventBus;
@@ -59,13 +61,18 @@ public class ReimpresionScreenPresenterImpl implements ReimpresionScreenPresente
         eventBus.unregister(this);
     }
 
+    @Override
+    public void imprimir(Context context) {
+        reimpresionScreenInteractor.imprimir(context);
+    }
+
     /**
      * Metodo para la verificacion de los datos
      */
     @Override
     public void VerifySuccess() {
         if (reimpresionScreenView != null) {
-            reimpresionScreenInteractor.validateAccess();
+           // reimpresionScreenInteractor.validateAccess();
         }
     }
 
@@ -97,7 +104,7 @@ public class ReimpresionScreenPresenterImpl implements ReimpresionScreenPresente
      */
     private void onVerifySuccess() {
         if (reimpresionScreenView != null) {
-            reimpresionScreenView.handleVerifySuccess();
+          //  reimpresionScreenView.handleVerifySuccess();
         }
     }
 

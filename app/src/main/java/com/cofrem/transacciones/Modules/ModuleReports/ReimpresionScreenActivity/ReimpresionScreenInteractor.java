@@ -1,7 +1,9 @@
 package com.cofrem.transacciones.Modules.ModuleReports.ReimpresionScreenActivity;
 
+import android.content.Context;
+
 interface ReimpresionScreenInteractor {
 
-    void validateAccess();
 
+    void imprimir(Context context);
 }

@@ -109,9 +109,15 @@ public class SplashScreenRepositoryImpl implements SplashScreenRepository {
             }
         } else {
             ModelTransaccion modelTransaccion = AppDatabase.getInstance(context).obtenerUltimaTransaccion();
-            PrintHandler.getInstance(context).printMessage(modelTransaccion.getNumero_tarjeta()+"\n"+modelTransaccion.getNumero_cargo());
 
-            return false;
+            String mensaje = "         COFREM \n" +
+                    modelTransaccion.getNumero_tarjeta()+"\n" +
+                    modelTransaccion.getNumero_cargo()+"\n" +
+                    "Gracias por su compra..."
+                    ;
+            //PrintHandler.getInstance(context).printMessage(mensaje);
+
+            return true;
         }
         return true;
     }
