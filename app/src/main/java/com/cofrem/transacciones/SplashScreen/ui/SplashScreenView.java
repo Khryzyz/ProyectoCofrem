@@ -6,24 +6,19 @@ package com.cofrem.transacciones.SplashScreen.ui;
 public interface SplashScreenView {
 
     /**
-     * Metodo para mostrar la barra de progreso
-     */
-    void showProgress();
-
-    /**
-     * Metodo para ocultar la barra de progreso
-     */
-    void hideProgress();
-
-    /**
      * Metodo para manejar la existencia de la configuracion inicial
      */
-    void handleVerifyInitialConfigSuccess();
+    void handleVerifyInitialConfigExiste();
 
     /**
      * Metodo para manejar la NO existencia de la configuracion inicial
      */
-    void handleVerifyInitialConfigError();
+    void handleVerifyInitialConfigNoExiste();
+
+    /**
+     * Metodo para manejar la existencia de la configuracion inicial NO valida
+     */
+    void handleVerifyInitialConfigNoValida();
 
     /**
      * Metodo para manejar la verificacion exitosa

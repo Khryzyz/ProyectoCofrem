@@ -10,7 +10,7 @@
     android:paddingLeft="@dimen/appPaddingLeft"
     android:paddingRight="@dimen/appPaddingRight"
     android:paddingTop="@dimen/appPaddingTop"
-    tools:context=".Modules.ModuleTransaction.SaldoScreenActivity.ui.SaldoScreenActivity">
+    tools:context=".Modules.ModuleTransaction.SaldoScreen.ui.SaldoScreenActivity">
 
     <!--Header de los modulos-->
     <include

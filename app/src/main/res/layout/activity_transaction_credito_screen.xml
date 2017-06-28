@@ -10,7 +10,7 @@
     android:paddingLeft="@dimen/appPaddingLeft"
     android:paddingRight="@dimen/appPaddingRight"
     android:paddingTop="@dimen/appPaddingTop"
-    tools:context=".Modules.ModuleTransaction.CreditoScreenActivity.ui.CreditoScreenActivity">
+    tools:context=".Modules.ModuleTransaction.CreditoScreen.ui.CreditoScreenActivity">
 
     <!--Header de los modulos-->
     <include

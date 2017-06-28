@@ -6,9 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.cofrem.transacciones.models.ModelTransaccion;
+import com.cofrem.transacciones.models.Transaccion;
 
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -45,10 +44,6 @@ public final class AppDatabase extends SQLiteOpenHelper {
     public static synchronized AppDatabase getInstance(Context context) {
 
         if (singleton == null) {
-
-            //Todo: Borrar esta linea despues de probar el acceso y eliminacion de la base de datos
-            //context.deleteDatabase(DatabaseManager.DatabaseApp.DATABASE_NAME);
-
             singleton = new AppDatabase(context.getApplicationContext());
         }
         return singleton;
@@ -79,7 +74,8 @@ public final class AppDatabase extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
-        // Añade los cambios que se realizarán en el esquema
+
+        // Drop todas las tablas 
         db.execSQL(DatabaseManager.TableProducto.DROP_TABLE_PRODUCTO);
         db.execSQL(DatabaseManager.TableTransacciones.DROP_TABLE_TRANSACCIONES);
         db.execSQL(DatabaseManager.TableEstablecimiento.DROP_TABLE_ESTABLECIMIENTO);
@@ -103,12 +99,12 @@ public final class AppDatabase extends SQLiteOpenHelper {
         contentValues.put(DatabaseManager.TableProducto.COLUMN_PRODUCTO_ESTADO, 1);
 
         // Insercion del registro en la base de datos
-        int countRegistro = (int) getWritableDatabase().insert(
+        int count = (int) getWritableDatabase().insert(
                 DatabaseManager.TableProducto.TABLE_NAME_PRODUCTO,
                 null,
                 contentValues
         );
-        if (countRegistro == 1)
+        if (count == 1)
             return true;
         else
             return false;
@@ -133,12 +129,12 @@ public final class AppDatabase extends SQLiteOpenHelper {
         contentValues.put(DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_ESTADO, 1);
 
         // Insercion del registro en la base de datos
-        int countRegistro = (int) getWritableDatabase().insert(
+        int count = (int) getWritableDatabase().insert(
                 DatabaseManager.TableTransacciones.TABLE_NAME_TRANSACCIONES,
                 null,
                 contentValues
         );
-        if (countRegistro == 1)
+        if (count == 1)
             return true;
         else
             return false;
@@ -159,7 +155,8 @@ public final class AppDatabase extends SQLiteOpenHelper {
         queryIdProducto = getWritableDatabase().rawQuery(
                 "SELECT " + DatabaseManager.TableProducto.COLUMN_PRODUCTO_ID + " AS ID " +
                         " FROM " + DatabaseManager.TableProducto.TABLE_NAME_PRODUCTO +
-                        " WHERE " + DatabaseManager.TableProducto.COLUMN_PRODUCTO_NOMBRE + " = '" + NOMBRE_PRODUCTO + "'", null
+                        " WHERE " + DatabaseManager.TableProducto.COLUMN_PRODUCTO_NOMBRE + " = '" + NOMBRE_PRODUCTO + "'",
+                null
         );
 
         queryIdProducto.moveToFirst();
@@ -174,47 +171,74 @@ public final class AppDatabase extends SQLiteOpenHelper {
      *
      * @return conteo de los registros
      */
-    public int obtenerConteoRegistro() {
+    public int obtenerConteoRegistroProductos() {
 
-        int countRegistro;
+        int count;
 
-        Cursor queryCount;
+        Cursor cursorQuery;
 
-        queryCount = getWritableDatabase().rawQuery(
-                "SELECT COUNT(1) FROM " + DatabaseManager.TableProducto.TABLE_NAME_PRODUCTO, null
+        cursorQuery = getWritableDatabase().rawQuery(
+                "SELECT COUNT(1) FROM " +
+                        DatabaseManager.TableProducto.TABLE_NAME_PRODUCTO,
+                null
         );
 
-        queryCount.moveToFirst();
+        cursorQuery.moveToFirst();
 
-        countRegistro = queryCount.getInt(0);
+        count = cursorQuery.getInt(0);
 
-        return countRegistro;
+        return count;
+    }
+
+    /**
+     * Metodo para Obtener el conteo de los registros de la tabla ConfiguracionConexion
+     *
+     * @return conteo de los registros
+     */
+    public int obtenerConteoConfiguracionInicial() {
+
+        int count;
+
+        Cursor cursorQuery;
+
+        cursorQuery = getWritableDatabase().rawQuery(
+                "SELECT COUNT(1) FROM " +
+                        DatabaseManager.TableConfiguracionConexion.TABLE_NAME_CONFIGURACION_CONEXION,
+                null
+        );
+
+        cursorQuery.moveToFirst();
+
+        count = cursorQuery.getInt(0);
+
+        return count;
     }
 
     /**
      * Metodo para Obtener ultima  transaccion
      */
-    public ModelTransaccion obtenerUltimaTransaccion() {
+    public Transaccion obtenerUltimaTransaccion() {
 
-        int countRegistro;
+        Transaccion modelTransaccion = new Transaccion();
 
-        ModelTransaccion modelTransaccion = new ModelTransaccion();
+        Cursor cursorQuery;
 
-        Cursor queryCount;
-
-        queryCount = getWritableDatabase().rawQuery(
-                "SELECT * FROM " + DatabaseManager.TableTransacciones.TABLE_NAME_TRANSACCIONES + " ORDER BY " + DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_REGISTRO + " ASC LIMIT 1", null
+        cursorQuery = getWritableDatabase().rawQuery(
+                "SELECT * FROM " + DatabaseManager.TableTransacciones.TABLE_NAME_TRANSACCIONES +
+                        " ORDER BY " + DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_REGISTRO +
+                        " ASC LIMIT 1",
+                null
         );
 
-        queryCount.moveToFirst();
+        cursorQuery.moveToFirst();
 
-        modelTransaccion.setId(queryCount.getInt(0));
-        modelTransaccion.setProducto_id(queryCount.getInt(1));
-        modelTransaccion.setNumero_cargo(queryCount.getInt(2));
-        modelTransaccion.setNumero_tarjeta(queryCount.getString(3));
-        modelTransaccion.setValor(queryCount.getInt(4));
-        modelTransaccion.setRegistro(queryCount.getString(5));
-        modelTransaccion.setEstado(queryCount.getInt(6));
+        modelTransaccion.setId(cursorQuery.getInt(0));
+        modelTransaccion.setProducto_id(cursorQuery.getInt(1));
+        modelTransaccion.setNumero_cargo(cursorQuery.getInt(2));
+        modelTransaccion.setNumero_tarjeta(cursorQuery.getString(3));
+        modelTransaccion.setValor(cursorQuery.getInt(4));
+        modelTransaccion.setRegistro(cursorQuery.getString(5));
+        modelTransaccion.setEstado(cursorQuery.getInt(6));
 
         return modelTransaccion;
     }
@@ -227,16 +251,19 @@ public final class AppDatabase extends SQLiteOpenHelper {
      */
 
 
-
     /**
      * Metodo para Obtener el String de fecha y hora
      *
      * @return String fecha
      */
     private String getDateTime() {
+
         SimpleDateFormat dateFormat = new SimpleDateFormat(
-                "yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+                "yyyy-MM-dd HH:mm:ss",
+                Locale.getDefault());
+
         Date date = new Date();
+
         return dateFormat.format(date);
     }
 

@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import com.cofrem.transacciones.Modules.ModuleReports.ReimpresionScreenActivity.ModelReport.Reports;
+import com.cofrem.transacciones.models.Reports;
 import com.cofrem.transacciones.Modules.ModuleReports.ReimpresionScreenActivity.ui.ReimpresionScreenActivity_;
 
 import org.androidannotations.annotations.AfterViews;

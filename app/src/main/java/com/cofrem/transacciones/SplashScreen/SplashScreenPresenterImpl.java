@@ -74,7 +74,6 @@ public class SplashScreenPresenterImpl implements SplashScreenPresenter {
     @Override
     public void validateInitialConfig(Context context) {
         if (splashScreenView != null) {
-            splashScreenView.showProgress();
             splashScreenInteractor.validateInitialConfig(context);
         }
     }
@@ -87,7 +86,6 @@ public class SplashScreenPresenterImpl implements SplashScreenPresenter {
     @Override
     public void validateAccess(Context context) {
         if (splashScreenView != null) {
-            splashScreenView.showProgress();
             splashScreenInteractor.validateAccess(context);
         }
     }
@@ -101,12 +99,16 @@ public class SplashScreenPresenterImpl implements SplashScreenPresenter {
     public void onEventMainThread(SplashScreenEvent splashScreenEvent) {
         switch (splashScreenEvent.getEventType()) {
 
-            case SplashScreenEvent.onVerifyInitialConfigSuccess:
-                onVerifyInitialConfigSuccess();
+            case SplashScreenEvent.onVerifyInitialConfigExiste:
+                onVerifyInitialConfigExiste();
                 break;
 
-            case SplashScreenEvent.onVerifyInitialConfigError:
-                onVerifyInitialConfigError();
+            case SplashScreenEvent.onVerifyInitialConfigNoExiste:
+                onVerifyInitialConfigNoExiste();
+                break;
+
+            case SplashScreenEvent.onVerifyInitialConfigNoValida:
+                onVerifyInitialConfigNoValida();
                 break;
 
             case SplashScreenEvent.onVerifySuccess:
@@ -161,19 +163,27 @@ public class SplashScreenPresenterImpl implements SplashScreenPresenter {
     /**
      * Metodo para manejar la verificacion exitosa
      */
-    private void onVerifyInitialConfigSuccess() {
+    private void onVerifyInitialConfigExiste() {
         if (splashScreenView != null) {
-            splashScreenView.handleVerifyInitialConfigSuccess();
+            splashScreenView.handleVerifyInitialConfigExiste();
         }
     }
 
     /**
      * Metodo para manejar la verificacion exitosa
      */
-    private void onVerifyInitialConfigError() {
+    private void onVerifyInitialConfigNoExiste() {
         if (splashScreenView != null) {
-            splashScreenView.hideProgress();
-            splashScreenView.handleVerifyInitialConfigError();
+            splashScreenView.handleVerifyInitialConfigNoExiste();
+        }
+    }
+
+    /**
+     * Metodo para manejar la existencia de la configuracion inicial NO valida
+     */
+    private void onVerifyInitialConfigNoValida() {
+        if (splashScreenView != null) {
+            splashScreenView.handleVerifyInitialConfigNoValida();
         }
     }
 

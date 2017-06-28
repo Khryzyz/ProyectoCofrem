@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.RelativeLayout;
 
-import com.cofrem.transacciones.Modules.ModuleReports.ReimpresionScreenActivity.ModelReport.Reports;
+import com.cofrem.transacciones.models.Reports;
 import com.cofrem.transacciones.Modules.ModuleReports.ReimpresionScreenActivity.ReimpresionScreenPresenter;
 import com.cofrem.transacciones.Modules.ModuleReports.ReimpresionScreenActivity.ReimpresionScreenPresenterImpl;
 import com.cofrem.transacciones.R;

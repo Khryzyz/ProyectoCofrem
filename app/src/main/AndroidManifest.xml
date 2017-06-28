@@ -39,31 +39,31 @@
         <activity
             android:name=".MainScreenActivity_"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"></activity>
-        <!--Transaction Screen-->
+        <!-- Transaction Screen -->
         <activity
             android:name=".TransactionScreenActivity_"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"></activity>
-        <!--Transaction Screen / Module Credito-->
+        <!-- Transaction Screen / Module Credito -->
         <activity
-            android:name=".Modules.ModuleTransaction.CreditoScreenActivity.ui.CreditoScreenActivity_"
+            android:name=".Modules.ModuleTransaction.CreditoScreen.ui.CreditoScreenActivity_"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"></activity>
-        <!--Transaction Screen / Module Saldo-->
+        <!-- Transaction Screen / Module Saldo -->
         <activity
-            android:name=".Modules.ModuleTransaction.SaldoScreenActivity.ui.SaldoScreenActivity_"
+            android:name=".Modules.ModuleTransaction.SaldoScreen.ui.SaldoScreenActivity_"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"></activity>
-        <!--Transaction Screen / Module Anulacion-->
+        <!-- Transaction Screen / Module Anulacion -->
         <activity
-            android:name=".Modules.ModuleTransaction.AnulacionScreenActivity.ui.AnulacionScreenActivity_"
+            android:name=".Modules.ModuleTransaction.AnulacionScreen.ui.AnulacionScreenActivity_"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"></activity>
-        <!--Report Screen-->
+        <!-- Report Screen -->
         <activity
             android:name=".ReportScreenActivity_"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"></activity>
-        <!--Report Screen Reimpresion activity-->
+        <!-- Report Screen Reimpresion activity -->
         <activity
             android:name=".Modules.ModuleReports.ReimpresionScreenActivity.ui.ReimpresionScreenActivity_"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"></activity>
-        <!--Configuration Screen-->
+        <!-- Configuration Screen -->
         <activity
             android:name=".ConfigurationScreenActivity_"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"></activity>
