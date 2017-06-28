@@ -122,18 +122,6 @@ public class SplashScreenRepositoryImpl implements SplashScreenRepository {
             }
         } else {
             ModelTransaccion modelTransaccion = AppDatabase.getInstance(context).obtenerUltimaTransaccion();
-<<<<<<< refs/remotes/origin/desarrollo
-=======
-            PrintHandler.getInstance(context).printMessage(modelTransaccion.getNumero_tarjeta() + "\n" + modelTransaccion.getNumero_cargo());
->>>>>>> Agregado evento de no configuracion
-
-            String mensaje = "         COFREM \n" +
-                    modelTransaccion.getNumero_tarjeta()+"\n" +
-                    modelTransaccion.getNumero_cargo()+"\n" +
-                    "Gracias por su compra..."
-                    ;
-            //PrintHandler.getInstance(context).printMessage(mensaje);
-
             return true;
         }
         return true;
