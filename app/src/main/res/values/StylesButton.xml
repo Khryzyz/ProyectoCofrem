@@ -12,8 +12,8 @@
         <item name="android:background">@color/appColorPrimary</item>
         <item name="android:layout_centerHorizontal">true</item>
         <item name="android:layout_marginBottom">@dimen/appMarginBottom</item>
-        <item name="android:layout_marginLeft">@dimen/appMarginLeft</item>
-        <item name="android:layout_marginRight">@dimen/appMarginRight</item>
+        <item name="android:layout_marginStart">@dimen/appMarginStart</item>
+        <item name="android:layout_marginEnd">@dimen/appMarginEnd</item>
     </style>
 
     <style name="StyleButtonBack" parent="StyleButtonStandar">
@@ -38,8 +38,6 @@
         <item name="android:textColor">@color/appColorWhite</item>
         <item name="android:background">@color/appColorPrimary</item>
         <item name="android:layout_marginBottom">@dimen/appMarginBottom</item>
-        <item name="android:layout_marginLeft">@dimen/appMarginLeft</item>
-        <item name="android:layout_marginRight">@dimen/appMarginRight</item>
     </style>
 
     <style name="StyleButtonCancel" parent="StyleButtonAccept">

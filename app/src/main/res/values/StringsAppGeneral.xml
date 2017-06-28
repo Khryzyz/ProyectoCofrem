@@ -71,8 +71,9 @@
 
     <string name="general_message_press_back">Sí deseas volver a la vista anterior, debes presionar el boton</string>
 
-    <string name="general_message_verify_configuration_initial_success">Configuración Inicial existente.</string>
-    <string name="general_message_verify_configuration_initial_error">Configuración Inicial NO existente.</string>
+    <string name="general_message_verify_configuration_initial_existe">Configuración Inicial existente.</string>
+    <string name="general_message_verify_configuration_initial_no_existe">Configuración Inicial NO existente.</string>
+    <string name="general_message_verify_configuration_initial_no_valida">Configuración Inicial NO valida.</string>
 
     <string name="general_message_verify_success">Verificación exitosa</string>
     <string name="general_message_verify_error">Verificación fallida</string>

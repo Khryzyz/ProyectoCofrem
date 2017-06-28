@@ -8,7 +8,7 @@ import com.cofrem.transacciones.database.AppDatabase;
 import com.cofrem.transacciones.lib.EventBus;
 import com.cofrem.transacciones.lib.GreenRobotEventBus;
 import com.cofrem.transacciones.lib.PrintHandler;
-import com.cofrem.transacciones.models.ModelTransaccion;
+import com.cofrem.transacciones.models.Transaccion;
 
 public class ReimpresionScreenRepositoryImpl implements ReimpresionScreenRepository {
     /**
@@ -44,7 +44,7 @@ public class ReimpresionScreenRepositoryImpl implements ReimpresionScreenReposit
 
     @Override
     public void imprimirUltimoRecibo(Context context) {
-        ModelTransaccion modelTransaccion = AppDatabase.getInstance(context).obtenerUltimaTransaccion();
+        Transaccion modelTransaccion = AppDatabase.getInstance(context).obtenerUltimaTransaccion();
         String mensaje = "         COFREM \n" +
                 modelTransaccion.getNumero_tarjeta()+"\n" +
                 modelTransaccion.getNumero_cargo()+"\n" +

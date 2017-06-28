@@ -1,16 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_splash_screen"
+    style="@style/AppStyleActivity"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/appColorWhite"
-    android:orientation="vertical"
-    android:paddingBottom="@dimen/appPaddingBottom"
-    android:paddingLeft="@dimen/appPaddingLeft"
-    android:paddingRight="@dimen/appPaddingRight"
-    android:paddingTop="@dimen/appPaddingTop"
-    tools:context=".Modules.ModuleTransaction.SaldoScreenActivity.ui.SaldoScreenActivity">
+    android:layout_height="match_parent">
 
     <!--Header de los modulos-->
     <include

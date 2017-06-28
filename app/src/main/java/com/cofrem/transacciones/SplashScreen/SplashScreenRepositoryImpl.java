@@ -1,23 +1,14 @@
 package com.cofrem.transacciones.SplashScreen;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.util.Log;
 
-import com.cofrem.transacciones.R;
 import com.cofrem.transacciones.SplashScreen.events.SplashScreenEvent;
 import com.cofrem.transacciones.database.AppDatabase;
-import com.cofrem.transacciones.global.InfoGlobalSettingsPrint;
 import com.cofrem.transacciones.lib.EventBus;
 import com.cofrem.transacciones.lib.GreenRobotEventBus;
 import com.cofrem.transacciones.lib.KsoapAsync;
-import com.cofrem.transacciones.lib.KsoapTransaction;
-import com.cofrem.transacciones.lib.PrintHandler;
-import com.cofrem.transacciones.models.ModelTransaccion;
-
-import org.androidannotations.annotations.App;
 
 public class SplashScreenRepositoryImpl implements SplashScreenRepository {
 
@@ -50,8 +41,19 @@ public class SplashScreenRepositoryImpl implements SplashScreenRepository {
      */
     @Override
     public void validateInitialConfig(Context context) {
-        Log.e("Hola", "repositorio");
-        postEvent(SplashScreenEvent.onVerifyInitialConfigSuccess);
+        int conteoRegistrosConfiguracionInicial = AppDatabase.getInstance(context).obtenerConteoConfiguracionInicial();
+
+        switch (conteoRegistrosConfiguracionInicial){
+            case 1:
+                postEvent(SplashScreenEvent.onVerifyInitialConfigExiste);
+                break;
+            case 0:
+                postEvent(SplashScreenEvent.onVerifyInitialConfigNoExiste);
+                break;
+            default:
+                postEvent(SplashScreenEvent.onVerifyInitialConfigNoValida);
+                break;
+        }
     }
 
     /**
@@ -114,14 +116,14 @@ public class SplashScreenRepositoryImpl implements SplashScreenRepository {
      * @return
      */
     private boolean verifyInitialRegister(Context context) {
-        /*if (AppDatabase.getInstance(context).obtenerConteoRegistro() == 0) {
+        /*if (AppDatabase.getInstance(context).obtenerConteoRegistroProductos() == 0) {
             if (AppDatabase.getInstance(context).insertRegistroInicialProductos()) {
                 if (AppDatabase.getInstance(context).insertRegistroPruebaTransaction(AppDatabase.getInstance(context).obtenerProductoIdByNombre("CREDITO ROTATIVO"))) {
                     return true;
                 }
             }
         } else {
-            ModelTransaccion modelTransaccion = AppDatabase.getInstance(context).obtenerUltimaTransaccion();
+            Transaccion modelTransaccion = AppDatabase.getInstance(context).obtenerUltimaTransaccion();
             return true;
         }*/
         return true;

@@ -28,15 +28,17 @@ public class DatabaseManager {
      */
     public static class DatabaseApp {
 
-        public static final String DATABASE_NAME = "app_cofre_transactions.db";
-        public static final int DATABASE_VERSION = 8;
+        public static final String DATABASE_NAME = "app_cofrem_transactions.db";
+        public static final int DATABASE_VERSION = 9;
 
     }
 
     /**
+     * #############################################################################################
      * Tabla Producto:
      * - Modelado de la tabla producto
      * - Scripts de la tabla producto
+     * #############################################################################################
      */
     public static class TableProducto {
 
@@ -77,9 +79,11 @@ public class DatabaseManager {
     }
 
     /**
-     * Tabla:
-     * - Modelado de la tabla
-     * - Scripts de la tabla
+     * #############################################################################################
+     * Tabla Transacciones:
+     * - Modelado de la tabla producto
+     * - Scripts de la tabla producto
+     * #############################################################################################
      */
     public static class TableTransacciones {
 
@@ -124,9 +128,11 @@ public class DatabaseManager {
     }
 
     /**
-     * Tabla:
-     * - Modelado de la tabla
-     * - Scripts de la tabla
+     * #############################################################################################
+     * Tabla Establecimiento:
+     * - Modelado de la tabla producto
+     * - Scripts de la tabla producto
+     * #############################################################################################
      */
     public static class TableEstablecimiento {
 
@@ -171,9 +177,11 @@ public class DatabaseManager {
     }
 
     /**
-     * Tabla:
-     * - Modelado de la tabla
-     * - Scripts de la tabla
+     * #############################################################################################
+     * Tabla ConfiguraciónConexión:
+     * - Modelado de la tabla producto
+     * - Scripts de la tabla producto
+     * #############################################################################################
      */
     public static class TableConfiguracionConexion {
 
@@ -187,7 +195,7 @@ public class DatabaseManager {
          * Modelado de la tabla
          * Columnas de la tabla
          */
-        public static final String COLUMN_CONFIGURACION_CONEXION_HOST= "host";
+        public static final String COLUMN_CONFIGURACION_CONEXION_HOST = "host";
         public static final String COLUMN_CONFIGURACION_CONEXION_PUERTO = "puerto";
         public static final String COLUMN_CONFIGURACION_CONEXION_ESTABLECIMIENTO = "establecimiento";
         public static final String COLUMN_CONFIGURACION_CONEXION_LOCAL = "local";

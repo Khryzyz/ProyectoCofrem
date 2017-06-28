@@ -1,15 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_splash_screen"
+    style="@style/AppStyleActivity"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/appColorWhite"
-    android:paddingBottom="@dimen/appPaddingBottom"
-    android:paddingLeft="@dimen/appPaddingLeft"
-    android:paddingRight="@dimen/appPaddingRight"
-    android:paddingTop="@dimen/appPaddingTop"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
     <!--Header de los modulos-->
     <include
@@ -25,8 +18,8 @@
         android:layout_below="@id/headerContent"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/appMarginBottom"
-        android:layout_marginLeft="@dimen/appMarginLeft"
-        android:layout_marginRight="@dimen/appMarginRight"
+        android:layout_marginStart="@dimen/appMarginStart"
+        android:layout_marginEnd="@dimen/appMarginEnd"
         android:text="@string/main_text_button_transaction" />
 
     <Button
@@ -35,8 +28,8 @@
         android:layout_below="@id/btnMainScreenModuleTransaction"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/appMarginBottom"
-        android:layout_marginLeft="@dimen/appMarginLeft"
-        android:layout_marginRight="@dimen/appMarginRight"
+        android:layout_marginStart="@dimen/appMarginStart"
+        android:layout_marginEnd="@dimen/appMarginEnd"
         android:text="@string/main_text_button_reports" />
 
     <Button
@@ -45,7 +38,7 @@
         android:layout_below="@id/btnMainScreenModuleReport"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/appMarginBottom"
-        android:layout_marginLeft="@dimen/appMarginLeft"
-        android:layout_marginRight="@dimen/appMarginRight"
+        android:layout_marginStart="@dimen/appMarginStart"
+        android:layout_marginEnd="@dimen/appMarginEnd"
         android:text="@string/main_text_button_configuration" />
 </RelativeLayout>

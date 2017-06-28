@@ -8,8 +8,8 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.cofrem.transacciones.ConfigurationScreenActivity_;
 import com.cofrem.transacciones.MainScreenActivity_;
+import com.cofrem.transacciones.Modules.ModuleConfiguration.RegisterConfigurationScreen.ui.RegisterConfigurationScreenActivity_;
 import com.cofrem.transacciones.R;
 import com.cofrem.transacciones.SplashScreen.SplashScreenPresenter;
 import com.cofrem.transacciones.SplashScreen.SplashScreenPresenterImpl;
@@ -48,9 +48,6 @@ public class SplashScreenActivity extends Activity implements SplashScreenView {
     @AfterViews
     void SplashInit() {
 
-        // Metodo para colocar la orientacion de la app
-        setOrientation();
-
         /**
          * Instanciamiento e inicializacion del presentador
          */
@@ -61,13 +58,12 @@ public class SplashScreenActivity extends Activity implements SplashScreenView {
          */
         splashScreenPresenter.onCreate();
 
-        /**
-         * Llamada al metodo validateInitialConfig del presentador que valida:
-         *  - La existencia de la configuración inicial
-         *  - En caso de no existir mostrará la vista de configuración
-         *  - En caso de existir validara el acceso
-         */
-        splashScreenPresenter.validateInitialConfig(this);
+        // Metodo para colocar la orientacion de la app
+        setOrientation();
+
+        // Metodo para validar la configuracion inicial
+        validateConfig();
+
     }
 
     /**
@@ -92,33 +88,15 @@ public class SplashScreenActivity extends Activity implements SplashScreenView {
      */
 
     /**
-     * Metodo para mostrar la barra de progreso
-     */
-    @Override
-    public void showProgress() {
-        // Muesra la barra  de progreso
-        pgbLoadingSplashScreen.setVisibility(View.VISIBLE);
-    }
-
-    /**
-     * Metodo para ocultar la barra de progreso
-     */
-    @Override
-    public void hideProgress() {
-        //Oculta la barra de progreso
-        pgbLoadingSplashScreen.setVisibility(View.GONE);
-    }
-
-    /**
      * Metodo para manejar la existencia de la configuracion inicial
      */
     @Override
-    public void handleVerifyInitialConfigSuccess() {
+    public void handleVerifyInitialConfigExiste() {
 
         //Agregado el texto de error del manejador de verificafcion inicial encontrada
 
         txvSplashScreenInfo.setText(txvSplashScreenInfo.getText() +
-                "\n " + getString(R.string.general_message_verify_configuration_initial_success)
+                "\n " + getString(R.string.general_message_verify_configuration_initial_existe)
         );
 
         /**
@@ -134,16 +112,30 @@ public class SplashScreenActivity extends Activity implements SplashScreenView {
      * Metodo para manejar la NO existencia de la configuracion inicial
      */
     @Override
-    public void handleVerifyInitialConfigError() {
+    public void handleVerifyInitialConfigNoExiste() {
 
         //Agregado el texto de error del manejador de verificafcion inicial no encontrada
 
         txvSplashScreenInfo.setText(txvSplashScreenInfo.getText() +
-                "\n " + getString(R.string.general_message_verify_configuration_initial_error)
+                "\n " + getString(R.string.general_message_verify_configuration_initial_no_existe)
         );
 
         //Navegando a la ventana de configuración
         navigateToConfigurationScreen();
+    }
+
+    /**
+     * Metodo para manejar la existencia de la configuracion inicial NO valida
+     */
+    @Override
+    public void handleVerifyInitialConfigNoValida() {
+
+        //Agregado el texto de error del manejador de verificacion inicial no vlida
+
+        txvSplashScreenInfo.setText(txvSplashScreenInfo.getText() +
+                "\n " + getString(R.string.general_message_verify_configuration_initial_no_valida)
+        );
+
     }
 
     /**
@@ -268,10 +260,44 @@ public class SplashScreenActivity extends Activity implements SplashScreenView {
      */
 
     /**
+     * Metodo para mostrar la barra de progreso
+     */
+    public void showProgress() {
+        // Muesra la barra  de progreso
+        pgbLoadingSplashScreen.setVisibility(View.VISIBLE);
+    }
+
+    /**
+     * Metodo para ocultar la barra de progreso
+     */
+    public void hideProgress() {
+        //Oculta la barra de progreso
+        pgbLoadingSplashScreen.setVisibility(View.GONE);
+    }
+
+    /**
      * Metodo que coloca la orientacion de la App de forma predeterminada
      */
     private void setOrientation() {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+    }
+
+    /**
+     * Metodo para validar la configuración inicial
+     */
+    private void validateConfig() {
+
+        // Muestra la barra de progreso
+        showProgress();
+
+        /**
+         * Llamada al metodo validateInitialConfig del presentador que valida:
+         *  - La existencia de la configuración inicial
+         *  - En caso de no existir mostrará la vista de configuración
+         *  - En caso de existir validara el acceso
+         */
+        splashScreenPresenter.validateInitialConfig(this);
+
     }
 
     /**
@@ -303,10 +329,12 @@ public class SplashScreenActivity extends Activity implements SplashScreenView {
      */
     public void navigateToConfigurationScreen() {
         hideProgress();
+
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(SplashScreenActivity.this, ConfigurationScreenActivity_.class);
+
+                Intent intent = new Intent(SplashScreenActivity.this, RegisterConfigurationScreenActivity_.class);
                 //Agregadas banderas para no retorno
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
                         | Intent.FLAG_ACTIVITY_NEW_TASK
@@ -314,7 +342,7 @@ public class SplashScreenActivity extends Activity implements SplashScreenView {
 
                 startActivity(intent);
             }
-        }, 3000);
+        }, 1000);
     }
 
 }

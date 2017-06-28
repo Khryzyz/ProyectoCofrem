@@ -2,7 +2,12 @@ package com.cofrem.transacciones;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Handler;
 import android.widget.Toast;
+
+import com.cofrem.transacciones.Modules.ModuleConfiguration.RegisterConfigurationScreen.ui.RegisterConfigurationScreenActivity_;
+import com.cofrem.transacciones.Modules.ModuleConfiguration.TestCommunicationScreen.ui.TestCommunicationScreenActivity;
+import com.cofrem.transacciones.Modules.ModuleConfiguration.TestCommunicationScreen.ui.TestCommunicationScreenActivity_;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
@@ -51,10 +56,65 @@ public class ConfigurationScreenActivity extends Activity {
     /**
      * Metodo para navegar a la ventana principal
      */
+    @Click(R.id.btnConfigurationScreenModuleRegisterConfiguration)
+    public void navigateToRegisterConfiguration() {
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(ConfigurationScreenActivity.this, RegisterConfigurationScreenActivity_.class);
+                //Agregadas banderas para no retorno
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
+                        | Intent.FLAG_ACTIVITY_NEW_TASK
+                        | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+                startActivity(intent);
+            }
+        }, 1000);
+
+    }
+
+    /**
+     * Metodo para navegar a la ventana principal
+     */
+    @Click(R.id.btnConfigurationScreenModuleTestCommunication)
+    public void navigateToTestCommunication() {
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(ConfigurationScreenActivity.this, TestCommunicationScreenActivity_.class);
+                //Agregadas banderas para no retorno
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
+                        | Intent.FLAG_ACTIVITY_NEW_TASK
+                        | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+                startActivity(intent);
+            }
+        }, 1000);
+
+    }
+
+    /**
+     * Metodo para navegar a la ventana principal
+     */
     @Click(R.id.btnConfigurationScreenBack)
     public void navigateToMainScreen() {
-        Intent intent = new Intent(this, MainScreenActivity_.class);
-        startActivity(intent);
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(ConfigurationScreenActivity.this, MainScreenActivity_.class);
+                //Agregadas banderas para no retorno
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
+                        | Intent.FLAG_ACTIVITY_NEW_TASK
+                        | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+                startActivity(intent);
+            }
+        }, 1000);
+
     }
+
 
 }
