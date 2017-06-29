@@ -41,18 +41,65 @@ public class SplashScreenRepositoryImpl implements SplashScreenRepository {
      */
     @Override
     public void validateInitialConfig(Context context) {
-        int conteoRegistrosConfiguracionInicial = AppDatabase.getInstance(context).obtenerConteoConfiguracionInicial();
 
-        switch (conteoRegistrosConfiguracionInicial){
-            case 1:
-                postEvent(SplashScreenEvent.onVerifyInitialConfigExiste);
-                break;
-            case 0:
-                postEvent(SplashScreenEvent.onVerifyInitialConfigNoExiste);
-                break;
-            default:
-                postEvent(SplashScreenEvent.onVerifyInitialConfigNoValida);
-                break;
+        //Variable que almacena el estado de la conexión a internet
+        boolean internetConnection = verifyInternetConnection(context);
+
+        //Valida la existencia de conexion a internet
+        if (internetConnection) {
+
+            // Registra el evento de existencia de conexion a internet
+            postEvent(SplashScreenEvent.onInternetConnectionSuccess);
+
+            //Consulta la existencia del registro de configuracion
+            int conteoRegistrosConfiguracionInicial = AppDatabase.getInstance(context).conteoConfiguracionConexion();
+
+
+            switch (conteoRegistrosConfiguracionInicial) {
+
+                /**
+                 * En caso de que no exista la configuracion
+                 * - Registra el evento de no existencia de configuracion
+                 * - Inserta el registro del valor de acceso al dispositivo
+                 */
+                case 0:
+
+                    //Consulta la existencia del registro de valor de acceso al dispositivo
+                    int conteoRegistroConfiguracionValorAcceso = AppDatabase.getInstance(context).conteoConfiguracionAcceso();
+
+                    /**
+                     * En caso de que no exista el registro de configuracion de acceso intenta registrarlo
+                     */
+                    if (conteoRegistroConfiguracionValorAcceso == 0) {
+
+                        //Registra el valor de acceso
+                        if (AppDatabase.getInstance(context).insertConfiguracionAcceso()) {
+                            postEvent(SplashScreenEvent.onVerifyInitialConfigNoExiste);
+                        } else {
+                            postEvent(SplashScreenEvent.onInsertRegistroValorAccesoError);
+                        }
+
+                    } else {
+                        postEvent(SplashScreenEvent.onVerifyInitialConfigNoExiste);
+                    }
+
+                    break;
+
+                case 1:
+
+                    postEvent(SplashScreenEvent.onVerifyInitialConfigExiste);
+
+                    break;
+
+                default:
+
+                    postEvent(SplashScreenEvent.onVerifyInitialConfigNoValida);
+
+                    break;
+
+            }
+        } else {
+            postEvent(SplashScreenEvent.onInternetConnectionError);
         }
     }
 

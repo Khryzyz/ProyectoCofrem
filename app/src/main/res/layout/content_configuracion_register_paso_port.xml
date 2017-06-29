@@ -5,7 +5,7 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/txvConfiguracionConfiguracionHostTitle"
+        android:id="@+id/txvConfiguracionRegisterPortTitle"
         style="@style/StyleTextPrimaryLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -14,35 +14,35 @@
         android:text="@string/configuration_text_title_configuracion" />
 
     <TextView
-        android:id="@+id/txvConfiguracionConfiguracionHostClave"
+        android:id="@+id/txvConfiguracionRegisterPortClave"
         style="@style/StyleTextPrimaryMedium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/txvConfiguracionConfiguracionHostTitle"
+        android:layout_below="@id/txvConfiguracionRegisterPortTitle"
         android:layout_marginBottom="@dimen/appMarginBottom"
-        android:text="@string/configuration_text_ingeresar_host" />
+        android:text="@string/configuration_text_ingresar_puerto" />
 
     <EditText
-        android:id="@+id/edtConfiguracionConfiguracionHostContenidoClave"
+        android:id="@+id/edtConfiguracionRegisterPortContenidoClave"
         style="@style/StylePassPrimary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/txvConfiguracionConfiguracionHostClave"
+        android:layout_below="@id/txvConfiguracionRegisterPortClave"
         android:layout_marginBottom="@dimen/appMarginBottom"
         android:inputType="textPassword" />
 
     <Button
-        android:id="@+id/btnConfiguracionConfiguracionHostBotonCancelar"
+        android:id="@+id/btnConfiguracionRegisterPortBotonCancelar"
         style="@style/StyleButtonCancel"
         android:layout_alignParentStart="true"
-        android:layout_below="@id/edtConfiguracionConfiguracionHostContenidoClave"
+        android:layout_below="@id/edtConfiguracionRegisterPortContenidoClave"
         android:text="@string/general_text_button_cancelar" />
 
     <Button
-        android:id="@+id/btnConfiguracionConfiguracionHostBotonAceptar"
+        android:id="@+id/btnConfiguracionRegisterPortBotonAceptar"
         style="@style/StyleButtonAccept"
         android:layout_alignParentEnd="true"
-        android:layout_below="@id/edtConfiguracionConfiguracionHostContenidoClave"
+        android:layout_below="@id/edtConfiguracionRegisterPortContenidoClave"
         android:text="@string/general_text_button_aceptar" />
 
 

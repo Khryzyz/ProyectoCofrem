@@ -5,7 +5,7 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/txvConfiguracionConfiguracionLocalTitle"
+        android:id="@+id/txvConfiguracionRegisterHostTitle"
         style="@style/StyleTextPrimaryLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -14,35 +14,35 @@
         android:text="@string/configuration_text_title_configuracion" />
 
     <TextView
-        android:id="@+id/txvConfiguracionConfiguracionLocalClave"
+        android:id="@+id/txvConfiguracionRegisterHostClave"
         style="@style/StyleTextPrimaryMedium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/txvConfiguracionConfiguracionLocalTitle"
+        android:layout_below="@id/txvConfiguracionRegisterHostTitle"
         android:layout_marginBottom="@dimen/appMarginBottom"
-        android:text="@string/configuration_text_ingeresar_local" />
+        android:text="@string/configuration_text_ingresar_host" />
 
     <EditText
-        android:id="@+id/edtConfiguracionConfiguracionLocalContenidoClave"
+        android:id="@+id/edtConfiguracionRegisterHostContenidoClave"
         style="@style/StylePassPrimary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/txvConfiguracionConfiguracionLocalClave"
+        android:layout_below="@id/txvConfiguracionRegisterHostClave"
         android:layout_marginBottom="@dimen/appMarginBottom"
-        android:inputType="textPassword" />
+        android:inputType="number" />
 
     <Button
-        android:id="@+id/btnConfiguracionConfiguracionLocalBotonCancelar"
+        android:id="@+id/btnConfiguracionRegisterHostBotonCancelar"
         style="@style/StyleButtonCancel"
         android:layout_alignParentStart="true"
-        android:layout_below="@id/edtConfiguracionConfiguracionLocalContenidoClave"
+        android:layout_below="@id/edtConfiguracionRegisterHostContenidoClave"
         android:text="@string/general_text_button_cancelar" />
 
     <Button
-        android:id="@+id/btnConfiguracionConfiguracionLocalBotonAceptar"
+        android:id="@+id/btnConfiguracionRegisterHostBotonAceptar"
         style="@style/StyleButtonAccept"
         android:layout_alignParentEnd="true"
-        android:layout_below="@id/edtConfiguracionConfiguracionLocalContenidoClave"
+        android:layout_below="@id/edtConfiguracionRegisterHostContenidoClave"
         android:text="@string/general_text_button_aceptar" />
 
 

@@ -14,7 +14,7 @@
 
     <include
         android:id="@+id/bodyContentConfigurationTest"
-        layout="@layout/content_configuracion_conexion_paso_prueba"
+        layout="@layout/content_configuracion_test_paso_prueba"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/headerContent"

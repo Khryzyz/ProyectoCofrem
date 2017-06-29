@@ -13,16 +13,24 @@
         android:layout_marginBottom="@dimen/appMarginBottom" />
 
     <include
-        android:id="@+id/bodyContentConfigurationHost"
-        layout="@layout/content_configuracion_configuracion_paso_host"
+        android:id="@+id/bodyContentConfigurationPassTecnico"
+        layout="@layout/content_configuracion_register_paso_pass_tecnico"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/headerContent"
         android:visibility="visible" />
 
     <include
+        android:id="@+id/bodyContentConfigurationHost"
+        layout="@layout/content_configuracion_register_paso_host"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/headerContent"
+        android:visibility="gone" />
+
+    <include
         android:id="@+id/bodyContentConfigurationPort"
-        layout="@layout/content_configuracion_configuracion_paso_port"
+        layout="@layout/content_configuracion_register_paso_port"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/headerContent"
@@ -30,7 +38,7 @@
 
     <include
         android:id="@+id/bodyContentConfigurationEstablecimiento"
-        layout="@layout/content_configuracion_configuracion_paso_establecimiento"
+        layout="@layout/content_configuracion_register_paso_establecimiento"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/headerContent"
@@ -38,7 +46,7 @@
 
     <include
         android:id="@+id/bodyContentConfigurationLocal"
-        layout="@layout/content_configuracion_configuracion_paso_local"
+        layout="@layout/content_configuracion_register_paso_local"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/headerContent"
@@ -46,7 +54,7 @@
 
     <include
         android:id="@+id/bodyContentConfigurationExito"
-        layout="@layout/content_configuracion_configuracion_paso_exitosa"
+        layout="@layout/content_configuracion_register_paso_exitosa"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/headerContent"

@@ -74,6 +74,7 @@
     <string name="general_message_verify_configuration_initial_existe">Configuración Inicial existente.</string>
     <string name="general_message_verify_configuration_initial_no_existe">Configuración Inicial NO existente.</string>
     <string name="general_message_verify_configuration_initial_no_valida">Configuración Inicial NO valida.</string>
+    <string name="general_message_verify_register_valor_acceso">No se pudo registrar el valor de acceso, verifique el dispositivo e intentelo nuevamente.</string>
 
     <string name="general_message_verify_success">Verificación exitosa</string>
     <string name="general_message_verify_error">Verificación fallida</string>

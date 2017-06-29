@@ -21,6 +21,11 @@ public interface SplashScreenView {
     void handleVerifyInitialConfigNoValida();
 
     /**
+     * Metodo para manejar el error al registrar el valor de acceso
+     */
+    void handleInsertRegistroValorAccesoError();
+
+    /**
      * Metodo para manejar la verificacion exitosa
      */
     void handleVerifySuccess();

@@ -1,5 +1,7 @@
 package com.cofrem.transacciones.Modules.ModuleConfiguration.RegisterConfigurationScreen;
 
+import android.content.Context;
+
 class RegisterConfigurationScreenInteractorImpl implements RegisterConfigurationScreenInteractor {
     /**
      * #############################################################################################
@@ -31,11 +33,16 @@ class RegisterConfigurationScreenInteractorImpl implements RegisterConfiguration
      */
 
     /**
+     * Valida el acceso a la configuracion del dispositivo mediante la contraseña de administrador
      *
+     * @param context
+     * @param passAdmin
      */
     @Override
-    public void validateAccess() {
-        //Valida el acceso a la app
-        registerConfigurationScreenRepository.validateAcces();
+    public void validateAccessAdmin(Context context, int passAdmin) {
+
+        //Valida el acceso a la configuracion del dispositivo
+        registerConfigurationScreenRepository.validateAccessAdmin(context, passAdmin);
+
     }
 }

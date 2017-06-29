@@ -5,7 +5,7 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/txvConfiguracionConfiguracionExitosaTitle"
+        android:id="@+id/txvConfiguracionRegisterExitosaTitle"
         style="@style/StyleTextPrimaryLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -14,29 +14,29 @@
         android:text="@string/configuration_text_title_configuracion" />
 
     <TextView
-        android:id="@+id/txvConfiguracionConfiguracionExitosaNumCargo"
+        android:id="@+id/txvConfiguracionRegisterExitosaNumCargo"
         style="@style/StyleTextPrimaryMedium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/txvConfiguracionConfiguracionExitosaTitle"
+        android:layout_below="@id/txvConfiguracionRegisterExitosaTitle"
         android:layout_marginBottom="@dimen/appMarginBottom"
         android:text="@string/configuration_text_estado_configuracion" />
 
     <TextView
-        android:id="@+id/txvConfiguracionConfiguracionExitosaResultado"
+        android:id="@+id/txvConfiguracionRegisterExitosaResultado"
         style="@style/StyleTextPrimaryMedium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_below="@id/txvConfiguracionConfiguracionExitosaNumCargo"
+        android:layout_below="@id/txvConfiguracionRegisterExitosaNumCargo"
         android:layout_marginBottom="@dimen/appMarginBottom"
         android:text="@string/configuration_text_exitosa" />
 
     <Button
-        android:id="@+id/btnConfiguracionConfiguracionExitosaBotonSalir"
+        android:id="@+id/btnConfiguracionRegisterExitosaBotonSalir"
         style="@style/StyleButtonExit"
         android:layout_alignParentEnd="true"
-        android:layout_below="@id/txvConfiguracionConfiguracionExitosaResultado"
+        android:layout_below="@id/txvConfiguracionRegisterExitosaResultado"
         android:text="@string/general_text_button_salir" />
 
 
