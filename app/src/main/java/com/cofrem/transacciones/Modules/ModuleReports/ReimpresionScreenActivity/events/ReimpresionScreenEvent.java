@@ -1,10 +1,12 @@
 package com.cofrem.transacciones.Modules.ModuleReports.ReimpresionScreenActivity.events;
 
+import com.cofrem.transacciones.models.Transaccion;
+
 public class ReimpresionScreenEvent {
 
     public final static int onVerifySuccess = 0;
-    public final static int LanzarContentReimpresionUltimo = 1;
-    public final static int LanzarContentReimpresionNumCargo = 2;
+    public final static int onVerifyExistenceReciboPorNumCargoSuccess = 1;
+    public final static int onVerifyExistenceReciboPorNumCargoError = 2;
 
 
     // Variable que maneja los tipos de eventos
@@ -12,6 +14,9 @@ public class ReimpresionScreenEvent {
 
     // Variable que maneja los mensajes de error de los eventos
     private String errorMessage;
+
+    // Variable que maneja los resultados de las transacciones
+    private Transaccion modelTransaccion;
 
     //Getters y Setters de la clase
 
@@ -29,5 +34,13 @@ public class ReimpresionScreenEvent {
 
     public void setErrorMessage(String errorMessage) {
         this.errorMessage = errorMessage;
+    }
+
+    public Transaccion getModelTransaccion() {
+        return modelTransaccion;
+    }
+
+    public void setModelTransaccion(Transaccion modelTransaccion) {
+        this.modelTransaccion = modelTransaccion;
     }
 }

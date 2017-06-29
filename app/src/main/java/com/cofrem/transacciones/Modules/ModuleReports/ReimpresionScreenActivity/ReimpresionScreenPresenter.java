@@ -23,8 +23,21 @@ public interface ReimpresionScreenPresenter {
      */
     void onDestroy();
 
+    /**
+     * Metodo que Reimprime el ultimo recibo:
+     *
+     * @param context
+     */
+    void imprimirUltimoRecibo(Context context);
 
-    void imprimir(Context context);
+    /**
+     * Metodo que Reimprime unm recibo por numero de cargo:
+     *
+     * @param context , numCargo
+     *
+     */
+    void imprimirConNumCargo(Context context,String numCargo);
+
 
     /**
      * Metodo para recibir los eventos generados

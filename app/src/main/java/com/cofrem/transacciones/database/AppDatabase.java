@@ -303,26 +303,51 @@ public final class AppDatabase extends SQLiteOpenHelper {
 
         Cursor cursorQuery;
 
-        cursorQuery = getWritableDatabase().rawQuery(
-                "SELECT * FROM " + DatabaseManager.TableTransacciones.TABLE_NAME_TRANSACCIONES +
-                        " ORDER BY " + DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_REGISTRO +
-                        " ASC LIMIT 1",
-                null
+        Cursor cursor;
+
+        cursor = getWritableDatabase().rawQuery(
+                "SELECT * FROM " + DatabaseManager.TableTransacciones.TABLE_NAME_TRANSACCIONES + " ORDER BY " + DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_REGISTRO + " ASC LIMIT 1", null
         );
 
-        cursorQuery.moveToFirst();
+        if (cursor.moveToFirst()) {
+            modelTransaccion.setId(cursor.getInt(0));
+            modelTransaccion.setProducto_id(cursor.getInt(1));
+            modelTransaccion.setNumero_cargo(cursor.getInt(2));
+            modelTransaccion.setNumero_tarjeta(cursor.getString(3));
+            modelTransaccion.setValor(cursor.getInt(4));
+            modelTransaccion.setRegistro(cursor.getString(5));
+            modelTransaccion.setEstado(cursor.getInt(6));
+        }
 
-        modelTransaccion.setId(cursorQuery.getInt(0));
-        modelTransaccion.setProducto_id(cursorQuery.getInt(1));
-        modelTransaccion.setNumero_cargo(cursorQuery.getInt(2));
-        modelTransaccion.setNumero_tarjeta(cursorQuery.getString(3));
-        modelTransaccion.setValor(cursorQuery.getInt(4));
-        modelTransaccion.setRegistro(cursorQuery.getString(5));
-        modelTransaccion.setEstado(cursorQuery.getInt(6));
 
         return modelTransaccion;
     }
 
+    /**
+     * Metodo para Obtener una  transaccion segun el numero de cargo
+     */
+    public Transaccion obtenerTransaccion(String numCargo) {
+        Transaccion modelTransaccion = new Transaccion();
+
+        Cursor cursor;
+
+        cursor = getWritableDatabase().rawQuery(
+                "SELECT * FROM " + DatabaseManager.TableTransacciones.TABLE_NAME_TRANSACCIONES + " WHERE " + DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_NUMERO_CARGO + " = " + numCargo, null
+        );
+
+        if (cursor.moveToFirst()) {
+            modelTransaccion.setId(cursor.getInt(0));
+            modelTransaccion.setProducto_id(cursor.getInt(1));
+            modelTransaccion.setNumero_cargo(cursor.getInt(2));
+            modelTransaccion.setNumero_tarjeta(cursor.getString(3));
+            modelTransaccion.setValor(cursor.getInt(4));
+            modelTransaccion.setRegistro(cursor.getString(5));
+            modelTransaccion.setEstado(cursor.getInt(6));
+        }
+
+        return modelTransaccion;
+
+    }
 
     /**
      * #############################################################################################

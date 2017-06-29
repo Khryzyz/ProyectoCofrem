@@ -34,4 +34,6 @@
     <string name="report_text_valor_anulaciones">Valor de las anulaciones</string>
 
 
+    <!-- Textos adicionales mensajes -->
+    <string name="report_text_message_No_existen_recibo_num_cargo">No existen Recibos con ese número de Cargo</string>
 </resources>
