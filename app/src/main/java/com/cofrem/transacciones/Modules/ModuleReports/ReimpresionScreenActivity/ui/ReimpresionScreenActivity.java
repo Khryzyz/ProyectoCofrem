@@ -3,7 +3,9 @@ package com.cofrem.transacciones.Modules.ModuleReports.ReimpresionScreenActivity
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.cofrem.transacciones.models.Reports;
 import com.cofrem.transacciones.Modules.ModuleReports.ReimpresionScreenActivity.ReimpresionScreenPresenter;
@@ -45,6 +47,9 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
     @ViewById
     RelativeLayout bodyContentCierreLoteImpresion;
 
+    @ViewById
+    EditText edtReportReimprimeonReciboNummeroCargoContenidoClave;
+
 
     /**
      * #############################################################################################
@@ -82,7 +87,7 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
                 bodyContentReporteDetallesImpresion.setVisibility(View.VISIBLE);
                 break;
             case Reports.reportReporteGeneral:
-                bodyContentReimpresionRecibo.setVisibility(View.VISIBLE);
+                bodyContentReporteGeneralImpresion.setVisibility(View.VISIBLE);
                 break;
             case Reports.reportCierreLote:
                 bodyContentCierreLoteClaveDispositivo.setVisibility(View.VISIBLE);
@@ -111,6 +116,27 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
      * Metodos sobrecargados de la interface
      * #############################################################################################
      */
+
+
+    /**
+     * Metodo para manejar la existencia de la configuracion inicial
+     */
+    @Override
+    public void handleVerifyExistenceReciboPorNumCargoSuccess(){
+
+    }
+
+    /**
+     * Metodo para manejar la existencia de la configuracion inicial
+     */
+    @Override
+    public void handleVerifyExistenceReciboPorNumCargoError() {
+        Toast.makeText(this, this.getString(R.string.report_text_message_No_existen_recibo_num_cargo), Toast.LENGTH_LONG).show();
+    }
+
+
+
+
 
     /**
      * #############################################################################################
@@ -146,6 +172,28 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
         bodyContentReimpresionReciboUltimo.setVisibility(View.VISIBLE);
     }
 
+    /**
+     * Metodo que se encargara de imprimir el recibo
+     */
+    @Click(R.id.btnReportReimpresionReciboImprimirRecibo)
+    public void imprimirUltimoRecibo() {
+
+        reimpresionScreenPresenter.imprimirUltimoRecibo(this);
+
+    }
+
+    /**
+     * Metodo para salir de la vista de Reimpresion Ultimo
+     */
+    @Click(R.id.btnReportReimpresionReciboSalir)
+    public void salirDelContentReimprimirUltimo() {
+        bodyContentReimpresionReciboUltimo.setVisibility(View.GONE);
+        bodyContentReimpresionRecibo.setVisibility(View.VISIBLE);
+    }
+
+    /**
+     * Metodo para iniciar el proceso de Reimprimir recibo por numero de cargo
+     */
     @Click(R.id.btnReportReimpresionReciboNumeroDeCargo)
     public void navigateToContentReimprimirNumCargo() {
         bodyContentReimpresionRecibo.setVisibility(View.GONE);
@@ -153,19 +201,15 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
     }
 
     /**
-     * Metodo que se encargara de imprimir el recibo
+     * Metodo para validad si el nuero de cargo existe para imprimir el recibo
      */
-    @Click(R.id.btnReportReimpresionReciboImprimirRecibo)
-    public void imprimirUltimoRecibo() {
+    @Click(R.id.btnReportReimprimeonReciboNummeroCargoBotonAceptar)
+    public void acceptReimprimirNumCargo() {
 
-        reimpresionScreenPresenter.imprimir(this);
-
+        reimpresionScreenPresenter.imprimirConNumCargo(this,edtReportReimprimeonReciboNummeroCargoContenidoClave.getText().toString());
     }
 
-    @Click(R.id.btnReportReimpresionReciboSalir)
-    public void salirDelContentReimprimirUltimo() {
-        bodyContentReimpresionReciboUltimo.setVisibility(View.GONE);
-        bodyContentReimpresionRecibo.setVisibility(View.VISIBLE);
-    }
+
+
 
 }

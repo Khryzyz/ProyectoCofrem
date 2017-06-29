@@ -46,12 +46,32 @@ public class ReimpresionScreenRepositoryImpl implements ReimpresionScreenReposit
     public void imprimirUltimoRecibo(Context context) {
         Transaccion modelTransaccion = AppDatabase.getInstance(context).obtenerUltimaTransaccion();
         String mensaje = "         COFREM \n" +
-                modelTransaccion.getNumero_tarjeta()+"\n" +
-                modelTransaccion.getNumero_cargo()+"\n" +
+                "numero de la tarjeta:  $"+modelTransaccion.getNumero_tarjeta()+"\n" +
+                "valor:  $"+modelTransaccion.getValor()+"\n" +
+                "numero de cargo:  $"+modelTransaccion.getNumero_cargo()+"\n" +
                 "Gracias por su compra..."
                 ;
 
         PrintHandler.getInstance(context).printMessage(mensaje);
+        Log.e("Reporte",mensaje);
+    }
+
+    @Override
+    public void imprimirConNumCargo(Context context, String numCargo) {
+
+        ModelTransaccion modelTransaccion = AppDatabase.getInstance(context).obtenerTransaccion(numCargo);
+        String mensaje = " vacio ";
+        if(modelTransaccion.getNumero_tarjeta()==null){
+               mensaje = "         COFREM \n" +
+                    "numero de la tarjeta: "+modelTransaccion.getNumero_tarjeta()+"\n" +
+                    "valor: $"+modelTransaccion.getValor()+"\n" +
+                    "numero de cargo: "+modelTransaccion.getNumero_cargo()+"\n" +
+                    "Gracias por su compra...@ ? ¡ $ % & "
+                    ;
+
+            PrintHandler.getInstance(context).printMessage(mensaje);
+        }
+
         Log.e("Reporte",mensaje);
     }
 
