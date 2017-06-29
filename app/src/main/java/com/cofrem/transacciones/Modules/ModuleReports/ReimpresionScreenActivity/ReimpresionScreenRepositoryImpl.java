@@ -43,36 +43,46 @@ public class ReimpresionScreenRepositoryImpl implements ReimpresionScreenReposit
     }
 
     @Override
+    public void validadExistenciaReciboConNumCargo(Context context, String numCargo) {
+        Transaccion modelTransaccion = AppDatabase.getInstance(context).obtenerTransaccion(numCargo);
+        if (modelTransaccion.getNumero_tarjeta() == null) {
+            postEvent(ReimpresionScreenEvent.onVerifyExistenceReciboPorNumCargoSuccess, modelTransaccion);
+        } else {
+            postEvent(ReimpresionScreenEvent.onVerifyExistenceReciboPorNumCargoError);
+        }
+
+    }
+
+    @Override
     public void imprimirUltimoRecibo(Context context) {
         Transaccion modelTransaccion = AppDatabase.getInstance(context).obtenerUltimaTransaccion();
         String mensaje = "         COFREM \n" +
-                "numero de la tarjeta:  $"+modelTransaccion.getNumero_tarjeta()+"\n" +
-                "valor:  $"+modelTransaccion.getValor()+"\n" +
-                "numero de cargo:  $"+modelTransaccion.getNumero_cargo()+"\n" +
-                "Gracias por su compra..."
-                ;
+                "numero de la tarjeta:  $" + modelTransaccion.getNumero_tarjeta() + "\n" +
+                "valor:  $" + modelTransaccion.getValor() + "\n" +
+                "numero de cargo:  $" + modelTransaccion.getNumero_cargo() + "\n" +
+                "Gracias por su compra...";
 
         PrintHandler.getInstance(context).printMessage(mensaje);
-        Log.e("Reporte",mensaje);
+        Log.e("Reporte", mensaje);
     }
 
     @Override
     public void imprimirConNumCargo(Context context, String numCargo) {
 
-        ModelTransaccion modelTransaccion = AppDatabase.getInstance(context).obtenerTransaccion(numCargo);
+        Transaccion modelTransaccion = AppDatabase.getInstance(context).obtenerTransaccion(numCargo);
         String mensaje = " vacio ";
-        if(modelTransaccion.getNumero_tarjeta()==null){
-               mensaje = "         COFREM \n" +
-                    "numero de la tarjeta: "+modelTransaccion.getNumero_tarjeta()+"\n" +
-                    "valor: $"+modelTransaccion.getValor()+"\n" +
-                    "numero de cargo: "+modelTransaccion.getNumero_cargo()+"\n" +
+        if (modelTransaccion.getNumero_tarjeta() == null) {
+            mensaje = "         COFREM \n" +
+                    "numero de la tarjeta: " + modelTransaccion.getNumero_tarjeta() + "\n" +
+                    "valor: $" + modelTransaccion.getValor() + "\n" +
+                    "numero de cargo: " + modelTransaccion.getNumero_cargo() + "\n" +
                     "Gracias por su compra...@ ? ¡ $ % & "
-                    ;
+            ;
 
             PrintHandler.getInstance(context).printMessage(mensaje);
         }
 
-        Log.e("Reporte",mensaje);
+        Log.e("Reporte", mensaje);
     }
 
     /**
@@ -87,11 +97,15 @@ public class ReimpresionScreenRepositoryImpl implements ReimpresionScreenReposit
      * @param type
      * @param errorMessage
      */
-    private void postEvent(int type, String errorMessage) {
+    private void postEvent(int type, Transaccion modalTransaccion, String errorMessage) {
         ReimpresionScreenEvent reimpresionScreenEvent = new ReimpresionScreenEvent();
         reimpresionScreenEvent.setEventType(type);
         if (errorMessage != null) {
             reimpresionScreenEvent.setErrorMessage(errorMessage);
+        }
+
+        if (modalTransaccion != null) {
+            reimpresionScreenEvent.setModelTransaccion(modalTransaccion);
         }
 
         EventBus eventBus = GreenRobotEventBus.getInstance();
@@ -104,9 +118,20 @@ public class ReimpresionScreenRepositoryImpl implements ReimpresionScreenReposit
      *
      * @param type
      */
+    private void postEvent(int type, Transaccion modelTransaccion) {
+
+        postEvent(type, modelTransaccion, null);
+
+    }
+
+    /**
+     * Sobrecarga del metodo postevent
+     *
+     * @param type
+     */
     private void postEvent(int type) {
 
-        postEvent(type, null);
+        postEvent(type, null, null);
 
     }
 }

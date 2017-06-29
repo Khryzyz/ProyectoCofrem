@@ -11,6 +11,7 @@ import com.cofrem.transacciones.models.Reports;
 import com.cofrem.transacciones.Modules.ModuleReports.ReimpresionScreenActivity.ReimpresionScreenPresenter;
 import com.cofrem.transacciones.Modules.ModuleReports.ReimpresionScreenActivity.ReimpresionScreenPresenterImpl;
 import com.cofrem.transacciones.R;
+import com.cofrem.transacciones.models.Transaccion;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
@@ -50,6 +51,7 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
     @ViewById
     EditText edtReportReimprimeonReciboNummeroCargoContenidoClave;
 
+    Transaccion modelTransaccion;
 
     /**
      * #############################################################################################
@@ -122,7 +124,8 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
      * Metodo para manejar la existencia de la configuracion inicial
      */
     @Override
-    public void handleVerifyExistenceReciboPorNumCargoSuccess(){
+    public void handleVerifyExistenceReciboPorNumCargoSuccess(Transaccion modelTransaccion) {
+        this.modelTransaccion = modelTransaccion;
 
     }
 
@@ -133,9 +136,6 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
     public void handleVerifyExistenceReciboPorNumCargoError() {
         Toast.makeText(this, this.getString(R.string.report_text_message_No_existen_recibo_num_cargo), Toast.LENGTH_LONG).show();
     }
-
-
-
 
 
     /**
@@ -206,10 +206,8 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
     @Click(R.id.btnReportReimprimeonReciboNummeroCargoBotonAceptar)
     public void acceptReimprimirNumCargo() {
 
-        reimpresionScreenPresenter.imprimirConNumCargo(this,edtReportReimprimeonReciboNummeroCargoContenidoClave.getText().toString());
+        reimpresionScreenPresenter.imprimirConNumCargo(this, edtReportReimprimeonReciboNummeroCargoContenidoClave.getText().toString());
     }
-
-
 
 
 }

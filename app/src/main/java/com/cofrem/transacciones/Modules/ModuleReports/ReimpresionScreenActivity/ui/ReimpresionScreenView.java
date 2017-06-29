@@ -1,11 +1,13 @@
 package com.cofrem.transacciones.Modules.ModuleReports.ReimpresionScreenActivity.ui;
 
+import com.cofrem.transacciones.models.Transaccion;
+
 public interface ReimpresionScreenView {
 
     /**
      * Metodo para manejar la existencia un recibo por numero de cargo
      */
-    void handleVerifyExistenceReciboPorNumCargoSuccess();
+    void handleVerifyExistenceReciboPorNumCargoSuccess(Transaccion modelTransaccion);
 
 
     /**

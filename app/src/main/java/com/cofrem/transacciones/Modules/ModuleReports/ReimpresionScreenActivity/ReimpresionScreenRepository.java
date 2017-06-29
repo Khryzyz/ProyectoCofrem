@@ -16,4 +16,12 @@ public interface ReimpresionScreenRepository {
      */
     void imprimirConNumCargo(Context context,String numCargo);
 
+    /**
+     * Metodo que Reimprime unm recibo por numero de cargo:
+     *
+     * @param context , numCargo
+     *
+     */
+    void validadExistenciaReciboConNumCargo(Context context,String numCargo);
+
 }

@@ -309,7 +309,7 @@ public final class AppDatabase extends SQLiteOpenHelper {
                 "SELECT * FROM " + DatabaseManager.TableTransacciones.TABLE_NAME_TRANSACCIONES + " ORDER BY " + DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_REGISTRO + " ASC LIMIT 1", null
         );
 
-        if(cursor.moveToFirst()){
+        if (cursor.moveToFirst()) {
             modelTransaccion.setId(cursor.getInt(0));
             modelTransaccion.setProducto_id(cursor.getInt(1));
             modelTransaccion.setNumero_cargo(cursor.getInt(2));
@@ -320,24 +320,22 @@ public final class AppDatabase extends SQLiteOpenHelper {
         }
 
 
-
-
         return modelTransaccion;
     }
 
     /**
      * Metodo para Obtener una  transaccion segun el numero de cargo
      */
-    public ModelTransaccion obtenerTransaccion(String numCargo) {
-        ModelTransaccion modelTransaccion = new ModelTransaccion();
+    public Transaccion obtenerTransaccion(String numCargo) {
+        Transaccion modelTransaccion = new Transaccion();
 
         Cursor cursor;
 
         cursor = getWritableDatabase().rawQuery(
-                "SELECT * FROM " + DatabaseManager.TableTransacciones.TABLE_NAME_TRANSACCIONES + " WHERE " + DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_NUMERO_CARGO + " = " +numCargo, null
+                "SELECT * FROM " + DatabaseManager.TableTransacciones.TABLE_NAME_TRANSACCIONES + " WHERE " + DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_NUMERO_CARGO + " = " + numCargo, null
         );
 
-        if(cursor.moveToFirst()){
+        if (cursor.moveToFirst()) {
             modelTransaccion.setId(cursor.getInt(0));
             modelTransaccion.setProducto_id(cursor.getInt(1));
             modelTransaccion.setNumero_cargo(cursor.getInt(2));

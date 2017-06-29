@@ -6,6 +6,7 @@ import com.cofrem.transacciones.Modules.ModuleReports.ReimpresionScreenActivity.
 import com.cofrem.transacciones.Modules.ModuleReports.ReimpresionScreenActivity.ui.ReimpresionScreenView;
 import com.cofrem.transacciones.lib.EventBus;
 import com.cofrem.transacciones.lib.GreenRobotEventBus;
+import com.cofrem.transacciones.models.Transaccion;
 
 public class ReimpresionScreenPresenterImpl implements ReimpresionScreenPresenter {
 
@@ -68,7 +69,7 @@ public class ReimpresionScreenPresenterImpl implements ReimpresionScreenPresente
 
     @Override
     public void imprimirConNumCargo(Context context, String numCargo) {
-        reimpresionScreenInteractor.imprimirConNumCargo(context,numCargo);
+        reimpresionScreenInteractor.imprimirConNumCargo(context, numCargo);
     }
 
     /**
@@ -91,7 +92,7 @@ public class ReimpresionScreenPresenterImpl implements ReimpresionScreenPresente
         switch (reimpresionScreenEvent.getEventType()) {
 
             case ReimpresionScreenEvent.onVerifyExistenceReciboPorNumCargoSuccess:
-                onVerifyExistenceReciboPorNumCargoSuccess();
+                onVerifyExistenceReciboPorNumCargoSuccess(reimpresionScreenEvent.getModelTransaccion());
                 break;
             case ReimpresionScreenEvent.onVerifyExistenceReciboPorNumCargoError:
                 onVerifyExistenceReciboPorNumCargoError();
@@ -112,12 +113,12 @@ public class ReimpresionScreenPresenterImpl implements ReimpresionScreenPresente
      */
     private void onVerifySuccess() {
         if (reimpresionScreenView != null) {
-          //  reimpresionScreenView.handleVerifySuccess();
+            //  reimpresionScreenView.handleVerifySuccess();
         }
     }
 
-    public void onVerifyExistenceReciboPorNumCargoSuccess() {
-        reimpresionScreenView.handleVerifyExistenceReciboPorNumCargoSuccess();
+    public void onVerifyExistenceReciboPorNumCargoSuccess(Transaccion modeltgransaccion) {
+        reimpresionScreenView.handleVerifyExistenceReciboPorNumCargoSuccess(modeltgransaccion);
     }
 
 
