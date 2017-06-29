@@ -111,6 +111,10 @@ public class SplashScreenPresenterImpl implements SplashScreenPresenter {
                 onVerifyInitialConfigNoValida();
                 break;
 
+            case SplashScreenEvent.onInsertRegistroValorAccesoError:
+                onInsertRegistroValorAccesoError();
+                break;
+
             case SplashScreenEvent.onVerifySuccess:
                 onVerifySuccess();
                 break;
@@ -184,6 +188,15 @@ public class SplashScreenPresenterImpl implements SplashScreenPresenter {
     private void onVerifyInitialConfigNoValida() {
         if (splashScreenView != null) {
             splashScreenView.handleVerifyInitialConfigNoValida();
+        }
+    }
+
+    /**
+     * Metodo para manejar el error al registrar el valor de acceso
+     */
+    private void onInsertRegistroValorAccesoError() {
+        if (splashScreenView != null) {
+            splashScreenView.handleInsertRegistroValorAccesoError();
         }
     }
 

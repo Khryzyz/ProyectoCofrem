@@ -1,5 +1,7 @@
 package com.cofrem.transacciones.Modules.ModuleConfiguration.RegisterConfigurationScreen;
 
+import android.content.Context;
+
 import com.cofrem.transacciones.Modules.ModuleConfiguration.RegisterConfigurationScreen.events.RegisterConfigurationScreenEvent;
 import com.cofrem.transacciones.Modules.ModuleConfiguration.RegisterConfigurationScreen.ui.RegisterConfigurationScreenView;
 import com.cofrem.transacciones.lib.EventBus;
@@ -60,12 +62,15 @@ public class RegisterConfigurationScreenPresenterImpl implements RegisterConfigu
     }
 
     /**
-     * Metodo para la verificacion de los datos
+     * Valida el acceso a la configuracion del dispositivo mediante la contraseña de administrador
+     *
+     * @param context
+     * @param passAdmin
      */
     @Override
-    public void VerifySuccess() {
+    public void validateAccessAdmin(Context context, int passAdmin) {
         if (registerConfigurationScreenView != null) {
-            registerConfigurationScreenInteractor.validateAccess();
+            registerConfigurationScreenInteractor.validateAccessAdmin(context, passAdmin);
         }
     }
 
@@ -78,8 +83,14 @@ public class RegisterConfigurationScreenPresenterImpl implements RegisterConfigu
     public void onEventMainThread(RegisterConfigurationScreenEvent registerConfigurationScreenEvent) {
         switch (registerConfigurationScreenEvent.getEventType()) {
 
-            case RegisterConfigurationScreenEvent.onVerifySuccess:
-                onVerifySuccess();
+            case RegisterConfigurationScreenEvent.onValorAccesoValido:
+                onValorAccesoValido();
+                break;
+            case RegisterConfigurationScreenEvent.onValorAccesoNoValido:
+                onValorAccesoNoValido();
+                break;
+            case RegisterConfigurationScreenEvent.onValorAccesoError:
+                onValorAccesoError();
                 break;
 
         }
@@ -93,11 +104,27 @@ public class RegisterConfigurationScreenPresenterImpl implements RegisterConfigu
      */
 
     /**
-     * Metodo para manejar la verificacion exitosa
+     * Metodo para manejar el valor de acceso valido
      */
-    private void onVerifySuccess() {
+    private void onValorAccesoValido() {
         if (registerConfigurationScreenView != null) {
-            registerConfigurationScreenView.handleVerifySuccess();
+            registerConfigurationScreenView.handleValorAccesoValido();
+        }
+    }
+    /**
+     * Metodo para manejar el valor de acceso NO valido
+     */
+    private void onValorAccesoNoValido() {
+        if (registerConfigurationScreenView != null) {
+            registerConfigurationScreenView.handleValorAccesoNoValido();
+        }
+    }
+    /**
+     * Metodo para manejar el error en la configuracion de valor de acceso
+     */
+    private void onValorAccesoError() {
+        if (registerConfigurationScreenView != null) {
+            registerConfigurationScreenView.handleValorAccesoError();
         }
     }
 

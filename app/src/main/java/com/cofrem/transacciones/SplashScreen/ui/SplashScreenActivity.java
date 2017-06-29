@@ -102,7 +102,7 @@ public class SplashScreenActivity extends Activity implements SplashScreenView {
         );
 
         /**
-         * Llamada al metodo validateAcces del presentador que valida:
+         * Llamada al metodo validateAccesAdmin del presentador que valida:
          *  - Conexion a internet
          *  - Existencia datos en DB interna
          *  - Coherencia de datos con el servidor
@@ -131,11 +131,29 @@ public class SplashScreenActivity extends Activity implements SplashScreenView {
     @Override
     public void handleVerifyInitialConfigNoValida() {
 
+        //Oculta la barra de progreso
+        hideProgress();
+
         //Agrega el texto de error del manejador de verificacion inicial no valida
         txvSplashScreenInfo.setText(txvSplashScreenInfo.getText() +
                 "\n " + getString(R.string.general_message_verify_configuration_initial_no_valida)
         );
 
+    }
+
+    /**
+     * Metodo para manejar el error al registrar el valor de acceso
+     */
+    @Override
+    public void handleInsertRegistroValorAccesoError() {
+
+        //Oculta la barra de progreso
+        hideProgress();
+
+        //Agrega el texto de error del manejador de verificacion inicial no valida
+        txvSplashScreenInfo.setText(txvSplashScreenInfo.getText() +
+                "\n " + getString(R.string.general_message_verify_register_valor_acceso)
+        );
     }
 
     /**

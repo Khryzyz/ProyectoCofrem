@@ -29,7 +29,7 @@ public class DatabaseManager {
     public static class DatabaseApp {
 
         public static final String DATABASE_NAME = "app_cofrem_transactions.db";
-        public static final int DATABASE_VERSION = 9;
+        public static final int DATABASE_VERSION = 10;
 
     }
 
@@ -221,5 +221,46 @@ public class DatabaseManager {
          */
         public static final String DROP_TABLE_CONFIGURACION_CONEXION =
                 "DROP TABLE IF EXISTS '" + TABLE_NAME_CONFIGURACION_CONEXION + "'";
+    }
+
+    /**
+     * #############################################################################################
+     * Tabla ConfiguraciónAcceso:
+     * - Modelado de la tabla producto
+     * - Scripts de la tabla producto
+     * #############################################################################################
+     */
+    public static class TableConfiguracionAcceso {
+
+        /**
+         * Modelado de la tabla
+         * Nombre de la tabla
+         */
+        public static final String TABLE_NAME_CONFIGURACION_ACCESO = "acceso";
+
+        /**
+         * Modelado de la tabla
+         * Columnas de la tabla
+         */
+        public static final String COLUMN_CONFIGURACION_ACCESO_VALOR = "valor";
+        public static final String COLUMN_CONFIGURACION_ACCESO_REGISTRO = "registro";
+        public static final String COLUMN_CONFIGURACION_ACCESO_ESTADO = "estado";
+
+        /**
+         * Scripts de la tabla producti
+         * Comando CREATE para la tabla Producto de la base de datos
+         */
+        public static final String CREATE_TABLE_CONFIGURACION_ACCESO =
+                "CREATE TABLE " + TABLE_NAME_CONFIGURACION_ACCESO + "(" +
+                        COLUMN_CONFIGURACION_ACCESO_VALOR + " " + INT_TYPE + ATTR_NOT_NULL + "," +
+                        COLUMN_CONFIGURACION_ACCESO_REGISTRO + " " + TIMESTAMP_TYPE + ATTR_NOT_NULL + "," +
+                        COLUMN_CONFIGURACION_ACCESO_ESTADO + " " + INT_TYPE + ATTR_NOT_NULL + ")";
+
+        /**
+         * Scripts de la tabla registro
+         * Comando DROP para la tabla Producto de la base de datos
+         */
+        public static final String DROP_TABLE_CONFIGURACION_ACCESO =
+                "DROP TABLE IF EXISTS '" + TABLE_NAME_CONFIGURACION_ACCESO + "'";
     }
 }

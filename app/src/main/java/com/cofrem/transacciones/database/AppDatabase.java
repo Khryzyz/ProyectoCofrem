@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import com.cofrem.transacciones.models.Transaccion;
 
+import java.security.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -62,6 +63,8 @@ public final class AppDatabase extends SQLiteOpenHelper {
         db.execSQL(DatabaseManager.TableTransacciones.CREATE_TABLE_TRANSACCIONES);
         db.execSQL(DatabaseManager.TableEstablecimiento.CREATE_TABLE_ESTABLECIMIENTO);
         db.execSQL(DatabaseManager.TableConfiguracionConexion.CREATE_TABLE_CONFIGURACION_CONEXION);
+        db.execSQL(DatabaseManager.TableConfiguracionAcceso.CREATE_TABLE_CONFIGURACION_ACCESO);
+
     }
 
     /**
@@ -80,8 +83,83 @@ public final class AppDatabase extends SQLiteOpenHelper {
         db.execSQL(DatabaseManager.TableTransacciones.DROP_TABLE_TRANSACCIONES);
         db.execSQL(DatabaseManager.TableEstablecimiento.DROP_TABLE_ESTABLECIMIENTO);
         db.execSQL(DatabaseManager.TableConfiguracionConexion.DROP_TABLE_CONFIGURACION_CONEXION);
+        db.execSQL(DatabaseManager.TableConfiguracionAcceso.DROP_TABLE_CONFIGURACION_ACCESO);
 
         onCreate(db);
+    }
+
+    /**
+     * Metodo para insertar registro inicial en la Base de Datos de la clave de acceso a dispositivo
+     */
+    public boolean insertConfiguracionAcceso() {
+
+        // Inicializacion de la variable de contenidos del registro
+        ContentValues contentValues = new ContentValues();
+
+        // Almacena los valores a insertar
+        contentValues.put(DatabaseManager.TableConfiguracionAcceso.COLUMN_CONFIGURACION_ACCESO_VALOR, 8717);
+        contentValues.put(DatabaseManager.TableConfiguracionAcceso.COLUMN_CONFIGURACION_ACCESO_REGISTRO, getDateTime());
+        contentValues.put(DatabaseManager.TableConfiguracionAcceso.COLUMN_CONFIGURACION_ACCESO_REGISTRO, 1);
+
+        // Insercion del registro en la base de datos
+        Long count = getWritableDatabase().insert(
+                DatabaseManager.TableConfiguracionAcceso.TABLE_NAME_CONFIGURACION_ACCESO,
+                null,
+                contentValues
+        );
+        if (count == 1) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+    /**
+     * Metodo para validar si existe registro inicial en la Base de Datos de la clave de acceso a dispositivo
+     */
+    public int conteoConfiguracionAcceso() {
+
+        int count;
+
+        Cursor cursorQuery;
+
+        cursorQuery = getWritableDatabase().rawQuery(
+                "SELECT COUNT(1) FROM " +
+                        DatabaseManager.TableConfiguracionAcceso.TABLE_NAME_CONFIGURACION_ACCESO,
+                null
+        );
+
+        cursorQuery.moveToFirst();
+
+        count = cursorQuery.getInt(0);
+
+        return count;
+
+    }
+
+    /**
+     * Metodo para validar si existe registro inicial en la Base de Datos de la clave de acceso a dispositivo
+     */
+    public int conteoConfiguracionAccesoByValorAcceso(int valorAcceso) {
+
+        int count;
+
+        Cursor cursorQuery;
+
+        cursorQuery = getWritableDatabase().rawQuery(
+                "SELECT COUNT(1) FROM " +
+                        DatabaseManager.TableConfiguracionAcceso.TABLE_NAME_CONFIGURACION_ACCESO +
+                        " WHERE " + DatabaseManager.TableConfiguracionAcceso.COLUMN_CONFIGURACION_ACCESO_VALOR + " = '" + valorAcceso + "'",
+                null
+        );
+
+        cursorQuery.moveToFirst();
+
+        count = cursorQuery.getInt(0);
+
+        return count;
+
     }
 
     /**
@@ -104,10 +182,11 @@ public final class AppDatabase extends SQLiteOpenHelper {
                 null,
                 contentValues
         );
-        if (count == 1)
+        if (count == 1) {
             return true;
-        else
+        } else {
             return false;
+        }
 
     }
 
@@ -134,10 +213,11 @@ public final class AppDatabase extends SQLiteOpenHelper {
                 null,
                 contentValues
         );
-        if (count == 1)
+        if (count == 1) {
             return true;
-        else
+        } else {
             return false;
+        }
 
     }
 
@@ -195,7 +275,7 @@ public final class AppDatabase extends SQLiteOpenHelper {
      *
      * @return conteo de los registros
      */
-    public int obtenerConteoConfiguracionInicial() {
+    public int conteoConfiguracionConexion() {
 
         int count;
 

@@ -1,13 +1,9 @@
 package com.cofrem.transacciones.Modules.ModuleConfiguration.RegisterConfigurationScreen.ui;
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
-import android.text.InputType;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,7 +19,6 @@ import com.cofrem.transacciones.models.Configurations;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
-import org.androidannotations.annotations.ItemClick;
 import org.androidannotations.annotations.ViewById;
 
 import static android.view.KeyEvent.KEYCODE_ENTER;
@@ -154,6 +149,7 @@ public class RegisterConfigurationScreenActivity extends Activity implements Reg
      */
     @Override
     public void onBackPressed() {
+        //Vacia la caja de contraseña
         edtConfiguracionRegisterPassTecnicoContenidoClave.setText("");
     }
 
@@ -164,11 +160,47 @@ public class RegisterConfigurationScreenActivity extends Activity implements Reg
      */
 
     /**
-     * Metodo para manejar la verificacion exitosa
+     * Metodo para manejar el valor de acceso valido
      */
-    public void handleVerifySuccess() {
+    @Override
+    public void handleValorAccesoValido() {
+        
+        //Oculta la vista de la contraseña
+        bodyContentConfigurationPassTecnico.setVisibility(View.GONE);
+
+        //Muestra la vista del Host
+        bodyContentConfigurationHost.setVisibility(View.VISIBLE);
 
     }
+
+    /**
+     * Metodo para manejar el valor de acceso NO valido
+     */
+    @Override
+    public void handleValorAccesoNoValido() {
+
+        //Vacia la caja de contraseña
+        edtConfiguracionRegisterPassTecnicoContenidoClave.setText("");
+
+        //Muestra el mensaje de error en la contraseña
+        Toast.makeText(this, R.string.configuration_text_valor_acceso_no_valido, Toast.LENGTH_SHORT).show();
+
+    }
+
+    /**
+     * Metodo para manejar el error en la configuracion de valor de acceso
+     */
+    @Override
+    public void handleValorAccesoError() {
+
+        //Vacia la caja de contraseña
+        edtConfiguracionRegisterPassTecnicoContenidoClave.setText("");
+
+        //Muestra el mensaje de error en la configuracion de la contraseña
+        Toast.makeText(this, R.string.configuration_text_valor_acceso_error, Toast.LENGTH_SHORT).show();
+
+    }
+
 
     /**
      * #############################################################################################
@@ -197,9 +229,17 @@ public class RegisterConfigurationScreenActivity extends Activity implements Reg
         String passwordAdmin = edtConfiguracionRegisterPassTecnicoContenidoClave.getText().toString();
 
         if (passwordAdmin.length() == 4) {
-            Toast.makeText(this, "4 caracteres", Toast.LENGTH_SHORT).show();
+
+            registerConfigurationScreenPresenter.validateAccessAdmin(this, Integer.valueOf(passwordAdmin));
+
         } else {
-            Toast.makeText(this, R.string.configuration_error_pass, Toast.LENGTH_SHORT).show();
+
+            //Vacia la caja de contraseña
+            edtConfiguracionRegisterPassTecnicoContenidoClave.setText("");
+
+            //Muestra el mensaje de error de formato de la contraseña
+            Toast.makeText(this, R.string.configuration_error_format_valor_acceso, Toast.LENGTH_SHORT).show();
+
         }
 
     }
@@ -216,4 +256,5 @@ public class RegisterConfigurationScreenActivity extends Activity implements Reg
         bodyContentConfigurationExito.setVisibility(View.GONE);
 
     }
+
 }

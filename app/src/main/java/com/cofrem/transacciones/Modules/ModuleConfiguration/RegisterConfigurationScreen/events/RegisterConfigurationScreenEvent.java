@@ -2,7 +2,9 @@ package com.cofrem.transacciones.Modules.ModuleConfiguration.RegisterConfigurati
 
 public class RegisterConfigurationScreenEvent {
 
-    public final static int onVerifySuccess = 0;
+    public final static int onValorAccesoValido = 0;
+    public final static int onValorAccesoNoValido = 1;
+    public final static int onValorAccesoError= 2;
 
     // Variable que maneja los tipos de eventos
     private int eventType;

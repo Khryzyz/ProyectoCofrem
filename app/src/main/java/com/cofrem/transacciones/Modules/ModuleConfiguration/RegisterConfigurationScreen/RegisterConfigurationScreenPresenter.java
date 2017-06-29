@@ -1,13 +1,18 @@
 package com.cofrem.transacciones.Modules.ModuleConfiguration.RegisterConfigurationScreen;
 
+import android.content.Context;
+
 import com.cofrem.transacciones.Modules.ModuleConfiguration.RegisterConfigurationScreen.events.RegisterConfigurationScreenEvent;
 
 public interface RegisterConfigurationScreenPresenter {
 
     /**
-     * metodo presentador
+     * Valida el acceso a la configuracion del dispositivo mediante la contraseña de administrador
+     *
+     * @param context
+     * @param passAdmin
      */
-    void VerifySuccess();
+    void validateAccessAdmin(Context context, int passAdmin);
 
     /**
      * Metodo para la creacion del presentador
