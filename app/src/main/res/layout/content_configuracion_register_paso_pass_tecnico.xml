@@ -5,7 +5,7 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/txvConfiguracionConfiguracionPortTitle"
+        android:id="@+id/txvConfiguracionRegisterPassTecnicoTitle"
         style="@style/StyleTextPrimaryLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -14,35 +14,37 @@
         android:text="@string/configuration_text_title_configuracion" />
 
     <TextView
-        android:id="@+id/txvConfiguracionConfiguracionPortClave"
+        android:id="@+id/txvConfiguracionRegisterPassTecnicoClave"
         style="@style/StyleTextPrimaryMedium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/txvConfiguracionConfiguracionPortTitle"
+        android:layout_below="@id/txvConfiguracionRegisterPassTecnicoTitle"
         android:layout_marginBottom="@dimen/appMarginBottom"
-        android:text="@string/configuration_text_ingeresar_puerto" />
+        android:text="@string/configuration_text_ingresar_pass_tecnico" />
 
     <EditText
-        android:id="@+id/edtConfiguracionConfiguracionPortContenidoClave"
+        android:id="@+id/edtConfiguracionRegisterPassTecnicoContenidoClave"
         style="@style/StylePassPrimary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/txvConfiguracionConfiguracionPortClave"
+        android:layout_below="@id/txvConfiguracionRegisterPassTecnicoClave"
         android:layout_marginBottom="@dimen/appMarginBottom"
-        android:inputType="textPassword" />
+        android:inputType="numberPassword"
+        android:cursorVisible="false"
+        android:maxLength="4" />
 
     <Button
-        android:id="@+id/btnConfiguracionConfiguracionPortBotonCancelar"
+        android:id="@+id/btnConfiguracionRegisterPassTecnicoBotonCancelar"
         style="@style/StyleButtonCancel"
         android:layout_alignParentStart="true"
-        android:layout_below="@id/edtConfiguracionConfiguracionPortContenidoClave"
+        android:layout_below="@id/edtConfiguracionRegisterPassTecnicoContenidoClave"
         android:text="@string/general_text_button_cancelar" />
 
     <Button
-        android:id="@+id/btnConfiguracionConfiguracionPortBotonAceptar"
+        android:id="@+id/btnConfiguracionRegisterPassTecnicoBotonAceptar"
         style="@style/StyleButtonAccept"
         android:layout_alignParentEnd="true"
-        android:layout_below="@id/edtConfiguracionConfiguracionPortContenidoClave"
+        android:layout_below="@id/edtConfiguracionRegisterPassTecnicoContenidoClave"
         android:text="@string/general_text_button_aceptar" />
 
 

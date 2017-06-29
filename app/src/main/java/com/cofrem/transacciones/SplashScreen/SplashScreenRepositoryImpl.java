@@ -41,18 +41,29 @@ public class SplashScreenRepositoryImpl implements SplashScreenRepository {
      */
     @Override
     public void validateInitialConfig(Context context) {
-        int conteoRegistrosConfiguracionInicial = AppDatabase.getInstance(context).obtenerConteoConfiguracionInicial();
 
-        switch (conteoRegistrosConfiguracionInicial){
-            case 1:
-                postEvent(SplashScreenEvent.onVerifyInitialConfigExiste);
-                break;
-            case 0:
-                postEvent(SplashScreenEvent.onVerifyInitialConfigNoExiste);
-                break;
-            default:
-                postEvent(SplashScreenEvent.onVerifyInitialConfigNoValida);
-                break;
+        //Variable que almacena el estado de la conexión a internet
+        boolean internetConnection = verifyInternetConnection(context);
+
+        if (internetConnection) {
+
+            postEvent(SplashScreenEvent.onInternetConnectionSuccess);
+
+            int conteoRegistrosConfiguracionInicial = AppDatabase.getInstance(context).obtenerConteoConfiguracionInicial();
+
+            switch (conteoRegistrosConfiguracionInicial) {
+                case 1:
+                    postEvent(SplashScreenEvent.onVerifyInitialConfigExiste);
+                    break;
+                case 0:
+                    postEvent(SplashScreenEvent.onVerifyInitialConfigNoExiste);
+                    break;
+                default:
+                    postEvent(SplashScreenEvent.onVerifyInitialConfigNoValida);
+                    break;
+            }
+        } else {
+            postEvent(SplashScreenEvent.onInternetConnectionError);
         }
     }
 

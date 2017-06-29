@@ -5,7 +5,7 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/txvConfiguracionConfiguracionEstablecimientoTitle"
+        android:id="@+id/txvConfiguracionRegisterLocalTitle"
         style="@style/StyleTextPrimaryLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -14,35 +14,35 @@
         android:text="@string/configuration_text_title_configuracion" />
 
     <TextView
-        android:id="@+id/txvConfiguracionConfiguracionEstablecimientoClave"
+        android:id="@+id/txvConfiguracionRegisterLocalClave"
         style="@style/StyleTextPrimaryMedium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/txvConfiguracionConfiguracionEstablecimientoTitle"
+        android:layout_below="@id/txvConfiguracionRegisterLocalTitle"
         android:layout_marginBottom="@dimen/appMarginBottom"
-        android:text="@string/configuration_text_ingeresar_establecimiento" />
+        android:text="@string/configuration_text_ingresar_local" />
 
     <EditText
-        android:id="@+id/edtConfiguracionConfiguracionEstablecimientoContenidoClave"
+        android:id="@+id/edtConfiguracionRegisterLocalContenidoClave"
         style="@style/StylePassPrimary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/txvConfiguracionConfiguracionEstablecimientoClave"
+        android:layout_below="@id/txvConfiguracionRegisterLocalClave"
         android:layout_marginBottom="@dimen/appMarginBottom"
         android:inputType="textPassword" />
 
     <Button
-        android:id="@+id/btnConfiguracionConfiguracionEstablecimientoBotonCancelar"
+        android:id="@+id/btnConfiguracionRegisterLocalBotonCancelar"
         style="@style/StyleButtonCancel"
         android:layout_alignParentStart="true"
-        android:layout_below="@id/edtConfiguracionConfiguracionEstablecimientoContenidoClave"
+        android:layout_below="@id/edtConfiguracionRegisterLocalContenidoClave"
         android:text="@string/general_text_button_cancelar" />
 
     <Button
-        android:id="@+id/btnConfiguracionConfiguracionEstablecimientoBotonAceptar"
+        android:id="@+id/btnConfiguracionRegisterLocalBotonAceptar"
         style="@style/StyleButtonAccept"
         android:layout_alignParentEnd="true"
-        android:layout_below="@id/edtConfiguracionConfiguracionEstablecimientoContenidoClave"
+        android:layout_below="@id/edtConfiguracionRegisterLocalContenidoClave"
         android:text="@string/general_text_button_aceptar" />
 
 

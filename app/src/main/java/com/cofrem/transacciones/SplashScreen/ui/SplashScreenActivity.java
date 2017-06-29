@@ -3,6 +3,7 @@ package com.cofrem.transacciones.SplashScreen.ui;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -13,6 +14,8 @@ import com.cofrem.transacciones.Modules.ModuleConfiguration.RegisterConfiguratio
 import com.cofrem.transacciones.R;
 import com.cofrem.transacciones.SplashScreen.SplashScreenPresenter;
 import com.cofrem.transacciones.SplashScreen.SplashScreenPresenterImpl;
+import com.cofrem.transacciones.models.Configurations;
+import com.cofrem.transacciones.models.Reports;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
@@ -93,8 +96,7 @@ public class SplashScreenActivity extends Activity implements SplashScreenView {
     @Override
     public void handleVerifyInitialConfigExiste() {
 
-        //Agregado el texto de error del manejador de verificafcion inicial encontrada
-
+        //Agrega el texto de error del manejador de configuracion inicial encontrada
         txvSplashScreenInfo.setText(txvSplashScreenInfo.getText() +
                 "\n " + getString(R.string.general_message_verify_configuration_initial_existe)
         );
@@ -114,8 +116,7 @@ public class SplashScreenActivity extends Activity implements SplashScreenView {
     @Override
     public void handleVerifyInitialConfigNoExiste() {
 
-        //Agregado el texto de error del manejador de verificafcion inicial no encontrada
-
+        //Agrega el texto de error del manejador de configuracion inicial no encontrada
         txvSplashScreenInfo.setText(txvSplashScreenInfo.getText() +
                 "\n " + getString(R.string.general_message_verify_configuration_initial_no_existe)
         );
@@ -130,8 +131,7 @@ public class SplashScreenActivity extends Activity implements SplashScreenView {
     @Override
     public void handleVerifyInitialConfigNoValida() {
 
-        //Agregado el texto de error del manejador de verificacion inicial no vlida
-
+        //Agrega el texto de error del manejador de verificacion inicial no valida
         txvSplashScreenInfo.setText(txvSplashScreenInfo.getText() +
                 "\n " + getString(R.string.general_message_verify_configuration_initial_no_valida)
         );
@@ -170,6 +170,8 @@ public class SplashScreenActivity extends Activity implements SplashScreenView {
      */
     @Override
     public void handleInternetConnectionSuccess() {
+
+        //Agrega el texto de informacion del manejador de conexion a internet existente
         txvSplashScreenInfo.setText(txvSplashScreenInfo.getText() +
                 "\n" +
                 getString(R.string.general_message_internet_info)
@@ -181,6 +183,11 @@ public class SplashScreenActivity extends Activity implements SplashScreenView {
      */
     @Override
     public void handleInternetConnectionError() {
+
+        //Oculta la barra de progreso
+        hideProgress();
+
+        //Agrega el texto de error del manejador de conexion a internet no existente
         txvSplashScreenInfo.setText(txvSplashScreenInfo.getText() +
                 "\n" +
                 getString(R.string.general_message_internet_error)
@@ -262,7 +269,7 @@ public class SplashScreenActivity extends Activity implements SplashScreenView {
     /**
      * Metodo para mostrar la barra de progreso
      */
-    public void showProgress() {
+    private void showProgress() {
         // Muesra la barra  de progreso
         pgbLoadingSplashScreen.setVisibility(View.VISIBLE);
     }
@@ -270,7 +277,7 @@ public class SplashScreenActivity extends Activity implements SplashScreenView {
     /**
      * Metodo para ocultar la barra de progreso
      */
-    public void hideProgress() {
+    private void hideProgress() {
         //Oculta la barra de progreso
         pgbLoadingSplashScreen.setVisibility(View.GONE);
     }
@@ -303,7 +310,7 @@ public class SplashScreenActivity extends Activity implements SplashScreenView {
     /**
      * Metodo para navegar a la ventana inicial
      */
-    public void navigateToMainScreen() {
+    private void navigateToMainScreen() {
 
         txvSplashScreenInfo.setText(txvSplashScreenInfo.getText() +
                 "\n Aqui se muestra la pantalla principal"
@@ -327,18 +334,27 @@ public class SplashScreenActivity extends Activity implements SplashScreenView {
     /**
      * Metodo para navegar a la ventana inicial
      */
-    public void navigateToConfigurationScreen() {
+    private void navigateToConfigurationScreen() {
+
+        //Oculta la barra de progreso
         hideProgress();
 
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
 
+                //Inicializacion del Bundle de argumentos
+                Bundle args = new Bundle();
+
+                args.putInt(Configurations.keyConfiguration, Configurations.configuracionRegistrarConfigInicial);
+
                 Intent intent = new Intent(SplashScreenActivity.this, RegisterConfigurationScreenActivity_.class);
                 //Agregadas banderas para no retorno
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
                         | Intent.FLAG_ACTIVITY_NEW_TASK
                         | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+                intent.putExtras(args);
 
                 startActivity(intent);
             }

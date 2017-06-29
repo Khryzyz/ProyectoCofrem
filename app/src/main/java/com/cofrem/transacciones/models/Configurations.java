@@ -10,8 +10,10 @@ public class Configurations {
     /**
      * Configuraciones disponibles
      */
-    public final static int configuracionRegistrar = 1;
+    public final static int configuracionRegistrarConfigInicial = 1;
 
-    public final static int configuracionProbar = 2;
+    public final static int configuracionRegistrar = 2;
+
+    public final static int configuracionProbar = 3;
 
 }
