@@ -2,6 +2,7 @@ package com.cofrem.transacciones.Modules.ModuleConfiguration.RegisterConfigurati
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -31,7 +32,11 @@ public class RegisterConfigurationScreenActivity extends Activity implements Reg
      * Declaracion de componentes y variables
      * #############################################################################################
      */
-    //Declaracion de los Contoles
+    /**
+     * Declaracion de los Contoles
+     */
+
+    // Contents del modulo
     @ViewById
     RelativeLayout bodyContentConfigurationPassTecnico;
     @ViewById
@@ -44,10 +49,65 @@ public class RegisterConfigurationScreenActivity extends Activity implements Reg
     RelativeLayout bodyContentConfigurationLocal;
     @ViewById
     RelativeLayout bodyContentConfigurationExito;
+
+    //Paso configuracion__register_paso_pass_tecnico
     @ViewById
     Button btnConfiguracionRegisterPassTecnicoBotonCancelar;
     @ViewById
     EditText edtConfiguracionRegisterPassTecnicoContenidoClave;
+
+    //Paso configuracion__register_paso_pass_tecnico
+    @ViewById
+    Button btnConfiguracionRegisterHostBotonCancelar;
+    @ViewById
+    EditText edtConfiguracionRegisterHostContenidoValor;
+
+    /**
+     * Model que almacena la configuracion del dispositivo
+     */
+    Configurations modelConfiguration = new Configurations();
+
+    /**
+     * Pasos definidos del registro de configuracion
+     */
+    int pasoRegisterConfguration = 0; // Define el paso actual
+
+    final static int PASO_PASS_TECNICO = 0;
+    final static int PASO_HOST = 1;
+    final static int PASO_PORT = 2;
+    final static int PASO_LOCAL = 3;
+    final static int PASO_ESTABLECIMIENTO = 4;
+
+    //Creación del filtro para el ingreso de IP
+    InputFilter inputFilter = new InputFilter() {
+        @Override
+        public CharSequence filter(CharSequence source,
+                                   int start,
+                                   int end,
+                                   android.text.Spanned dest,
+                                   int dstart,
+                                   int dend) {
+            if (end > start) {
+                String destTxt = dest.toString();
+                String resultingTxt = destTxt.substring(0, dstart)
+                        + source.subSequence(start, end)
+                        + destTxt.substring(dend);
+                if (!resultingTxt
+                        .matches("^\\d{1,3}(\\.(\\d{1,3}(\\.(\\d{1,3}(\\.(\\d{1,3})?)?)?)?)?)?")) {
+                    return "";
+                } else {
+                    String[] splits = resultingTxt.split("\\.");
+                    for (int i = 0; i < splits.length; i++) {
+                        if (Integer.valueOf(splits[i]) > 255) {
+                            return "";
+                        }
+                    }
+                }
+            }
+            return null;
+        }
+
+    };
 
     /**
      * #############################################################################################
@@ -81,14 +141,21 @@ public class RegisterConfigurationScreenActivity extends Activity implements Reg
          */
         inicializarOcultamientoVistas();
 
+        //Inicializa el paso del registro de la configuracion
+        pasoRegisterConfguration = 0;
+
         //Primera ventana visible
         bodyContentConfigurationPassTecnico.setVisibility(View.VISIBLE);
 
+        //Recibe los parametros del Bundle
         Bundle args = getIntent().getExtras();
 
         if (args.getInt(Configurations.keyConfiguration) == Configurations.configuracionRegistrarConfigInicial) {
             btnConfiguracionRegisterPassTecnicoBotonCancelar.setVisibility(View.GONE);
         }
+
+        //Seteando el valor del filtro en el EditText
+        edtConfiguracionRegisterHostContenidoValor.setFilters(new InputFilter[]{inputFilter});
 
     }
 
@@ -130,10 +197,28 @@ public class RegisterConfigurationScreenActivity extends Activity implements Reg
 
                 //Metodo para ocultar el teclado
                 hideKeyBoard();
-
-                //Metodo para validar la contraseña
-                validatePasswordAdmin();
-
+                switch (pasoRegisterConfguration) {
+                    case PASO_PASS_TECNICO:
+                        //Metodo para validar la contraseña
+                        validatePasswordAdmin();
+                        break;
+                    case PASO_HOST:
+                        //Metodo para validar la contraseña
+                        registerHost();
+                        break;
+                    case PASO_PORT:
+                        //Metodo para validar la contraseña
+                        registerPort();
+                        break;
+                    case PASO_LOCAL:
+                        //Metodo para validar la contraseña
+                        registerLocal();
+                        break;
+                    case PASO_ESTABLECIMIENTO:
+                        //Metodo para validar la contraseña
+                        registerEstablecimiento();
+                        break;
+                }
                 break;
 
             default:
@@ -149,8 +234,30 @@ public class RegisterConfigurationScreenActivity extends Activity implements Reg
      */
     @Override
     public void onBackPressed() {
-        //Vacia la caja de contraseña
-        edtConfiguracionRegisterPassTecnicoContenidoClave.setText("");
+
+        switch (pasoRegisterConfguration) {
+            case PASO_PASS_TECNICO:
+                //Vacia la caja de contraseña
+                edtConfiguracionRegisterPassTecnicoContenidoClave.setText("");
+                break;
+            case PASO_HOST:
+                //Vacia la caja de contraseña
+                edtConfiguracionRegisterHostContenidoValor.setText("");
+                break;
+            case PASO_PORT:
+                //Vacia la caja de
+
+                break;
+            case PASO_LOCAL:
+                //Vacia la caja de
+
+                break;
+            case PASO_ESTABLECIMIENTO:
+                //Vacia la caja de
+
+                break;
+
+        }
     }
 
     /**
@@ -164,13 +271,15 @@ public class RegisterConfigurationScreenActivity extends Activity implements Reg
      */
     @Override
     public void handleValorAccesoValido() {
-        
+
         //Oculta la vista de la contraseña
         bodyContentConfigurationPassTecnico.setVisibility(View.GONE);
 
         //Muestra la vista del Host
         bodyContentConfigurationHost.setVisibility(View.VISIBLE);
 
+        //Actualiza el paso actual
+        pasoRegisterConfguration++;
     }
 
     /**
@@ -209,9 +318,23 @@ public class RegisterConfigurationScreenActivity extends Activity implements Reg
      */
 
     /**
+     * Metodo que oculta por defecto los include de la vista
+     */
+    private void inicializarOcultamientoVistas() {
+
+        bodyContentConfigurationHost.setVisibility(View.GONE);
+        bodyContentConfigurationPort.setVisibility(View.GONE);
+        bodyContentConfigurationEstablecimiento.setVisibility(View.GONE);
+        bodyContentConfigurationLocal.setVisibility(View.GONE);
+        bodyContentConfigurationExito.setVisibility(View.GONE);
+
+    }
+
+    /**
      * Metodo que oculta el teclado al presionar el EditText
      */
-    @Click(R.id.edtConfiguracionRegisterPassTecnicoContenidoClave)
+    @Click({R.id.edtConfiguracionRegisterPassTecnicoContenidoClave,
+            R.id.edtConfiguracionRegisterHostContenidoValor})
     public void hideKeyBoard() {
 
         //Oculta el teclado
@@ -245,16 +368,47 @@ public class RegisterConfigurationScreenActivity extends Activity implements Reg
     }
 
     /**
-     * Metodo que oculta por defecto los include de la vista
+     * Metodo que registra la configuracion del host
      */
-    private void inicializarOcultamientoVistas() {
+    private void registerHost() {
 
-        bodyContentConfigurationHost.setVisibility(View.GONE);
-        bodyContentConfigurationPort.setVisibility(View.GONE);
-        bodyContentConfigurationEstablecimiento.setVisibility(View.GONE);
-        bodyContentConfigurationLocal.setVisibility(View.GONE);
-        bodyContentConfigurationExito.setVisibility(View.GONE);
+        modelConfiguration.setHost(edtConfiguracionRegisterHostContenidoValor.getText().toString());
 
+        //Actualiza el paso actual
+        pasoRegisterConfguration++;
+    }
+
+    /**
+     * Metodo que registra la configuracion del port
+     */
+    private void registerPort() {
+
+        modelConfiguration.setPort(1111);
+
+        //Actualiza el paso actual
+        pasoRegisterConfguration++;
+    }
+
+    /**
+     * Metodo que registra la configuracion del local
+     */
+    private void registerLocal() {
+
+        modelConfiguration.setLocal(edtConfiguracionRegisterHostContenidoValor.getText().toString());
+
+        //Actualiza el paso actual
+        pasoRegisterConfguration++;
+    }
+
+    /**
+     * Metodo que registra la configuracion del establecimiento
+     */
+    private void registerEstablecimiento() {
+
+        modelConfiguration.setEstablecimiento(edtConfiguracionRegisterHostContenidoValor.getText().toString());
+
+        //Actualiza el paso actual
+        pasoRegisterConfguration++;
     }
 
 }

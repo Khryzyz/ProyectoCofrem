@@ -14,7 +14,7 @@
         android:text="@string/configuration_text_title_configuracion" />
 
     <TextView
-        android:id="@+id/txvConfiguracionRegisterHostClave"
+        android:id="@+id/txvConfiguracionRegisterHostValor"
         style="@style/StyleTextPrimaryMedium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -23,26 +23,25 @@
         android:text="@string/configuration_text_ingresar_host" />
 
     <EditText
-        android:id="@+id/edtConfiguracionRegisterHostContenidoClave"
+        android:id="@+id/edtConfiguracionRegisterHostContenidoValor"
         style="@style/StylePassPrimary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/txvConfiguracionRegisterHostClave"
-        android:layout_marginBottom="@dimen/appMarginBottom"
-        android:inputType="number" />
+        android:layout_below="@id/txvConfiguracionRegisterHostValor"
+        android:layout_marginBottom="@dimen/appMarginBottom"/>
 
     <Button
         android:id="@+id/btnConfiguracionRegisterHostBotonCancelar"
         style="@style/StyleButtonCancel"
         android:layout_alignParentStart="true"
-        android:layout_below="@id/edtConfiguracionRegisterHostContenidoClave"
+        android:layout_below="@id/edtConfiguracionRegisterHostContenidoValor"
         android:text="@string/general_text_button_cancelar" />
 
     <Button
         android:id="@+id/btnConfiguracionRegisterHostBotonAceptar"
         style="@style/StyleButtonAccept"
         android:layout_alignParentEnd="true"
-        android:layout_below="@id/edtConfiguracionRegisterHostContenidoClave"
+        android:layout_below="@id/edtConfiguracionRegisterHostContenidoValor"
         android:text="@string/general_text_button_aceptar" />
 
 
