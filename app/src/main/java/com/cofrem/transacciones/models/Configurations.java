@@ -21,19 +21,17 @@ public class Configurations {
      */
     private String host;
     private int port;
-    private String local;
-    private String establecimiento;
+    private String dispositivo;
 
     //Constructor vacio
     public Configurations() {
     }
 
     //Constructo con parametros
-    public Configurations(String host, int port, String local, String establecimiento) {
+    public Configurations(String host, int port, String dispositivo) {
         this.host = host;
         this.port = port;
-        this.local = local;
-        this.establecimiento = establecimiento;
+        this.dispositivo = dispositivo;
     }
 
     //Getters y Setters de la clase
@@ -53,19 +51,12 @@ public class Configurations {
         this.port = port;
     }
 
-    public String getLocal() {
-        return local;
+    public String getDispositivo() {
+        return dispositivo;
     }
 
-    public void setLocal(String local) {
-        this.local = local;
+    public void setDispositivo(String dispositivo) {
+        this.dispositivo = dispositivo;
     }
 
-    public String getEstablecimiento() {
-        return establecimiento;
-    }
-
-    public void setEstablecimiento(String establecimiento) {
-        this.establecimiento = establecimiento;
-    }
 }

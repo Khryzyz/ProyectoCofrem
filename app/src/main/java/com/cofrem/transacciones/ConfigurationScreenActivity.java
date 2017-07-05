@@ -6,7 +6,6 @@ import android.os.Handler;
 import android.widget.Toast;
 
 import com.cofrem.transacciones.Modules.ModuleConfiguration.RegisterConfigurationScreen.ui.RegisterConfigurationScreenActivity_;
-import com.cofrem.transacciones.Modules.ModuleConfiguration.TestCommunicationScreen.ui.TestCommunicationScreenActivity;
 import com.cofrem.transacciones.Modules.ModuleConfiguration.TestCommunicationScreen.ui.TestCommunicationScreenActivity_;
 
 import org.androidannotations.annotations.AfterViews;
