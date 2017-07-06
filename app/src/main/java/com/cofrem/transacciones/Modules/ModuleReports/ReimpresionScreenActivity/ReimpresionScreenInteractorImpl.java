@@ -29,13 +29,13 @@ class ReimpresionScreenInteractorImpl implements ReimpresionScreenInteractor {
     }
 
     @Override
-    public void imprimirUltimoRecibo(Context context) {
-        reimpresionScreenRepository.imprimirUltimoRecibo(context);
+    public void validarExistenciaUltimoRecibo(Context context) {
+        reimpresionScreenRepository.validarExistenciaUltimoRecibo(context);
     }
 
     @Override
-    public void imprimirConNumCargo(Context context, String numCargo) {
-        reimpresionScreenRepository.imprimirConNumCargo(context,numCargo);
+    public void validarExistenciaReciboConNumCargo(Context context, String numCargo) {
+        reimpresionScreenRepository.validarExistenciaReciboConNumCargo(context,numCargo);
     }
     /**
      * #############################################################################################

@@ -28,7 +28,7 @@ public interface ReimpresionScreenPresenter {
      *
      * @param context
      */
-    void imprimirUltimoRecibo(Context context);
+    void validarExistenciaUltimoRecibo(Context context);
 
     /**
      * Metodo que Reimprime unm recibo por numero de cargo:
@@ -36,7 +36,7 @@ public interface ReimpresionScreenPresenter {
      * @param context , numCargo
      *
      */
-    void imprimirConNumCargo(Context context,String numCargo);
+    void validarExistenciaReciboConNumCargo(Context context,String numCargo);
 
 
     /**

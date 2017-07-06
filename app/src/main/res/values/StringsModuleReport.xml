@@ -30,10 +30,13 @@
     <string name="report_text_ingeresar_numero_cargo">Ingrese el número de cargo:</string>
     <string name="report_text_numero_cargo">Número de cargo:</string>
     <string name="report_text_ingeresar_clave_dispositivo">Ingrese contraseña del dispositivo</string>
+    <string name="report_text_ingeresar_clave_administrador">Ingrese contraseña del Administrador</string>
     <string name="report_text_valor_ventas">Valor de las ventas</string>
     <string name="report_text_valor_anulaciones">Valor de las anulaciones</string>
 
 
     <!-- Textos adicionales mensajes -->
-    <string name="report_text_message_No_existen_recibo_num_cargo">No existen Recibos con ese número de Cargo</string>
+    <string name="report_text_message_No_existen_recibo_num_cargo">No existen un Recibo con este número de Cargo</string>
+
+
 </resources>

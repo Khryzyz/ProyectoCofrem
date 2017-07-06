@@ -4,14 +4,18 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.BatteryManager;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.cofrem.transacciones.global.InfoGlobalSettingsPrint;
 import com.telpo.tps550.api.printer.ThermalPrinter;
+
+import java.io.File;
 
 public class PrintHandler extends Handler {
 
@@ -19,6 +23,8 @@ public class PrintHandler extends Handler {
     // Atributos
     private static PrintHandler singleton;
     private static Context context;
+
+    private Bitmap bitmapOrigen;
 
     private String messagePrint;
 
@@ -61,8 +67,19 @@ public class PrintHandler extends Handler {
         this.messagePrint = messagePrint;
         singleton.sendMessage(singleton.obtainMessage(InfoGlobalSettingsPrint.CODE_PRINTCONTENT, 1, 0, null)
         );
+    }
 
+    public void printPinture(Bitmap origen){
+        this.bitmapOrigen = origen;
+        singleton.sendMessage(singleton.obtainMessage(InfoGlobalSettingsPrint.CODE_PRINTPICTURE, 1, 0, null)
+        );
+    }
 
+    public void printRecibo(Bitmap origen,String messagePrint){
+        this.bitmapOrigen = origen;
+        this.messagePrint = messagePrint;
+        singleton.sendMessage(singleton.obtainMessage(InfoGlobalSettingsPrint.CODE_PRINTCERIBO, 1, 0, null)
+        );
     }
 
 
@@ -99,6 +116,11 @@ public class PrintHandler extends Handler {
                 }
                 break;
 
+            case InfoGlobalSettingsPrint.CODE_PRINTPICTURE:
+                // progressDialog=ProgressDialog.show(PrinterActivity.this,getString(R.string.bl_dy),getString(R.string.printing_wait));
+                // printting = CODE_PRINTPICTURE;
+                new printPicture().start();
+                break;
 
             case InfoGlobalSettingsPrint.CODE_PRINTCONTENT:
                 // progressDialog=ProgressDialog.show(PrinterActivity.this,getString(R.string.bl_dy),getString(R.string.printing_wait));
@@ -106,10 +128,10 @@ public class PrintHandler extends Handler {
                 new contentPrintThread().start();
                 break;
 
-            case InfoGlobalSettingsPrint.CODE_PRINTPICTURE:
+            case InfoGlobalSettingsPrint.CODE_PRINTCERIBO:
                 // progressDialog=ProgressDialog.show(PrinterActivity.this,getString(R.string.bl_dy),getString(R.string.printing_wait));
                 // printting = CODE_PRINTPICTURE;
-                new printPicture().start();
+                new PrintRecibo().start();
                 break;
 
             case InfoGlobalSettingsPrint.CODE_CANCELPROMPT:
@@ -209,26 +231,38 @@ public class PrintHandler extends Handler {
         @Override
         public void run() {
             super.run();
-            /*
+            String Result;
             setName("PrintPicture Thread");
             try {
                 ThermalPrinter.start();
                 ThermalPrinter.reset();
                 ThermalPrinter.setGray(InfoGlobalSettingsPrint.GRAY_LEVEL);
                 ThermalPrinter.setAlgin(ThermalPrinter.ALGIN_MIDDLE);
-                File file = new File("/mnt/sdcard/111.bmp");
-                if (file.exists()) {
-                    ThermalPrinter.printLogo(BitmapFactory.decodeFile("/mnt/sdcard/111.bmp"));
-                    ThermalPrinter.walkPaper(100);
-                } else {
-                    runOnUiThread(new Runnable() {
 
-                        @Override
-                        public void run() {
-                            Toast.makeText(PrinterActivity.this, getString(R.string.not_find_picture), Toast.LENGTH_LONG).show();
-                        }
-                    });
+                if(bitmapOrigen!=null){
+                    ThermalPrinter.printLogo(bitmapOrigen);
+                    ThermalPrinter.walkPaper(20);
+                }else{
+                    Log.e("error","no se cargo la imagen");
                 }
+
+
+
+//                File file = new File(bitmapOrigen);
+//                if (file.exists()) {
+//                    ThermalPrinter.printLogo(BitmapFactory.decodeFile("/mnt/sdcard/111.bmp"));
+//                    ThermalPrinter.walkPaper(100);
+//                } else {
+//
+//                    Log.e("error","no se cargo la imagen");
+//                    runOnUiThread(new Runnable() {
+//
+//                        @Override
+//                        public void run() {
+//                            Toast.makeText(ReimpresionScreenActivity.this, getString(R.string.not_find_picture), Toast.LENGTH_LONG).show();
+//                        }
+//                    });
+//                }
             } catch (Exception e) {
                 e.printStackTrace();
                 Result = e.toString();
@@ -236,14 +270,14 @@ public class PrintHandler extends Handler {
                     nopaper = true;
                     // return;
                 } else if (Result.equals("com.telpo.tps550.api.printer.OverHeatException")) {
-                    handler.sendMessage(handler.obtainMessage(CODE_OVERHEAT, 1, 0, null));
+                    singleton.sendMessage(singleton.obtainMessage(InfoGlobalSettingsPrint.CODE_OVERHEAT, 1, 0, null));
                 } else {
-                    handler.sendMessage(handler.obtainMessage(CODE_PRINTERR, 1, 0, null));
+                    singleton.sendMessage(singleton.obtainMessage(InfoGlobalSettingsPrint.CODE_PRINTERR, 1, 0, null));
                 }
             } finally {
-                handler.sendMessage(handler.obtainMessage(CODE_CANCELPROMPT, 1, 0, null));
+                singleton.sendMessage(singleton.obtainMessage(InfoGlobalSettingsPrint.CODE_CANCELPROMPT, 1, 0, null));
                 if (nopaper)
-                    handler.sendMessage(handler.obtainMessage(CODE_NOPAPER, 1, 0, null));
+                    singleton.sendMessage(singleton.obtainMessage(InfoGlobalSettingsPrint.CODE_NOPAPER, 1, 0, null));
                 ThermalPrinter.stop();
                 nopaper = false;
                 // PrinterActivity.this.sleep(1500);
@@ -252,16 +286,83 @@ public class PrintHandler extends Handler {
                 // progressDialog.dismiss();
                 // progressDialog = null;
                 // }
-                Log.v(TAG, "The PrintPicture Progress End !!!");
-                if (isClose) {
-                    finish();
-                }
+                Log.v("", "The PrintPicture Progress End !!!");
+//                if (isClose) {
+//                    finish();
+//                }
             }
             // handler.sendMessage(handler
             // .obtainMessage(CODE_ENABLE_BUTTON, 1, 0, null));
-*/
+
         }
     }
+
+
+    /**
+     * Metodo extendido de un hilo q hace algo
+     * - al parecer imprime contenido
+     * - este es el q importa
+     */
+    private class PrintRecibo extends Thread {
+        @Override
+        public void run() {
+            super.run();
+
+            String Result;
+
+            setName("Content Print Thread");
+            try {
+                ThermalPrinter.start();
+                ThermalPrinter.reset();
+                ThermalPrinter.setGray(InfoGlobalSettingsPrint.GRAY_LEVEL);
+                ThermalPrinter.setAlgin(ThermalPrinter.ALGIN_MIDDLE);
+                if(bitmapOrigen!=null){
+                    ThermalPrinter.printLogo(bitmapOrigen);
+                    ThermalPrinter.walkPaper(10);
+                }else{
+                    Log.e("error","no se cargo la imagen");
+                }
+                ThermalPrinter.setAlgin(ThermalPrinter.ALGIN_LEFT);
+                ThermalPrinter.setLeftIndent(InfoGlobalSettingsPrint.LEFT_DISTANCE);
+                ThermalPrinter.setLineSpace(InfoGlobalSettingsPrint.LINE_DISTANCE);
+                if (InfoGlobalSettingsPrint.FONT_SIZE == 4) {
+                    ThermalPrinter.setFontSize(2);
+                    ThermalPrinter.enlargeFontSize(2, 2);
+                } else if (InfoGlobalSettingsPrint.FONT_SIZE == 3) {
+                    ThermalPrinter.setFontSize(1);
+                    ThermalPrinter.enlargeFontSize(2, 2);
+                } else if (InfoGlobalSettingsPrint.FONT_SIZE == 2) {
+                    ThermalPrinter.setFontSize(2);
+                } else if (InfoGlobalSettingsPrint.FONT_SIZE == 1) {
+                    ThermalPrinter.setFontSize(1);
+                }
+                ThermalPrinter.setGray(InfoGlobalSettingsPrint.GRAY_LEVEL);
+                ThermalPrinter.addString(messagePrint);
+                ThermalPrinter.printString();
+                ThermalPrinter.clearString();
+                ThermalPrinter.walkPaper(100);
+            } catch (Exception e) {
+                e.printStackTrace();
+                Result = e.toString();
+                if (Result.equals("com.telpo.tps550.api.printer.NoPaperException")) {
+                    nopaper = true;
+                    // return;
+                } else if (Result.equals("com.telpo.tps550.api.printer.OverHeatException")) {
+                    singleton.sendMessage(singleton.obtainMessage(InfoGlobalSettingsPrint.CODE_OVERHEAT, 1, 0, null));
+                } else {
+                    singleton.sendMessage(singleton.obtainMessage(InfoGlobalSettingsPrint.CODE_PRINTERR, 1, 0, null));
+                }
+            } finally {
+                // lock.release();
+                singleton.sendMessage(singleton.obtainMessage(InfoGlobalSettingsPrint.CODE_CANCELPROMPT, 1, 0, null));
+                if (nopaper)
+                    singleton.sendMessage(singleton.obtainMessage(InfoGlobalSettingsPrint.CODE_NOPAPER, 1, 0, null));
+                ThermalPrinter.stop();
+                nopaper = false;
+            }
+        }
+    }
+
 
     /**
      * Metodo extendido de un hilo q hace algo

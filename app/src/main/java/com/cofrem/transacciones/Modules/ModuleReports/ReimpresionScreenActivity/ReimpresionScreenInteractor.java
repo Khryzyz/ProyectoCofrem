@@ -5,7 +5,7 @@ import android.content.Context;
 interface ReimpresionScreenInteractor {
 
 
-    void imprimirUltimoRecibo(Context context);
+    void validarExistenciaUltimoRecibo(Context context);
 
 
     /**
@@ -14,5 +14,5 @@ interface ReimpresionScreenInteractor {
      * @param context , numCargo
      *
      */
-    void imprimirConNumCargo(Context context,String numCargo);
+    void validarExistenciaReciboConNumCargo(Context context,String numCargo);
 }
