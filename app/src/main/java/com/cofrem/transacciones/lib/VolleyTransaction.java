@@ -41,7 +41,7 @@ public class VolleyTransaction {
                         //@param int method
                         Request.Method.POST,
 
-                        //@param URL
+                        //@param PARAM_URL
                         InfoGlobalTransaccionREST.URL_BASE + "/" + moduleTransaccion,
 
                         //@param Class<T> clazz Clase o modelo en el que se formatean los datos
@@ -106,7 +106,7 @@ public class VolleyTransaction {
                         //@param int method
                         Request.Method.GET,
 
-                        //@param URL
+                        //@param PARAM_URL
                         InfoGlobalTransaccionREST.URL_BASE + "/" + moduleTransaccion,
 
                         //@param Class<T> clazz Clase o modelo en el que se formatean los datos

@@ -6,6 +6,7 @@ import com.cofrem.transacciones.Modules.ModuleConfiguration.RegisterConfiguratio
 import com.cofrem.transacciones.Modules.ModuleConfiguration.RegisterConfigurationScreen.ui.RegisterConfigurationScreenView;
 import com.cofrem.transacciones.lib.EventBus;
 import com.cofrem.transacciones.lib.GreenRobotEventBus;
+import com.cofrem.transacciones.models.Configurations;
 
 public class RegisterConfigurationScreenPresenterImpl implements RegisterConfigurationScreenPresenter {
 
@@ -68,10 +69,21 @@ public class RegisterConfigurationScreenPresenterImpl implements RegisterConfigu
      * @param passAdmin
      */
     @Override
-    public void validateAccessAdmin(Context context, int passAdmin) {
+    public void validateAccessAdmin(Context context, String passAdmin) {
         if (registerConfigurationScreenView != null) {
             registerConfigurationScreenInteractor.validateAccessAdmin(context, passAdmin);
         }
+    }
+
+    /**
+     * Registra los parametros de conexion del dispositivo
+     *
+     * @param context
+     * @param configurations
+     */
+    @Override
+    public void registerConexion(Context context, Configurations configurations) {
+        registerConfigurationScreenInteractor.registerConexion(context, configurations);
     }
 
     /**
@@ -93,6 +105,8 @@ public class RegisterConfigurationScreenPresenterImpl implements RegisterConfigu
                 onValorAccesoError();
                 break;
 
+            //TODO: AGREGAR EVENTOS FALTANTES
+
         }
     }
 
@@ -111,6 +125,7 @@ public class RegisterConfigurationScreenPresenterImpl implements RegisterConfigu
             registerConfigurationScreenView.handleValorAccesoValido();
         }
     }
+
     /**
      * Metodo para manejar el valor de acceso NO valido
      */
@@ -119,6 +134,7 @@ public class RegisterConfigurationScreenPresenterImpl implements RegisterConfigu
             registerConfigurationScreenView.handleValorAccesoNoValido();
         }
     }
+
     /**
      * Metodo para manejar el error en la configuracion de valor de acceso
      */

@@ -25,6 +25,7 @@
     <EditText
         android:id="@+id/edtConfiguracionRegisterHostContenidoValor"
         style="@style/StylePassPrimary"
+        android:text="190.25.202.186"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/txvConfiguracionRegisterHostValor"

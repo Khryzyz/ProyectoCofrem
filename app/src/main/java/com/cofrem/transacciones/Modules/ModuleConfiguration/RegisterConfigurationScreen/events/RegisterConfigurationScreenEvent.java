@@ -4,7 +4,14 @@ public class RegisterConfigurationScreenEvent {
 
     public final static int onValorAccesoValido = 0;
     public final static int onValorAccesoNoValido = 1;
-    public final static int onValorAccesoError= 2;
+    public final static int onValorAccesoError = 2;
+    public final static int onRegistroConfiguracionSuccess = 3;
+    public final static int onRegistroConfiguracionError = 4;
+    public final static int onInformacionDispositivoSuccess = 5;
+    public final static int onInformacionDispositivoError = 6;
+    public final static int onProccessInformacionEstablecimientoSuccess = 7;
+    public final static int onProccessInformacionEstablecimientoError = 8;
+
 
     // Variable que maneja los tipos de eventos
     private int eventType;

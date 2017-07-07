@@ -17,21 +17,21 @@ public class Configurations {
     public final static int configuracionProbar = 3;
 
     /**
-     * Modelo para el registro de la configuracion del dispositivo
+     * Modelo para el registro de la configuracion del codigoDispositivo
      */
     private String host;
     private int port;
-    private String dispositivo;
+    private String codigoDispositivo;
 
     //Constructor vacio
     public Configurations() {
     }
 
     //Constructo con parametros
-    public Configurations(String host, int port, String dispositivo) {
+    public Configurations(String host, int port, String codigoDispositivo) {
         this.host = host;
         this.port = port;
-        this.dispositivo = dispositivo;
+        this.codigoDispositivo = codigoDispositivo;
     }
 
     //Getters y Setters de la clase
@@ -51,12 +51,12 @@ public class Configurations {
         this.port = port;
     }
 
-    public String getDispositivo() {
-        return dispositivo;
+    public String getCodigoDispositivo() {
+        return codigoDispositivo;
     }
 
-    public void setDispositivo(String dispositivo) {
-        this.dispositivo = dispositivo;
+    public void setCodigoDispositivo(String codigoDispositivo) {
+        this.codigoDispositivo = codigoDispositivo;
     }
 
 }

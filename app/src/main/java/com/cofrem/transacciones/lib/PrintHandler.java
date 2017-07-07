@@ -80,7 +80,7 @@ public class PrintHandler extends Handler {
 /*
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
                 alertDialog.setTitle(R.string.operation_result);
-                alertDialog.setMessage(getString(R.string.LowBattery));
+                alertDialog.setMessageWS(getString(R.string.LowBattery));
                 alertDialog.setPositiveButton(getString(R.string.dlg_ok), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -127,7 +127,7 @@ public class PrintHandler extends Handler {
             case InfoGlobalSettingsPrint.CODE_OVERHEAT:
                /* AlertDialog.Builder overHeatDialog = new AlertDialog.Builder(context);
                 overHeatDialog.setTitle(R.string.operation_result);
-                overHeatDialog.setMessage(getString(R.string.overTemp));
+                overHeatDialog.setMessageWS(getString(R.string.overTemp));
                 overHeatDialog.setPositiveButton(getString(R.string.dlg_ok), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -322,7 +322,7 @@ public class PrintHandler extends Handler {
         /*
         AlertDialog.Builder dlg = new AlertDialog.Builder(context);
         dlg.setTitle(getString(R.string.noPaper));
-        dlg.setMessage(getString(R.string.noPaperNotice));
+        dlg.setMessageWS(getString(R.string.noPaperNotice));
         dlg.setPositiveButton(R.string.sure, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {

@@ -350,7 +350,7 @@ public class SplashScreenActivity extends Activity implements SplashScreenView {
     }
 
     /**
-     * Metodo para navegar a la ventana inicial
+     * Metodo para navegar a la ventana de registro de configuracion
      */
     private void navigateToConfigurationScreen() {
 

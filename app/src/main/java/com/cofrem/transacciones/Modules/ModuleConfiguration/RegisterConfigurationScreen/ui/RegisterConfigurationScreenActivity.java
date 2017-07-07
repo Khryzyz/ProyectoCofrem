@@ -426,7 +426,7 @@ public class RegisterConfigurationScreenActivity extends Activity implements Reg
 
         if (passwordAdmin.length() == 4) {
 
-            registerConfigurationScreenPresenter.validateAccessAdmin(this, Integer.valueOf(passwordAdmin));
+            registerConfigurationScreenPresenter.validateAccessAdmin(this, passwordAdmin);
 
         } else {
 
@@ -464,7 +464,7 @@ public class RegisterConfigurationScreenActivity extends Activity implements Reg
      * Metodo que registra la configuracion del port
      */
     @Click(R.id.btnConfiguracionRegisterPortBotonAceptar)
-    private void registerPort() {
+    public void registerPort() {
 
         //Registra el valor del port en el modelo de la configuracion
         modelConfiguration.setPort(Integer.parseInt(edtConfiguracionRegisterPortContenidoValor.getText().toString()));
@@ -483,10 +483,10 @@ public class RegisterConfigurationScreenActivity extends Activity implements Reg
      * Metodo que registra la configuracion del dispositivo
      */
     @Click(R.id.btnConfiguracionRegisterDispositivoBotonAceptar)
-    private void registerDispositivo() {
+    public void registerDispositivo() {
 
         //Registra el valor del codigo de dispositivo en el modelo de la configuracion
-        modelConfiguration.setDispositivo(edtConfiguracionRegisterDispositivoContenidoValor.getText().toString());
+        modelConfiguration.setCodigoDispositivo(edtConfiguracionRegisterDispositivoContenidoValor.getText().toString());
 
         registerConfigurationScreenPresenter.registerConexion(this, modelConfiguration);
 

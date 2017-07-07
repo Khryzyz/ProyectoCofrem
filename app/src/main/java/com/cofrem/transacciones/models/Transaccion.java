@@ -5,7 +5,7 @@ import java.sql.Timestamp;
 public class Transaccion {
 
     /**
-     * Modelo para el registro del Dispositivo
+     * Modelo para el registro del Establecimiento
      */
     private int id;
     private int producto_id;

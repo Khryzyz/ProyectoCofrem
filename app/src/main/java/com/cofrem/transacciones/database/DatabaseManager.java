@@ -29,7 +29,7 @@ public class DatabaseManager {
     public static class DatabaseApp {
 
         public static final String DATABASE_NAME = "app_cofrem_transactions.db";
-        public static final int DATABASE_VERSION = 10;
+        public static final int DATABASE_VERSION = 26;
 
     }
 
@@ -65,10 +65,10 @@ public class DatabaseManager {
         public static final String CREATE_TABLE_PRODUCTO =
                 "CREATE TABLE " + TABLE_NAME_PRODUCTO + "(" +
                         COLUMN_PRODUCTO_ID + " " + INT_TYPE + " " + PRIMARY_KEY + " " + AUTOINCREMENT + "," +
-                        COLUMN_PRODUCTO_NOMBRE + " " + STRING_TYPE + ATTR_NOT_NULL + "," +
-                        COLUMN_PRODUCTO_DESCRIPCION + " " + STRING_TYPE + ATTR_NOT_NULL + "," +
-                        COLUMN_PRODUCTO_REGISTRO + " " + STRING_TYPE + ATTR_NOT_NULL + "," +
-                        COLUMN_PRODUCTO_ESTADO + " " + INT_TYPE + ATTR_NOT_NULL + ")";
+                        COLUMN_PRODUCTO_NOMBRE + " " + STRING_TYPE + " " + ATTR_NOT_NULL + "," +
+                        COLUMN_PRODUCTO_DESCRIPCION + " " + STRING_TYPE + " " + ATTR_NOT_NULL + "," +
+                        COLUMN_PRODUCTO_REGISTRO + " " + STRING_TYPE + " " + ATTR_NOT_NULL + "," +
+                        COLUMN_PRODUCTO_ESTADO + " " + INT_TYPE + " " + ATTR_NOT_NULL + ")";
 
         /**
          * Scripts de la tabla registro
@@ -112,12 +112,12 @@ public class DatabaseManager {
         public static final String CREATE_TABLE_TRANSACCIONES =
                 "CREATE TABLE " + TABLE_NAME_TRANSACCIONES + "(" +
                         COLUMN_TRANSACCIONES_ID + " " + INT_TYPE + " " + PRIMARY_KEY + " " + AUTOINCREMENT + "," +
-                        COLUMN_TRANSACCIONES_PRODUCTO_ID + " " + INT_TYPE + ATTR_NOT_NULL + "," +
-                        COLUMN_TRANSACCIONES_NUMERO_CARGO + " " + INT_TYPE + ATTR_NOT_NULL + "," +
-                        COLUMN_TRANSACCIONES_NUMERO_TARJETA + " " + STRING_TYPE + ATTR_NOT_NULL + "," +
-                        COLUMN_TRANSACCIONES_VALOR + " " + INT_TYPE + ATTR_NOT_NULL + "," +
-                        COLUMN_TRANSACCIONES_REGISTRO + " " + TIMESTAMP_TYPE + ATTR_NOT_NULL + "," +
-                        COLUMN_TRANSACCIONES_ESTADO + " " + INT_TYPE + ATTR_NOT_NULL + ")";
+                        COLUMN_TRANSACCIONES_PRODUCTO_ID + " " + INT_TYPE + " " + ATTR_NOT_NULL + "," +
+                        COLUMN_TRANSACCIONES_NUMERO_CARGO + " " + INT_TYPE + " " + ATTR_NOT_NULL + "," +
+                        COLUMN_TRANSACCIONES_NUMERO_TARJETA + " " + STRING_TYPE + " " + ATTR_NOT_NULL + "," +
+                        COLUMN_TRANSACCIONES_VALOR + " " + INT_TYPE + " " + ATTR_NOT_NULL + "," +
+                        COLUMN_TRANSACCIONES_REGISTRO + " " + TIMESTAMP_TYPE + " " + ATTR_NOT_NULL + "," +
+                        COLUMN_TRANSACCIONES_ESTADO + " " + INT_TYPE + " " + ATTR_NOT_NULL + ")";
 
         /**
          * Scripts de la tabla registro
@@ -130,8 +130,8 @@ public class DatabaseManager {
     /**
      * #############################################################################################
      * Tabla Establecimiento:
-     * - Modelado de la tabla producto
-     * - Scripts de la tabla producto
+     * - Modelado de la tabla establecimiento
+     * - Scripts de la tabla establecimiento
      * #############################################################################################
      */
     public static class TableEstablecimiento {
@@ -146,11 +146,12 @@ public class DatabaseManager {
          * Modelado de la tabla
          * Columnas de la tabla
          */
-        public static final String COLUMN_ESTABLECIMIENTO_ID = "id";
         public static final String COLUMN_ESTABLECIMIENTO_CODIGO = "codigo";
         public static final String COLUMN_ESTABLECIMIENTO_NOMBRE = "nombre";
         public static final String COLUMN_ESTABLECIMIENTO_DIRECCION = "direccion";
-        public static final String COLUMN_ESTABLECIMIENTO_PUNTO = "punto";
+        public static final String COLUMN_ESTABLECIMIENTO_CIUDAD = "ciudad";
+        public static final String COLUMN_ESTABLECIMIENTO_NIT = "nit";
+        public static final String COLUMN_ESTABLECIMIENTO_RAZON_SOCIAL = "razonsocial";
         public static final String COLUMN_ESTABLECIMIENTO_REGISTRO = "registro";
         public static final String COLUMN_ESTABLECIMIENTO_ESTADO = "estado";
 
@@ -160,13 +161,14 @@ public class DatabaseManager {
          */
         public static final String CREATE_TABLE_ESTABLECIMIENTO =
                 "CREATE TABLE " + TABLE_NAME_ESTABLECIMIENTO + "(" +
-                        COLUMN_ESTABLECIMIENTO_ID + " " + INT_TYPE + " " + PRIMARY_KEY + " " + AUTOINCREMENT + "," +
-                        COLUMN_ESTABLECIMIENTO_CODIGO + " " + STRING_TYPE + ATTR_NOT_NULL + "," +
-                        COLUMN_ESTABLECIMIENTO_NOMBRE + " " + STRING_TYPE + ATTR_NOT_NULL + "," +
-                        COLUMN_ESTABLECIMIENTO_DIRECCION + " " + STRING_TYPE + ATTR_NOT_NULL + "," +
-                        COLUMN_ESTABLECIMIENTO_PUNTO + " " + STRING_TYPE + ATTR_NOT_NULL + "," +
-                        COLUMN_ESTABLECIMIENTO_REGISTRO + " " + TIMESTAMP_TYPE + ATTR_NOT_NULL + "," +
-                        COLUMN_ESTABLECIMIENTO_ESTADO + " " + INT_TYPE + ATTR_NOT_NULL + ")";
+                        COLUMN_ESTABLECIMIENTO_CODIGO + " " + STRING_TYPE + " " + PRIMARY_KEY + "," +
+                        COLUMN_ESTABLECIMIENTO_NOMBRE + " " + STRING_TYPE + " " + ATTR_NOT_NULL + "," +
+                        COLUMN_ESTABLECIMIENTO_DIRECCION + " " + STRING_TYPE + " " + ATTR_NOT_NULL + "," +
+                        COLUMN_ESTABLECIMIENTO_CIUDAD + " " + STRING_TYPE + " " + ATTR_NOT_NULL + "," +
+                        COLUMN_ESTABLECIMIENTO_NIT + " " + STRING_TYPE + " " + ATTR_NOT_NULL + "," +
+                        COLUMN_ESTABLECIMIENTO_RAZON_SOCIAL + " " + STRING_TYPE + " " + ATTR_NOT_NULL + "," +
+                        COLUMN_ESTABLECIMIENTO_REGISTRO + " " + TIMESTAMP_TYPE + " " + ATTR_NOT_NULL + "," +
+                        COLUMN_ESTABLECIMIENTO_ESTADO + " " + INT_TYPE + " " + ATTR_NOT_NULL + ")";
 
         /**
          * Scripts de la tabla registro
@@ -196,9 +198,8 @@ public class DatabaseManager {
          * Columnas de la tabla
          */
         public static final String COLUMN_CONFIGURACION_CONEXION_HOST = "host";
-        public static final String COLUMN_CONFIGURACION_CONEXION_PUERTO = "puerto";
-        public static final String COLUMN_CONFIGURACION_CONEXION_ESTABLECIMIENTO = "establecimiento";
-        public static final String COLUMN_CONFIGURACION_CONEXION_LOCAL = "local";
+        public static final String COLUMN_CONFIGURACION_CONEXION_PORT = "puerto";
+        public static final String COLUMN_CONFIGURACION_CONEXION_DISPOSITIVO = "dispositivo";
         public static final String COLUMN_CONFIGURACION_CONEXION_REGISTRO = "registro";
         public static final String COLUMN_CONFIGURACION_CONEXION_ESTADO = "estado";
 
@@ -208,12 +209,11 @@ public class DatabaseManager {
          */
         public static final String CREATE_TABLE_CONFIGURACION_CONEXION =
                 "CREATE TABLE " + TABLE_NAME_CONFIGURACION_CONEXION + "(" +
-                        COLUMN_CONFIGURACION_CONEXION_HOST + " " + STRING_TYPE + ATTR_NOT_NULL + "," +
-                        COLUMN_CONFIGURACION_CONEXION_PUERTO + " " + STRING_TYPE + ATTR_NOT_NULL + "," +
-                        COLUMN_CONFIGURACION_CONEXION_ESTABLECIMIENTO + " " + STRING_TYPE + ATTR_NOT_NULL + "," +
-                        COLUMN_CONFIGURACION_CONEXION_LOCAL + " " + STRING_TYPE + ATTR_NOT_NULL + "," +
-                        COLUMN_CONFIGURACION_CONEXION_REGISTRO + " " + TIMESTAMP_TYPE + ATTR_NOT_NULL + "," +
-                        COLUMN_CONFIGURACION_CONEXION_ESTADO + " " + INT_TYPE + ATTR_NOT_NULL + ")";
+                        COLUMN_CONFIGURACION_CONEXION_HOST + " " + STRING_TYPE + " " + ATTR_NOT_NULL + "," +
+                        COLUMN_CONFIGURACION_CONEXION_PORT + " " + STRING_TYPE + " " + ATTR_NOT_NULL + "," +
+                        COLUMN_CONFIGURACION_CONEXION_DISPOSITIVO + " " + STRING_TYPE + " " + ATTR_NOT_NULL + "," +
+                        COLUMN_CONFIGURACION_CONEXION_REGISTRO + " " + TIMESTAMP_TYPE + " " + ATTR_NOT_NULL + "," +
+                        COLUMN_CONFIGURACION_CONEXION_ESTADO + " " + INT_TYPE + " " + ATTR_NOT_NULL + ")";
 
         /**
          * Scripts de la tabla registro
@@ -242,7 +242,8 @@ public class DatabaseManager {
          * Modelado de la tabla
          * Columnas de la tabla
          */
-        public static final String COLUMN_CONFIGURACION_ACCESO_VALOR = "valor";
+        public static final String COLUMN_CONFIGURACION_ACCESO_CLAVE_TECNICA = "clavetecnica";
+        public static final String COLUMN_CONFIGURACION_ACCESO_CLAVE_ADMIN = "claveadmin";
         public static final String COLUMN_CONFIGURACION_ACCESO_REGISTRO = "registro";
         public static final String COLUMN_CONFIGURACION_ACCESO_ESTADO = "estado";
 
@@ -252,9 +253,10 @@ public class DatabaseManager {
          */
         public static final String CREATE_TABLE_CONFIGURACION_ACCESO =
                 "CREATE TABLE " + TABLE_NAME_CONFIGURACION_ACCESO + "(" +
-                        COLUMN_CONFIGURACION_ACCESO_VALOR + " " + INT_TYPE + ATTR_NOT_NULL + "," +
-                        COLUMN_CONFIGURACION_ACCESO_REGISTRO + " " + TIMESTAMP_TYPE + ATTR_NOT_NULL + "," +
-                        COLUMN_CONFIGURACION_ACCESO_ESTADO + " " + INT_TYPE + ATTR_NOT_NULL + ")";
+                        COLUMN_CONFIGURACION_ACCESO_CLAVE_TECNICA + " " + INT_TYPE + " " + ATTR_NOT_NULL + "," +
+                        COLUMN_CONFIGURACION_ACCESO_CLAVE_ADMIN + " " + INT_TYPE + " " + ATTR_NULL + "," +
+                        COLUMN_CONFIGURACION_ACCESO_REGISTRO + " " + TIMESTAMP_TYPE + " " + ATTR_NOT_NULL + "," +
+                        COLUMN_CONFIGURACION_ACCESO_ESTADO + " " + INT_TYPE + " " + ATTR_NOT_NULL + ")";
 
         /**
          * Scripts de la tabla registro
