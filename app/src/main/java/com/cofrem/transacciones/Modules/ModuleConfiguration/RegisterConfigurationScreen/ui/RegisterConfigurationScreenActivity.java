@@ -37,6 +37,10 @@ public class RegisterConfigurationScreenActivity extends Activity implements Reg
      * Declaracion de componentes y variables
      * #############################################################################################
      */
+
+    //Almacena el valor de la pantalla anterior
+    int valorRetorno;
+
     /**
      * Declaracion de los Contoles
      */
@@ -167,7 +171,9 @@ public class RegisterConfigurationScreenActivity extends Activity implements Reg
         //Recibe los parametros del Bundle
         Bundle args = getIntent().getExtras();
 
-        if (args.getInt(Configurations.keyConfiguration) == Configurations.configuracionRegistrarConfigInicial) {
+        valorRetorno = args.getInt(Configurations.keyConfiguration);
+
+        if (valorRetorno == Configurations.configuracionRegistrarConfigInicial) {
             btnConfiguracionRegisterPassTecnicoBotonCancelar.setVisibility(View.GONE);
             btnConfiguracionRegisterHostBotonCancelar.setVisibility(View.GONE);
             btnConfiguracionRegisterPortBotonCancelar.setVisibility(View.GONE);
@@ -432,20 +438,47 @@ public class RegisterConfigurationScreenActivity extends Activity implements Reg
         //Muestra el mensaje de error del registro de informacion del dispositivo incorrecto
         Toast.makeText(this, R.string.configuration_text_procesar_informacion_dispositivo_success, Toast.LENGTH_SHORT).show();
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
+        switch (valorRetorno) {
 
-                Intent intent = new Intent(RegisterConfigurationScreenActivity.this, SplashScreenActivity_.class);
-                //Agregadas banderas para no retorno
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
-                        | Intent.FLAG_ACTIVITY_NEW_TASK
-                        | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            case Configurations.configuracionRegistrarConfigInicial:
 
-                startActivity(intent);
-            }
-        }, 1000);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
 
+                        Intent intent = new Intent(RegisterConfigurationScreenActivity.this, SplashScreenActivity_.class);
+
+                        //Agregadas banderas para no retorno
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
+                                | Intent.FLAG_ACTIVITY_NEW_TASK
+                                | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+                        startActivity(intent);
+                    }
+                }, 1000);
+
+                break;
+
+            case Configurations.configuracionRegistrar:
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        Intent intent = new Intent(RegisterConfigurationScreenActivity.this, ConfigurationScreenActivity_.class);
+
+                        //Agregadas banderas para no retorno
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
+                                | Intent.FLAG_ACTIVITY_NEW_TASK
+                                | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+                        startActivity(intent);
+                    }
+                }, 1000);
+
+                break;
+
+        }
     }
 
     /**
