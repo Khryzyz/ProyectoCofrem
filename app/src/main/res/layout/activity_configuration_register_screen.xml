@@ -4,6 +4,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <FrameLayout
+        android:id="@+id/frlPgbHldRegisterScreen"
+        style="@style/StyleProgressbarHolder"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:id="@+id/pgbRegisterScreen"
+            style="@style/StyleProgressbar" />
+    </FrameLayout>
+
     <!--Header de los modulos-->
     <include
         android:id="@+id/headerContent"
@@ -51,15 +61,5 @@
         android:layout_height="match_parent"
         android:layout_below="@id/headerContent"
         android:visibility="gone" />
-
-    <FrameLayout
-        android:id="@+id/frlPgbHldRegisterScreen"
-        style="@style/StyleProgressbarHolder">
-
-        <ProgressBar
-            android:id="@+id/pgbRegisterScreen"
-            style="@style/StyleProgressbar" />
-        s
-    </FrameLayout>
 
 </RelativeLayout>
