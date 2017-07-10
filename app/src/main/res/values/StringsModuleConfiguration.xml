@@ -38,8 +38,11 @@
     <string name="configuration_text_registro_conexion_success">Configuración de conexión registrada correctamente.</string>
     <string name="configuration_text_registro_conexion_error">Error en el registro de la configuración de conexión.</string>
 
-    <string name="configuration_text_informacion_dispositivo_success">Información del dispositivo registrada correctamente.</string>
-    <string name="configuration_text_informacion_dispositivo_error_database">Error en el registro de la información del dispositivo.</string>
-    <string name="configuration_text_informacion_dispositivo_error_connection">Error en la recepcion de la información del dispositivo.</string>
+    <string name="configuration_text_informacion_dispositivo_success">Información del dispositivo consultada correctamente.</string>
+    <string name="configuration_text_informacion_dispositivo_error_conexion">Error en la consulta de la información del dispositivo.</string>
+    <string name="configuration_text_informacion_dispositivo_error_informacion">Error en la consulta de la información del dispositivo.</string>
+
+    <string name="configuration_text_procesar_informacion_dispositivo_success">Información del dispositivo registrada correctamente.</string>
+    <string name="configuration_text_procesar_informacion_dispositivo_error">Error en el registro de la información del dispositivo.</string>
 
 </resources>

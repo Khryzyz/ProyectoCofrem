@@ -10,12 +10,21 @@ import org.ksoap2.serialization.SoapObject;
 
 public class KsoapAsync extends AsyncTask<TransactionWS, Integer, SoapObject> {
 
+    /**
+     * Interface para el callback de datos
+     */
     public interface ResponseKsoapAsync {
         SoapObject processFinish(SoapObject soapResponse);
     }
 
-    public ResponseKsoapAsync delegate = null;//Call back interface
+    //Call back interface
+    public ResponseKsoapAsync delegate = null;
 
+    /**
+     * Metodo de la interface de devolucion
+     *
+     * @param response
+     */
     public KsoapAsync(ResponseKsoapAsync response) {
         delegate = response;//Assigning call back interfacethrough constructor
     }
@@ -63,21 +72,21 @@ public class KsoapAsync extends AsyncTask<TransactionWS, Integer, SoapObject> {
 
         }
 
-        //TODO: MODIFICAR EL LLAMADO DE LA URL
         //request to server and get Soap Primitive response
-        SoapObject soapResponse = KsoapTransaction.getData("http://"+transactionWs.getUrlTransaction()+"/WsDatafono/Datafono?wsdl", transactionWs.getNameSpaceTransaction() + transactionWs.getMethodNameTransaction(), soapRequest);
+        SoapObject soapResponse = KsoapTransaction.getData(transactionWs.getUrlTransaction(), transactionWs.getNameSpaceTransaction() + transactionWs.getMethodNameTransaction(), soapRequest);
 
         return soapResponse;
     }
 
     /**
-     * Al concluir la ejecucion retorna la respuesta
+     * Metodo que se ejecuta despues de la ejecucion retorna la respuesta
      *
      * @param soapResponse
      */
     @Override
     protected void onPostExecute(SoapObject soapResponse) {
 
+        //Delegado que retorna el objeto soap
         delegate.processFinish(soapResponse);
     }
 }

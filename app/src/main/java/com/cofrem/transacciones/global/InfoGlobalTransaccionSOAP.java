@@ -2,9 +2,11 @@ package com.cofrem.transacciones.global;
 
 public class InfoGlobalTransaccionSOAP {
 
-    public final static String PARAM_URL = "http://190.25.202.186:8082/WsDatafono/Datafono?wsdl";
+    public final static String HTTP = "http://";
 
-    public final static String NAME_SPACE = "http://datafono/";
+    public final static String WEB_SERVICE_URI = "/WsDatafono/Datafono?wsdl";
+
+    public final static String NAME_SPACE = "datafono/";
 
     public final static String METHOD_NAME_PUNTO = "Punto";
 

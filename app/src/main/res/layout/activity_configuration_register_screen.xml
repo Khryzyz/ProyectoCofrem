@@ -52,4 +52,14 @@
         android:layout_below="@id/headerContent"
         android:visibility="gone" />
 
+    <FrameLayout
+        android:id="@+id/frlPgbHldRegisterScreen"
+        style="@style/StyleProgressbarHolder">
+
+        <ProgressBar
+            android:id="@+id/pgbRegisterScreen"
+            style="@style/StyleProgressbar" />
+        s
+    </FrameLayout>
+
 </RelativeLayout>

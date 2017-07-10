@@ -78,7 +78,7 @@ public class ReimpresionScreenPresenterImpl implements ReimpresionScreenPresente
     @Override
     public void VerifySuccess() {
         if (reimpresionScreenView != null) {
-           // reimpresionScreenInteractor.validateAccessAdmin();
+           // reimpresionScreenInteractor.validarPasswordTecnico();
         }
     }
 

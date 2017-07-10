@@ -5,43 +5,51 @@ public interface RegisterConfigurationScreenView {
     /**
      * Metodo para manejar el valor de acceso valido
      */
-    void handleValorAccesoValido();
+    void handlePasswordTecnicoValido();
 
     /**
      * Metodo para manejar el valor de acceso NO valido
      */
-    void handleValorAccesoNoValido();
+    void handlePasswordTecnicoNoValido();
 
     /**
      * Metodo para manejar el error en la configuracion de valor de acceso
      */
-    void handleValorAccesoError();
+    void handlePasswordTecnicoError();
 
     /**
-     * Metodo para manejar el registro de conexion correcto
+     * Metodo para manejar el registro de la configuracion correcto
      */
-    void handleRegistroConexionSuccess();
+    void handleRegistroConfigConexionSuccess();
 
     /**
-     * Metodo para manejar el registro de conexion incorrecto
+     * Metodo para manejar el registro de la configuracion erroneo
      */
-    void handleRegistroConexionError();
+    void handleRegistroConfigConexionError();
 
     /**
-     * Metodo para manejar el registro de informacion del dispositivo correcto
+     * Metodo para manejar la consulta de la informacion del dispositivo
      */
-    void handleRegistroInformacionDispositivoSuccess();
-
-    /**
-     * Metodo para manejar el registro de informacion del dispositivo incorrecto
-     * por error en el registro en la base de datos
-     */
-    void handleRegistroInformacionDispositivoErrorDatabase();
+    void handleInformacionDispositivoSuccess();
 
     /**
      * Metodo para manejar el registro de informacion del dispositivo incorrecto
-     * por error en la conexion con el web service
      */
-    void handleRegistroInformacionDispositivoErrorConnection();
+    void handleInformacionDispositivoErrorConexion();
+
+    /**
+     * Metodo para manejar el registro de informacion del dispositivo incorrecto
+     */
+    void handleInformacionDispositivoErrorInformacion();
+
+    /**
+     * Metodo para manejar el registro de la informacion del dispositivo correcto
+     */
+    void handleProccessInformacionEstablecimientoSuccess();
+
+    /**
+     * Metodo para manejar el registro de la informacion del dispositivo erronea
+     */
+    void handleProccessInformacionEstablecimientoError();
 
 }

@@ -13,7 +13,7 @@ public interface RegisterConfigurationScreenPresenter {
      * @param context
      * @param passAdmin
      */
-    void validateAccessAdmin(Context context, String passAdmin);
+    void validarPasswordTecnico(Context context, String passAdmin);
 
     /**
      * Registra los parametros de conexion del dispositivo
@@ -21,7 +21,7 @@ public interface RegisterConfigurationScreenPresenter {
      * @param context
      * @param configurations
      */
-    void registerConexion(Context context, Configurations configurations);
+    void registrarConfiguracionConexion(Context context, Configurations configurations);
 
     /**
      * Metodo para la creacion del presentador

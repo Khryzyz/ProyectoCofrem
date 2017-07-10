@@ -20,12 +20,6 @@ import org.ksoap2.serialization.SoapObject;
 import java.util.concurrent.ExecutionException;
 
 public class RegisterConfigurationScreenRepositoryImpl implements RegisterConfigurationScreenRepository {
-    /**
-     * #############################################################################################
-     * Declaracion de componentes y variables
-     * #############################################################################################
-     */
-
 
     /**
      * #############################################################################################
@@ -48,7 +42,7 @@ public class RegisterConfigurationScreenRepositoryImpl implements RegisterConfig
      * @param passAdmin
      */
     @Override
-    public void validateAccessAdmin(Context context, String passAdmin) {
+    public void validarPasswordTecnico(Context context, String passAdmin) {
 
         int validateExistValorAcceso = AppDatabase.getInstance(context).conteoConfiguracionAccesoByClaveTecnica(passAdmin);
 
@@ -73,51 +67,61 @@ public class RegisterConfigurationScreenRepositoryImpl implements RegisterConfig
      * @param configurations
      */
     @Override
-    public void registerConexion(Context context, Configurations configurations) {
+    public void registrarConfiguracionConexion(Context context, Configurations configurations) {
+
+        //Se crea una nueva instancia del model establecimiento
+        Establecimiento establecimiento;
 
         //Se registra la configuracion de la conexion en el dispositivo
         if (AppDatabase.getInstance(context).insertConfiguracionConexion(configurations)) {
 
             //Evento Correcto de registro de configuracion de la conexion en el establecimiento
-            postEvent(RegisterConfigurationScreenEvent.onRegistroConfiguracionSuccess);
-
-            //Se crea una nueva instancia del model establecimiento
-            Establecimiento establecimiento;
+            postEvent(RegisterConfigurationScreenEvent.onRegistroConfigConexionSuccess);
 
             //Valida por medio del WS si la informacion del establecimiento es correcta
-            establecimiento = validateInfoDispositivo(context, configurations.getCodigoDispositivo());
+            establecimiento = validarInfoDispositivo(context, configurations.getCodigoDispositivo());
 
+            //Si la informacion del estableceimiento no es nula, la recoleccion de la informacion es correcta
             if (establecimiento != null) {
 
-                //Evento Correcto de recepcion de informacion del establecimiento desde el WS
-                postEvent(RegisterConfigurationScreenEvent.onInformacionDispositivoSuccess);
+                MessageWS messageWS = establecimiento.getMessageWS();
+                if (messageWS.getCodigoMensaje() == MessageWS.statusTerminalTransactionSuccess ||
+                        messageWS.getCodigoMensaje() == MessageWS.statusTerminalExist) {
 
-                //Se registra la configuracion de la conexion en el establecimiento
-                if (AppDatabase.getInstance(context).processInfoEstablecimiento(establecimiento)) {
+                    //Evento Correcto de recepcion de informacion del establecimiento desde el WS
+                    postEvent(RegisterConfigurationScreenEvent.onInformacionDispositivoSuccess);
 
-                    //Evento Correcto de registro de informacion del establecimiento desde el WS
-                    // y actualizacion de accesos
-                    postEvent(RegisterConfigurationScreenEvent.onProccessInformacionEstablecimientoSuccess);
+                    //Se registra la configuracion de la conexion en el establecimiento
+                    if (AppDatabase.getInstance(context).processInfoEstablecimiento(establecimiento)) {
+
+                        //Evento Correcto de registro de informacion del establecimiento desde el WS
+                        // y actualizacion de accesos
+                        postEvent(RegisterConfigurationScreenEvent.onProccessInformacionEstablecimientoSuccess);
+                    } else {
+                        //Evento Erroneo de registro de informacion del establecimiento desde el WS
+                        // y actualizacion de accesos
+                        postEvent(RegisterConfigurationScreenEvent.onProccessInformacionEstablecimientoError);
+                    }
 
                 } else {
 
                     //Evento Erroneo de registro de informacion del establecimiento desde el WS
                     // y actualizacion de accesos
-                    postEvent(RegisterConfigurationScreenEvent.onProccessInformacionEstablecimientoError);
+                    postEvent(RegisterConfigurationScreenEvent.onInformacionDispositivoErrorInformacion);
 
                 }
 
             } else {
 
                 //Evento Erroneo de recepcion de informacion del establecimiento desde el WS
-                postEvent(RegisterConfigurationScreenEvent.onInformacionDispositivoError);
+                postEvent(RegisterConfigurationScreenEvent.onInformacionDispositivoErrorConexion);
 
             }
 
         } else {
 
             //Evento Erroneo de registro de configuracion de la conexion en el establecimiento
-            postEvent(RegisterConfigurationScreenEvent.onRegistroConfiguracionError);
+            postEvent(RegisterConfigurationScreenEvent.onRegistroConfigConexionError);
         }
 
     }
@@ -130,27 +134,43 @@ public class RegisterConfigurationScreenRepositoryImpl implements RegisterConfig
      */
 
     /**
-     * Metodo que valida mediantre el WS la existencia del dispositivo
+     * Metodo que:
+     * - valida mediante el WS la existencia del dispositivo
+     * - Extrae la informacion del establecimiento
      *
+     * @param context
      * @param codigoDispositivo
+     * @return Establecimiento
      */
-    private Establecimiento validateInfoDispositivo(Context context, String codigoDispositivo) {
+    private Establecimiento validarInfoDispositivo(Context context, String codigoDispositivo) {
 
+        //Se crea una nueva instancia del model establecimiento para ser retornada
         Establecimiento establecimiento = null;
 
+        //Inicializacion y declaracion de parametros para la peticion web service
         String[] params = new String[]{InfoGlobalTransaccionSOAP.PARAM_NAME_CODIGO_TERMINAL, codigoDispositivo};
 
+        //Creacion del modelo TransactionWS para ser usado dentro del webservice
         TransactionWS transactionWS = new TransactionWS(
-                AppDatabase.getInstance(context).obtenerURLConfiguracionConexion(),
-                InfoGlobalTransaccionSOAP.NAME_SPACE,
+                InfoGlobalTransaccionSOAP.HTTP + AppDatabase.getInstance(context).obtenerURLConfiguracionConexion() + InfoGlobalTransaccionSOAP.WEB_SERVICE_URI,
+                InfoGlobalTransaccionSOAP.HTTP + InfoGlobalTransaccionSOAP.NAME_SPACE,
                 InfoGlobalTransaccionSOAP.METHOD_NAME_TERMINAL,
                 new String[][]{params});
 
+        //Inicializacion del objeto que sera devuelto por la transaccion del webservice
         SoapObject soapTransaction = null;
 
         try {
 
+            //Transaccion solicitada al web service
             soapTransaction = new KsoapAsync(new KsoapAsync.ResponseKsoapAsync() {
+
+                /**
+                 * Metodo sobrecargado que maneja el callback de los datos
+                 *
+                 * @param soapResponse
+                 * @return
+                 */
                 @Override
                 public SoapObject processFinish(SoapObject soapResponse) {
                     return soapResponse;
@@ -168,30 +188,60 @@ public class RegisterConfigurationScreenRepositoryImpl implements RegisterConfig
 
         }
 
-        if (soapTransaction != null)
+        //Si la transaccion no genero resultado regresa un establecimiento vacio
+        if (soapTransaction != null) {
 
-        {
-
+            //Inicializacion del modelo MessageWS
             MessageWS messageWS = new MessageWS((SoapObject) soapTransaction.getProperty(0));
 
+            switch (messageWS.getCodigoMensaje()) {
 
-            if (messageWS.getCodigoMensaje() == MessageWS.statusTerminalTransactionSuccess) {
+                //Informacion encontrada
+                case MessageWS.statusTerminalTransactionSuccess:
+                case MessageWS.statusTerminalExist:
 
-                InformacionEstablecimiento informacionEstablecimiento = new InformacionEstablecimiento((SoapObject) soapTransaction.getProperty(1));
+                    //Inicializacion del modelo InformacionEstablecimiento
+                    InformacionEstablecimiento informacionEstablecimiento = new InformacionEstablecimiento((SoapObject) soapTransaction.getProperty(1));
 
-                ConexionEstablecimiento conexionEstablecimiento = new ConexionEstablecimiento((SoapObject) soapTransaction.getProperty(1));
+                    //Inicializacion del modelo ConexionEstablecimiento
+                    ConexionEstablecimiento conexionEstablecimiento = new ConexionEstablecimiento((SoapObject) soapTransaction.getProperty(1));
 
-                establecimiento = new Establecimiento(
-                        informacionEstablecimiento,
-                        conexionEstablecimiento,
-                        messageWS
-                );
+                    //Inicializacion del modelo establecimiento
+                    establecimiento = new Establecimiento(
+                            informacionEstablecimiento,
+                            conexionEstablecimiento,
+                            messageWS
+                    );
+                    break;
 
+                //Transaccion sin resultados
+                case MessageWS.statusTerminalTransactionNoResult:
+                    //Inicializacion del modelo establecimiento
+                    establecimiento = new Establecimiento(
+                            messageWS
+                    );
+                    break;
+
+                //Terminal no existe
+                case MessageWS.statusTerminalNotExist:
+                    //Inicializacion del modelo establecimiento
+                    establecimiento = new Establecimiento(
+                            messageWS
+                    );
+                    break;
+
+                //Error general en la transaccion
+                case MessageWS.statusTerminalErrorException:
+                    //Inicializacion del modelo establecimiento
+                    establecimiento = new Establecimiento(
+                            messageWS
+                    );
+                    break;
             }
 
         }
 
-
+        //Retorno del establecimiento
         return establecimiento;
     }
 

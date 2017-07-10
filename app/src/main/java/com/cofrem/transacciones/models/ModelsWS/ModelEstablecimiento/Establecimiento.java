@@ -11,7 +11,13 @@ public class Establecimiento {
     private ConexionEstablecimiento conexionEstablecimiento;
     private MessageWS messageWS;
 
-    public Establecimiento(InformacionEstablecimiento informacionEstablecimiento, ConexionEstablecimiento conexionEstablecimiento, MessageWS messageWS) {
+    public Establecimiento(MessageWS messageWS) {
+        this.messageWS = messageWS;
+    }
+
+    public Establecimiento(InformacionEstablecimiento informacionEstablecimiento,
+                           ConexionEstablecimiento conexionEstablecimiento,
+                           MessageWS messageWS) {
         this.informacionEstablecimiento = informacionEstablecimiento;
         this.conexionEstablecimiento = conexionEstablecimiento;
         this.messageWS = messageWS;
@@ -40,4 +46,5 @@ public class Establecimiento {
     public void setMessageWS(MessageWS messageWS) {
         this.messageWS = messageWS;
     }
+
 }

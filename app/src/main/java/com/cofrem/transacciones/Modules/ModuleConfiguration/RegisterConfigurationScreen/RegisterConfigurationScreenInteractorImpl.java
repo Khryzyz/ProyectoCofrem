@@ -41,10 +41,10 @@ class RegisterConfigurationScreenInteractorImpl implements RegisterConfiguration
      * @param passAdmin
      */
     @Override
-    public void validateAccessAdmin(Context context, String passAdmin) {
+    public void validarPasswordTecnico(Context context, String passAdmin) {
 
         //Valida el acceso a la configuracion del dispositivo
-        registerConfigurationScreenRepository.validateAccessAdmin(context, passAdmin);
+        registerConfigurationScreenRepository.validarPasswordTecnico(context, passAdmin);
 
     }
 
@@ -55,7 +55,7 @@ class RegisterConfigurationScreenInteractorImpl implements RegisterConfiguration
      * @param configurations
      */
     @Override
-    public void registerConexion(Context context, Configurations configurations) {
-        registerConfigurationScreenRepository.registerConexion(context, configurations);
+    public void registrarConfiguracionConexion(Context context, Configurations configurations) {
+        registerConfigurationScreenRepository.registrarConfiguracionConexion(context, configurations);
     }
 }
