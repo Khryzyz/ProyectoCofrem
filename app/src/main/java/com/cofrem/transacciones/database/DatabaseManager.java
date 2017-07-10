@@ -29,7 +29,7 @@ public class DatabaseManager {
     public static class DatabaseApp {
 
         public static final String DATABASE_NAME = "app_cofrem_transactions.db";
-        public static final int DATABASE_VERSION = 28;
+        public static final int DATABASE_VERSION = 48;
 
     }
 
@@ -253,8 +253,8 @@ public class DatabaseManager {
          */
         public static final String CREATE_TABLE_CONFIGURACION_ACCESO =
                 "CREATE TABLE " + TABLE_NAME_CONFIGURACION_ACCESO + "(" +
-                        COLUMN_CONFIGURACION_ACCESO_CLAVE_TECNICA + " " + INT_TYPE + " " + ATTR_NOT_NULL + "," +
-                        COLUMN_CONFIGURACION_ACCESO_CLAVE_ADMIN + " " + INT_TYPE + " " + ATTR_NULL + "," +
+                        COLUMN_CONFIGURACION_ACCESO_CLAVE_TECNICA + " " + STRING_TYPE + " " + ATTR_NOT_NULL + "," +
+                        COLUMN_CONFIGURACION_ACCESO_CLAVE_ADMIN + " " + STRING_TYPE + " " + ATTR_NULL + "," +
                         COLUMN_CONFIGURACION_ACCESO_REGISTRO + " " + TIMESTAMP_TYPE + " " + ATTR_NOT_NULL + "," +
                         COLUMN_CONFIGURACION_ACCESO_ESTADO + " " + INT_TYPE + " " + ATTR_NOT_NULL + ")";
 

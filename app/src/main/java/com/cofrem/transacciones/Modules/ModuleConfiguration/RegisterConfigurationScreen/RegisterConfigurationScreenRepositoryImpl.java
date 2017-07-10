@@ -8,6 +8,7 @@ import com.cofrem.transacciones.global.InfoGlobalTransaccionSOAP;
 import com.cofrem.transacciones.lib.EventBus;
 import com.cofrem.transacciones.lib.GreenRobotEventBus;
 import com.cofrem.transacciones.lib.KsoapAsync;
+import com.cofrem.transacciones.lib.MD5;
 import com.cofrem.transacciones.models.Configurations;
 import com.cofrem.transacciones.models.ModelsWS.MessageWS;
 import com.cofrem.transacciones.models.ModelsWS.ModelEstablecimiento.ConexionEstablecimiento;
@@ -44,7 +45,7 @@ public class RegisterConfigurationScreenRepositoryImpl implements RegisterConfig
     @Override
     public void validarPasswordTecnico(Context context, String passAdmin) {
 
-        int validateExistValorAcceso = AppDatabase.getInstance(context).conteoConfiguracionAccesoByClaveTecnica(passAdmin);
+        int validateExistValorAcceso = AppDatabase.getInstance(context).conteoConfiguracionAccesoByClaveTecnica(MD5.crypt(passAdmin));
 
         switch (validateExistValorAcceso) {
             case 0:
@@ -85,6 +86,7 @@ public class RegisterConfigurationScreenRepositoryImpl implements RegisterConfig
             if (establecimiento != null) {
 
                 MessageWS messageWS = establecimiento.getMessageWS();
+
                 if (messageWS.getCodigoMensaje() == MessageWS.statusTerminalTransactionSuccess ||
                         messageWS.getCodigoMensaje() == MessageWS.statusTerminalExist) {
 
@@ -98,15 +100,13 @@ public class RegisterConfigurationScreenRepositoryImpl implements RegisterConfig
                         // y actualizacion de accesos
                         postEvent(RegisterConfigurationScreenEvent.onProccessInformacionEstablecimientoSuccess);
                     } else {
-                        //Evento Erroneo de registro de informacion del establecimiento desde el WS
-                        // y actualizacion de accesos
+                        //Evento Erroneo de registro de informacion del establecimiento desde el WS y actualizacion de accesos
                         postEvent(RegisterConfigurationScreenEvent.onProccessInformacionEstablecimientoError);
                     }
 
                 } else {
 
-                    //Evento Erroneo de registro de informacion del establecimiento desde el WS
-                    // y actualizacion de accesos
+                    //Evento Erroneo de registro de informacion del establecimiento desde el WS y actualizacion de accesos
                     postEvent(RegisterConfigurationScreenEvent.onInformacionDispositivoErrorInformacion);
 
                 }
