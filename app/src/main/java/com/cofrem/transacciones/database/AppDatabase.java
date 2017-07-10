@@ -143,7 +143,7 @@ public final class AppDatabase extends SQLiteOpenHelper {
         contentValues.put(DatabaseManager.TableConfiguracionAcceso.COLUMN_CONFIGURACION_ACCESO_ESTADO, 1);
 
         // Insercion del registro en la base de datos
-        Long count = getWritableDatabase().insert(
+        int count = (int) getWritableDatabase().insert(
                 DatabaseManager.TableConfiguracionAcceso.TABLE_NAME_CONFIGURACION_ACCESO,
                 null,
                 contentValues
@@ -281,7 +281,7 @@ public final class AppDatabase extends SQLiteOpenHelper {
      */
     public boolean insertConfiguracionConexion(Configurations configurations) {
 
-        Long count = null;
+        int count = 0;
 
         try {
             getWritableDatabase().beginTransaction();
@@ -304,7 +304,7 @@ public final class AppDatabase extends SQLiteOpenHelper {
             contentValuesInsert.put(DatabaseManager.TableConfiguracionConexion.COLUMN_CONFIGURACION_CONEXION_ESTADO, 1);
 
             // Insercion del registro en la base de datos
-            count = getWritableDatabase().insert(
+            count = (int) getWritableDatabase().insert(
                     DatabaseManager.TableConfiguracionConexion.TABLE_NAME_CONFIGURACION_CONEXION,
                     null,
                     contentValuesInsert
@@ -440,6 +440,7 @@ public final class AppDatabase extends SQLiteOpenHelper {
      * #############################################################################################
      */
 
+
     /**
      * Metodo para Obtener ultima  transaccion
      */
@@ -452,7 +453,9 @@ public final class AppDatabase extends SQLiteOpenHelper {
         Cursor cursor;
 
         cursor = getWritableDatabase().rawQuery(
-                "SELECT * FROM " + DatabaseManager.TableTransacciones.TABLE_NAME_TRANSACCIONES + " ORDER BY " + DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_REGISTRO + " ASC LIMIT 1", null
+                "SELECT * FROM " + DatabaseManager.TableTransacciones.TABLE_NAME_TRANSACCIONES +
+                        " ORDER BY " + DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_REGISTRO +
+                        " ASC LIMIT 1", null
         );
 
         if (cursor.moveToFirst()) {
@@ -479,8 +482,7 @@ public final class AppDatabase extends SQLiteOpenHelper {
 
         cursor = getWritableDatabase().rawQuery(
                 "SELECT * FROM " + DatabaseManager.TableTransacciones.TABLE_NAME_TRANSACCIONES +
-                        " WHERE " + DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_NUMERO_CARGO + " = " + numCargo,
-                null
+                        " WHERE " + DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_NUMERO_CARGO + " = " + numCargo, null
         );
 
         if (cursor.moveToFirst()) {
