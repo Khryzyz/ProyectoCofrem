@@ -37,16 +37,8 @@
         android:visibility="gone" />
 
     <include
-        android:id="@+id/bodyContentConfigurationEstablecimiento"
-        layout="@layout/content_configuracion_register_paso_establecimiento"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/headerContent"
-        android:visibility="gone" />
-
-    <include
-        android:id="@+id/bodyContentConfigurationLocal"
-        layout="@layout/content_configuracion_register_paso_local"
+        android:id="@+id/bodyContentConfigurationDispositivo"
+        layout="@layout/content_configuracion_register_paso_dispositivo"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/headerContent"
@@ -59,5 +51,15 @@
         android:layout_height="match_parent"
         android:layout_below="@id/headerContent"
         android:visibility="gone" />
+
+    <FrameLayout
+        android:id="@+id/frlPgbHldRegisterScreen"
+        style="@style/StyleProgressbarHolder">
+
+        <ProgressBar
+            android:id="@+id/pgbRegisterScreen"
+            style="@style/StyleProgressbar" />
+        s
+    </FrameLayout>
 
 </RelativeLayout>

@@ -15,26 +15,34 @@
     <!-- Textos adicionales -->
     <string name="configuration_text_ingresar_pass_tecnico">Ingrese contraseña de administración:</string>
 
-    <string name="configuration_text_ingresar_host">Ingrese el Host</string>
+    <string name="configuration_text_ingresar_host">Ingrese el Host:</string>
 
-    <string name="configuration_text_ingresar_ip">Ingrese IP de comunicación</string>
+    <string name="configuration_text_ingresar_ip">Ingrese IP de conexión:</string>
 
-    <string name="configuration_text_ingresar_puerto">Ingrese puerto</string>
+    <string name="configuration_text_ingresar_puerto">Ingrese puerto de conexion:</string>
 
-    <string name="configuration_text_ingresar_establecimiento">Ingrese el establecimiento</string>
+    <string name="configuration_text_ingresar_dispositivo">Ingrese el codigo de identificacion del dispositivo:</string>
 
-    <string name="configuration_text_ingresar_local">Ingrese el local</string>
+    <string name="configuration_text_estado_configuracion">Estado de la configuración.</string>
 
-    <string name="configuration_text_estado_configuracion">Estado de la configuración</string>
+    <string name="configuration_text_estado_conexion">Estado de la conexión.</string>
 
-    <string name="configuration_text_estado_conexion">Estado de la conexión</string>
-
-    <string name="configuration_text_exitosa">Exitosa</string>
+    <string name="configuration_text_exitosa">Exitosa.</string>
 
     <!-- Textos register configuration -->
-    <string name="configuration_error_format_valor_acceso">La contraseña de administración debe tener exactamente 4 caracteres</string>
-    <string name="configuration_text_valor_acceso_valido">Contraseña valida</string>
+    <string name="configuration_error_format_valor_acceso">La contraseña de administración debe tener exactamente 4 caracteres.</string>
+    <string name="configuration_text_valor_acceso_valido">Contraseña valida.</string>
     <string name="configuration_text_valor_acceso_no_valido">Contraseña no valida, por favor verificar.</string>
     <string name="configuration_text_valor_acceso_error">Existe un error en la configuración del valor de la contraseña de su dispositivo.</string>
+
+    <string name="configuration_text_registro_conexion_success">Configuración de conexión registrada correctamente.</string>
+    <string name="configuration_text_registro_conexion_error">Error en el registro de la configuración de conexión.</string>
+
+    <string name="configuration_text_informacion_dispositivo_success">Información del dispositivo consultada correctamente.</string>
+    <string name="configuration_text_informacion_dispositivo_error_conexion">Error en la consulta de la información del dispositivo.</string>
+    <string name="configuration_text_informacion_dispositivo_error_informacion">Error en la consulta de la información del dispositivo.</string>
+
+    <string name="configuration_text_procesar_informacion_dispositivo_success">Información del dispositivo registrada correctamente.</string>
+    <string name="configuration_text_procesar_informacion_dispositivo_error">Error en el registro de la información del dispositivo.</string>
 
 </resources>

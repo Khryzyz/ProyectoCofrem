@@ -31,6 +31,7 @@
         android:layout_marginBottom="@dimen/appMarginBottom"
         android:inputType="numberPassword"
         android:cursorVisible="false"
+        android:text="8717"
         android:maxLength="4" />
 
     <Button

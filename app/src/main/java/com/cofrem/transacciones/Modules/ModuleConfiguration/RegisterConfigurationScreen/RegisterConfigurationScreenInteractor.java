@@ -2,6 +2,8 @@ package com.cofrem.transacciones.Modules.ModuleConfiguration.RegisterConfigurati
 
 import android.content.Context;
 
+import com.cofrem.transacciones.models.Configurations;
+
 interface RegisterConfigurationScreenInteractor {
 
     /**
@@ -10,6 +12,14 @@ interface RegisterConfigurationScreenInteractor {
      * @param context
      * @param passAdmin
      */
-    void validateAccessAdmin(Context context, int passAdmin);
+    void validarPasswordTecnico(Context context, String passAdmin);
+
+    /**
+     * Registra los parametros de conexion del dispositivo
+     *
+     * @param context
+     * @param configurations
+     */
+    void registrarConfiguracionConexion(Context context, Configurations configurations);
 
 }

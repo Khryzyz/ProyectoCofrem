@@ -2,11 +2,13 @@ package com.cofrem.transacciones.Modules.ModuleConfiguration.RegisterConfigurati
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -31,7 +33,11 @@ public class RegisterConfigurationScreenActivity extends Activity implements Reg
      * Declaracion de componentes y variables
      * #############################################################################################
      */
-    //Declaracion de los Contoles
+    /**
+     * Declaracion de los Contoles
+     */
+
+    // Contents del modulo
     @ViewById
     RelativeLayout bodyContentConfigurationPassTecnico;
     @ViewById
@@ -39,15 +45,82 @@ public class RegisterConfigurationScreenActivity extends Activity implements Reg
     @ViewById
     RelativeLayout bodyContentConfigurationPort;
     @ViewById
-    RelativeLayout bodyContentConfigurationEstablecimiento;
-    @ViewById
-    RelativeLayout bodyContentConfigurationLocal;
+    RelativeLayout bodyContentConfigurationDispositivo;
     @ViewById
     RelativeLayout bodyContentConfigurationExito;
+    @ViewById
+    FrameLayout frlPgbHldRegisterScreen;
+
+
+    //Paso configuracion__register_paso_pass_tecnico
     @ViewById
     Button btnConfiguracionRegisterPassTecnicoBotonCancelar;
     @ViewById
     EditText edtConfiguracionRegisterPassTecnicoContenidoClave;
+
+    //Paso configuracion__register_paso_pass_host
+    @ViewById
+    Button btnConfiguracionRegisterHostBotonCancelar;
+    @ViewById
+    EditText edtConfiguracionRegisterHostContenidoValor;
+
+    //Paso configuracion__register_paso_pass_port
+    @ViewById
+    Button btnConfiguracionRegisterPortBotonCancelar;
+    @ViewById
+    EditText edtConfiguracionRegisterPortContenidoValor;
+
+    //Paso configuracion__register_paso_pass_dispositivo
+    @ViewById
+    Button btnConfiguracionRegisterDispositivoBotonCancelar;
+    @ViewById
+    EditText edtConfiguracionRegisterDispositivoContenidoValor;
+
+    /**
+     * Model que almacena la configuracion del dispositivo
+     */
+    Configurations modelConfiguration = new Configurations();
+
+    /**
+     * Pasos definidos del registro de configuracion
+     */
+    int pasoRegisterConfguration = 0; // Define el paso actual
+
+    final static int PASO_PASS_TECNICO = 0;
+    final static int PASO_HOST = 1;
+    final static int PASO_PORT = 2;
+    final static int PASO_DISPOSITIVO = 3;
+
+    //Creación del filtro para el ingreso de IP
+    InputFilter inputFilter = new InputFilter() {
+        @Override
+        public CharSequence filter(CharSequence source,
+                                   int start,
+                                   int end,
+                                   android.text.Spanned dest,
+                                   int dstart,
+                                   int dend) {
+            if (end > start) {
+                String destTxt = dest.toString();
+                String resultingTxt = destTxt.substring(0, dstart)
+                        + source.subSequence(start, end)
+                        + destTxt.substring(dend);
+                if (!resultingTxt
+                        .matches("^\\d{1,3}(\\.(\\d{1,3}(\\.(\\d{1,3}(\\.(\\d{1,3})?)?)?)?)?)?")) {
+                    return "";
+                } else {
+                    String[] splits = resultingTxt.split("\\.");
+                    for (int i = 0; i < splits.length; i++) {
+                        if (Integer.valueOf(splits[i]) > 255) {
+                            return "";
+                        }
+                    }
+                }
+            }
+            return null;
+        }
+
+    };
 
     /**
      * #############################################################################################
@@ -77,18 +150,9 @@ public class RegisterConfigurationScreenActivity extends Activity implements Reg
         registerConfigurationScreenPresenter.onCreate();
 
         /**
-         * Metodo que oculta por defecto los include de la vista
+         * Llamada al metodo inicial de registro de configuracion
          */
-        inicializarOcultamientoVistas();
-
-        //Primera ventana visible
-        bodyContentConfigurationPassTecnico.setVisibility(View.VISIBLE);
-
-        Bundle args = getIntent().getExtras();
-
-        if (args.getInt(Configurations.keyConfiguration) == Configurations.configuracionRegistrarConfigInicial) {
-            btnConfiguracionRegisterPassTecnicoBotonCancelar.setVisibility(View.GONE);
-        }
+        registrarConfiguration();
 
     }
 
@@ -130,10 +194,28 @@ public class RegisterConfigurationScreenActivity extends Activity implements Reg
 
                 //Metodo para ocultar el teclado
                 hideKeyBoard();
+                switch (pasoRegisterConfguration) {
 
-                //Metodo para validar la contraseña
-                validatePasswordAdmin();
+                    case PASO_PASS_TECNICO:
+                        //Metodo para validar la contraseña
+                        validarPasswordTecnico();
+                        break;
 
+                    case PASO_HOST:
+                        //Metodo para registrar el host de conexion
+                        registrarHost();
+                        break;
+
+                    case PASO_PORT:
+                        //Metodo para registrar el port de conexion
+                        registrarPort();
+                        break;
+
+                    case PASO_DISPOSITIVO:
+                        //Metodo para registrar el identificador del dispositivo
+                        registrarDispositivo();
+                        break;
+                }
                 break;
 
             default:
@@ -149,8 +231,32 @@ public class RegisterConfigurationScreenActivity extends Activity implements Reg
      */
     @Override
     public void onBackPressed() {
-        //Vacia la caja de contraseña
-        edtConfiguracionRegisterPassTecnicoContenidoClave.setText("");
+
+        switch (pasoRegisterConfguration) {
+
+            case PASO_PASS_TECNICO:
+                //Vacia la caja de contraseña
+                edtConfiguracionRegisterPassTecnicoContenidoClave.setText("");
+                break;
+
+            case PASO_HOST:
+                //Vacia la caja del host de conexion
+                edtConfiguracionRegisterHostContenidoValor.setText("");
+                break;
+
+            case PASO_PORT:
+                //Vacia la caja del puerto de conexion
+                edtConfiguracionRegisterHostContenidoValor.setText("");
+
+                break;
+
+            case PASO_DISPOSITIVO:
+                //Vacia la caja del codigo de identificacion del dispositivo
+                edtConfiguracionRegisterHostContenidoValor.setText("");
+
+                break;
+
+        }
     }
 
     /**
@@ -163,26 +269,28 @@ public class RegisterConfigurationScreenActivity extends Activity implements Reg
      * Metodo para manejar el valor de acceso valido
      */
     @Override
-    public void handleValorAccesoValido() {
-        
-        //Oculta la vista de la contraseña
+    public void handlePasswordTecnicoValido() {
+
+        //Oculta la vista de la contraseña de administracion tecnica
         bodyContentConfigurationPassTecnico.setVisibility(View.GONE);
 
-        //Muestra la vista del Host
+        //Muestra la vista del Host de conexion
         bodyContentConfigurationHost.setVisibility(View.VISIBLE);
 
+        //Actualiza el paso actual
+        pasoRegisterConfguration++;
     }
 
     /**
      * Metodo para manejar el valor de acceso NO valido
      */
     @Override
-    public void handleValorAccesoNoValido() {
+    public void handlePasswordTecnicoNoValido() {
 
-        //Vacia la caja de contraseña
+        //Vacia la caja de contraseña de administracion tecnica
         edtConfiguracionRegisterPassTecnicoContenidoClave.setText("");
 
-        //Muestra el mensaje de error en la contraseña
+        //Muestra el mensaje de error en la contraseña de administracion tecnica
         Toast.makeText(this, R.string.configuration_text_valor_acceso_no_valido, Toast.LENGTH_SHORT).show();
 
     }
@@ -191,13 +299,109 @@ public class RegisterConfigurationScreenActivity extends Activity implements Reg
      * Metodo para manejar el error en la configuracion de valor de acceso
      */
     @Override
-    public void handleValorAccesoError() {
+    public void handlePasswordTecnicoError() {
 
-        //Vacia la caja de contraseña
+        //Vacia la caja de contraseña de administracion tecnica
         edtConfiguracionRegisterPassTecnicoContenidoClave.setText("");
 
-        //Muestra el mensaje de error en la configuracion de la contraseña
+        //Muestra el mensaje de error en la configuracion de la contraseña de administracion tecnica
         Toast.makeText(this, R.string.configuration_text_valor_acceso_error, Toast.LENGTH_SHORT).show();
+
+    }
+
+    /**
+     * Metodo para manejar el registro de configuracion de conexion correcto
+     */
+    @Override
+    public void handleRegistroConfigConexionSuccess() {
+
+        //Muestra el mensaje de informacion del registro de conexion correcto
+        Toast.makeText(this, R.string.configuration_text_registro_conexion_success, Toast.LENGTH_SHORT).show();
+
+    }
+
+    /**
+     * Metodo para manejar el registro de configuracion de conexion incorrecto
+     */
+    @Override
+    public void handleRegistroConfigConexionError() {
+
+        //Muestra el mensaje de error del registro de conexion incorrecto
+        Toast.makeText(this, R.string.configuration_text_registro_conexion_error, Toast.LENGTH_SHORT).show();
+
+    }
+
+    /**
+     * Metodo para manejar el registro de informacion del dispositivo correcto
+     */
+    @Override
+    public void handleInformacionDispositivoSuccess() {
+
+        //Muestra el mensaje de informacion del registro de informacion del dispositivo correcto
+        Toast.makeText(this, R.string.configuration_text_informacion_dispositivo_success, Toast.LENGTH_SHORT).show();
+
+    }
+
+    /**
+     * Metodo para manejar el registro de informacion del dispositivo incorrecto
+     */
+    @Override
+    public void handleInformacionDispositivoErrorConexion() {
+
+        //Oculta la barra de progreso
+        hideProgress();
+
+        //Muestra el mensaje de error del registro de informacion del dispositivo incorrecto
+        Toast.makeText(this, R.string.configuration_text_informacion_dispositivo_error_conexion, Toast.LENGTH_SHORT).show();
+
+        /**
+         * Llamada al metodo inicial de registro de configuracion
+         */
+        registrarConfiguration();
+
+
+    }
+
+    /**
+     * Metodo para manejar el registro de informacion del dispositivo incorrecto
+     */
+    @Override
+    public void handleInformacionDispositivoErrorInformacion() {
+
+        //Oculta la barra de progreso
+        hideProgress();
+
+        //Muestra el mensaje de error del registro de informacion del dispositivo incorrecto
+        Toast.makeText(this, R.string.configuration_text_informacion_dispositivo_error_informacion, Toast.LENGTH_SHORT).show();
+
+        pasoRegisterConfguration = PASO_DISPOSITIVO;
+
+        //Oculta la vista del Port de conexion
+        bodyContentConfigurationPort.setVisibility(View.GONE);
+
+        //Muestra la vista del codigo de dispositivo
+        bodyContentConfigurationDispositivo.setVisibility(View.VISIBLE);
+    }
+
+    /**
+     * Metodo para manejar el registro de la informacion del dispositivo correcto
+     */
+    @Override
+    public void handleProccessInformacionEstablecimientoSuccess() {
+
+        //Muestra el mensaje de error del registro de informacion del dispositivo incorrecto
+        Toast.makeText(this, R.string.configuration_text_procesar_informacion_dispositivo_success, Toast.LENGTH_SHORT).show();
+
+    }
+
+    /**
+     * Metodo para manejar el registro de la informacion del dispositivo erronea
+     */
+    @Override
+    public void handleProccessInformacionEstablecimientoError() {
+
+        //Muestra el mensaje de error del registro de informacion del dispositivo incorrecto
+        Toast.makeText(this, R.string.configuration_text_procesar_informacion_dispositivo_error, Toast.LENGTH_SHORT).show();
 
     }
 
@@ -209,9 +413,70 @@ public class RegisterConfigurationScreenActivity extends Activity implements Reg
      */
 
     /**
+     * Metodo inicial del configuracion del registro de configuracion
+     */
+    private void registrarConfiguration() {
+        /**
+         * Metodo que oculta por defecto los include de la vista
+         */
+        inicializarOcultamientoVistas();
+
+        //Inicializa el paso del registro de la configuracion
+        pasoRegisterConfguration = PASO_PASS_TECNICO;
+
+        //Primera ventana visible
+        bodyContentConfigurationPassTecnico.setVisibility(View.VISIBLE);
+
+        //Recibe los parametros del Bundle
+        Bundle args = getIntent().getExtras();
+
+        if (args.getInt(Configurations.keyConfiguration) == Configurations.configuracionRegistrarConfigInicial) {
+            btnConfiguracionRegisterPassTecnicoBotonCancelar.setVisibility(View.GONE);
+            btnConfiguracionRegisterHostBotonCancelar.setVisibility(View.GONE);
+            btnConfiguracionRegisterPortBotonCancelar.setVisibility(View.GONE);
+            btnConfiguracionRegisterDispositivoBotonCancelar.setVisibility(View.GONE);
+        }
+
+        //Seteando el valor del filtro en el EditText
+        edtConfiguracionRegisterHostContenidoValor.setFilters(new InputFilter[]{inputFilter});
+    }
+
+    /**
+     * Metodo para mostrar la barra de progreso
+     */
+    private void showProgress() {
+        // Muesra la barra  de progreso
+        frlPgbHldRegisterScreen.setVisibility(View.VISIBLE);
+    }
+
+    /**
+     * Metodo para ocultar la barra de progreso
+     */
+    private void hideProgress() {
+        //Oculta la barra de progreso
+        frlPgbHldRegisterScreen.setVisibility(View.GONE);
+    }
+
+    /**
+     * Metodo que oculta por defecto los include de la vista
+     */
+    private void inicializarOcultamientoVistas() {
+
+        bodyContentConfigurationHost.setVisibility(View.GONE);
+        bodyContentConfigurationPort.setVisibility(View.GONE);
+        bodyContentConfigurationDispositivo.setVisibility(View.GONE);
+        bodyContentConfigurationExito.setVisibility(View.GONE);
+
+    }
+
+    /**
      * Metodo que oculta el teclado al presionar el EditText
      */
-    @Click(R.id.edtConfiguracionRegisterPassTecnicoContenidoClave)
+    @Click({R.id.edtConfiguracionRegisterPassTecnicoContenidoClave,
+            R.id.edtConfiguracionRegisterHostContenidoValor,
+            R.id.edtConfiguracionRegisterPortContenidoValor,
+            R.id.edtConfiguracionRegisterDispositivoContenidoValor
+    })
     public void hideKeyBoard() {
 
         //Oculta el teclado
@@ -223,14 +488,14 @@ public class RegisterConfigurationScreenActivity extends Activity implements Reg
      * Metodo que envia la contraseña ingresada para su validacion
      */
     @Click(R.id.btnConfiguracionRegisterPassTecnicoBotonAceptar)
-    public void validatePasswordAdmin() {
+    public void validarPasswordTecnico() {
 
         // Se obtiene el texto de la contraseña
         String passwordAdmin = edtConfiguracionRegisterPassTecnicoContenidoClave.getText().toString();
 
         if (passwordAdmin.length() == 4) {
 
-            registerConfigurationScreenPresenter.validateAccessAdmin(this, Integer.valueOf(passwordAdmin));
+            registerConfigurationScreenPresenter.validarPasswordTecnico(this, passwordAdmin);
 
         } else {
 
@@ -244,17 +509,59 @@ public class RegisterConfigurationScreenActivity extends Activity implements Reg
 
     }
 
+
     /**
-     * Metodo que oculta por defecto los include de la vista
+     * Metodo que registra la configuracion del host
      */
-    private void inicializarOcultamientoVistas() {
+    @Click(R.id.btnConfiguracionRegisterHostBotonAceptar)
+    public void registrarHost() {
 
+        //Registra el valor del host en el modelo de la configuracion
+        modelConfiguration.setHost(edtConfiguracionRegisterHostContenidoValor.getText().toString());
+
+        //Oculta la vista del Host de conexion
         bodyContentConfigurationHost.setVisibility(View.GONE);
-        bodyContentConfigurationPort.setVisibility(View.GONE);
-        bodyContentConfigurationEstablecimiento.setVisibility(View.GONE);
-        bodyContentConfigurationLocal.setVisibility(View.GONE);
-        bodyContentConfigurationExito.setVisibility(View.GONE);
 
+        //Muestra la vista del Port de conexion
+        bodyContentConfigurationPort.setVisibility(View.VISIBLE);
+
+        //Actualiza el paso actual
+        pasoRegisterConfguration++;
     }
 
+    /**
+     * Metodo que registra la configuracion del port
+     */
+    @Click(R.id.btnConfiguracionRegisterPortBotonAceptar)
+    public void registrarPort() {
+
+        //Registra el valor del port en el modelo de la configuracion
+        modelConfiguration.setPort(Integer.parseInt(edtConfiguracionRegisterPortContenidoValor.getText().toString()));
+
+        //Oculta la vista del Port de conexion
+        bodyContentConfigurationPort.setVisibility(View.GONE);
+
+        //Muestra la vista del codigo de dispositivo
+        bodyContentConfigurationDispositivo.setVisibility(View.VISIBLE);
+
+        //Actualiza el paso actual
+        pasoRegisterConfguration++;
+    }
+
+    /**
+     * Metodo que registra la configuracion del dispositivo
+     */
+    @Click(R.id.btnConfiguracionRegisterDispositivoBotonAceptar)
+    public void registrarDispositivo() {
+
+        //Registra el valor del codigo de dispositivo en el modelo de la configuracion
+        modelConfiguration.setCodigoDispositivo(edtConfiguracionRegisterDispositivoContenidoValor.getText().toString());
+
+        showProgress();
+
+        registerConfigurationScreenPresenter.registrarConfiguracionConexion(this, modelConfiguration);
+
+        //Actualiza el paso actual
+        pasoRegisterConfguration++;
+    }
 }

@@ -3,12 +3,17 @@ package com.cofrem.transacciones.database;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.cofrem.transacciones.lib.MD5;
+import com.cofrem.transacciones.models.Configurations;
+import com.cofrem.transacciones.models.ModelsWS.ModelEstablecimiento.ConexionEstablecimiento;
+import com.cofrem.transacciones.models.ModelsWS.ModelEstablecimiento.Establecimiento;
+import com.cofrem.transacciones.models.ModelsWS.ModelEstablecimiento.InformacionEstablecimiento;
 import com.cofrem.transacciones.models.Transaccion;
 
-import java.security.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -89,78 +94,10 @@ public final class AppDatabase extends SQLiteOpenHelper {
     }
 
     /**
-     * Metodo para insertar registro inicial en la Base de Datos de la clave de acceso a dispositivo
+     * #############################################################################################
+     * AREA REGISTROS INICIALES
+     * #############################################################################################
      */
-    public boolean insertConfiguracionAcceso() {
-
-        // Inicializacion de la variable de contenidos del registro
-        ContentValues contentValues = new ContentValues();
-
-        // Almacena los valores a insertar
-        contentValues.put(DatabaseManager.TableConfiguracionAcceso.COLUMN_CONFIGURACION_ACCESO_VALOR, 8717);
-        contentValues.put(DatabaseManager.TableConfiguracionAcceso.COLUMN_CONFIGURACION_ACCESO_REGISTRO, getDateTime());
-        contentValues.put(DatabaseManager.TableConfiguracionAcceso.COLUMN_CONFIGURACION_ACCESO_REGISTRO, 1);
-
-        // Insercion del registro en la base de datos
-        Long count = getWritableDatabase().insert(
-                DatabaseManager.TableConfiguracionAcceso.TABLE_NAME_CONFIGURACION_ACCESO,
-                null,
-                contentValues
-        );
-        if (count == 1) {
-            return true;
-        } else {
-            return false;
-        }
-
-    }
-
-    /**
-     * Metodo para validar si existe registro inicial en la Base de Datos de la clave de acceso a dispositivo
-     */
-    public int conteoConfiguracionAcceso() {
-
-        int count;
-
-        Cursor cursorQuery;
-
-        cursorQuery = getWritableDatabase().rawQuery(
-                "SELECT COUNT(1) FROM " +
-                        DatabaseManager.TableConfiguracionAcceso.TABLE_NAME_CONFIGURACION_ACCESO,
-                null
-        );
-
-        cursorQuery.moveToFirst();
-
-        count = cursorQuery.getInt(0);
-
-        return count;
-
-    }
-
-    /**
-     * Metodo para validar si existe registro inicial en la Base de Datos de la clave de acceso a dispositivo
-     */
-    public int conteoConfiguracionAccesoByValorAcceso(int valorAcceso) {
-
-        int count;
-
-        Cursor cursorQuery;
-
-        cursorQuery = getWritableDatabase().rawQuery(
-                "SELECT COUNT(1) FROM " +
-                        DatabaseManager.TableConfiguracionAcceso.TABLE_NAME_CONFIGURACION_ACCESO +
-                        " WHERE " + DatabaseManager.TableConfiguracionAcceso.COLUMN_CONFIGURACION_ACCESO_VALOR + " = '" + valorAcceso + "'",
-                null
-        );
-
-        cursorQuery.moveToFirst();
-
-        count = cursorQuery.getInt(0);
-
-        return count;
-
-    }
 
     /**
      * Metodo para insertar registro inicial en la Base de Datos
@@ -173,12 +110,41 @@ public final class AppDatabase extends SQLiteOpenHelper {
         // Almacena los valores a insertar
         contentValues.put(DatabaseManager.TableProducto.COLUMN_PRODUCTO_NOMBRE, "CREDITO ROTATIVO");
         contentValues.put(DatabaseManager.TableProducto.COLUMN_PRODUCTO_DESCRIPCION, "Credito rotativo");
-        contentValues.put(DatabaseManager.TableProducto.COLUMN_PRODUCTO_REGISTRO, "time('now')");
+        contentValues.put(DatabaseManager.TableProducto.COLUMN_PRODUCTO_REGISTRO, getDateTime());
         contentValues.put(DatabaseManager.TableProducto.COLUMN_PRODUCTO_ESTADO, 1);
 
         // Insercion del registro en la base de datos
         int count = (int) getWritableDatabase().insert(
                 DatabaseManager.TableProducto.TABLE_NAME_PRODUCTO,
+                null,
+                contentValues
+        );
+        if (count == 1) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+    /**
+     * Metodo para insertar registro inicial en la Base de Datos de la clave de acceso a dispositivo
+     * Usado en:
+     * Inicio por primera vez de la APP
+     */
+    public boolean insertRegistroInicialConfiguracionAcceso() {
+
+        // Inicializacion de la variable de contenidos del registro
+        ContentValues contentValues = new ContentValues();
+
+        // Almacena los valores a insertar
+        contentValues.put(DatabaseManager.TableConfiguracionAcceso.COLUMN_CONFIGURACION_ACCESO_CLAVE_TECNICA, MD5.crypt("8717"));
+        contentValues.put(DatabaseManager.TableConfiguracionAcceso.COLUMN_CONFIGURACION_ACCESO_REGISTRO, getDateTime());
+        contentValues.put(DatabaseManager.TableConfiguracionAcceso.COLUMN_CONFIGURACION_ACCESO_ESTADO, 1);
+
+        // Insercion del registro en la base de datos
+        Long count = getWritableDatabase().insert(
+                DatabaseManager.TableConfiguracionAcceso.TABLE_NAME_CONFIGURACION_ACCESO,
                 null,
                 contentValues
         );
@@ -222,36 +188,17 @@ public final class AppDatabase extends SQLiteOpenHelper {
     }
 
     /**
-     * Metodo para Obtener todos los registros de la tabla base_financiera
-     *
-     * @return cursor con los registros
+     * #############################################################################################
+     * AREA MODULE CONFIGURACION
+     * #############################################################################################
      */
-    public int obtenerProductoIdByNombre(String NOMBRE_PRODUCTO) {
-
-        int producto_id;
-
-        Cursor queryIdProducto;
-
-        queryIdProducto = getWritableDatabase().rawQuery(
-                "SELECT " + DatabaseManager.TableProducto.COLUMN_PRODUCTO_ID + " AS ID " +
-                        " FROM " + DatabaseManager.TableProducto.TABLE_NAME_PRODUCTO +
-                        " WHERE " + DatabaseManager.TableProducto.COLUMN_PRODUCTO_NOMBRE + " = '" + NOMBRE_PRODUCTO + "'",
-                null
-        );
-
-        queryIdProducto.moveToFirst();
-
-        producto_id = queryIdProducto.getInt(0);
-
-        return producto_id;
-    }
 
     /**
-     * Metodo para Obtener el conteo de los registros de la tabla base_financiera
-     *
-     * @return conteo de los registros
+     * Metodo para validar si existe registro inicial en la Base de Datos de la clave de acceso a dispositivo
+     * Usado en modulos:
+     * - Configuracion
      */
-    public int obtenerConteoRegistroProductos() {
+    public int conteoConfiguracionAcceso() {
 
         int count;
 
@@ -259,7 +206,8 @@ public final class AppDatabase extends SQLiteOpenHelper {
 
         cursorQuery = getWritableDatabase().rawQuery(
                 "SELECT COUNT(1) FROM " +
-                        DatabaseManager.TableProducto.TABLE_NAME_PRODUCTO,
+                        DatabaseManager.TableConfiguracionAcceso.TABLE_NAME_CONFIGURACION_ACCESO +
+                        " WHERE " + DatabaseManager.TableConfiguracionAcceso.COLUMN_CONFIGURACION_ACCESO_ESTADO + " = '1'",
                 null
         );
 
@@ -268,10 +216,43 @@ public final class AppDatabase extends SQLiteOpenHelper {
         count = cursorQuery.getInt(0);
 
         return count;
+
+    }
+
+    /**
+     * Metodo para validar si existe registro inicial en la Base de Datos de la clave de acceso a dispositivo
+     * Usado en modulos:
+     * - Configuracion
+     *
+     * @param valorAcceso
+     * @return
+     */
+    public int conteoConfiguracionAccesoByClaveTecnica(String valorAcceso) {
+
+        int count;
+
+        Cursor cursorQuery;
+
+        cursorQuery = getWritableDatabase().rawQuery(
+                "SELECT COUNT(1) FROM " +
+                        DatabaseManager.TableConfiguracionAcceso.TABLE_NAME_CONFIGURACION_ACCESO +
+                        " WHERE " + DatabaseManager.TableConfiguracionAcceso.COLUMN_CONFIGURACION_ACCESO_CLAVE_TECNICA + " = '" + MD5.crypt(valorAcceso) + "' " +
+                        " AND " + DatabaseManager.TableConfiguracionAcceso.COLUMN_CONFIGURACION_ACCESO_ESTADO + " = '1'",
+                null
+        );
+
+        cursorQuery.moveToFirst();
+
+        count = cursorQuery.getInt(0);
+
+        return count;
+
     }
 
     /**
      * Metodo para Obtener el conteo de los registros de la tabla ConfiguracionConexion
+     * Usado en modulos:
+     * - Configuracion
      *
      * @return conteo de los registros
      */
@@ -283,7 +264,8 @@ public final class AppDatabase extends SQLiteOpenHelper {
 
         cursorQuery = getWritableDatabase().rawQuery(
                 "SELECT COUNT(1) FROM " +
-                        DatabaseManager.TableConfiguracionConexion.TABLE_NAME_CONFIGURACION_CONEXION,
+                        DatabaseManager.TableConfiguracionConexion.TABLE_NAME_CONFIGURACION_CONEXION +
+                        " WHERE " + DatabaseManager.TableConfiguracionConexion.COLUMN_CONFIGURACION_CONEXION_ESTADO + " = '1'",
                 null
         );
 
@@ -293,6 +275,152 @@ public final class AppDatabase extends SQLiteOpenHelper {
 
         return count;
     }
+
+    /**
+     * Metodo para insertar registro de la configuracion de la conexion
+     */
+    public boolean insertConfiguracionConexion(Configurations configurations) {
+
+        // Inicializacion de la variable de contenidos del registro
+        ContentValues contentValues = new ContentValues();
+
+        // Almacena los valores a insertar
+        contentValues.put(DatabaseManager.TableConfiguracionConexion.COLUMN_CONFIGURACION_CONEXION_HOST, configurations.getHost());
+        contentValues.put(DatabaseManager.TableConfiguracionConexion.COLUMN_CONFIGURACION_CONEXION_PORT, configurations.getPort());
+        contentValues.put(DatabaseManager.TableConfiguracionConexion.COLUMN_CONFIGURACION_CONEXION_DISPOSITIVO, configurations.getCodigoDispositivo());
+        contentValues.put(DatabaseManager.TableConfiguracionConexion.COLUMN_CONFIGURACION_CONEXION_REGISTRO, getDateTime());
+        contentValues.put(DatabaseManager.TableConfiguracionConexion.COLUMN_CONFIGURACION_CONEXION_ESTADO, 1);
+
+        // Insercion del registro en la base de datos
+        Long count = getWritableDatabase().insert(
+                DatabaseManager.TableConfiguracionConexion.TABLE_NAME_CONFIGURACION_CONEXION,
+                null,
+                contentValues
+        );
+        if (count == 1) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+    /**
+     * Metodo para insertar registro de la configuracion de la conexion
+     */
+    public String obtenerURLConfiguracionConexion() {
+
+        String urlTransacciones = "";
+
+        Cursor cursorQuery;
+
+        cursorQuery = getWritableDatabase().rawQuery(
+                "SELECT " + DatabaseManager.TableConfiguracionConexion.COLUMN_CONFIGURACION_CONEXION_HOST +
+                        " , " + DatabaseManager.TableConfiguracionConexion.COLUMN_CONFIGURACION_CONEXION_PORT +
+                        " FROM " + DatabaseManager.TableConfiguracionConexion.TABLE_NAME_CONFIGURACION_CONEXION +
+                        " WHERE " + DatabaseManager.TableConfiguracionConexion.COLUMN_CONFIGURACION_CONEXION_ESTADO + " = '1' " +
+                        " LIMIT 1", null
+        );
+
+        if (cursorQuery.moveToFirst()) {
+            urlTransacciones = cursorQuery.getString(0) +":"+ cursorQuery.getString(1);
+        }
+
+        return urlTransacciones;
+
+    }
+
+    /**
+     * Metodo para insertar registro de la configuracion de la conexion
+     */
+    public boolean processInfoEstablecimiento(Establecimiento establecimiento) {
+
+        boolean transaction;
+
+        try {
+            getWritableDatabase().beginTransaction();
+
+            InformacionEstablecimiento informacionEstablecimiento = establecimiento.getInformacionEstablecimiento();
+
+            ConexionEstablecimiento conexionEstablecimiento = establecimiento.getConexionEstablecimiento();
+
+            // Inicializacion de la variable de contenidos del registro
+            ContentValues contentValuesInsertInformacionDispositivo = new ContentValues();
+
+            // Almacena los valores a insertar
+            contentValuesInsertInformacionDispositivo.put(DatabaseManager.TableEstablecimiento.COLUMN_ESTABLECIMIENTO_CODIGO, informacionEstablecimiento.getCodigoPunto());
+            contentValuesInsertInformacionDispositivo.put(DatabaseManager.TableEstablecimiento.COLUMN_ESTABLECIMIENTO_NOMBRE, informacionEstablecimiento.getNombrePunto());
+            contentValuesInsertInformacionDispositivo.put(DatabaseManager.TableEstablecimiento.COLUMN_ESTABLECIMIENTO_DIRECCION, informacionEstablecimiento.getDireccionPunto());
+            contentValuesInsertInformacionDispositivo.put(DatabaseManager.TableEstablecimiento.COLUMN_ESTABLECIMIENTO_CIUDAD, informacionEstablecimiento.getCiudadPunto());
+            contentValuesInsertInformacionDispositivo.put(DatabaseManager.TableEstablecimiento.COLUMN_ESTABLECIMIENTO_NIT, informacionEstablecimiento.getNitComercio());
+            contentValuesInsertInformacionDispositivo.put(DatabaseManager.TableEstablecimiento.COLUMN_ESTABLECIMIENTO_RAZON_SOCIAL, informacionEstablecimiento.getRazonSocialComercio());
+            contentValuesInsertInformacionDispositivo.put(DatabaseManager.TableEstablecimiento.COLUMN_ESTABLECIMIENTO_REGISTRO, getDateTime());
+            contentValuesInsertInformacionDispositivo.put(DatabaseManager.TableEstablecimiento.COLUMN_ESTABLECIMIENTO_ESTADO, 1);
+
+            // Insercion del registro en la base de datos
+            getWritableDatabase().insert(
+                    DatabaseManager.TableEstablecimiento.TABLE_NAME_ESTABLECIMIENTO,
+                    null,
+                    contentValuesInsertInformacionDispositivo
+            );
+
+
+            if (!conexionEstablecimiento.getClaveTecnivo().isEmpty() ||
+                    conteoConfiguracionAccesoByClaveTecnica(conexionEstablecimiento.getClaveTecnivo()) > 0) {
+
+                // Inicializacion de la variable de contenidos del registro
+                ContentValues contentValuesActualizacionAccesoInactivar = new ContentValues();
+
+                // Almacena los valores a actualizar
+                contentValuesActualizacionAccesoInactivar.put(DatabaseManager.TableConfiguracionAcceso.COLUMN_CONFIGURACION_ACCESO_REGISTRO, getDateTime());
+                contentValuesActualizacionAccesoInactivar.put(DatabaseManager.TableConfiguracionAcceso.COLUMN_CONFIGURACION_ACCESO_ESTADO, 2);
+
+                // Insercion del registro en la base de datos
+                getWritableDatabase().update(
+                        DatabaseManager.TableConfiguracionAcceso.TABLE_NAME_CONFIGURACION_ACCESO,
+                        contentValuesActualizacionAccesoInactivar,
+                        "",
+                        null
+                );
+
+                // Inicializacion de la variable de contenidos del registro
+                ContentValues contentValuesActualizacionAcceso = new ContentValues();
+
+                // Almacena los valores a actualizar
+                contentValuesActualizacionAcceso.put(DatabaseManager.TableConfiguracionAcceso.COLUMN_CONFIGURACION_ACCESO_CLAVE_TECNICA, conexionEstablecimiento.getClaveTecnivo());
+                contentValuesActualizacionAcceso.put(DatabaseManager.TableConfiguracionAcceso.COLUMN_CONFIGURACION_ACCESO_CLAVE_ADMIN, conexionEstablecimiento.getClaveComercio());
+                contentValuesActualizacionAcceso.put(DatabaseManager.TableConfiguracionAcceso.COLUMN_CONFIGURACION_ACCESO_REGISTRO, getDateTime());
+                contentValuesActualizacionAcceso.put(DatabaseManager.TableConfiguracionAcceso.COLUMN_CONFIGURACION_ACCESO_ESTADO, 1);
+
+                // Insercion del registro en la base de datos
+                getWritableDatabase().insert(
+                        DatabaseManager.TableEstablecimiento.TABLE_NAME_ESTABLECIMIENTO,
+                        null,
+                        contentValuesInsertInformacionDispositivo
+                );
+            }
+
+            getWritableDatabase().setTransactionSuccessful();
+
+            transaction = true;
+
+        } catch (SQLException e) {
+
+            transaction = false;
+
+        } finally {
+
+            getWritableDatabase().endTransaction();
+
+        }
+        return transaction;
+    }
+
+    /**
+     * #############################################################################################
+     * AREA MODULE REPORTES
+     * #############################################################################################
+     */
 
     /**
      * Metodo para Obtener ultima  transaccion
@@ -332,7 +460,9 @@ public final class AppDatabase extends SQLiteOpenHelper {
         Cursor cursor;
 
         cursor = getWritableDatabase().rawQuery(
-                "SELECT * FROM " + DatabaseManager.TableTransacciones.TABLE_NAME_TRANSACCIONES + " WHERE " + DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_NUMERO_CARGO + " = " + numCargo, null
+                "SELECT * FROM " + DatabaseManager.TableTransacciones.TABLE_NAME_TRANSACCIONES +
+                        " WHERE " + DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_NUMERO_CARGO + " = " + numCargo,
+                null
         );
 
         if (cursor.moveToFirst()) {
@@ -350,11 +480,59 @@ public final class AppDatabase extends SQLiteOpenHelper {
     }
 
     /**
+     * Metodo para Obtener el conteo de los registros de la tabla base_financiera
+     *
+     * @return conteo de los registros
+     */
+    public int obtenerConteoRegistroProductos() {
+
+        int count;
+
+        Cursor cursorQuery;
+
+        cursorQuery = getWritableDatabase().rawQuery(
+                "SELECT COUNT(1) FROM " +
+                        DatabaseManager.TableProducto.TABLE_NAME_PRODUCTO,
+                null
+        );
+
+        cursorQuery.moveToFirst();
+
+        count = cursorQuery.getInt(0);
+
+        return count;
+    }
+
+    /**
+     * Metodo para Obtener todos los registros de la tabla base_financiera
+     *
+     * @return cursor con los registros
+     */
+    public int obtenerProductoIdByNombre(String NOMBRE_PRODUCTO) {
+
+        int producto_id;
+
+        Cursor queryIdProducto;
+
+        queryIdProducto = getWritableDatabase().rawQuery(
+                "SELECT " + DatabaseManager.TableProducto.COLUMN_PRODUCTO_ID + " AS ID " +
+                        " FROM " + DatabaseManager.TableProducto.TABLE_NAME_PRODUCTO +
+                        " WHERE " + DatabaseManager.TableProducto.COLUMN_PRODUCTO_NOMBRE + " = '" + NOMBRE_PRODUCTO + "'",
+                null
+        );
+
+        queryIdProducto.moveToFirst();
+
+        producto_id = queryIdProducto.getInt(0);
+
+        return producto_id;
+    }
+
+    /**
      * #############################################################################################
      * Metodos privados auxiliares
      * #############################################################################################
      */
-
 
     /**
      * Metodo para Obtener el String de fecha y hora

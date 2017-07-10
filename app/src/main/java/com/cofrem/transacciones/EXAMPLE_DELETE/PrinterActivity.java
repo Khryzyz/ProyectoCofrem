@@ -192,7 +192,7 @@ public class PrinterActivity extends Activity {
 
     private class MyHandler extends Handler {
         @Override
-        public void handleMessage(Message msg) {
+        public void handleMessage(MessageWS msg) {
             if (stop == true)
                 return;
             switch (msg.what) {
@@ -205,7 +205,7 @@ public class PrinterActivity extends Activity {
 
                     AlertDialog.Builder alertDialog = new AlertDialog.Builder(PrinterActivity.this);
                     alertDialog.setTitle(R.string.operation_result);
-                    alertDialog.setMessage(getString(R.string.LowBattery));
+                    alertDialog.setMessageWS(getString(R.string.LowBattery));
                     alertDialog.setPositiveButton(getString(R.string.dlg_ok), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
@@ -273,7 +273,7 @@ public class PrinterActivity extends Activity {
                 case CODE_OVERHEAT:
                     AlertDialog.Builder overHeatDialog = new AlertDialog.Builder(PrinterActivity.this);
                     overHeatDialog.setTitle(R.string.operation_result);
-                    overHeatDialog.setMessage(getString(R.string.overTemp));
+                    overHeatDialog.setMessageWS(getString(R.string.overTemp));
                     overHeatDialog.setPositiveButton(getString(R.string.dlg_ok), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
@@ -855,7 +855,7 @@ public class PrinterActivity extends Activity {
 
         dialog = new ProgressDialog(PrinterActivity.this);
         dialog.setTitle(R.string.idcard_czz);
-        dialog.setMessage(getText(R.string.watting));
+        dialog.setMessageWS(getText(R.string.watting));
         dialog.setCancelable(false);
         dialog.show();
 
@@ -876,12 +876,12 @@ public class PrinterActivity extends Activity {
                     e.printStackTrace();
                 } finally {
                     if (printVersion != null) {
-                        Message message = new Message();
+                        MessageWS message = new MessageWS();
                         message.what = CODE_PRINTVERSION;
                         message.obj = "1";
                         handler.sendMessage(message);
                     } else {
-                        Message message = new Message();
+                        MessageWS message = new MessageWS();
                         message.what = CODE_PRINTVERSION;
                         message.obj = "0";
                         handler.sendMessage(message);
@@ -913,7 +913,7 @@ public class PrinterActivity extends Activity {
     private void noPaperDlg() {
         AlertDialog.Builder dlg = new AlertDialog.Builder(PrinterActivity.this);
         dlg.setTitle(getString(R.string.noPaper));
-        dlg.setMessage(getString(R.string.noPaperNotice));
+        dlg.setMessageWS(getString(R.string.noPaperNotice));
         dlg.setPositiveButton(R.string.sure, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {

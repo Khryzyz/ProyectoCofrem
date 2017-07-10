@@ -3,6 +3,7 @@ package com.cofrem.transacciones.Modules.ModuleConfiguration.RegisterConfigurati
 import android.content.Context;
 
 import com.cofrem.transacciones.Modules.ModuleConfiguration.RegisterConfigurationScreen.events.RegisterConfigurationScreenEvent;
+import com.cofrem.transacciones.models.Configurations;
 
 public interface RegisterConfigurationScreenPresenter {
 
@@ -12,7 +13,15 @@ public interface RegisterConfigurationScreenPresenter {
      * @param context
      * @param passAdmin
      */
-    void validateAccessAdmin(Context context, int passAdmin);
+    void validarPasswordTecnico(Context context, String passAdmin);
+
+    /**
+     * Registra los parametros de conexion del dispositivo
+     *
+     * @param context
+     * @param configurations
+     */
+    void registrarConfiguracionConexion(Context context, Configurations configurations);
 
     /**
      * Metodo para la creacion del presentador

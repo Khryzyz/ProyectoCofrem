@@ -14,7 +14,7 @@
         android:text="@string/configuration_text_title_configuracion" />
 
     <TextView
-        android:id="@+id/txvConfiguracionRegisterPortClave"
+        android:id="@+id/txvConfiguracionRegisterPortValor"
         style="@style/StyleTextPrimaryMedium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -23,26 +23,27 @@
         android:text="@string/configuration_text_ingresar_puerto" />
 
     <EditText
-        android:id="@+id/edtConfiguracionRegisterPortContenidoClave"
+        android:id="@+id/edtConfiguracionRegisterPortContenidoValor"
         style="@style/StylePassPrimary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/txvConfiguracionRegisterPortClave"
+        android:layout_below="@id/txvConfiguracionRegisterPortValor"
         android:layout_marginBottom="@dimen/appMarginBottom"
-        android:inputType="textPassword" />
+        android:inputType="number"
+        android:text="8082" />
 
     <Button
         android:id="@+id/btnConfiguracionRegisterPortBotonCancelar"
         style="@style/StyleButtonCancel"
         android:layout_alignParentStart="true"
-        android:layout_below="@id/edtConfiguracionRegisterPortContenidoClave"
+        android:layout_below="@id/edtConfiguracionRegisterPortContenidoValor"
         android:text="@string/general_text_button_cancelar" />
 
     <Button
         android:id="@+id/btnConfiguracionRegisterPortBotonAceptar"
         style="@style/StyleButtonAccept"
         android:layout_alignParentEnd="true"
-        android:layout_below="@id/edtConfiguracionRegisterPortContenidoClave"
+        android:layout_below="@id/edtConfiguracionRegisterPortContenidoValor"
         android:text="@string/general_text_button_aceptar" />
 
 
