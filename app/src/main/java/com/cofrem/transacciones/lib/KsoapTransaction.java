@@ -34,7 +34,7 @@ public class KsoapTransaction {
             soapSerializationEnvelope.setOutputSoapObject(soapObject);
 
             //capa de transporte http basada en J2SE
-            //crea nueva instancia -> URL: destino de datos SOAP POST
+            //crea nueva instancia -> PARAM_URL: destino de datos SOAP POST
             HttpTransportSE httpTransportSE = new HttpTransportSE(urlSOAP);
 
             // Establece cabecera para la accion
@@ -45,11 +45,8 @@ public class KsoapTransaction {
             // Obtiene la respuesta de la peticion
             SoapObject soapSerializationEnvelopeResponse = (SoapObject) soapSerializationEnvelope.getResponse();
 
-            // Parsea el objeto a Objeto tipo SOAP y devuelve el primer elemento
-            SoapObject objectResponse = (SoapObject) soapSerializationEnvelopeResponse.getProperty(0);
-
             // Regresa el objeto
-            return objectResponse;
+            return soapSerializationEnvelopeResponse;
 
         } catch (HttpResponseException e1) {
 

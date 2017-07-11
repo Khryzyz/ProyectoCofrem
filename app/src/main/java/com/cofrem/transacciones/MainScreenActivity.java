@@ -2,6 +2,8 @@ package com.cofrem.transacciones;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Handler;
+
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
@@ -38,9 +40,20 @@ public class MainScreenActivity extends Activity {
      */
     @Click(R.id.btnMainScreenModuleTransaction)
     public void navigateTransactionView() {
-        Intent intent = new Intent(MainScreenActivity.this, TransactionScreenActivity_.class);
 
-        startActivity(intent);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+                Intent intent = new Intent(MainScreenActivity.this, TransactionScreenActivity_.class);
+                //Agregadas banderas para no retorno
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
+                        | Intent.FLAG_ACTIVITY_NEW_TASK
+                        | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+                startActivity(intent);
+            }
+        }, 1000);
     }
 
     /**
@@ -48,9 +61,21 @@ public class MainScreenActivity extends Activity {
      */
     @Click(R.id.btnMainScreenModuleReport)
     public void navigateToReportsView() {
-        Intent intent = new Intent(MainScreenActivity.this, ReportScreenActivity_.class);
 
-        startActivity(intent);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+                Intent intent = new Intent(MainScreenActivity.this, ReportScreenActivity_.class);
+                //Agregadas banderas para no retorno
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
+                        | Intent.FLAG_ACTIVITY_NEW_TASK
+                        | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+                startActivity(intent);
+            }
+        }, 1000);
+
     }
 
     /**
@@ -58,8 +83,20 @@ public class MainScreenActivity extends Activity {
      */
     @Click(R.id.btnMainScreenModuleConfiguration)
     public void navigateToConfigurationView() {
-        Intent intent = new Intent(MainScreenActivity.this, ConfigurationScreenActivity_.class);
 
-        startActivity(intent);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+                Intent intent = new Intent(MainScreenActivity.this, ConfigurationScreenActivity_.class);
+                //Agregadas banderas para no retorno
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
+                        | Intent.FLAG_ACTIVITY_NEW_TASK
+                        | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+                startActivity(intent);
+            }
+        }, 1000);
+
     }
 }

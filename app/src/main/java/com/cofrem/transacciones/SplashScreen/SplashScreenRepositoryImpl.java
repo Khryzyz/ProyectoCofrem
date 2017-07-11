@@ -66,16 +66,21 @@ public class SplashScreenRepositoryImpl implements SplashScreenRepository {
                 case 0:
 
                     //Consulta la existencia del registro de valor de acceso al dispositivo
-                    int conteoRegistroConfiguracionValorAcceso = AppDatabase.getInstance(context).conteoConfiguracionAcceso();
+                    int conteoRegistroConfiguracionAcceso = AppDatabase.getInstance(context).conteoConfiguracionAcceso();
 
                     /**
                      * En caso de que no exista el registro de configuracion de acceso intenta registrarlo
                      */
-                    if (conteoRegistroConfiguracionValorAcceso == 0) {
+                    if (conteoRegistroConfiguracionAcceso == 0) {
 
                         //Registra el valor de acceso
+<<<<<<< HEAD
                         if (AppDatabase.getInstance(context).insertConfiguracionAcceso()) {
                             postEvent(SplashScreenEvent.onVerifyInitialConfigExiste);
+=======
+                        if (AppDatabase.getInstance(context).insertRegistroInicialConfiguracionAcceso()) {
+                            postEvent(SplashScreenEvent.onVerifyInitialConfigNoExiste);
+>>>>>>> a7a6fa2f5fdf8127b4fd3151696a4035034b8c1d
                         } else {
                             postEvent(SplashScreenEvent.onVerifyInitialConfigExiste);
                         }
@@ -113,9 +118,6 @@ public class SplashScreenRepositoryImpl implements SplashScreenRepository {
      */
     @Override
     public void validateAcces(final Context context) {
-
-
-        new KsoapAsync().execute("750");
 
         boolean deviceMagneticReader = verifyDeviceMagneticReader(context);
         boolean internetConnection = verifyInternetConnection(context);

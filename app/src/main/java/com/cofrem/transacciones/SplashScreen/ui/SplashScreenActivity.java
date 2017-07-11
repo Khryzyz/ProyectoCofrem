@@ -15,7 +15,6 @@ import com.cofrem.transacciones.R;
 import com.cofrem.transacciones.SplashScreen.SplashScreenPresenter;
 import com.cofrem.transacciones.SplashScreen.SplashScreenPresenterImpl;
 import com.cofrem.transacciones.models.Configurations;
-import com.cofrem.transacciones.models.Reports;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
@@ -122,7 +121,7 @@ public class SplashScreenActivity extends Activity implements SplashScreenView {
         );
 
         //Navegando a la ventana de configuración
-        navigateToConfigurationScreen();
+        navigateToRegisterConfiguracionScreen();
     }
 
     /**
@@ -350,9 +349,9 @@ public class SplashScreenActivity extends Activity implements SplashScreenView {
     }
 
     /**
-     * Metodo para navegar a la ventana inicial
+     * Metodo para navegar a la ventana de registro de configuracion
      */
-    private void navigateToConfigurationScreen() {
+    private void navigateToRegisterConfiguracionScreen() {
 
         //Oculta la barra de progreso
         hideProgress();

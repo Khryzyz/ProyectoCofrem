@@ -26,7 +26,7 @@ public class GsonRequest<T> extends Request<T> {
      * Make a GET request and return a parsed object from JSON.
      *
      * @param int           method          Metodo por el cual se realiza la peticion
-     * @param String        url             URL donde se realiza la peticion
+     * @param String        url             PARAM_URL donde se realiza la peticion
      * @param Class<T>      clazz           Clase o modelo en el que se formatean los datos
      * @param Map<String,   String>   headers         Encabezado de la peticion
      * @param Listener<T>   listener        Escuchador de peticion correcta
@@ -47,7 +47,7 @@ public class GsonRequest<T> extends Request<T> {
      * Make a POST request and return a parsed object from JSON.
      *
      * @param int           method          Metodo por el cual se realiza la peticion
-     * @param String        url             URL donde se realiza la peticion
+     * @param String        url             PARAM_URL donde se realiza la peticion
      * @param Class<T>      clazz           Clase o modelo en el que se formatean los datos
      * @param Map<String,   String>   params          Encabezado de la peticion
      * @param Listener<T>   listener        Escuchador de peticion correcta
@@ -101,7 +101,7 @@ public class GsonRequest<T> extends Request<T> {
     @Override
     protected Response<T> parseNetworkResponse(NetworkResponse response) {
         try {
-            //Cadena de peticion JSON hacia la URL
+            //Cadena de peticion JSON hacia la PARAM_URL
             String json = new String(response.data, HttpHeaderParser.parseCharset(response.headers));
             return Response.success(mGson.fromJson(json, clazz), HttpHeaderParser.parseCacheHeaders(response));
         } catch (UnsupportedEncodingException e) {
