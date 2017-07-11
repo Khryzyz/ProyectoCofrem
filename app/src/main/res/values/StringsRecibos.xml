@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <!-- Textos de botones -->
+    <string name="imprimir_recibo">"Tarjeta Numero:  %1$s \nvalor:  %2$s \nnumero de cargo:  %3$s \nGracias por su compra"</string>
+    <string name="reimprimir_recibo">"        Recibo Reimpreso \n   Fecha %1$s \n\nTarjeta Numero:  %2$s \nvalor:   %3$s \nnumero de cargo:  %4$s \nGracias por su compra"</string>
+</resources>

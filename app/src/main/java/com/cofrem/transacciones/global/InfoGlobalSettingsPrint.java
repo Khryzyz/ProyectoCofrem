@@ -9,7 +9,7 @@ public class InfoGlobalSettingsPrint {
     public final static int LINE_DISTANCE = 1;
 
     //1 - 3
-    public final static int FONT_SIZE = 3;
+    public final static int FONT_SIZE = 2;
 
     //0 - 12
     public final static int GRAY_LEVEL = 12;
@@ -33,6 +33,7 @@ public class InfoGlobalSettingsPrint {
     public final static int CODE_MAKER = 13;
     public final static int CODE_PRINTPICTURE = 14;
     public final static int CODE_EXECUTECOMMAND = 15;
+    public final static int CODE_PRINTCERIBO = 16;
 
 
 }

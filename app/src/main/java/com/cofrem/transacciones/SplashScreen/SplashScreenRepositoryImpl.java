@@ -9,6 +9,7 @@ import com.cofrem.transacciones.database.AppDatabase;
 import com.cofrem.transacciones.lib.EventBus;
 import com.cofrem.transacciones.lib.GreenRobotEventBus;
 import com.cofrem.transacciones.lib.KsoapAsync;
+import com.cofrem.transacciones.models.Transaccion;
 
 public class SplashScreenRepositoryImpl implements SplashScreenRepository {
 
@@ -73,14 +74,19 @@ public class SplashScreenRepositoryImpl implements SplashScreenRepository {
                     if (conteoRegistroConfiguracionAcceso == 0) {
 
                         //Registra el valor de acceso
+<<<<<<< HEAD
+                        if (AppDatabase.getInstance(context).insertConfiguracionAcceso()) {
+                            postEvent(SplashScreenEvent.onVerifyInitialConfigExiste);
+=======
                         if (AppDatabase.getInstance(context).insertRegistroInicialConfiguracionAcceso()) {
                             postEvent(SplashScreenEvent.onVerifyInitialConfigNoExiste);
+>>>>>>> a7a6fa2f5fdf8127b4fd3151696a4035034b8c1d
                         } else {
-                            postEvent(SplashScreenEvent.onInsertRegistroValorAccesoError);
+                            postEvent(SplashScreenEvent.onVerifyInitialConfigExiste);
                         }
 
                     } else {
-                        postEvent(SplashScreenEvent.onVerifyInitialConfigNoExiste);
+                        postEvent(SplashScreenEvent.onVerifyInitialConfigExiste);
                     }
 
                     break;
@@ -160,16 +166,25 @@ public class SplashScreenRepositoryImpl implements SplashScreenRepository {
      * @return
      */
     private boolean verifyInitialRegister(Context context) {
-        /*if (AppDatabase.getInstance(context).obtenerConteoRegistroProductos() == 0) {
+        if (AppDatabase.getInstance(context).obtenerConteoRegistroProductos() == 0) {
             if (AppDatabase.getInstance(context).insertRegistroInicialProductos()) {
-                if (AppDatabase.getInstance(context).insertRegistroPruebaTransaction(AppDatabase.getInstance(context).obtenerProductoIdByNombre("CREDITO ROTATIVO"))) {
-                    return true;
+
+                int prueba = 0;
+                if (AppDatabase.getInstance(context).insertRegistroPruebaTransaction(1)) {
+                    prueba++;
                 }
+                if (AppDatabase.getInstance(context).insertRegistroPruebaTransaction(2)) {
+                    prueba++;
+
+                }
+                if (prueba==2)
+                return true;
+
             }
         } else {
             Transaccion modelTransaccion = AppDatabase.getInstance(context).obtenerUltimaTransaccion();
             return true;
-        }*/
+        }
         return true;
     }
 

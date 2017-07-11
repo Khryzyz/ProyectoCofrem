@@ -1,12 +1,25 @@
 package com.cofrem.transacciones.Modules.ModuleReports.ReimpresionScreenActivity.ui;
 
 import android.app.Activity;
+import android.content.ContentResolver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.AnyRes;
+import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cofrem.transacciones.ReportScreenActivity_;
+import com.cofrem.transacciones.lib.PrintHandler;
 import com.cofrem.transacciones.models.Reports;
 import com.cofrem.transacciones.Modules.ModuleReports.ReimpresionScreenActivity.ReimpresionScreenPresenter;
 import com.cofrem.transacciones.Modules.ModuleReports.ReimpresionScreenActivity.ReimpresionScreenPresenterImpl;
@@ -18,6 +31,11 @@ import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 @EActivity(R.layout.activity_report_reimpresion_screen)
 public class ReimpresionScreenActivity extends Activity implements ReimpresionScreenView {
 
@@ -28,6 +46,11 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
      */
     //Instanciamiento de la interface SaldoScreenPresenter
     private ReimpresionScreenPresenter reimpresionScreenPresenter;
+
+    private static final int PASO_ULTIMO_RECIBO = 1;
+    private static final int PASO_NUMERO_CARGO = 2;
+
+    private int paso;
 
     @ViewById
     RelativeLayout bodyContentReimpresionRecibo;
@@ -47,9 +70,16 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
     RelativeLayout bodyContentCierreLoteVerificacion;
     @ViewById
     RelativeLayout bodyContentCierreLoteImpresion;
+    @ViewById
+    RelativeLayout bodyContentReimpresionReciboClaveAdministrador;
 
     @ViewById
     EditText edtReportReimprimeonReciboNummeroCargoContenidoClave;
+    @ViewById
+    TextView txvReportReimprimeonReciboImpresionSaldoCantidad;
+    @ViewById
+    EditText edtReportReimpresionReciboClaveAdministradorContenidoClave;
+
 
     Transaccion modelTransaccion;
 
@@ -113,6 +143,16 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
         reimpresionScreenPresenter.onDestroy();
         super.onDestroy();
     }
+
+    /**
+     * Metodo que interfiere la presion del boton "Back"
+     */
+    @Override
+    public void onBackPressed() {
+        String mensajeRegresar = getString(R.string.general_message_press_back) + getString(R.string.general_text_button_regresar);
+        Toast.makeText(this, mensajeRegresar, Toast.LENGTH_SHORT).show();
+    }
+
     /**
      * #############################################################################################
      * Metodos sobrecargados de la interface
@@ -121,28 +161,97 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
 
 
     /**
-     * Metodo para manejar la existencia de la configuracion inicial
+     * Metodo para manejar la existencia de un Ultimo recibo para reimprimir
+     */
+    @Override
+    public void handleVerifyExistenceUltimoReciboSuccess(Transaccion modelTransaccion) {
+        this.modelTransaccion = modelTransaccion;
+        bodyContentReimpresionRecibo.setVisibility(View.GONE);
+        bodyContentReimpresionReciboClaveAdministrador.setVisibility(View.VISIBLE);
+    }
+
+    /**
+     * Metodo para manejar la NO existencia de un Ultimo recibo para reimprimir
+     */
+    @Override
+    public void handleVerifyExistenceUltimoReciboError() {
+// texto quemado hay que pitarlo
+        Toast.makeText(this, "no existen registros", Toast.LENGTH_LONG).show();
+
+    }
+
+
+    /**
+     * Metodo para manejar la existencia de un recibo por numero de cargo
      */
     @Override
     public void handleVerifyExistenceReciboPorNumCargoSuccess(Transaccion modelTransaccion) {
         this.modelTransaccion = modelTransaccion;
+        bodyContentReimpresionReciboNumeroCargo.setVisibility(View.GONE);
+        bodyContentReimpresionReciboClaveAdministrador.setVisibility(View.VISIBLE);
 
     }
 
+
     /**
-     * Metodo para manejar la existencia de la configuracion inicial
+     * Metodo para manejar la NO existencia de un recibo por numero de cargo
      */
     @Override
     public void handleVerifyExistenceReciboPorNumCargoError() {
         Toast.makeText(this, this.getString(R.string.report_text_message_No_existen_recibo_num_cargo), Toast.LENGTH_LONG).show();
     }
 
+    @Override
+    public void handleVerifyClaveAdministradorSuccess() {
+        bodyContentReimpresionReciboClaveAdministrador.setVisibility(View.GONE);
+       switch (paso){
+           case PASO_ULTIMO_RECIBO:
+               bodyContentReimpresionReciboUltimo.setVisibility(View.VISIBLE);
+               break;
+           case PASO_NUMERO_CARGO:
+               bodyContentReimpresionReciboImpresion.setVisibility(View.VISIBLE);
+               txvReportReimprimeonReciboImpresionSaldoCantidad.setText(String.valueOf(modelTransaccion.getNumero_cargo()));
+               break;
+       }
+        edtReportReimpresionReciboClaveAdministradorContenidoClave.setText("");
+    }
 
+// texto quemado hay que pitarlo
+    @Override
+    public void handleVerifyClaveAdministradorError() {
+        Toast.makeText(this, this.getString(R.string.report_text_message_No_existen_recibo_num_cargo), Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void handleVerifyExistenceReporteDetalleSuccess() {
+
+    }
+
+    @Override
+    public void handleVerifyExistenceReporteDetalleError() {
+
+    }
     /**
      * #############################################################################################
      * Metodo propios de la clase
      * #############################################################################################
      */
+
+    /**
+     * Metodo para Obtener el String de fecha y hora
+     *
+     * @return String fecha
+     */
+    private String getDateTime() {
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat(
+                "yyyy-MM-dd HH:mm:ss",
+                Locale.getDefault());
+
+        Date date = new Date();
+
+        return dateFormat.format(date);
+    }
 
 
     /**
@@ -163,22 +272,36 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
     }
 
     /**
-     * Metodo para navegar a la ventana reimprecion ultimo recibo Imprimir
+     * Metodo para validar la existencia de un ultimo recibo para Reimprimir
      */
     @Click(R.id.btnReportReimpresionReciboUltimoRecibo)
-    public void navigateToContentReimprimirUltimo() {
-        //reimpresionScreenPresenter.imprimir(this);
-        bodyContentReimpresionRecibo.setVisibility(View.GONE);
-        bodyContentReimpresionReciboUltimo.setVisibility(View.VISIBLE);
+    public void validarExistenciaUltimoRecibo() {
+        paso = PASO_ULTIMO_RECIBO;
+        reimpresionScreenPresenter.validarExistenciaUltimoRecibo(this);
+    }
+
+
+    @Click(R.id.btnReportReimpresionReciboClaveAdministradorBotonAceptar)
+    public void validarClaveAdministrador(){
+        reimpresionScreenPresenter.validarClaveAdministrador(this,
+                edtReportReimpresionReciboClaveAdministradorContenidoClave.getText().toString());
     }
 
     /**
-     * Metodo que se encargara de imprimir el recibo
+     * Metodo que se encargara de Reimprimir el recibo
      */
     @Click(R.id.btnReportReimpresionReciboImprimirRecibo)
     public void imprimirUltimoRecibo() {
 
-        reimpresionScreenPresenter.imprimirUltimoRecibo(this);
+        Bitmap logo = BitmapFactory.decodeResource(this.getResources(), R.mipmap.logo);
+        String mensaje = this.getResources().getString(
+                R.string.reimprimir_recibo,
+                getDateTime(),
+                modelTransaccion.getNumero_tarjeta(),
+                String.valueOf(modelTransaccion.getValor()),
+                String.valueOf(modelTransaccion.getNumero_cargo())
+        );
+        PrintHandler.getInstance(this).printRecibo(logo,mensaje);
 
     }
 
@@ -205,9 +328,71 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
      */
     @Click(R.id.btnReportReimprimeonReciboNummeroCargoBotonAceptar)
     public void acceptReimprimirNumCargo() {
-
-        reimpresionScreenPresenter.imprimirConNumCargo(this, edtReportReimprimeonReciboNummeroCargoContenidoClave.getText().toString());
+        paso = PASO_NUMERO_CARGO;
+        reimpresionScreenPresenter.validarExistenciaReciboConNumCargo(this, edtReportReimprimeonReciboNummeroCargoContenidoClave.getText().toString());
     }
+
+
+    @Click(R.id.btnReportReimprimeonReciboImpresionBotonImprimir)
+    public void imprimirReimprimirNumCargo(){
+        Bitmap logo = BitmapFactory.decodeResource(this.getResources(), R.mipmap.logo);
+
+        String mensaje = this.getResources().getString(
+                R.string.reimprimir_recibo,
+                getDateTime(),
+                modelTransaccion.getNumero_tarjeta(),
+                String.valueOf(modelTransaccion.getValor()),
+                String.valueOf(modelTransaccion.getNumero_cargo())
+        );
+
+        PrintHandler.getInstance(this).printRecibo(logo,mensaje);
+        edtReportReimprimeonReciboNummeroCargoContenidoClave.setText("");
+
+    }
+
+    @Click(R.id.btnReportReimprimeonReciboImpresionBotonSalir)
+    public void cancelReimprimirNumCargo(){
+        bodyContentReimpresionReciboImpresion.setVisibility(View.GONE);
+        bodyContentReimpresionRecibo.setVisibility(View.VISIBLE);
+
+    }
+
+
+    @Click(R.id.btnReportReporteDetallesImpresionBotonImprimir)
+    public  void validarExistenciaDestalleRecibos(){
+        reimpresionScreenPresenter.validarExistenciaDetalleRecibos(this);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    @Click({R.id.btnTransactionScreenBack
+            ,R.id.btnReportReporteDetallesImpresionBotonSalir
+            ,R.id.btnReportReporteGeneralImpresionBotonSalir
+            ,R.id.btnReportCierreLoteClaveDispositivoBotonCancelar
+            ,R.id.btnReportCierreLoteImpresionBotonSalir
+            ,R.id.btnReportReimprimeonReciboNummeroCargoBotonCancelar})
+    public void regresarDesdeReimpimirRecibo(){
+        Intent intent = new Intent(this, ReportScreenActivity_.class);
+        startActivity(intent);
+    }
+
+
+
 
 
 }
