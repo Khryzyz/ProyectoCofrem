@@ -441,7 +441,7 @@ public final class AppDatabase extends SQLiteOpenHelper {
      */
 
 
-    /**
+        /**
      * Metodo para Obtener ultima  transaccion
      */
     public Transaccion obtenerUltimaTransaccion() {
@@ -453,9 +453,7 @@ public final class AppDatabase extends SQLiteOpenHelper {
         Cursor cursor;
 
         cursor = getWritableDatabase().rawQuery(
-                "SELECT * FROM " + DatabaseManager.TableTransacciones.TABLE_NAME_TRANSACCIONES +
-                        " ORDER BY " + DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_REGISTRO +
-                        " ASC LIMIT 1", null
+                "SELECT * FROM " + DatabaseManager.TableTransacciones.TABLE_NAME_TRANSACCIONES + " ORDER BY " + DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_REGISTRO + " ASC LIMIT 1", null
         );
 
         if (cursor.moveToFirst()) {
@@ -481,8 +479,7 @@ public final class AppDatabase extends SQLiteOpenHelper {
         Cursor cursor;
 
         cursor = getWritableDatabase().rawQuery(
-                "SELECT * FROM " + DatabaseManager.TableTransacciones.TABLE_NAME_TRANSACCIONES +
-                        " WHERE " + DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_NUMERO_CARGO + " = " + numCargo, null
+                "SELECT * FROM " + DatabaseManager.TableTransacciones.TABLE_NAME_TRANSACCIONES + " WHERE " + DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_NUMERO_CARGO + " = " + numCargo, null
         );
 
         if (cursor.moveToFirst()) {
@@ -494,9 +491,37 @@ public final class AppDatabase extends SQLiteOpenHelper {
             modelTransaccion.setRegistro(cursor.getString(5));
             modelTransaccion.setEstado(cursor.getInt(6));
         }
-
         return modelTransaccion;
+    }
 
+
+
+    /**
+     * Metodo para Obtener una  transaccion segun el numero de cargo
+     */
+    public ArrayList obtenerDetallesTransaccion() {
+
+        ArrayList<Transaccion> lista = new ArrayList<Transaccion>();
+        Cursor cursor;
+        cursor = getWritableDatabase().rawQuery(
+                "SELECT * FROM " + DatabaseManager.TableTransacciones.TABLE_NAME_TRANSACCIONES , null
+        );
+
+        while (cursor.moveToNext()) {
+            Transaccion modelTransaccion = new Transaccion();
+
+            modelTransaccion.setId(cursor.getInt(0));
+            modelTransaccion.setProducto_id(cursor.getInt(1));
+            modelTransaccion.setNumero_cargo(cursor.getInt(2));
+            modelTransaccion.setNumero_tarjeta(cursor.getString(3));
+            modelTransaccion.setValor(cursor.getInt(4));
+            modelTransaccion.setRegistro(cursor.getString(5));
+            modelTransaccion.setEstado(cursor.getInt(6));
+
+            lista.add(modelTransaccion);
+
+        }
+        return lista;
     }
 
     /**
