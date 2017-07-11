@@ -15,8 +15,10 @@ import com.cofrem.transacciones.lib.PrintHandler;
 import com.cofrem.transacciones.models.Transaccion;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Objects;
 
 public class ReimpresionScreenRepositoryImpl implements ReimpresionScreenRepository {
     /**
@@ -54,9 +56,32 @@ public class ReimpresionScreenRepositoryImpl implements ReimpresionScreenReposit
     public void validarExistenciaUltimoRecibo(Context context) {
         Transaccion modelTransaccion = AppDatabase.getInstance(context).obtenerUltimaTransaccion();
         if (modelTransaccion.getNumero_tarjeta() != null) {
-            postEvent(ReimpresionScreenEvent.onVerifyExistenceReciboPorNumCargoSuccess, modelTransaccion);
+            postEvent(ReimpresionScreenEvent.onVerifyExistenceUltimoReciboSuccess, modelTransaccion);
         } else {
-            postEvent(ReimpresionScreenEvent.onVerifyExistenceReciboPorNumCargoError);
+            postEvent(ReimpresionScreenEvent.onVerifyExistenceUltimoReciboError);
+        }
+    }
+
+    @Override
+    public void validarExistenciaDetalleRecibos(Context context) {
+        ArrayList<Transaccion> listaDetalle = AppDatabase.getInstance(context).obtenerDetallesTransaccion();
+
+        if(!listaDetalle.isEmpty()){
+            postEvent(ReimpresionScreenEvent.onVerifyExistenceReporteDetalleSuccess,listaDetalle);
+        }else{
+            postEvent(ReimpresionScreenEvent.onVerifyExistenceReporteDetalleError);
+        }
+
+
+
+    }
+
+    @Override
+    public void validarClaveAdministrador(Context context, String clave) {
+        if(clave.equals("123")){
+            postEvent(ReimpresionScreenEvent.onVerifyClaveAdministradorSuccess);
+        }else{
+            postEvent(ReimpresionScreenEvent.onVerifyClaveAdministradorError);
         }
     }
 
@@ -122,7 +147,7 @@ public class ReimpresionScreenRepositoryImpl implements ReimpresionScreenReposit
      * @param type
      * @param errorMessage
      */
-    private void postEvent(int type, Transaccion modalTransaccion, String errorMessage) {
+    private void postEvent(int type,String errorMessage ,Transaccion modalTransaccion ,ArrayList<Transaccion> lista) {
         ReimpresionScreenEvent reimpresionScreenEvent = new ReimpresionScreenEvent();
         reimpresionScreenEvent.setEventType(type);
         if (errorMessage != null) {
@@ -143,9 +168,19 @@ public class ReimpresionScreenRepositoryImpl implements ReimpresionScreenReposit
      *
      * @param type
      */
+    private void postEvent(int type, ArrayList<Transaccion> lista) {
+
+        postEvent(type,null , null,lista);
+
+    }
+    /**
+     * Sobrecarga del metodo postevent
+     *
+     * @param type
+     */
     private void postEvent(int type, Transaccion modelTransaccion) {
 
-        postEvent(type, modelTransaccion, null);
+        postEvent(type,null , modelTransaccion,null);
 
     }
 
@@ -156,7 +191,7 @@ public class ReimpresionScreenRepositoryImpl implements ReimpresionScreenReposit
      */
     private void postEvent(int type) {
 
-        postEvent(type, null, null);
+        postEvent(type, null, null,null);
 
     }
 }

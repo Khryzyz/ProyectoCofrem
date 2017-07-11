@@ -318,7 +318,7 @@ public class PrintHandler extends Handler {
                 ThermalPrinter.setAlgin(ThermalPrinter.ALGIN_MIDDLE);
                 if(bitmapOrigen!=null){
                     ThermalPrinter.printLogo(bitmapOrigen);
-                    ThermalPrinter.walkPaper(10);
+                    ThermalPrinter.walkPaper(1);
                 }else{
                     Log.e("error","no se cargo la imagen");
                 }

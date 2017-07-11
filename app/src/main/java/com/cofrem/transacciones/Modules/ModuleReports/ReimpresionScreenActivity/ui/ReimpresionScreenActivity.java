@@ -47,6 +47,11 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
     //Instanciamiento de la interface SaldoScreenPresenter
     private ReimpresionScreenPresenter reimpresionScreenPresenter;
 
+    private static final int PASO_ULTIMO_RECIBO = 1;
+    private static final int PASO_NUMERO_CARGO = 2;
+
+    private int paso;
+
     @ViewById
     RelativeLayout bodyContentReimpresionRecibo;
     @ViewById
@@ -65,11 +70,17 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
     RelativeLayout bodyContentCierreLoteVerificacion;
     @ViewById
     RelativeLayout bodyContentCierreLoteImpresion;
+    @ViewById
+    RelativeLayout bodyContentReimpresionReciboClaveAdministrador;
 
     @ViewById
     EditText edtReportReimprimeonReciboNummeroCargoContenidoClave;
     @ViewById
     TextView txvReportReimprimeonReciboImpresionSaldoCantidad;
+    @ViewById
+    EditText edtReportReimpresionReciboClaveAdministradorContenidoClave;
+
+
     Transaccion modelTransaccion;
 
     /**
@@ -154,7 +165,9 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
      */
     @Override
     public void handleVerifyExistenceUltimoReciboSuccess(Transaccion modelTransaccion) {
-
+        this.modelTransaccion = modelTransaccion;
+        bodyContentReimpresionRecibo.setVisibility(View.GONE);
+        bodyContentReimpresionReciboClaveAdministrador.setVisibility(View.VISIBLE);
     }
 
     /**
@@ -162,8 +175,11 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
      */
     @Override
     public void handleVerifyExistenceUltimoReciboError() {
+// texto quemado hay que pitarlo
+        Toast.makeText(this, "no existen registros", Toast.LENGTH_LONG).show();
 
     }
+
 
     /**
      * Metodo para manejar la existencia de un recibo por numero de cargo
@@ -172,11 +188,10 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
     public void handleVerifyExistenceReciboPorNumCargoSuccess(Transaccion modelTransaccion) {
         this.modelTransaccion = modelTransaccion;
         bodyContentReimpresionReciboNumeroCargo.setVisibility(View.GONE);
-        bodyContentReimpresionReciboImpresion.setVisibility(View.VISIBLE);
-
-        txvReportReimprimeonReciboImpresionSaldoCantidad.setText(String.valueOf(modelTransaccion.getNumero_cargo()));
+        bodyContentReimpresionReciboClaveAdministrador.setVisibility(View.VISIBLE);
 
     }
+
 
     /**
      * Metodo para manejar la NO existencia de un recibo por numero de cargo
@@ -186,10 +201,36 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
         Toast.makeText(this, this.getString(R.string.report_text_message_No_existen_recibo_num_cargo), Toast.LENGTH_LONG).show();
     }
 
+    @Override
+    public void handleVerifyClaveAdministradorSuccess() {
+        bodyContentReimpresionReciboClaveAdministrador.setVisibility(View.GONE);
+       switch (paso){
+           case PASO_ULTIMO_RECIBO:
+               bodyContentReimpresionReciboUltimo.setVisibility(View.VISIBLE);
+               break;
+           case PASO_NUMERO_CARGO:
+               bodyContentReimpresionReciboImpresion.setVisibility(View.VISIBLE);
+               txvReportReimprimeonReciboImpresionSaldoCantidad.setText(String.valueOf(modelTransaccion.getNumero_cargo()));
+               break;
+       }
+        edtReportReimpresionReciboClaveAdministradorContenidoClave.setText("");
+    }
 
+// texto quemado hay que pitarlo
+    @Override
+    public void handleVerifyClaveAdministradorError() {
+        Toast.makeText(this, this.getString(R.string.report_text_message_No_existen_recibo_num_cargo), Toast.LENGTH_LONG).show();
+    }
 
+    @Override
+    public void handleVerifyExistenceReporteDetalleSuccess() {
 
+    }
 
+    @Override
+    public void handleVerifyExistenceReporteDetalleError() {
+
+    }
     /**
      * #############################################################################################
      * Metodo propios de la clase
@@ -235,15 +276,15 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
      */
     @Click(R.id.btnReportReimpresionReciboUltimoRecibo)
     public void validarExistenciaUltimoRecibo() {
+        paso = PASO_ULTIMO_RECIBO;
         reimpresionScreenPresenter.validarExistenciaUltimoRecibo(this);
     }
 
-    /**
-     * Metodo para navegar a la ventana reimprecion ultimo recibo Imprimir
-     */
-    public void navigateToContentReimprimirUltimo(){
-        bodyContentReimpresionRecibo.setVisibility(View.GONE);
-        bodyContentReimpresionReciboUltimo.setVisibility(View.VISIBLE);
+
+    @Click(R.id.btnReportReimpresionReciboClaveAdministradorBotonAceptar)
+    public void validarClaveAdministrador(){
+        reimpresionScreenPresenter.validarClaveAdministrador(this,
+                edtReportReimpresionReciboClaveAdministradorContenidoClave.getText().toString());
     }
 
     /**
@@ -287,7 +328,7 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
      */
     @Click(R.id.btnReportReimprimeonReciboNummeroCargoBotonAceptar)
     public void acceptReimprimirNumCargo() {
-
+        paso = PASO_NUMERO_CARGO;
         reimpresionScreenPresenter.validarExistenciaReciboConNumCargo(this, edtReportReimprimeonReciboNummeroCargoContenidoClave.getText().toString());
     }
 
@@ -315,6 +356,29 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
         bodyContentReimpresionRecibo.setVisibility(View.VISIBLE);
 
     }
+
+
+    @Click(R.id.btnReportReporteDetallesImpresionBotonImprimir)
+    public  void validarExistenciaDestalleRecibos(){
+        reimpresionScreenPresenter.validarExistenciaDetalleRecibos(this);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     @Click({R.id.btnTransactionScreenBack
             ,R.id.btnReportReporteDetallesImpresionBotonSalir

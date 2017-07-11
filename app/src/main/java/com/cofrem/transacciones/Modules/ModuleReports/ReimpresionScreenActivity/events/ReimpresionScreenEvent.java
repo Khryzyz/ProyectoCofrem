@@ -15,6 +15,8 @@ public class ReimpresionScreenEvent {
     public final static int onVerifyExistenceReporteDetalleError = 6;
     public final static int onVerifyExistenceReporteGeneralSuccess = 7;
     public final static int onVerifyExistenceReporteGeneralError = 8;
+    public final static int onVerifyClaveAdministradorSuccess = 9;
+    public final static int onVerifyClaveAdministradorError = 10;
 
 
     // Variable que maneja los tipos de eventos

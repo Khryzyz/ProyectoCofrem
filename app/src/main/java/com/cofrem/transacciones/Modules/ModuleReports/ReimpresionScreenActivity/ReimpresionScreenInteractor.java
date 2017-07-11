@@ -15,4 +15,23 @@ interface ReimpresionScreenInteractor {
      *
      */
     void validarExistenciaReciboConNumCargo(Context context,String numCargo);
+
+
+    /**
+     * Metodo que validara la calve del administrador para dar paso a la reimpresion de recibos:
+     *
+     * @param context , numCargo
+     */
+    void validarClaveAdministrador(Context context,String clave);
+
+
+    /**
+     * Metodo que validara la existencua de recibos
+     *  - Si existen recibos enviara una lista de modelo de la transaccion
+     *  - si NO exite un recibo solo notifica que no existen
+     *
+     * @param context , numCargo
+     */
+    void validarExistenciaDetalleRecibos(Context context);
+
 }

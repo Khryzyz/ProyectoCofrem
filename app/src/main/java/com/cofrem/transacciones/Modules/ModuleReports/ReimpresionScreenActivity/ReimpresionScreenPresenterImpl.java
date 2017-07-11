@@ -63,6 +63,11 @@ public class ReimpresionScreenPresenterImpl implements ReimpresionScreenPresente
     }
 
     @Override
+    public void validarClaveAdministrador(Context context, String clave) {
+        reimpresionScreenInteractor.validarClaveAdministrador(context,clave);
+    }
+
+    @Override
     public void validarExistenciaUltimoRecibo(Context context) {
         reimpresionScreenInteractor.validarExistenciaUltimoRecibo(context);
     }
@@ -70,6 +75,11 @@ public class ReimpresionScreenPresenterImpl implements ReimpresionScreenPresente
     @Override
     public void validarExistenciaReciboConNumCargo(Context context, String numCargo) {
         reimpresionScreenInteractor.validarExistenciaReciboConNumCargo(context, numCargo);
+    }
+
+    @Override
+    public void validarExistenciaDetalleRecibos(Context context) {
+        reimpresionScreenInteractor.validarExistenciaDetalleRecibos(context);
     }
 
     /**
@@ -97,12 +107,31 @@ public class ReimpresionScreenPresenterImpl implements ReimpresionScreenPresente
             case ReimpresionScreenEvent.onVerifyExistenceReciboPorNumCargoError:
                 onVerifyExistenceReciboPorNumCargoError();
                 break;
+            case ReimpresionScreenEvent.onVerifyExistenceUltimoReciboSuccess:
+                onVerifyExistenceUltimoReciboSuccess(reimpresionScreenEvent.getModelTransaccion());
+                break;
+            case ReimpresionScreenEvent.onVerifyExistenceUltimoReciboError:
+                onVerifyExistenceUltimoReciboError();
+                break;
+            case ReimpresionScreenEvent.onVerifyClaveAdministradorSuccess:
+                onVerifyClaveAdministradorSuccess();
+                break;
+            case ReimpresionScreenEvent.onVerifyClaveAdministradorError:
+                onVerifyClaveAdministradorError();
+                break;
+            case ReimpresionScreenEvent.onVerifyExistenceReporteDetalleSuccess:
+                onVerifyExistenceReporteDetalleSuccess();
+                break;
+            case ReimpresionScreenEvent.onVerifyExistenceReporteDetalleError:
+                onVerifyExistenceReporteDetalleError();
+                break;
+
 
         }
     }
 
 
-    /**
+/**
      * #############################################################################################
      * Metodo propios de la clase
      * #############################################################################################
@@ -124,6 +153,30 @@ public class ReimpresionScreenPresenterImpl implements ReimpresionScreenPresente
 
     public void onVerifyExistenceReciboPorNumCargoError() {
         reimpresionScreenView.handleVerifyExistenceReciboPorNumCargoError();
+    }
+
+
+    public void onVerifyExistenceUltimoReciboSuccess(Transaccion modeltgransaccion){
+        reimpresionScreenView.handleVerifyExistenceUltimoReciboSuccess(modeltgransaccion);
+    }
+
+    public void onVerifyExistenceUltimoReciboError(){
+        reimpresionScreenView.handleVerifyExistenceUltimoReciboError();
+    }
+
+    public void onVerifyClaveAdministradorSuccess(){
+        reimpresionScreenView.handleVerifyClaveAdministradorSuccess();
+    }
+
+    public void onVerifyClaveAdministradorError(){
+        reimpresionScreenView.handleVerifyClaveAdministradorError();
+    }
+
+    private void onVerifyExistenceReporteDetalleSuccess() {
+        reimpresionScreenView.handleVerifyExistenceReporteDetalleSuccess();
+    }
+    private void onVerifyExistenceReporteDetalleError() {
+        reimpresionScreenView.handleVerifyExistenceReporteDetalleError();
     }
 
 }

@@ -26,5 +26,26 @@ public interface ReimpresionScreenView {
      */
     void handleVerifyExistenceReciboPorNumCargoError();
 
+    /**
+     * Metodo para manejar la existencia de un recibo por numero de cargo
+     */
+    void handleVerifyClaveAdministradorSuccess();
+
+
+    /**
+     * Metodo para manejar la existencia de un recibo por numero de cargo
+     */
+    void handleVerifyClaveAdministradorError();
+
+
+    /**
+     * Metodo para manejar la existencia de recibos para reporte por detalle
+     */
+    void handleVerifyExistenceReporteDetalleSuccess();
+
+    /**
+     * Metodo para manejar la existencia de recibos para reporte por detalle
+     */
+    void handleVerifyExistenceReporteDetalleError();
 
 }

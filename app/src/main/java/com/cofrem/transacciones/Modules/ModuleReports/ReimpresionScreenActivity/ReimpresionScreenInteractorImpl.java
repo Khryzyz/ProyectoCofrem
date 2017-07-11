@@ -29,6 +29,11 @@ class ReimpresionScreenInteractorImpl implements ReimpresionScreenInteractor {
     }
 
     @Override
+    public void validarClaveAdministrador(Context context, String clave) {
+        reimpresionScreenRepository.validarClaveAdministrador(context, clave);
+    }
+
+    @Override
     public void validarExistenciaUltimoRecibo(Context context) {
         reimpresionScreenRepository.validarExistenciaUltimoRecibo(context);
     }
@@ -36,6 +41,11 @@ class ReimpresionScreenInteractorImpl implements ReimpresionScreenInteractor {
     @Override
     public void validarExistenciaReciboConNumCargo(Context context, String numCargo) {
         reimpresionScreenRepository.validarExistenciaReciboConNumCargo(context,numCargo);
+    }
+
+    @Override
+    public void validarExistenciaDetalleRecibos(Context context) {
+        reimpresionScreenRepository.validarExistenciaDetalleRecibos(context);
     }
     /**
      * #############################################################################################
