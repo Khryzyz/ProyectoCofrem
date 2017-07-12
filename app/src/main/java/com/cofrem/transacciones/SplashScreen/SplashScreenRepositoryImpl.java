@@ -74,13 +74,12 @@ public class SplashScreenRepositoryImpl implements SplashScreenRepository {
                     if (conteoRegistroConfiguracionAcceso == 0) {
 
                         //Registra el valor de acceso
-<<<<<<< HEAD
-                        if (AppDatabase.getInstance(context).insertConfiguracionAcceso()) {
+                        if (AppDatabase.getInstance(context).insertRegistroInicialConfiguracionAcceso())
                             postEvent(SplashScreenEvent.onVerifyInitialConfigExiste);
-=======
+
                         if (AppDatabase.getInstance(context).insertRegistroInicialConfiguracionAcceso()) {
                             postEvent(SplashScreenEvent.onVerifyInitialConfigNoExiste);
->>>>>>> a7a6fa2f5fdf8127b4fd3151696a4035034b8c1d
+
                         } else {
                             postEvent(SplashScreenEvent.onVerifyInitialConfigExiste);
                         }

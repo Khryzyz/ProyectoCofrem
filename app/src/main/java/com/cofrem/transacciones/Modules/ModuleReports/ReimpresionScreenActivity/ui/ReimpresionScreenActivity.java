@@ -301,7 +301,9 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
                 String.valueOf(modelTransaccion.getValor()),
                 String.valueOf(modelTransaccion.getNumero_cargo())
         );
-        PrintHandler.getInstance(this).printRecibo(logo,mensaje);
+        PrintHandler.getInstance(this).printMessage(mensaje);
+//        PrintHandler.getInstance(this).printPinture(logo);
+//        PrintHandler.getInstance(this).printMessage(mensaje);
 
     }
 
