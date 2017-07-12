@@ -14,6 +14,7 @@ import com.cofrem.transacciones.Modules.ModuleConfiguration.RegisterConfiguratio
 import com.cofrem.transacciones.R;
 import com.cofrem.transacciones.SplashScreen.SplashScreenPresenter;
 import com.cofrem.transacciones.SplashScreen.SplashScreenPresenterImpl;
+import com.cofrem.transacciones.lib.MagneticHandler;
 import com.cofrem.transacciones.models.Configurations;
 
 import org.androidannotations.annotations.AfterViews;
@@ -62,6 +63,8 @@ public class SplashScreenActivity extends Activity implements SplashScreenView {
 
         // Metodo para colocar la orientacion de la app
         setOrientation();
+
+        String[] tarjeta = MagneticHandler.readMagnetic();
 
         // Metodo para validar la configuracion inicial
         validateConfig();

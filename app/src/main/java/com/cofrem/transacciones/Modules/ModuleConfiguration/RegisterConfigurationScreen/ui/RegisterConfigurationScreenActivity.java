@@ -514,7 +514,8 @@ public class RegisterConfigurationScreenActivity extends Activity implements Reg
      * Metodo para mostrar la barra de progreso
      */
     private void showProgress() {
-        // Muesra la barra  de progreso
+        //TODO: VERIFICAR QUE ESTA MOSTRANDO LA BARRA DE PROGRESO
+        // Muestra la barra  de progreso
         frlPgbHldRegisterScreen.setVisibility(View.VISIBLE);
     }
 
@@ -543,11 +544,11 @@ public class RegisterConfigurationScreenActivity extends Activity implements Reg
      */
     @Click({R.id.edtConfiguracionRegisterPassTecnicoContenidoClave,
             R.id.edtConfiguracionRegisterHostContenidoValor,
-            R.id.edtConfiguracionRegisterPortContenidoValor,
-            R.id.edtConfiguracionRegisterDispositivoContenidoValor
+            R.id.edtConfiguracionRegisterPortContenidoValor
     })
     public void hideKeyBoard() {
 
+        //TODO:VERIFICAR QUE EL TECLADO SE ESTA OCULTANDO
         //Oculta el teclado
         KeyBoard.hide(this);
 
