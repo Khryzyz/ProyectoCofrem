@@ -21,6 +21,8 @@
 
     <string name="configuration_text_ingresar_puerto">Ingrese puerto de conexion:</string>
 
+    <string name="configuration_text_ingresar_local">Ingrese el local:</string>
+
     <string name="configuration_text_ingresar_dispositivo">Ingrese el codigo de identificacion del dispositivo:</string>
 
     <string name="configuration_text_estado_configuracion">Estado de la configuración.</string>

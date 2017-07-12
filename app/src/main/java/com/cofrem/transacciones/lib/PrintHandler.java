@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.BatteryManager;
 import android.os.Handler;
 import android.os.Message;
@@ -16,6 +17,7 @@ import com.cofrem.transacciones.global.InfoGlobalSettingsPrint;
 import com.telpo.tps550.api.printer.ThermalPrinter;
 
 import java.io.File;
+import java.util.concurrent.ExecutionException;
 
 public class PrintHandler extends Handler {
 
@@ -125,7 +127,28 @@ public class PrintHandler extends Handler {
             case InfoGlobalSettingsPrint.CODE_PRINTCONTENT:
                 // progressDialog=ProgressDialog.show(PrinterActivity.this,getString(R.string.bl_dy),getString(R.string.printing_wait));
                 // printting = CODE_PRINTCONTENT;
-                new contentPrintThread().start();
+//                new contentPrintThread().start();
+                Boolean respuesta = true;
+                try {
+                    respuesta = new ImprimirTexto(new ImprimirTexto.ResponseImprimirTexto(){
+
+                        @Override
+                        public boolean processFinish(boolean exito) {
+                            return exito;
+                        }
+                    }).execute(messagePrint).get();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
+
+                if(respuesta){
+                   Log.e("impriminso","exito") ;
+                }else{
+                    Log.e("impriminso","error") ;
+                }
+
                 break;
 
             case InfoGlobalSettingsPrint.CODE_PRINTCERIBO:
@@ -175,8 +198,70 @@ public class PrintHandler extends Handler {
             super.run();
 
             String Result;
-
             setName("Content Print Thread");
+                try {
+                    ThermalPrinter.start();
+                    ThermalPrinter.reset();
+                    ThermalPrinter.setAlgin(ThermalPrinter.ALGIN_LEFT);
+                    ThermalPrinter.setLeftIndent(InfoGlobalSettingsPrint.LEFT_DISTANCE);
+                    ThermalPrinter.setLineSpace(InfoGlobalSettingsPrint.LINE_DISTANCE);
+                    if (InfoGlobalSettingsPrint.FONT_SIZE == 4) {
+                        ThermalPrinter.setFontSize(2);
+                        ThermalPrinter.enlargeFontSize(2, 2);
+                    } else if (InfoGlobalSettingsPrint.FONT_SIZE == 3) {
+                        ThermalPrinter.setFontSize(1);
+                        ThermalPrinter.enlargeFontSize(2, 2);
+                    } else if (InfoGlobalSettingsPrint.FONT_SIZE == 2) {
+                        ThermalPrinter.setFontSize(2);
+                    } else if (InfoGlobalSettingsPrint.FONT_SIZE == 1) {
+                        ThermalPrinter.setFontSize(1);
+                    }
+                    ThermalPrinter.setGray(InfoGlobalSettingsPrint.GRAY_LEVEL);
+                    ThermalPrinter.addString(messagePrint);
+                    ThermalPrinter.printString();
+                    ThermalPrinter.clearString();
+                    ThermalPrinter.walkPaper(100);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Result = e.toString();
+                    if (Result.equals("com.telpo.tps550.api.printer.NoPaperException")) {
+                        nopaper = true;
+                        // return;
+                    } else if (Result.equals("com.telpo.tps550.api.printer.OverHeatException")) {
+                        singleton.sendMessage(singleton.obtainMessage(InfoGlobalSettingsPrint.CODE_OVERHEAT, 1, 0, null));
+                    } else {
+                        singleton.sendMessage(singleton.obtainMessage(InfoGlobalSettingsPrint.CODE_PRINTERR, 1, 0, null));
+                    }
+                } finally {
+                    // lock.release();
+                    singleton.sendMessage(singleton.obtainMessage(InfoGlobalSettingsPrint.CODE_CANCELPROMPT, 1, 0, null));
+                    if (nopaper)
+                        singleton.sendMessage(singleton.obtainMessage(InfoGlobalSettingsPrint.CODE_NOPAPER, 1, 0, null));
+                    ThermalPrinter.stop();
+                    nopaper = false;
+                }
+
+        }
+    }
+
+
+    private static class ImprimirTexto extends AsyncTask<String, Integer, Boolean>{
+
+        public interface ResponseImprimirTexto{
+            boolean processFinish(boolean exito);
+        }
+
+        public ResponseImprimirTexto delegate =null;
+
+        public ImprimirTexto(ResponseImprimirTexto response) {
+            this.delegate = response;
+        }
+
+        @Override
+        protected Boolean doInBackground(String... strings) {
+
+            String Result;
+            Boolean nopaper = false;
             try {
                 ThermalPrinter.start();
                 ThermalPrinter.reset();
@@ -195,7 +280,7 @@ public class PrintHandler extends Handler {
                     ThermalPrinter.setFontSize(1);
                 }
                 ThermalPrinter.setGray(InfoGlobalSettingsPrint.GRAY_LEVEL);
-                ThermalPrinter.addString(messagePrint);
+                ThermalPrinter.addString(strings[0]);
                 ThermalPrinter.printString();
                 ThermalPrinter.clearString();
                 ThermalPrinter.walkPaper(100);
@@ -218,8 +303,17 @@ public class PrintHandler extends Handler {
                 ThermalPrinter.stop();
                 nopaper = false;
             }
+            return true;
         }
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            delegate.processFinish(aBoolean);
+        }
+
     }
+
+
 
     /**
      * Metodo extendido de un hilo q hace algo
@@ -233,19 +327,19 @@ public class PrintHandler extends Handler {
             super.run();
             String Result;
             setName("PrintPicture Thread");
-            try {
-                ThermalPrinter.start();
-                ThermalPrinter.reset();
-                ThermalPrinter.setGray(InfoGlobalSettingsPrint.GRAY_LEVEL);
-                ThermalPrinter.setAlgin(ThermalPrinter.ALGIN_MIDDLE);
 
-                if(bitmapOrigen!=null){
-                    ThermalPrinter.printLogo(bitmapOrigen);
-                    ThermalPrinter.walkPaper(20);
-                }else{
-                    Log.e("error","no se cargo la imagen");
-                }
+                try {
+                    ThermalPrinter.start();
+                    ThermalPrinter.reset();
+                    ThermalPrinter.setGray(InfoGlobalSettingsPrint.GRAY_LEVEL);
+                    ThermalPrinter.setAlgin(ThermalPrinter.ALGIN_MIDDLE);
 
+                    if (bitmapOrigen != null) {
+                        ThermalPrinter.printLogo(bitmapOrigen);
+                        ThermalPrinter.walkPaper(20);
+                    } else {
+                        Log.e("error", "no se cargo la imagen");
+                    }
 
 
 //                File file = new File(bitmapOrigen);
@@ -263,36 +357,36 @@ public class PrintHandler extends Handler {
 //                        }
 //                    });
 //                }
-            } catch (Exception e) {
-                e.printStackTrace();
-                Result = e.toString();
-                if (Result.equals("com.telpo.tps550.api.printer.NoPaperException")) {
-                    nopaper = true;
-                    // return;
-                } else if (Result.equals("com.telpo.tps550.api.printer.OverHeatException")) {
-                    singleton.sendMessage(singleton.obtainMessage(InfoGlobalSettingsPrint.CODE_OVERHEAT, 1, 0, null));
-                } else {
-                    singleton.sendMessage(singleton.obtainMessage(InfoGlobalSettingsPrint.CODE_PRINTERR, 1, 0, null));
-                }
-            } finally {
-                singleton.sendMessage(singleton.obtainMessage(InfoGlobalSettingsPrint.CODE_CANCELPROMPT, 1, 0, null));
-                if (nopaper)
-                    singleton.sendMessage(singleton.obtainMessage(InfoGlobalSettingsPrint.CODE_NOPAPER, 1, 0, null));
-                ThermalPrinter.stop();
-                nopaper = false;
-                // PrinterActivity.this.sleep(1500);
-                // if(progressDialog != null &&
-                // !PrinterActivity.this.isFinishing() ){
-                // progressDialog.dismiss();
-                // progressDialog = null;
-                // }
-                Log.v("", "The PrintPicture Progress End !!!");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Result = e.toString();
+                    if (Result.equals("com.telpo.tps550.api.printer.NoPaperException")) {
+                        nopaper = true;
+                        // return;
+                    } else if (Result.equals("com.telpo.tps550.api.printer.OverHeatException")) {
+                        singleton.sendMessage(singleton.obtainMessage(InfoGlobalSettingsPrint.CODE_OVERHEAT, 1, 0, null));
+                    } else {
+                        singleton.sendMessage(singleton.obtainMessage(InfoGlobalSettingsPrint.CODE_PRINTERR, 1, 0, null));
+                    }
+                } finally {
+                    singleton.sendMessage(singleton.obtainMessage(InfoGlobalSettingsPrint.CODE_CANCELPROMPT, 1, 0, null));
+                    if (nopaper)
+                        singleton.sendMessage(singleton.obtainMessage(InfoGlobalSettingsPrint.CODE_NOPAPER, 1, 0, null));
+                    ThermalPrinter.stop();
+                    nopaper = false;
+                    // PrinterActivity.this.sleep(1500);
+                    // if(progressDialog != null &&
+                    // !PrinterActivity.this.isFinishing() ){
+                    // progressDialog.dismiss();
+                    // progressDialog = null;
+                    // }
+                    Log.v("", "The PrintPicture Progress End !!!");
 //                if (isClose) {
 //                    finish();
 //                }
-            }
-            // handler.sendMessage(handler
-            // .obtainMessage(CODE_ENABLE_BUTTON, 1, 0, null));
+                }
+                // handler.sendMessage(handler
+                // .obtainMessage(CODE_ENABLE_BUTTON, 1, 0, null));
 
         }
     }
