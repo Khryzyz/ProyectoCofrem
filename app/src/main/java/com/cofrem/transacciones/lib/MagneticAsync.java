@@ -63,7 +63,20 @@ public class MagneticAsync extends AsyncTask<Void, Integer, String[]> {
     }
 
     @Override
+    protected void onPreExecute(){
+
+        try {
+            MagneticCard.open();
+        } catch (TelpoException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @Override
     protected void onPostExecute(String[] result) {
+
+        MagneticCard.close();
 
         //Delegado que retorna
         delegate.processFinish(result);

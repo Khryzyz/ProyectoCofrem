@@ -3,10 +3,10 @@
 
     <!-- Configuracion margenes de la interfaz de la aplicacion -->
 
-    <dimen name="appMargin">10dp</dimen>
-    <dimen name="appMarginBottom">10dp</dimen>
-    <dimen name="appMarginStart">10dp</dimen>
-    <dimen name="appMarginEnd">10dp</dimen>
-    <dimen name="appMarginTop">10dp</dimen>
+    <dimen name="appMargin">5dp</dimen>
+    <dimen name="appMarginBottom">5dp</dimen>
+    <dimen name="appMarginStart">5dp</dimen>
+    <dimen name="appMarginEnd">5dp</dimen>
+    <dimen name="appMarginTop">5dp</dimen>
 
 </resources>

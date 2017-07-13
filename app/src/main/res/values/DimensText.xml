@@ -3,10 +3,10 @@
 
     <!-- Configuracion dimensiones de los textos de la aplicacion -->
 
-    <dimen name="appTxtSizeXs">10sp</dimen>
-    <dimen name="appTxtSizeSm">15sp</dimen>
-    <dimen name="appTxtSizeMd">20sp</dimen>
-    <dimen name="appTxtSizeLg">30sp</dimen>
-    <dimen name="appTxtSizeXl">45sp</dimen>
+    <dimen name="appTxtSizeXs">10dp</dimen>
+    <dimen name="appTxtSizeSm">15dp</dimen>
+    <dimen name="appTxtSizeMd">20dp</dimen>
+    <dimen name="appTxtSizeLg">25dp</dimen>
+    <dimen name="appTxtSizeXl">30dp</dimen>
 
 </resources>

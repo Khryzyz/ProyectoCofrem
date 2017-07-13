@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/txvCreditoTransactionValorCompraTitle"
         android:layout_marginBottom="@dimen/appMarginBottom"
-        android:text="@string/transaction_text_verifacion_valor_transaccion" />
+        android:text="@string/transaction_text_valor_transaccion" />
 
     <EditText
         android:id="@+id/edtCreditoTransactionValorCompraValor"
@@ -29,7 +29,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/txvCreditoTransactionValorCompraSubtitle"
         android:layout_marginBottom="@dimen/appMarginBottom"
-        android:inputType="number" />
+        android:inputType="number"
+        android:maxLength="9" />
 
     <Button
         android:id="@+id/btnCreditoTransactionValorCompraBotonCancelar"
