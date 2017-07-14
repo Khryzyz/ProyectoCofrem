@@ -21,6 +21,14 @@
         android:visibility="visible" />
 
     <include
+        android:id="@+id/bodyContentReimpresionReciboClaveAdministrador"
+        layout="@layout/content_report_reimpresion_recibo_paso_clave_adminstrador"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/headerContent"
+        android:visibility="gone" />
+
+    <include
         android:id="@+id/bodyContentReimpresionReciboUltimo"
         layout="@layout/content_report_reimpresion_recibo_paso_ultimo"
         android:layout_width="match_parent"
