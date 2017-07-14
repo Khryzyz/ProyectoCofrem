@@ -29,7 +29,8 @@
         <!--Splash Screen-->
         <activity
             android:name=".SplashScreen.ui.SplashScreenActivity_"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:windowSoftInputMode="stateHidden|stateAlwaysHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -38,43 +39,53 @@
         <!--Main Screen-->
         <activity
             android:name=".MainScreenActivity_"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"></activity>
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:windowSoftInputMode="stateHidden|stateAlwaysHidden"></activity>
         <!-- Transaction Screen -->
         <activity
             android:name=".TransactionScreenActivity_"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"></activity>
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:windowSoftInputMode="stateHidden|stateAlwaysHidden"></activity>
         <!-- Transaction Screen / Module Credito -->
         <activity
             android:name=".Modules.ModuleTransaction.CreditoScreen.ui.CreditoScreenActivity_"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"></activity>
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:windowSoftInputMode="stateHidden|stateAlwaysHidden"></activity>
         <!-- Transaction Screen / Module Saldo -->
         <activity
             android:name=".Modules.ModuleTransaction.SaldoScreen.ui.SaldoScreenActivity_"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"></activity>
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:windowSoftInputMode="stateHidden|stateAlwaysHidden"></activity>
         <!-- Transaction Screen / Module Anulacion -->
         <activity
             android:name=".Modules.ModuleTransaction.AnulacionScreen.ui.AnulacionScreenActivity_"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"></activity>
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:windowSoftInputMode="stateHidden|stateAlwaysHidden"></activity>
         <!-- Report Screen -->
         <activity
             android:name=".ReportScreenActivity_"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"></activity>
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:windowSoftInputMode="stateHidden|stateAlwaysHidden"></activity>
         <!-- Report Screen Reimpresion activity -->
         <activity
             android:name=".Modules.ModuleReports.ReimpresionScreenActivity.ui.ReimpresionScreenActivity_"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"></activity>
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:windowSoftInputMode="stateHidden|stateAlwaysHidden"></activity>
         <!-- Configuration Screen -->
         <activity
             android:name=".ConfigurationScreenActivity_"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"></activity>
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:windowSoftInputMode="stateHidden|stateAlwaysHidden"></activity>
         <!-- Configuration Screen / Module RegisterConfiguration-->
         <activity
             android:name=".Modules.ModuleConfiguration.RegisterConfigurationScreen.ui.RegisterConfigurationScreenActivity_"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"></activity>
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:windowSoftInputMode="stateHidden|stateAlwaysHidden"></activity>
         <!-- Configuration Screen / Module TestCommunication-->
         <activity
             android:name=".Modules.ModuleConfiguration.TestCommunicationScreen.ui.TestCommunicationScreenActivity_"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"></activity>
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:windowSoftInputMode="stateHidden|stateAlwaysHidden"></activity>
 
     </application>
 

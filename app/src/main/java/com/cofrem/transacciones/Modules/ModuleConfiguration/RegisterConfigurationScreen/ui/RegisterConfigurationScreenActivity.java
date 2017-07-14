@@ -221,6 +221,9 @@ public class RegisterConfigurationScreenActivity extends Activity implements Reg
 
             case KEYCODE_ENTER:
 
+                // Ocula el soft keyboard al presionar la tecla enter
+                hideKeyBoard();
+
                 switch (pasoRegisterConfguration) {
 
                     case PASO_PASS_TECNICO:

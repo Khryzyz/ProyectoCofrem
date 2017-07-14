@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.cofrem.transacciones.Modules.ModuleTransaction.CreditoScreen.CreditoScreenPresenter;
 import com.cofrem.transacciones.Modules.ModuleTransaction.CreditoScreen.CreditoScreenPresenterImpl;
@@ -170,6 +171,9 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
         switch (keyCode) {
 
             case KEYCODE_ENTER:
+
+                // Ocula el soft keyboard al presionar la tecla enter
+                hideKeyBoard();
 
                 switch (pasoCreditoTransaction) {
 
@@ -341,7 +345,6 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
 
     @Click(R.id.btnCreditoTransactionValorCompraBotonAceptar)
     public void registrarValorCompra() {
-
     }
 
     @Click(R.id.btnCreditoTransactionNumeroDocumentoBotonAceptar)

@@ -50,6 +50,7 @@
     <!--Estilos de los campos de contraseña usados en la aplicacion-->
 
     <style name="StylePassPrimary">
+        <item name="android:longClickable">false</item>
         <item name="android:textColor">@color/appColorWhite</item>
         <item name="android:textSize">@dimen/appTxtSizeLg</item>
         <item name="android:cursorVisible">false</item>
@@ -60,6 +61,7 @@
     <!--Estilos de los campos de ingreso numerioco usados en la aplicacion-->
 
     <style name="StyleValuePrimary">
+        <item name="android:longClickable">false</item>
         <item name="android:textColor">@color/appColorWhite</item>
         <item name="android:textSize">@dimen/appTxtSizeLg</item>
         <item name="android:cursorVisible">false</item>

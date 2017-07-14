@@ -31,13 +31,9 @@
     <!-- Estilos de los botones usados en la aplicacion -->
 
     <style name="StyleButtonAccept">
+        <item name="android:drawable">@drawable/button_accept_style</item>
         <item name="android:layout_width">@dimen/appBtnSizeTextLg</item>
         <item name="android:layout_height">@dimen/appBtnSizeHeightSm</item>
-        <item name="android:textAlignment">center</item>
-        <item name="android:textSize">@dimen/appTxtSizeSm</item>
-        <item name="android:textColor">@color/appColorWhite</item>
-        <item name="android:background">@color/appColorPrimary</item>
-        <item name="android:layout_marginBottom">@dimen/appMarginBottom</item>
     </style>
 
     <style name="StyleButtonCancel" parent="StyleButtonAccept">
