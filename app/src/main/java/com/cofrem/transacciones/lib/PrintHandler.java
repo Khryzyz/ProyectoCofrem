@@ -18,10 +18,7 @@ import com.cofrem.transacciones.models.PrintRow;
 import com.telpo.tps550.api.printer.ThermalPrinter;
 
 import java.io.File;
-<<<<<<< HEAD
 import java.util.ArrayList;
-=======
->>>>>>> desarrollo
 import java.util.concurrent.ExecutionException;
 
 public class PrintHandler extends Handler {
@@ -250,11 +247,7 @@ public class PrintHandler extends Handler {
     }
 
 
-<<<<<<< HEAD
     protected static class ImprimirTexto extends AsyncTask<String, Integer, Boolean>{
-=======
-    private static class ImprimirTexto extends AsyncTask<String, Integer, Boolean>{
->>>>>>> desarrollo
 
         public interface ResponseImprimirTexto{
             boolean processFinish(boolean exito);
