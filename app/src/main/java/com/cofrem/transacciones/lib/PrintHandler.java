@@ -14,9 +14,11 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.cofrem.transacciones.global.InfoGlobalSettingsPrint;
+import com.cofrem.transacciones.models.PrintRow;
 import com.telpo.tps550.api.printer.ThermalPrinter;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 public class PrintHandler extends Handler {
@@ -245,7 +247,7 @@ public class PrintHandler extends Handler {
     }
 
 
-    private static class ImprimirTexto extends AsyncTask<String, Integer, Boolean>{
+    protected static class ImprimirTexto extends AsyncTask<String, Integer, Boolean>{
 
         public interface ResponseImprimirTexto{
             boolean processFinish(boolean exito);
