@@ -8,8 +8,13 @@ public class InfoGlobalSettingsPrint {
     //0 - 255
     public final static int LINE_DISTANCE = 1;
 
-    //1 - 3
+    //1 - 4
     public final static int FONT_SIZE = 2;
+    public final static int FONT_SIZE_1 = 1;
+    public final static int FONT_SIZE_2 = 2;
+    public final static int FONT_SIZE_3 = 3;
+    public final static int FONT_SIZE_4 = 4;
+
 
     //0 - 12
     public final static int GRAY_LEVEL = 12;
@@ -34,6 +39,10 @@ public class InfoGlobalSettingsPrint {
     public final static int CODE_PRINTPICTURE = 14;
     public final static int CODE_EXECUTECOMMAND = 15;
     public final static int CODE_PRINTCERIBO = 16;
+
+    public static final int ALGIN_LEFT = 0;
+    public static final int ALGIN_MIDDLE = 1;
+    public static final int ALGIN_RIGHT = 2;
 
 
 }
