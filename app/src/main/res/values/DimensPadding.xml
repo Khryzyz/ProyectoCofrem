@@ -3,11 +3,12 @@
 
     <!-- Configuracion paddings de la interfaz de la aplicacion -->
 
-    <dimen name="appPadding">5dp</dimen>
-    <dimen name="appPaddingBottom">5dp</dimen>
-    <dimen name="appPaddingStart">5dp</dimen>
-    <dimen name="appPaddingEnd">5dp</dimen>
-    <dimen name="appPaddingTop">5dp</dimen>
+    <dimen name="appPadding">10dp</dimen>
+    <dimen name="appPaddingDrawable">10dp</dimen>
+    <dimen name="appPaddingBottom">10dp</dimen>
+    <dimen name="appPaddingStart">10dp</dimen>
+    <dimen name="appPaddingEnd">10dp</dimen>
+    <dimen name="appPaddingTop">10dp</dimen>
 
     <!-- Configuracion paddings de la interfaz de la aplicacion -->
 

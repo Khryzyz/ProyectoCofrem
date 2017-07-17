@@ -3,8 +3,11 @@ package com.cofrem.transacciones.SplashScreen.ui;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
+import android.view.Display;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -98,7 +101,8 @@ public class SplashScreenActivity extends Activity implements SplashScreenView {
 
         //Agrega el texto de error del manejador de configuracion inicial encontrada
         txvSplashScreenInfo.setText(txvSplashScreenInfo.getText() +
-                "\n " + getString(R.string.general_message_verify_configuration_initial_existe)
+                "\n" +
+                getString(R.string.general_message_verify_configuration_initial_existe)
         );
 
         /**
@@ -118,7 +122,8 @@ public class SplashScreenActivity extends Activity implements SplashScreenView {
 
         //Agrega el texto de error del manejador de configuracion inicial no encontrada
         txvSplashScreenInfo.setText(txvSplashScreenInfo.getText() +
-                "\n " + getString(R.string.general_message_verify_configuration_initial_no_existe)
+                "\n" +
+                getString(R.string.general_message_verify_configuration_initial_no_existe)
         );
 
         //Navegando a la ventana de configuración
@@ -136,7 +141,8 @@ public class SplashScreenActivity extends Activity implements SplashScreenView {
 
         //Agrega el texto de error del manejador de verificacion inicial no valida
         txvSplashScreenInfo.setText(txvSplashScreenInfo.getText() +
-                "\n " + getString(R.string.general_message_verify_configuration_initial_no_valida)
+                "\n" +
+                getString(R.string.general_message_verify_configuration_initial_no_valida)
         );
 
     }
@@ -152,7 +158,8 @@ public class SplashScreenActivity extends Activity implements SplashScreenView {
 
         //Agrega el texto de error del manejador de verificacion inicial no valida
         txvSplashScreenInfo.setText(txvSplashScreenInfo.getText() +
-                "\n " + getString(R.string.general_message_verify_register_valor_acceso)
+                "\n" +
+                getString(R.string.general_message_verify_register_valor_acceso)
         );
     }
 
@@ -330,10 +337,6 @@ public class SplashScreenActivity extends Activity implements SplashScreenView {
      */
     private void navigateToMainScreen() {
 
-        txvSplashScreenInfo.setText(txvSplashScreenInfo.getText() +
-                "\n Aqui se muestra la pantalla principal"
-        );
-
         hideProgress();
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -346,7 +349,7 @@ public class SplashScreenActivity extends Activity implements SplashScreenView {
 
                 startActivity(intent);
             }
-        }, 3000);
+        }, 1000);
     }
 
     /**

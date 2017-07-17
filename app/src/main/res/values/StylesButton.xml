@@ -4,7 +4,7 @@
     <!-- Estilos de los botones usados en la aplicacion -->
 
     <style name="StyleButtonStandar">
-        <item name="android:drawablePadding">@dimen/appPaddingStart</item>
+        <item name="android:drawablePadding">@dimen/appPaddingDrawable</item>
         <item name="android:padding">@dimen/appPadding</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -37,13 +37,14 @@
     <!-- Estilos de los botones usados en la aplicacion -->
 
     <style name="StyleButtonAccept">
-        <item name="android:drawablePadding">@dimen/appPaddingStart</item>
+        <item name="android:drawablePadding">@dimen/appPaddingDrawable</item>
         <item name="android:drawableStart">@drawable/if_check_a</item>
         <item name="android:padding">@dimen/appPadding</item>
         <item name="android:layout_width">@dimen/appBtnSizeTextLg</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">@dimen/appTxtSizeSm</item>
         <item name="android:textColor">@color/appColorWhite</item>
+        <item name="android:textAlignment">textStart</item>
         <item name="android:background">@color/appColorPrimary</item>
         <item name="android:layout_marginBottom">@dimen/appMarginBottom</item>
     </style>

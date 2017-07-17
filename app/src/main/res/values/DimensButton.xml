@@ -11,6 +11,6 @@
     <dimen name="appBtnSizeHeightMd">90dp</dimen>
     <dimen name="appBtnSizeHeightLg">120dp</dimen>
 
-    <dimen name="appBtnSizeTextLg">120dp</dimen>
+    <dimen name="appBtnSizeTextLg">200px</dimen>
 
 </resources>
