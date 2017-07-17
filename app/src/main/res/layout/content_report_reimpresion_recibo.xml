@@ -15,6 +15,7 @@
 
     <Button
         android:id="@+id/btnReportReimpresionReciboUltimoRecibo"
+        android:drawableStart="@drawable/if_back_in_time"
         style="@style/StyleButtonStandar"
         android:layout_alignParentStart="true"
         android:layout_below="@id/txvReportReimprimeonReciboTitle"
@@ -22,6 +23,7 @@
 
     <Button
         android:id="@+id/btnReportReimpresionReciboNumeroDeCargo"
+        android:drawableStart="@drawable/if_list_c"
         style="@style/StyleButtonStandar"
         android:layout_alignParentStart="true"
         android:layout_below="@id/btnReportReimpresionReciboUltimoRecibo"

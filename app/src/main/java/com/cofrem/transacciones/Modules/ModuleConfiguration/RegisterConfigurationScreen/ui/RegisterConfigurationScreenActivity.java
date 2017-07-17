@@ -60,25 +60,25 @@ public class RegisterConfigurationScreenActivity extends Activity implements Reg
     FrameLayout frlPgbHldRegisterScreen;
 
 
-    //Paso configuracion__register_paso_pass_tecnico
+    //Paso configuracion_register_paso_pass_tecnico
     @ViewById
     Button btnConfiguracionRegisterPassTecnicoBotonCancelar;
     @ViewById
     EditText edtConfiguracionRegisterPassTecnicoContenidoClave;
 
-    //Paso configuracion__register_paso_pass_host
+    //Paso configuracion_register_paso_pass_host
     @ViewById
     Button btnConfiguracionRegisterHostBotonCancelar;
     @ViewById
     EditText edtConfiguracionRegisterHostContenidoValor;
 
-    //Paso configuracion__register_paso_pass_port
+    //Paso configuracion_register_paso_pass_port
     @ViewById
     Button btnConfiguracionRegisterPortBotonCancelar;
     @ViewById
     EditText edtConfiguracionRegisterPortContenidoValor;
 
-    //Paso configuracion__register_paso_pass_dispositivo
+    //Paso configuracion_register_paso_pass_dispositivo
     @ViewById
     Button btnConfiguracionRegisterDispositivoBotonCancelar;
     @ViewById
@@ -90,7 +90,7 @@ public class RegisterConfigurationScreenActivity extends Activity implements Reg
     Configurations modelConfiguration = new Configurations();
 
     /**
-     * Pasos definidos del registro de configuracion
+     * Pasos definidos
      */
     int pasoRegisterConfguration = 0; // Define el paso actual
 
@@ -201,7 +201,7 @@ public class RegisterConfigurationScreenActivity extends Activity implements Reg
     }
 
     /**
-     * Meotodo que intercepta las pulsaciones de las teclas del teclado fisico
+     * Metodo que intercepta las pulsaciones de las teclas del teclado fisico
      *
      * @param keyCode
      * @param event
@@ -221,8 +221,9 @@ public class RegisterConfigurationScreenActivity extends Activity implements Reg
 
             case KEYCODE_ENTER:
 
-                //Metodo para ocultar el teclado
+                // Ocula el soft keyboard al presionar la tecla enter
                 hideKeyBoard();
+
                 switch (pasoRegisterConfguration) {
 
                     case PASO_PASS_TECNICO:
@@ -514,7 +515,8 @@ public class RegisterConfigurationScreenActivity extends Activity implements Reg
      * Metodo para mostrar la barra de progreso
      */
     private void showProgress() {
-        // Muesra la barra  de progreso
+        //TODO: VERIFICAR QUE ESTA MOSTRANDO LA BARRA DE PROGRESO
+        // Muestra la barra  de progreso
         frlPgbHldRegisterScreen.setVisibility(View.VISIBLE);
     }
 
@@ -543,11 +545,11 @@ public class RegisterConfigurationScreenActivity extends Activity implements Reg
      */
     @Click({R.id.edtConfiguracionRegisterPassTecnicoContenidoClave,
             R.id.edtConfiguracionRegisterHostContenidoValor,
-            R.id.edtConfiguracionRegisterPortContenidoValor,
-            R.id.edtConfiguracionRegisterDispositivoContenidoValor
+            R.id.edtConfiguracionRegisterPortContenidoValor
     })
     public void hideKeyBoard() {
 
+        //TODO:VERIFICAR QUE EL TECLADO SE ESTA OCULTANDO
         //Oculta el teclado
         KeyBoard.hide(this);
 

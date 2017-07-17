@@ -13,7 +13,7 @@
 
     <!-- Titulos de vistas -->
 
-    <string name="transaction_text_title_credito">Compra de productos</string>
+    <string name="transaction_text_title_credito">Consumo</string>
 
     <string name="transaction_text_title_saldo">Consulta de Saldo</string>
 
@@ -29,9 +29,9 @@
 
     <string name="transaction_text_saldo">Saldo disponible</string>
 
-    <string name="transaction_text_valor_transaccion">Ingrese el valor de transacción:</string>
+    <string name="transaction_text_valor_transaccion">Ingrese el valor del consumo:</string>
 
-    <string name="transaction_text_verifacion_valor_transaccion">Verifique el valor de transacción:</string>
+    <string name="transaction_text_verifacion_valor_transaccion">Verifique el valor del consumo:</string>
 
     <string name="transaction_text_numero_cargo">Ingrese el número de cargo:</string>
 

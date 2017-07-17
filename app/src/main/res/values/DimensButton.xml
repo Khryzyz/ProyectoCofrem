@@ -7,10 +7,10 @@
     <dimen name="appBtnSizeWidthMd">90dp</dimen>
     <dimen name="appBtnSizeWidthLg">120dp</dimen>
 
-    <dimen name="appBtnSizeHeightSm">30dp</dimen>
-    <dimen name="appBtnSizeHeightMd">60dp</dimen>
-    <dimen name="appBtnSizeHeightLg">90dp</dimen>
+    <dimen name="appBtnSizeHeightSm">60dp</dimen>
+    <dimen name="appBtnSizeHeightMd">90dp</dimen>
+    <dimen name="appBtnSizeHeightLg">120dp</dimen>
 
-    <dimen name="appBtnSizeTextLg">120dp</dimen>
+    <dimen name="appBtnSizeTextLg">200px</dimen>
 
 </resources>

@@ -16,24 +16,28 @@
         android:id="@+id/btnReportScreenModuleReimpresion"
         style="@style/StyleButtonStandar"
         android:layout_below="@id/headerContent"
+        android:drawableStart="@drawable/if_back_d"
         android:text="@string/report_text_button_reimpresion" />
 
     <Button
         android:id="@+id/btnReportScreenModuleDetalle"
         style="@style/StyleButtonStandar"
         android:layout_below="@id/btnReportScreenModuleReimpresion"
+        android:drawableStart="@drawable/if_calendar_o"
         android:text="@string/report_text_button_detalle" />
 
     <Button
         android:id="@+id/btnReportScreenModuleGeneral"
         style="@style/StyleButtonStandar"
         android:layout_below="@id/btnReportScreenModuleDetalle"
+        android:drawableStart="@drawable/if_calendar"
         android:text="@string/report_text_button_general" />
 
     <Button
         android:id="@+id/btnReportScreenModuleCierreLote"
         style="@style/StyleButtonStandar"
         android:layout_below="@id/btnReportScreenModuleGeneral"
+        android:drawableStart="@drawable/if_calendar_check_o"
         android:text="@string/report_text_button_cierre" />
 
     <Button

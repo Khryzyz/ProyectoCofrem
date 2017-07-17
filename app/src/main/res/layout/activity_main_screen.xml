@@ -13,32 +13,35 @@
         android:layout_margin="@dimen/appMarginBottom" />
 
     <Button
+        android:drawableStart="@drawable/if_credit_card"
         android:id="@+id/btnMainScreenModuleTransaction"
         style="@style/StyleButtonStandar"
         android:layout_below="@id/headerContent"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/appMarginBottom"
-        android:layout_marginStart="@dimen/appMarginStart"
         android:layout_marginEnd="@dimen/appMarginEnd"
+        android:layout_marginStart="@dimen/appMarginStart"
         android:text="@string/main_text_button_transaction" />
 
     <Button
+        android:drawableStart="@drawable/if_bar_chart"
         android:id="@+id/btnMainScreenModuleReport"
         style="@style/StyleButtonStandar"
         android:layout_below="@id/btnMainScreenModuleTransaction"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/appMarginBottom"
-        android:layout_marginStart="@dimen/appMarginStart"
         android:layout_marginEnd="@dimen/appMarginEnd"
+        android:layout_marginStart="@dimen/appMarginStart"
         android:text="@string/main_text_button_reports" />
 
     <Button
+        android:drawableStart="@drawable/if_gears"
         android:id="@+id/btnMainScreenModuleConfiguration"
         style="@style/StyleButtonStandar"
         android:layout_below="@id/btnMainScreenModuleReport"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/appMarginBottom"
-        android:layout_marginStart="@dimen/appMarginStart"
         android:layout_marginEnd="@dimen/appMarginEnd"
+        android:layout_marginStart="@dimen/appMarginStart"
         android:text="@string/main_text_button_configuration" />
 </RelativeLayout>

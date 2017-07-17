@@ -4,12 +4,70 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <FrameLayout
+        android:id="@+id/frlPgbHldTransactionCredito"
+        style="@style/StyleProgressbarHolder"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:id="@+id/pgbTransactionCredito"
+            style="@style/StyleProgressbar" />
+    </FrameLayout>
+
     <!--Header de los modulos-->
     <include
         android:id="@+id/headerContent"
         layout="@layout/content_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/appMarginBottom" />
+        android:layout_marginBottom="@dimen/appMarginBottom" />
 
-  </RelativeLayout>
+    <include
+        android:id="@+id/bodyContentTransactionValorCompra"
+        layout="@layout/content_transaction_credito_paso_valor_compra"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/headerContent"
+        android:visibility="visible" />
+
+    <include
+        android:id="@+id/bodyContentTransactionNumeroDocumento"
+        layout="@layout/content_transaction_credito_paso_numero_documento"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/headerContent"
+        android:visibility="gone" />
+
+    <include
+        android:id="@+id/bodyContentTransactionVerificacionValor"
+        layout="@layout/content_transaction_credito_paso_verificacion_valor"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/headerContent"
+        android:visibility="gone" />
+
+    <include
+        android:id="@+id/bodyContentTransactionDesliceTarjeta"
+        layout="@layout/content_transaction_credito_paso_deslice_tarjeta"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/headerContent"
+        android:visibility="gone" />
+
+    <include
+        android:id="@+id/bodyContentTransactionPassUsuario"
+        layout="@layout/content_transaction_credito_paso_clave_usuario"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/headerContent"
+        android:visibility="gone" />
+
+    <include
+        android:id="@+id/bodyContentTransactionTransaccionExitosa"
+        layout="@layout/content_transaction_credito_paso_transaccion_exitosa"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/headerContent"
+        android:visibility="gone" />
+
+</RelativeLayout>

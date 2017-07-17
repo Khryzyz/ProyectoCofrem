@@ -4,43 +4,54 @@
     <!-- Estilos de los botones usados en la aplicacion -->
 
     <style name="StyleButtonStandar">
+        <item name="android:drawablePadding">@dimen/appPaddingDrawable</item>
+        <item name="android:padding">@dimen/appPadding</item>
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">@dimen/appBtnSizeHeightSm</item>
-        <item name="android:textAlignment">center</item>
+        <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">@dimen/appTxtSizeSm</item>
         <item name="android:textColor">@color/appColorWhite</item>
         <item name="android:background">@color/appColorPrimary</item>
         <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:textAlignment">textStart</item>
         <item name="android:layout_marginBottom">@dimen/appMarginBottom</item>
         <item name="android:layout_marginStart">@dimen/appMarginStart</item>
         <item name="android:layout_marginEnd">@dimen/appMarginEnd</item>
     </style>
 
     <style name="StyleButtonBack" parent="StyleButtonStandar">
+        <item name="android:drawableStart">@drawable/if_back_b</item>
+        <item name="android:drawablePadding">@dimen/appPaddingStart</item>
         <item name="android:background">@color/appColorClose</item>
     </style>
 
     <style name="StyleButtonExit" parent="StyleButtonStandar">
+        <item name="android:drawableStart">@drawable/if_back_a</item>
         <item name="android:background">@color/appColorClose</item>
     </style>
 
     <style name="StyleButtonPrint" parent="StyleButtonStandar">
+        <item name="android:drawableStart">@drawable/if_print</item>
         <item name="android:background">@color/appColorAccent</item>
     </style>
 
     <!-- Estilos de los botones usados en la aplicacion -->
 
     <style name="StyleButtonAccept">
+        <item name="android:drawablePadding">@dimen/appPaddingDrawable</item>
+        <item name="android:drawableStart">@drawable/if_check_a</item>
+        <item name="android:padding">@dimen/appPadding</item>
         <item name="android:layout_width">@dimen/appBtnSizeTextLg</item>
-        <item name="android:layout_height">@dimen/appBtnSizeHeightSm</item>
-        <item name="android:textAlignment">center</item>
+        <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">@dimen/appTxtSizeSm</item>
         <item name="android:textColor">@color/appColorWhite</item>
+        <item name="android:textAlignment">textStart</item>
         <item name="android:background">@color/appColorPrimary</item>
         <item name="android:layout_marginBottom">@dimen/appMarginBottom</item>
     </style>
 
+
     <style name="StyleButtonCancel" parent="StyleButtonAccept">
+        <item name="android:drawableStart">@drawable/if_cancel_a</item>
         <item name="android:background">@color/appColorClose</item>
     </style>
 

@@ -16,12 +16,14 @@
         android:id="@+id/btnConfigurationScreenModuleRegisterConfiguration"
         style="@style/StyleButtonStandar"
         android:layout_below="@id/headerContent"
+        android:drawableStart="@drawable/if_gear"
         android:text="@string/configuration_text_button_configuracion" />
 
     <Button
         android:id="@+id/btnConfigurationScreenModuleTestCommunication"
         style="@style/StyleButtonStandar"
         android:layout_below="@id/btnConfigurationScreenModuleRegisterConfiguration"
+        android:drawableStart="@drawable/if_conn_plug"
         android:text="@string/configuration_text_button_prueba" />
 
     <Button
