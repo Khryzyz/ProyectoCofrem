@@ -21,7 +21,7 @@
 
     <!-- Subtitulos de vistas -->
 
-    <string name="transaction_text_subtitle_verificacion_datos">Verifique datos de transacción:</string>
+    <string name="transaction_text_subtitle_verificacion_datos">Datos de transacción:</string>
 
     <!-- Textos adicionales -->
 
@@ -31,7 +31,7 @@
 
     <string name="transaction_text_valor_transaccion">Ingrese el valor del consumo:</string>
 
-    <string name="transaction_text_verifacion_valor_transaccion">Verifique el valor del consumo:</string>
+    <string name="transaction_text_verifacion_valor_transaccion">Valor del consumo:</string>
 
     <string name="transaction_text_numero_cargo">Ingrese el número de cargo:</string>
 
@@ -39,6 +39,8 @@
 
     <string name="transaction_text_numero_documento">Ingrese número de documento:</string>
 
-    <string name="transaction_text_verifique_numero_documento">Verifique el número de documento:</string>
+    <string name="transaction_text_verifique_numero_documento">Número de documento:</string>
+
+    <string name="transaction_error_format_clave_usuario">La contraseña debe tener exactamente 4 caracteres.</string>
 
 </resources>

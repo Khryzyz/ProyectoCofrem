@@ -10,12 +10,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.cofrem.transacciones.Modules.ModuleTransaction.CreditoScreen.CreditoScreenPresenter;
 import com.cofrem.transacciones.Modules.ModuleTransaction.CreditoScreen.CreditoScreenPresenterImpl;
 import com.cofrem.transacciones.R;
 import com.cofrem.transacciones.TransactionScreenActivity_;
 import com.cofrem.transacciones.lib.KeyBoard;
+import com.cofrem.transacciones.lib.MagneticHandler;
 import com.cofrem.transacciones.models.Transaccion;
 
 import org.androidannotations.annotations.AfterViews;
@@ -81,7 +83,7 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
     /**
      * Model que almacena la configuracion del dispositivo
      */
-    Transaccion modelConfiguration = new Transaccion();
+    Transaccion modelTransaccion = new Transaccion();
 
 
     /**
@@ -177,7 +179,7 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
                 switch (pasoCreditoTransaction) {
 
                     case PASO_VALOR_COMPRA:
-                        //Metodo para validar la contraseña
+                        //Metodo para registrar el valor del consumo
                         registrarValorCompra();
                         break;
 
@@ -225,7 +227,7 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
         switch (pasoCreditoTransaction) {
 
             case PASO_VALOR_COMPRA:
-                //Vacia la caja de contraseña
+                //Vacia la caja del valor del consumo
                 edtCreditoTransactionValorCompraValor.setText("");
                 break;
 
@@ -344,24 +346,89 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
 
     @Click(R.id.btnCreditoTransactionValorCompraBotonAceptar)
     public void registrarValorCompra() {
+
+        //Registra el valor del host en el modelo de la configuracion
+        modelTransaccion.setValor(Integer.parseInt(edtCreditoTransactionValorCompraValor.getText().toString()));
+
+        //Oculta la vista del Host de conexion
+        bodyContentTransactionValorCompra.setVisibility(View.GONE);
+
+        //Muestra la vista del Port de conexion
+        bodyContentTransactionNumeroDocumento.setVisibility(View.VISIBLE);
+
+        //Actualiza el paso actual
+        pasoCreditoTransaction++;
+
     }
 
     @Click(R.id.btnCreditoTransactionNumeroDocumentoBotonAceptar)
     public void registrarNumeroDocumento() {
 
+        //Registra el valor del host en el modelo de la configuracion
+        modelTransaccion.setNumero_documento(edtCreditoTransactionNumeroDocumentoValor.getText().toString());
+
+        //Oculta la vista del Host de conexion
+        bodyContentTransactionNumeroDocumento.setVisibility(View.GONE);
+
+        //Muestra la vista del Port de conexion
+        bodyContentTransactionVerificacionValor.setVisibility(View.VISIBLE);
+
+        //Actualiza el paso actual
+        pasoCreditoTransaction++;
     }
 
     @Click(R.id.btnCreditoTransactionVerificacionDatosBotonAceptar)
     public void verificarValor() {
 
+        //Oculta la vista del Host de conexion
+        bodyContentTransactionVerificacionValor.setVisibility(View.GONE);
+
+        //Muestra la vista del Port de conexion
+        bodyContentTransactionDesliceTarjeta.setVisibility(View.VISIBLE);
+
+        //Actualiza el paso actual
+        pasoCreditoTransaction++;
+
     }
 
     public void deslizarTarjeta() {
+
+        String[] magneticHandler = new MagneticHandler().readMagnetic();
+
+        //Registra el valor del host en el modelo de la configuracion
+        modelTransaccion.setNumero_tarjeta(magneticHandler[1]);
+
+        //Oculta la vista del Host de conexion
+        bodyContentTransactionDesliceTarjeta.setVisibility(View.GONE);
+
+        //Muestra la vista del Port de conexion
+        bodyContentTransactionPassUsuario.setVisibility(View.VISIBLE);
+
+        //Actualiza el paso actual
+        pasoCreditoTransaction++;
 
     }
 
     @Click(R.id.btnCreditoTransactionClaveUsuarioBotonAceptar)
     public void registrarClaveUsuario() {
+
+        // Se obtiene el texto de la contraseña
+        String passwordUser = edtCreditoTransactionClaveUsuarioContenidoClave.getText().toString();
+
+        if (passwordUser.length() == 4) {
+
+            creditoScreenPresenter.registrarTransaccion(this, modelTransaccion);
+
+
+        } else {
+
+            //Vacia la caja de contraseña
+            edtCreditoTransactionClaveUsuarioContenidoClave.setText("");
+
+            //Muestra el mensaje de error de formato de la contraseña
+            Toast.makeText(this, R.string.configuration_error_format_clave_tecnica, Toast.LENGTH_SHORT).show();
+
+        }
 
     }
 

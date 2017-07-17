@@ -2,6 +2,8 @@ package com.cofrem.transacciones.Modules.ModuleTransaction.CreditoScreen;
 
 import android.content.Context;
 
+import com.cofrem.transacciones.models.Transaccion;
+
 class CreditoScreenInteractorImpl implements CreditoScreenInteractor {
     /**
      * #############################################################################################
@@ -33,11 +35,14 @@ class CreditoScreenInteractorImpl implements CreditoScreenInteractor {
      */
 
     /**
+     * Metodo para obtener el numero de tarjeta desde el dispositivo
      *
+     * @param context
+     * @param transaccion
      */
     @Override
-    public void validateAccess(Context context) {
+    public void registrarTransaccion(Context context, Transaccion transaccion) {
         //Valida el acceso a la app
-        creditoScreenRepository.validateAcces(context);
+        creditoScreenRepository.registrarTransaccion(context, transaccion);
     }
 }

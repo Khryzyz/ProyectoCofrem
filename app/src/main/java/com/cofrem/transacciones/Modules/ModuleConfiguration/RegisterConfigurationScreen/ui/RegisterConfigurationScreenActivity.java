@@ -601,7 +601,7 @@ public class RegisterConfigurationScreenActivity extends Activity implements Reg
             edtConfiguracionRegisterPassTecnicoContenidoClave.setText("");
 
             //Muestra el mensaje de error de formato de la contraseña
-            Toast.makeText(this, R.string.configuration_error_format_valor_acceso, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.configuration_error_format_clave_tecnica, Toast.LENGTH_SHORT).show();
 
         }
     }

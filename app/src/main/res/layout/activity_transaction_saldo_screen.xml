@@ -12,4 +12,29 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/appMarginBottom" />
 
+    <include
+        android:id="@+id/bodyContentDeslizarTarjeta"
+        layout="@layout/content_transaction_saldo_paso_deslizar_tarjeta"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/headerContent"
+        android:visibility="gone" />
+
+    <include
+        android:id="@+id/bodyContentClaveUsuario"
+        layout="@layout/content_transaction_saldo_paso_clave_usuario"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/headerContent"
+        android:visibility="gone" />
+
+
+    <include
+        android:id="@+id/bodyContentTransaccionExitosa"
+        layout="@layout/content_transaction_saldo_paso_transaccion_exitosa"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/headerContent"
+        android:visibility="visible" />
+    
 </RelativeLayout>

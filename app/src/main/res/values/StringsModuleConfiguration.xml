@@ -32,7 +32,7 @@
     <string name="configuration_text_exitosa">Exitosa.</string>
 
     <!-- Textos register configuration -->
-    <string name="configuration_error_format_valor_acceso">La contraseña de administración debe tener exactamente 4 caracteres.</string>
+    <string name="configuration_error_format_clave_tecnica">La contraseña de administración debe tener exactamente 4 caracteres.</string>
     <string name="configuration_text_valor_acceso_valido">Contraseña valida.</string>
     <string name="configuration_text_valor_acceso_no_valido">Contraseña no valida, por favor verificar.</string>
     <string name="configuration_text_valor_acceso_error">Existe un error en la configuración del valor de la contraseña de su dispositivo.</string>

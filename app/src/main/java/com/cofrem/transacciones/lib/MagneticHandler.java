@@ -12,8 +12,6 @@ public class MagneticHandler {
         //Inicializacion del objeto que sera devuelto por la lectura de la tarjeta
         String[] magneticRead = null;
 
-        if (openMagnetic()) {
-
             try {
 
                 //Transaccion solicitada al web service
@@ -32,8 +30,6 @@ public class MagneticHandler {
 
                 }).execute().get();
 
-                closeMagnetic();
-
             } catch (InterruptedException e) {
 
                 e.printStackTrace();
@@ -44,33 +40,8 @@ public class MagneticHandler {
 
             }
 
-        }
-
         return magneticRead;
 
-    }
-
-    private static boolean openMagnetic() {
-
-        boolean statusMagnetic = false;
-
-        try {
-
-            MagneticCard.open();
-
-            statusMagnetic = true;
-
-        } catch (Exception e) {
-
-            e.printStackTrace();
-
-        }
-        return statusMagnetic;
-
-    }
-
-    private static void closeMagnetic() {
-        MagneticCard.close();
     }
 
 }

@@ -6,6 +6,7 @@ import com.cofrem.transacciones.Modules.ModuleTransaction.CreditoScreen.events.C
 import com.cofrem.transacciones.Modules.ModuleTransaction.CreditoScreen.ui.CreditoScreenView;
 import com.cofrem.transacciones.lib.EventBus;
 import com.cofrem.transacciones.lib.GreenRobotEventBus;
+import com.cofrem.transacciones.models.Transaccion;
 
 public class CreditoScreenPresenterImpl implements CreditoScreenPresenter {
 
@@ -62,12 +63,15 @@ public class CreditoScreenPresenterImpl implements CreditoScreenPresenter {
     }
 
     /**
-     * Metodo para la verificacion de los datos
+     * Metodo para obtener el numero de tarjeta desde el dispositivo
+     *
+     * @param context
+     * @param transaccion
      */
     @Override
-    public void VerifySuccess(Context context) {
+    public void registrarTransaccion(Context context, Transaccion transaccion) {
         if (creditoScreenView != null) {
-            creditoScreenInteractor.validateAccess(context);
+            creditoScreenInteractor.registrarTransaccion(context, transaccion);
         }
     }
 

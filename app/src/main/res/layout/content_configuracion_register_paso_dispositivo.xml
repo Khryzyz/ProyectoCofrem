@@ -30,8 +30,7 @@
         android:layout_below="@id/txvConfiguracionRegisterDispositivoValor"
         android:layout_marginBottom="@dimen/appMarginBottom"
         android:inputType="text"
-        android:maxLength="2"
-        android:text="14" />
+        android:maxLength="2" />
 
     <Button
         android:id="@+id/btnConfiguracionRegisterDispositivoBotonCancelar"

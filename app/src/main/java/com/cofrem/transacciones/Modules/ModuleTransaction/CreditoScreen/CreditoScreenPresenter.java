@@ -3,15 +3,17 @@ package com.cofrem.transacciones.Modules.ModuleTransaction.CreditoScreen;
 import android.content.Context;
 
 import com.cofrem.transacciones.Modules.ModuleTransaction.CreditoScreen.events.CreditoScreenEvent;
+import com.cofrem.transacciones.models.Transaccion;
 
 public interface CreditoScreenPresenter {
 
-    //Todo: crear metodos presentador
-
     /**
-     * metodo presentador
+     * Metodo para obtener el numero de tarjeta desde el dispositivo
+     *
+     * @param context
+     * @param transaccion
      */
-    void VerifySuccess(Context context);
+    void registrarTransaccion(Context context, Transaccion transaccion);
 
     /**
      * Metodo para la creacion del presentador
