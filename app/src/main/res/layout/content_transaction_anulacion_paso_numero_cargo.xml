@@ -23,7 +23,7 @@
         android:text="@string/transaction_text_numero_cargo" />
 
     <EditText
-        android:id="@+id/edtAnulacionTransactionNumeroCargoContenidoClave"
+        android:id="@+id/edtAnulacionTransactionNumeroCargoContenidoValor"
         style="@style/StyleValuePrimary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -35,14 +35,14 @@
         android:id="@+id/btnAnulacionTransactionNumeroCargoBotonCancelar"
         style="@style/StyleButtonCancel"
         android:layout_alignParentStart="true"
-        android:layout_below="@id/edtAnulacionTransactionNumeroCargoContenidoClave"
+        android:layout_below="@id/edtAnulacionTransactionNumeroCargoContenidoValor"
         android:text="@string/general_text_button_cancelar" />
 
     <Button
         android:id="@+id/btnAnulacionTransactionNumeroCargoBotonAceptar"
         style="@style/StyleButtonAccept"
         android:layout_alignParentEnd="true"
-        android:layout_below="@id/edtAnulacionTransactionNumeroCargoContenidoClave"
+        android:layout_below="@id/edtAnulacionTransactionNumeroCargoContenidoValor"
         android:text="@string/general_text_button_aceptar" />
 
 

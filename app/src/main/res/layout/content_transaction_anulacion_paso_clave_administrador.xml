@@ -14,7 +14,7 @@
         android:text="@string/transaction_text_title_anulacion" />
 
     <TextView
-        android:id="@+id/txvAnulacionTransactionClaveDispositivoClave"
+        android:id="@+id/txvAnulacionTransactionClaveAdministradorClave"
         style="@style/StyleTextPrimaryMedium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -23,26 +23,26 @@
         android:text="@string/general_text_clave_dispositivo" />
 
     <EditText
-        android:id="@+id/edtAnulacionTransactionClaveDispositivoContenidoClave"
+        android:id="@+id/edtAnulacionTransactionClaveAdministradorContenidoClave"
         style="@style/StylePassPrimary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/txvAnulacionTransactionClaveDispositivoClave"
+        android:layout_below="@id/txvAnulacionTransactionClaveAdministradorClave"
         android:layout_marginBottom="@dimen/appMarginBottom"
         android:inputType="textPassword" />
 
     <Button
-        android:id="@+id/btnAnulacionTransactionClaveDispositivoBotonCancelar"
+        android:id="@+id/btnAnulacionTransactionClaveAdministradorBotonCancelar"
         style="@style/StyleButtonCancel"
         android:layout_alignParentStart="true"
-        android:layout_below="@id/edtAnulacionTransactionClaveDispositivoContenidoClave"
+        android:layout_below="@id/edtAnulacionTransactionClaveAdministradorContenidoClave"
         android:text="@string/general_text_button_cancelar" />
 
     <Button
-        android:id="@+id/btnAnulacionTransactionClaveDispositivoBotonAceptar"
+        android:id="@+id/btnAnulacionTransactionClaveAdministradorBotonAceptar"
         style="@style/StyleButtonAccept"
         android:layout_alignParentEnd="true"
-        android:layout_below="@id/edtAnulacionTransactionClaveDispositivoContenidoClave"
+        android:layout_below="@id/edtAnulacionTransactionClaveAdministradorContenidoClave"
         android:text="@string/general_text_button_aceptar" />
 
 

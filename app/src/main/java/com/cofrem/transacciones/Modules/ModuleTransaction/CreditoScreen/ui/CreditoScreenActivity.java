@@ -82,7 +82,7 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
 
 
     /**
-     * Model que almacena la configuracion del dispositivo
+     * Model que almacena la transaccion actual
      */
     Transaccion modelTransaccion = new Transaccion();
 
@@ -131,7 +131,7 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
          */
         inicializarOcultamientoVistas();
 
-        //Inicializa el paso del registro de la configuracion
+        //Inicializa el paso del registro de la transaccion
         pasoCreditoTransaction = PASO_VALOR_COMPRA;
 
         //Primera ventana visible
@@ -383,13 +383,13 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
     @Click(R.id.btnCreditoTransactionValorCompraBotonAceptar)
     public void registrarValorCompra() {
 
-        //Registra el valor del host en el modelo de la configuracion
+        //Registra el valor de compra en el modelo de la transaccion
         modelTransaccion.setValor(Integer.parseInt(edtCreditoTransactionValorCompraValor.getText().toString()));
 
-        //Oculta la vista del Host de conexion
+        //Oculta la vista del Valor de compra
         bodyContentTransactionValorCompra.setVisibility(View.GONE);
 
-        //Muestra la vista del Port de conexion
+        //Muestra la vista del Numero de documento
         bodyContentTransactionNumeroDocumento.setVisibility(View.VISIBLE);
 
         //Actualiza el paso actual
@@ -403,13 +403,13 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
     @Click(R.id.btnCreditoTransactionNumeroDocumentoBotonAceptar)
     public void registrarNumeroDocumento() {
 
-        //Registra el valor del host en el modelo de la configuracion
+        //Registra el valor del numero de documento en el modelo de transaccion
         modelTransaccion.setNumero_documento(edtCreditoTransactionNumeroDocumentoValor.getText().toString());
 
-        //Oculta la vista del Host de conexion
+        //Oculta la vista del numero de documento
         bodyContentTransactionNumeroDocumento.setVisibility(View.GONE);
 
-        //Muestra la vista del Port de conexion
+        //Muestra la vista de verificacion del valor
         bodyContentTransactionVerificacionValor.setVisibility(View.VISIBLE);
 
         //Actualiza el paso actual
@@ -422,10 +422,10 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
     @Click(R.id.btnCreditoTransactionVerificacionDatosBotonAceptar)
     public void verificarValor() {
 
-        //Oculta la vista del Host de conexion
+        //Oculta la vista de verificacion de valor
         bodyContentTransactionVerificacionValor.setVisibility(View.GONE);
 
-        //Muestra la vista del Port de conexion
+        //Muestra la vista de deslizar tarjeta
         bodyContentTransactionDesliceTarjeta.setVisibility(View.VISIBLE);
 
         //Actualiza el paso actual
@@ -440,13 +440,13 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
 
         String[] magneticHandler = new MagneticHandler().readMagnetic();
 
-        //Registra el valor del host en el modelo de la configuracion
+        //Registra el valor del numero de tarjeta en el modelo de la transaccion
         modelTransaccion.setNumero_tarjeta(magneticHandler[1]);
 
-        //Oculta la vista del Host de conexion
+        //Oculta la vista de deslizar tarjeta
         bodyContentTransactionDesliceTarjeta.setVisibility(View.GONE);
 
-        //Muestra la vista del Port de conexion
+        //Muestra la vista de contraseña de usuario
         bodyContentTransactionPassUsuario.setVisibility(View.VISIBLE);
 
         //Actualiza el paso actual
@@ -478,7 +478,7 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
             edtCreditoTransactionClaveUsuarioContenidoClave.setText("");
 
             //Muestra el mensaje de error de formato de la contraseña
-            Toast.makeText(this, R.string.configuration_error_format_clave_tecnica, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.transaction_error_format_clave_usuario, Toast.LENGTH_SHORT).show();
 
         }
 

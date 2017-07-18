@@ -43,4 +43,6 @@
 
     <string name="transaction_error_format_clave_usuario">La contraseña debe tener exactamente 4 caracteres.</string>
 
+    <string name="transaction_error_format_clave_administrador">La contraseña de administración debe tener exactamente 4 caracteres.</string>
+
 </resources>

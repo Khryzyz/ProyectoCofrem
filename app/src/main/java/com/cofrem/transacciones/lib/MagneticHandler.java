@@ -7,38 +7,38 @@ import java.util.concurrent.ExecutionException;
 public class MagneticHandler {
 
 
-    public static String[] readMagnetic() {
+    public String[] readMagnetic() {
 
         //Inicializacion del objeto que sera devuelto por la lectura de la tarjeta
         String[] magneticRead = null;
 
-            try {
+        try {
 
-                //Transaccion solicitada al web service
-                magneticRead = new MagneticAsync(new MagneticAsync.ResponseMagneticAsync() {
+            //Transaccion solicitada al web service
+            magneticRead = new MagneticAsync(new MagneticAsync.ResponseMagneticAsync() {
 
-                    /**
-                     * Metodo sobrecargado que maneja el callback de los datos
-                     *
-                     * @param magneticResponse
-                     * @return
-                     */
-                    @Override
-                    public String[] processFinish(String[] magneticResponse) {
-                        return magneticResponse;
-                    }
+                /**
+                 * Metodo sobrecargado que maneja el callback de los datos
+                 *
+                 * @param magneticResponse
+                 * @return
+                 */
+                @Override
+                public String[] processFinish(String[] magneticResponse) {
+                    return magneticResponse;
+                }
 
-                }).execute().get();
+            }).execute().get();
 
-            } catch (InterruptedException e) {
+        } catch (InterruptedException e) {
 
-                e.printStackTrace();
+            e.printStackTrace();
 
-            } catch (ExecutionException e) {
+        } catch (ExecutionException e) {
 
-                e.printStackTrace();
+            e.printStackTrace();
 
-            }
+        }
 
         return magneticRead;
 
