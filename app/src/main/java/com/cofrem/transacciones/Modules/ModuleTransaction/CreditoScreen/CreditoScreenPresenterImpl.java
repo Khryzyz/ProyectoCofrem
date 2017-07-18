@@ -84,8 +84,17 @@ public class CreditoScreenPresenterImpl implements CreditoScreenPresenter {
     public void onEventMainThread(CreditoScreenEvent creditoScreenEvent) {
         switch (creditoScreenEvent.getEventType()) {
 
-            case CreditoScreenEvent.onVerifySuccess:
-                onVerifySuccess();
+            case CreditoScreenEvent.onTransaccionWSRegisterSuccess:
+                onTransaccionWSRegisterSuccess();
+                break;
+            case CreditoScreenEvent.onTransaccionWSRegisterError:
+                onTransaccionWSRegisterError();
+                break;
+            case CreditoScreenEvent.onTransaccionDBRegisterSuccess:
+                onTransaccionDBRegisterSuccess();
+                break;
+            case CreditoScreenEvent.onTransaccionDBRegisterError:
+                onTransaccionDBRegisterError();
                 break;
 
         }
@@ -99,11 +108,38 @@ public class CreditoScreenPresenterImpl implements CreditoScreenPresenter {
      */
 
     /**
-     * Metodo para manejar la verificacion exitosa
+     * Metodo para manejar la transaccion del Web Service Correcta
      */
-    private void onVerifySuccess() {
+    private void onTransaccionWSRegisterSuccess() {
         if (creditoScreenView != null) {
-            creditoScreenView.handleVerifySuccess();
+            creditoScreenView.handleTransaccionWSRegisterSuccess();
+        }
+    }
+
+    /**
+     * Metodo para manejar la transaccion del Web Service Erronea
+     */
+    private void onTransaccionWSRegisterError() {
+        if (creditoScreenView != null) {
+            creditoScreenView.handleTransaccionWSRegisterError();
+        }
+    }
+
+    /**
+     * Metodo para manejar la transaccion de la Base de datos Correcta
+     */
+    private void onTransaccionDBRegisterSuccess() {
+        if (creditoScreenView != null) {
+            creditoScreenView.handleTransaccionDBRegisterSuccess();
+        }
+    }
+
+    /**
+     * Metodo para manejar la transaccion de la Base de datos Erronea
+     */
+    private void onTransaccionDBRegisterError() {
+        if (creditoScreenView != null) {
+            creditoScreenView.handleTransaccionDBRegisterError();
         }
     }
 

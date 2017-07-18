@@ -3,12 +3,8 @@ package com.cofrem.transacciones.Modules.ModuleTransaction.CreditoScreen;
 import android.content.Context;
 
 import com.cofrem.transacciones.Modules.ModuleTransaction.CreditoScreen.events.CreditoScreenEvent;
-import com.cofrem.transacciones.database.AppDatabase;
-import com.cofrem.transacciones.global.InfoGlobalSettingsPrint;
-import com.cofrem.transacciones.global.InfoGlobalTransaccionSOAP;
 import com.cofrem.transacciones.lib.EventBus;
 import com.cofrem.transacciones.lib.GreenRobotEventBus;
-import com.cofrem.transacciones.lib.PrintHandler;
 import com.cofrem.transacciones.models.Transaccion;
 
 public class CreditoScreenRepositoryImpl implements CreditoScreenRepository {
@@ -42,16 +38,36 @@ public class CreditoScreenRepositoryImpl implements CreditoScreenRepository {
     @Override
     public void registrarTransaccion(Context context, Transaccion transaccion) {
 
+        //Registra mediante el WS la transaccion
         if (registrarTransaccionConsumoWS(context, transaccion)) {
+
+            postEvent(CreditoScreenEvent.onTransaccionWSRegisterSuccess);
+
+            //Registro en la base de datos de la transaccion
             if (registrarTransaccionConsumoDB(context, transaccion)) {
-                postEvent(CreditoScreenEvent.onVerifySuccess);
+
+                postEvent(CreditoScreenEvent.onTransaccionDBRegisterSuccess);
+
+                //Imprime el recibo
+                imprimitRecibo(context);
+
+
             } else {
-                postEvent(CreditoScreenEvent.onVerifyError);
+
+                //Error en el registro en la Base de Datos la transaccion
+                postEvent(CreditoScreenEvent.onTransaccionDBRegisterError);
+
             }
+
         } else {
-            postEvent(CreditoScreenEvent.onVerifyError);
+
+            //Error en el registro mediante el WS la transaccion
+            postEvent(CreditoScreenEvent.onTransaccionWSRegisterError);
+
         }
+
     }
+
 
     /**
      * #############################################################################################
@@ -81,9 +97,7 @@ public class CreditoScreenRepositoryImpl implements CreditoScreenRepository {
     }
 
     /**
-     * Metodo que:
-     * - registra mediante el WS la transaccion
-     * - Extrae el estado de la transaccion
+     * Metodo que registra en la base de datos interna la transaccion
      *
      * @param context
      * @param transaccion
@@ -98,6 +112,17 @@ public class CreditoScreenRepositoryImpl implements CreditoScreenRepository {
         //TODO: IMPLEMENTAR WEB SERVICE DE REGISTRO DE TRANSACCION
 
         return statusTransaction;
+    }
+
+    /**
+     * Metodo que imprime el recibo de la transaccion
+     *
+     * @param context
+     */
+    private void imprimitRecibo(Context context) {
+
+
+        //TODO: Implementar la imprecion del recibo
     }
 
     /**

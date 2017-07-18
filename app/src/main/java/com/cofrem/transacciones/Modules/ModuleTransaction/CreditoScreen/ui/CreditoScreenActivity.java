@@ -12,6 +12,7 @@ import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.cofrem.transacciones.MainScreenActivity_;
 import com.cofrem.transacciones.Modules.ModuleTransaction.CreditoScreen.CreditoScreenPresenter;
 import com.cofrem.transacciones.Modules.ModuleTransaction.CreditoScreen.CreditoScreenPresenterImpl;
 import com.cofrem.transacciones.R;
@@ -184,27 +185,27 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
                         break;
 
                     case PASO_NUMERO_DOCUMENTO:
-                        //Metodo para registrar el host de conexion
+                        //Metodo para registrar el numero de documento
                         registrarNumeroDocumento();
                         break;
 
                     case PASO_VERIFICACION_VALOR:
-                        //Metodo para registrar el port de conexion
+                        //Metodo para mostrar la información registrada
                         verificarValor();
                         break;
 
                     case PASO_DESLICE_TARJETA:
-                        //Metodo para registrar el identificador del dispositivo
+                        //Metodo para mostrar la orden de deslizar la tarjeta
                         deslizarTarjeta();
                         break;
 
                     case PASO_CLAVE_USUARIO:
-                        //Metodo para registrar el identificador del dispositivo
+                        //Metodo para registrar la contraseña del usuario
                         registrarClaveUsuario();
                         break;
 
                     case PASO_TRANSACCION_EXITOSA:
-                        //Metodo para registrar el identificador del dispositivo
+                        //Metodo para finalizar la transaccion
                         finalizarTransaccion();
                         break;
                 }
@@ -232,6 +233,7 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
                 break;
 
             case PASO_NUMERO_DOCUMENTO:
+                //Vacia la caja del valor del consumo
                 edtCreditoTransactionNumeroDocumentoValor.setText("");
                 break;
 
@@ -244,6 +246,7 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
                 break;
 
             case PASO_CLAVE_USUARIO:
+                //Vacia la caja del valor de la clave de usuario
                 edtCreditoTransactionClaveUsuarioContenidoClave.setText("");
                 break;
 
@@ -263,7 +266,37 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
     /**
      * Metodo para manejar la verificacion exitosa
      */
-    public void handleVerifySuccess() {
+    public void handleTransaccionWSRegisterSuccess() {
+
+    }
+
+    @Override
+    public void handleTransaccionWSRegisterError() {
+
+    }
+
+    @Override
+    public void handleTransaccionDBRegisterSuccess() {
+
+        //Oculta la barra de progreso
+        hideProgress();
+
+        //Oculta la vista del Host de conexion
+        bodyContentTransactionPassUsuario.setVisibility(View.GONE);
+
+        //Muestra la vista del Port de conexion
+        bodyContentTransactionTransaccionExitosa.setVisibility(View.VISIBLE);
+
+        //Actualiza el paso actual
+        pasoCreditoTransaction++;
+
+        //Metodo que finaliza la transaccion
+        finalizarTransaccion();
+
+    }
+
+    @Override
+    public void handleTransaccionDBRegisterError() {
 
     }
 
@@ -280,6 +313,7 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
         //TODO: VERIFICAR QUE ESTA MOSTRANDO LA BARRA DE PROGRESO
         // Muestra la barra  de progreso
         frlPgbHldTransactionCredito.setVisibility(View.VISIBLE);
+        frlPgbHldTransactionCredito.bringToFront();
     }
 
     /**
@@ -319,9 +353,8 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
 
     }
 
-
     /**
-     * Metodo para regresar a la ventana de configuracion
+     * Metodo para regresar a la ventana de transaccion
      */
     @Click({R.id.btnCreditoTransactionValorCompraBotonCancelar,
             R.id.btnCreditoTransactionNumeroDocumentoBotonCancelar,
@@ -344,6 +377,9 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
         }, 1000);
     }
 
+    /**
+     * Metodo para registrar el valor del consumo
+     */
     @Click(R.id.btnCreditoTransactionValorCompraBotonAceptar)
     public void registrarValorCompra() {
 
@@ -361,6 +397,9 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
 
     }
 
+    /**
+     * Metodo para registrar el numero de documento
+     */
     @Click(R.id.btnCreditoTransactionNumeroDocumentoBotonAceptar)
     public void registrarNumeroDocumento() {
 
@@ -377,6 +416,9 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
         pasoCreditoTransaction++;
     }
 
+    /**
+     * Metodo para mostrar la información registrada
+     */
     @Click(R.id.btnCreditoTransactionVerificacionDatosBotonAceptar)
     public void verificarValor() {
 
@@ -391,6 +433,9 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
 
     }
 
+    /**
+     * Metodo para mostrar la orden de deslizar la tarjeta
+     */
     public void deslizarTarjeta() {
 
         String[] magneticHandler = new MagneticHandler().readMagnetic();
@@ -409,6 +454,9 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
 
     }
 
+    /**
+     * Metodo para registrar la contraseña del usuario
+     */
     @Click(R.id.btnCreditoTransactionClaveUsuarioBotonAceptar)
     public void registrarClaveUsuario() {
 
@@ -417,6 +465,10 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
 
         if (passwordUser.length() == 4) {
 
+            //Mostrar la barra de progreso
+            showProgress();
+
+            //Registra la transaccion
             creditoScreenPresenter.registrarTransaccion(this, modelTransaccion);
 
 
@@ -432,7 +484,25 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
 
     }
 
+    /**
+     * Metodo para finalizar la transaccion
+     */
     public void finalizarTransaccion() {
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+                Intent intent = new Intent(CreditoScreenActivity.this, MainScreenActivity_.class);
+
+                //Agregadas banderas para no retorno
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
+                        | Intent.FLAG_ACTIVITY_NEW_TASK
+                        | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+                startActivity(intent);
+            }
+        }, 1000);
 
     }
 
