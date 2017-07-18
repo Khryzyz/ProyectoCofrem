@@ -1,15 +1,21 @@
 package com.cofrem.transacciones.Modules.ModuleTransaction.AnulacionScreen;
 
+import android.content.Context;
+
 import com.cofrem.transacciones.Modules.ModuleTransaction.AnulacionScreen.events.AnulacionScreenEvent;
+import com.cofrem.transacciones.models.Transaccion;
 
 public interface AnulacionScreenPresenter {
-
-    //Todo: crear metodos presentador
 
     /**
      * metodo presentador
      */
-    void VerifySuccess();
+    void validarPasswordAdministrador(Context context, String pass);
+
+    /**
+     * metodo presentador
+     */
+    void registrarTransaccion(Context context, Transaccion transaccion);
 
     /**
      * Metodo para la creacion del presentador

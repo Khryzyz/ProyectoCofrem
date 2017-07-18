@@ -4,6 +4,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <FrameLayout
+        android:id="@+id/frlPgbHldTransactionAnulacion"
+        style="@style/StyleProgressbarHolder"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:id="@+id/pgbTransactionAnulacion"
+            style="@style/StyleProgressbar" />
+    </FrameLayout>
+
     <!--Header de los modulos-->
     <include
         android:id="@+id/headerContent"
@@ -13,12 +23,12 @@
         android:layout_marginBottom="@dimen/appMarginBottom" />
 
     <include
-        android:id="@+id/bodyContentClaveDispositivo"
-        layout="@layout/content_transaction_anulacion_paso_clave_dispositivo"
+        android:id="@+id/bodyContentClaveAdministrador"
+        layout="@layout/content_transaction_anulacion_paso_clave_administrador"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/headerContent"
-        android:visibility="visible" />
+        android:visibility="gone" />
 
     <include
         android:id="@+id/bodyContentNumeroCargo"
@@ -59,6 +69,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/headerContent"
-        android:visibility="gone" />
+        android:visibility="visible" />
 
 </RelativeLayout>

@@ -10,12 +10,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
+import com.cofrem.transacciones.MainScreenActivity_;
 import com.cofrem.transacciones.Modules.ModuleTransaction.CreditoScreen.CreditoScreenPresenter;
 import com.cofrem.transacciones.Modules.ModuleTransaction.CreditoScreen.CreditoScreenPresenterImpl;
 import com.cofrem.transacciones.R;
 import com.cofrem.transacciones.TransactionScreenActivity_;
 import com.cofrem.transacciones.lib.KeyBoard;
+import com.cofrem.transacciones.lib.MagneticHandler;
 import com.cofrem.transacciones.models.Transaccion;
 
 import org.androidannotations.annotations.AfterViews;
@@ -79,9 +82,9 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
 
 
     /**
-     * Model que almacena la configuracion del dispositivo
+     * Model que almacena la transaccion actual
      */
-    Transaccion modelConfiguration = new Transaccion();
+    Transaccion modelTransaccion = new Transaccion();
 
 
     /**
@@ -128,7 +131,7 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
          */
         inicializarOcultamientoVistas();
 
-        //Inicializa el paso del registro de la configuracion
+        //Inicializa el paso del registro de la transaccion
         pasoCreditoTransaction = PASO_VALOR_COMPRA;
 
         //Primera ventana visible
@@ -177,32 +180,32 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
                 switch (pasoCreditoTransaction) {
 
                     case PASO_VALOR_COMPRA:
-                        //Metodo para validar la contraseña
+                        //Metodo para registrar el valor del consumo
                         registrarValorCompra();
                         break;
 
                     case PASO_NUMERO_DOCUMENTO:
-                        //Metodo para registrar el host de conexion
+                        //Metodo para registrar el numero de documento
                         registrarNumeroDocumento();
                         break;
 
                     case PASO_VERIFICACION_VALOR:
-                        //Metodo para registrar el port de conexion
+                        //Metodo para mostrar la información registrada
                         verificarValor();
                         break;
 
                     case PASO_DESLICE_TARJETA:
-                        //Metodo para registrar el identificador del dispositivo
+                        //Metodo para mostrar la orden de deslizar la tarjeta
                         deslizarTarjeta();
                         break;
 
                     case PASO_CLAVE_USUARIO:
-                        //Metodo para registrar el identificador del dispositivo
+                        //Metodo para registrar la contraseña del usuario
                         registrarClaveUsuario();
                         break;
 
                     case PASO_TRANSACCION_EXITOSA:
-                        //Metodo para registrar el identificador del dispositivo
+                        //Metodo para finalizar la transaccion
                         finalizarTransaccion();
                         break;
                 }
@@ -225,11 +228,12 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
         switch (pasoCreditoTransaction) {
 
             case PASO_VALOR_COMPRA:
-                //Vacia la caja de contraseña
+                //Vacia la caja del valor del consumo
                 edtCreditoTransactionValorCompraValor.setText("");
                 break;
 
             case PASO_NUMERO_DOCUMENTO:
+                //Vacia la caja del valor del consumo
                 edtCreditoTransactionNumeroDocumentoValor.setText("");
                 break;
 
@@ -242,6 +246,7 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
                 break;
 
             case PASO_CLAVE_USUARIO:
+                //Vacia la caja del valor de la clave de usuario
                 edtCreditoTransactionClaveUsuarioContenidoClave.setText("");
                 break;
 
@@ -261,7 +266,37 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
     /**
      * Metodo para manejar la verificacion exitosa
      */
-    public void handleVerifySuccess() {
+    public void handleTransaccionWSRegisterSuccess() {
+
+    }
+
+    @Override
+    public void handleTransaccionWSRegisterError() {
+
+    }
+
+    @Override
+    public void handleTransaccionDBRegisterSuccess() {
+
+        //Oculta la barra de progreso
+        hideProgress();
+
+        //Oculta la vista del Host de conexion
+        bodyContentTransactionPassUsuario.setVisibility(View.GONE);
+
+        //Muestra la vista del Port de conexion
+        bodyContentTransactionTransaccionExitosa.setVisibility(View.VISIBLE);
+
+        //Actualiza el paso actual
+        pasoCreditoTransaction++;
+
+        //Metodo que finaliza la transaccion
+        finalizarTransaccion();
+
+    }
+
+    @Override
+    public void handleTransaccionDBRegisterError() {
 
     }
 
@@ -278,6 +313,7 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
         //TODO: VERIFICAR QUE ESTA MOSTRANDO LA BARRA DE PROGRESO
         // Muestra la barra  de progreso
         frlPgbHldTransactionCredito.setVisibility(View.VISIBLE);
+        frlPgbHldTransactionCredito.bringToFront();
     }
 
     /**
@@ -317,9 +353,8 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
 
     }
 
-
     /**
-     * Metodo para regresar a la ventana de configuracion
+     * Metodo para regresar a la ventana de transaccion
      */
     @Click({R.id.btnCreditoTransactionValorCompraBotonCancelar,
             R.id.btnCreditoTransactionNumeroDocumentoBotonCancelar,
@@ -342,30 +377,132 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
         }, 1000);
     }
 
+    /**
+     * Metodo para registrar el valor del consumo
+     */
     @Click(R.id.btnCreditoTransactionValorCompraBotonAceptar)
     public void registrarValorCompra() {
+
+        //Registra el valor de compra en el modelo de la transaccion
+        modelTransaccion.setValor(Integer.parseInt(edtCreditoTransactionValorCompraValor.getText().toString()));
+
+        //Oculta la vista del Valor de compra
+        bodyContentTransactionValorCompra.setVisibility(View.GONE);
+
+        //Muestra la vista del Numero de documento
+        bodyContentTransactionNumeroDocumento.setVisibility(View.VISIBLE);
+
+        //Actualiza el paso actual
+        pasoCreditoTransaction++;
+
     }
 
+    /**
+     * Metodo para registrar el numero de documento
+     */
     @Click(R.id.btnCreditoTransactionNumeroDocumentoBotonAceptar)
     public void registrarNumeroDocumento() {
 
+        //Registra el valor del numero de documento en el modelo de transaccion
+        modelTransaccion.setNumero_documento(edtCreditoTransactionNumeroDocumentoValor.getText().toString());
+
+        //Oculta la vista del numero de documento
+        bodyContentTransactionNumeroDocumento.setVisibility(View.GONE);
+
+        //Muestra la vista de verificacion del valor
+        bodyContentTransactionVerificacionValor.setVisibility(View.VISIBLE);
+
+        //Actualiza el paso actual
+        pasoCreditoTransaction++;
     }
 
+    /**
+     * Metodo para mostrar la información registrada
+     */
     @Click(R.id.btnCreditoTransactionVerificacionDatosBotonAceptar)
     public void verificarValor() {
 
+        //Oculta la vista de verificacion de valor
+        bodyContentTransactionVerificacionValor.setVisibility(View.GONE);
+
+        //Muestra la vista de deslizar tarjeta
+        bodyContentTransactionDesliceTarjeta.setVisibility(View.VISIBLE);
+
+        //Actualiza el paso actual
+        pasoCreditoTransaction++;
+
     }
 
+    /**
+     * Metodo para mostrar la orden de deslizar la tarjeta
+     */
     public void deslizarTarjeta() {
 
+        String[] magneticHandler = new MagneticHandler().readMagnetic();
+
+        //Registra el valor del numero de tarjeta en el modelo de la transaccion
+        modelTransaccion.setNumero_tarjeta(magneticHandler[1]);
+
+        //Oculta la vista de deslizar tarjeta
+        bodyContentTransactionDesliceTarjeta.setVisibility(View.GONE);
+
+        //Muestra la vista de contraseña de usuario
+        bodyContentTransactionPassUsuario.setVisibility(View.VISIBLE);
+
+        //Actualiza el paso actual
+        pasoCreditoTransaction++;
+
     }
 
+    /**
+     * Metodo para registrar la contraseña del usuario
+     */
     @Click(R.id.btnCreditoTransactionClaveUsuarioBotonAceptar)
     public void registrarClaveUsuario() {
 
+        // Se obtiene el texto de la contraseña
+        String passwordUser = edtCreditoTransactionClaveUsuarioContenidoClave.getText().toString();
+
+        if (passwordUser.length() == 4) {
+
+            //Mostrar la barra de progreso
+            showProgress();
+
+            //Registra la transaccion
+            creditoScreenPresenter.registrarTransaccion(this, modelTransaccion);
+
+
+        } else {
+
+            //Vacia la caja de contraseña
+            edtCreditoTransactionClaveUsuarioContenidoClave.setText("");
+
+            //Muestra el mensaje de error de formato de la contraseña
+            Toast.makeText(this, R.string.transaction_error_format_clave_usuario, Toast.LENGTH_SHORT).show();
+
+        }
+
     }
 
+    /**
+     * Metodo para finalizar la transaccion
+     */
     public void finalizarTransaccion() {
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+                Intent intent = new Intent(CreditoScreenActivity.this, MainScreenActivity_.class);
+
+                //Agregadas banderas para no retorno
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
+                        | Intent.FLAG_ACTIVITY_NEW_TASK
+                        | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+                startActivity(intent);
+            }
+        }, 1000);
 
     }
 

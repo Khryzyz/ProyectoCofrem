@@ -2,7 +2,11 @@ package com.cofrem.transacciones.Modules.ModuleTransaction.CreditoScreen.events;
 
 public class CreditoScreenEvent {
 
-    public final static int onVerifySuccess = 0;
+    public final static int onTransaccionWSRegisterSuccess = 0;
+    public final static int onTransaccionWSRegisterError = 1;
+    public final static int onTransaccionDBRegisterSuccess = 2;
+    public final static int onTransaccionDBRegisterError = 3;
+
 
     // Variable que maneja los tipos de eventos
     private int eventType;

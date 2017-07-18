@@ -30,7 +30,7 @@ public class MagneticAsync extends AsyncTask<Void, Integer, String[]> {
     @Override
     protected String[] doInBackground(Void... params) {
 
-        String[] TracData = null;
+        String[] TracData;
 
         MagneticCard.startReading();
 

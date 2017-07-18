@@ -11,6 +11,7 @@ public class Transaccion {
     private int producto_id;
     private int numero_cargo;
     private String numero_tarjeta;
+    private String numero_documento;
     private int valor;
     private String registro;
     private int estado;
@@ -25,11 +26,12 @@ public class Transaccion {
     /**
      * Constructor de la clase
      */
-    public Transaccion(int id, int producto_id, int numero_cargo, String numero_tarjeta, int valor, String registro, int estado) {
+    public Transaccion(int id, int producto_id, int numero_cargo, String numero_tarjeta, String numero_documento, int valor, String registro, int estado) {
         this.id = id;
         this.producto_id = producto_id;
         this.numero_cargo = numero_cargo;
         this.numero_tarjeta = numero_tarjeta;
+        this.numero_documento = numero_documento;
         this.valor = valor;
         this.registro = registro;
         this.estado = estado;
@@ -38,6 +40,8 @@ public class Transaccion {
     /**
      * Getters y Setters
      */
+
+
     public int getId() {
         return id;
     }
@@ -69,6 +73,15 @@ public class Transaccion {
     public void setNumero_tarjeta(String numero_tarjeta) {
         this.numero_tarjeta = numero_tarjeta;
     }
+
+    public String getNumero_documento() {
+        return numero_documento;
+    }
+
+    public void setNumero_documento(String numero_documento) {
+        this.numero_documento = numero_documento;
+    }
+
 
     public int getValor() {
         return valor;

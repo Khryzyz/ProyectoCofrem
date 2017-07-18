@@ -92,7 +92,7 @@ public class RegisterConfigurationScreenActivity extends Activity implements Reg
     /**
      * Pasos definidos
      */
-    int pasoRegisterConfguration = 0; // Define el paso actual
+    int pasoRegisterConfiguration = 0; // Define el paso actual
 
     final static int PASO_PASS_TECNICO = 0;
     final static int PASO_HOST = 1;
@@ -163,7 +163,7 @@ public class RegisterConfigurationScreenActivity extends Activity implements Reg
         inicializarOcultamientoVistas();
 
         //Inicializa el paso del registro de la configuracion
-        pasoRegisterConfguration = PASO_PASS_TECNICO;
+        pasoRegisterConfiguration = PASO_PASS_TECNICO;
 
         //Primera ventana visible
         bodyContentConfigurationPassTecnico.setVisibility(View.VISIBLE);
@@ -224,7 +224,7 @@ public class RegisterConfigurationScreenActivity extends Activity implements Reg
                 // Ocula el soft keyboard al presionar la tecla enter
                 hideKeyBoard();
 
-                switch (pasoRegisterConfguration) {
+                switch (pasoRegisterConfiguration) {
 
                     case PASO_PASS_TECNICO:
                         //Metodo para validar la contraseña
@@ -262,7 +262,7 @@ public class RegisterConfigurationScreenActivity extends Activity implements Reg
     @Override
     public void onBackPressed() {
 
-        switch (pasoRegisterConfguration) {
+        switch (pasoRegisterConfiguration) {
 
             case PASO_PASS_TECNICO:
                 //Vacia la caja de contraseña
@@ -311,7 +311,7 @@ public class RegisterConfigurationScreenActivity extends Activity implements Reg
         bodyContentConfigurationHost.setVisibility(View.VISIBLE);
 
         //Actualiza el paso actual
-        pasoRegisterConfguration++;
+        pasoRegisterConfiguration++;
     }
 
     /**
@@ -396,7 +396,7 @@ public class RegisterConfigurationScreenActivity extends Activity implements Reg
         //Muestra el mensaje de error del registro de informacion del dispositivo incorrecto
         Toast.makeText(this, R.string.configuration_text_informacion_dispositivo_error_conexion, Toast.LENGTH_SHORT).show();
 
-        pasoRegisterConfguration = PASO_HOST;
+        pasoRegisterConfiguration = PASO_HOST;
 
         //Oculta las vistas
         inicializarOcultamientoVistas();
@@ -418,7 +418,7 @@ public class RegisterConfigurationScreenActivity extends Activity implements Reg
         //Muestra el mensaje de error del registro de informacion del dispositivo incorrecto
         Toast.makeText(this, R.string.configuration_text_informacion_dispositivo_error_informacion, Toast.LENGTH_SHORT).show();
 
-        pasoRegisterConfguration = PASO_DISPOSITIVO;
+        pasoRegisterConfiguration = PASO_DISPOSITIVO;
 
         //Oculta las vistas
         inicializarOcultamientoVistas();
@@ -494,7 +494,7 @@ public class RegisterConfigurationScreenActivity extends Activity implements Reg
         //Muestra el mensaje de error del registro de informacion del dispositivo incorrecto
         Toast.makeText(this, R.string.configuration_text_procesar_informacion_dispositivo_error, Toast.LENGTH_SHORT).show();
 
-        pasoRegisterConfguration = PASO_HOST;
+        pasoRegisterConfiguration = PASO_HOST;
 
         //Oculta las vistas
         inicializarOcultamientoVistas();
@@ -518,6 +518,7 @@ public class RegisterConfigurationScreenActivity extends Activity implements Reg
         //TODO: VERIFICAR QUE ESTA MOSTRANDO LA BARRA DE PROGRESO
         // Muestra la barra  de progreso
         frlPgbHldRegisterScreen.setVisibility(View.VISIBLE);
+        frlPgbHldRegisterScreen.bringToFront();
     }
 
     /**
@@ -601,7 +602,7 @@ public class RegisterConfigurationScreenActivity extends Activity implements Reg
             edtConfiguracionRegisterPassTecnicoContenidoClave.setText("");
 
             //Muestra el mensaje de error de formato de la contraseña
-            Toast.makeText(this, R.string.configuration_error_format_valor_acceso, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.configuration_error_format_clave_tecnica, Toast.LENGTH_SHORT).show();
 
         }
     }
@@ -622,7 +623,7 @@ public class RegisterConfigurationScreenActivity extends Activity implements Reg
         bodyContentConfigurationPort.setVisibility(View.VISIBLE);
 
         //Actualiza el paso actual
-        pasoRegisterConfguration++;
+        pasoRegisterConfiguration++;
     }
 
     /**
@@ -641,7 +642,7 @@ public class RegisterConfigurationScreenActivity extends Activity implements Reg
         bodyContentConfigurationDispositivo.setVisibility(View.VISIBLE);
 
         //Actualiza el paso actual
-        pasoRegisterConfguration++;
+        pasoRegisterConfiguration++;
     }
 
     /**
