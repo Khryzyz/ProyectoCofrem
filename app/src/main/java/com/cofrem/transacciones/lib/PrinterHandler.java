@@ -168,24 +168,41 @@ public class PrinterHandler {
         boolean bandera = true;
 
         for (PrintRow row : Rows) {
-            if (row.getMsg1() != null) {
+            if (row.getMsg1() != null && row.getMsg2() != null) {
 
 //                    Printer.printText(row.getMsg1(),new StyleConfig(StyleConfig.Align.LEFT,false));
-                Printer.printText(row.getMsg1(),new StyleConfig(StyleConfig.Align.LEFT,false));
+                Printer.printText(justificarTexto(row.getMsg1(),row.getMsg2()),new StyleConfig(StyleConfig.Align.LEFT,true));
 
 //                    bandera = imprimir(row.getMsg1(),row.getFonzise1(),row.getPosition1(),row.getWalkPaper());
+            }else if(row.getMsg1() != null){
+                Printer.printText(row.getMsg1(),row.getStyleConfig());
+            }else if (row.getLogo() != null){
+                Printer.printImage(row.getLogo(),row.getAlign());
+                Printer.printText("",new StyleConfig(StyleConfig.Align.LEFT,true));
             }
 
-            if (row.getMsg2() != null) {
-                Printer.printText(row.getMsg2(),new StyleConfig(StyleConfig.Align.RIGHT,true));
-
-
-//                    Printer.printText(row.getMsg2(),new StyleConfig());
-                //bandera = imprimir(row.getMsg2()+"\n",row.getFonzise2(),row.getPosition2(),row.getWalkPaper());
-            }
             Printer.commitOperation();
         }
-        Printer.feedPaper(100);
+//        Printer.feedPaper(100);
+    }
+
+
+    public static String justificarTexto(String msg1,String msg2){
+
+        int lengthMsg1 = msg1.length();
+        int lengthMsg2 = msg2.length();
+
+        int lengthTotal =31- (lengthMsg1 + lengthMsg2) ;
+
+        String resul = msg1;
+
+        for(int i = 0; i < lengthTotal; i++){
+            resul += " ";
+        }
+
+        resul += msg2;
+
+        return resul;
     }
 
 

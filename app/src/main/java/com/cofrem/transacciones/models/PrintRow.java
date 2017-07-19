@@ -1,34 +1,38 @@
 package com.cofrem.transacciones.models;
 
+import android.graphics.Bitmap;
+
+import com.cofrem.transacciones.lib.StyleConfig;
+
 /**
  * Created by luispineda on 12/07/17.
  */
 
 public class PrintRow {
 
-    private String msg1,msg2;
-    private int fonzise1, fonzise2;
-    private int position1, position2;
-    private int walkPaper;
+    private String msg1, msg2;
+    private Bitmap logo;
+    private StyleConfig styleConfig;
+    private StyleConfig.Align align;
+
 
     public PrintRow() {
     }
 
-    public PrintRow(String msg1, int fonzise1, int position1,int walkPaper) {
-        this.msg1 = msg1;
-        this.fonzise1 = fonzise1;
-        this.position1 = position1;
-        this.walkPaper = walkPaper;
+    public PrintRow(Bitmap logo, StyleConfig.Align align) {
+        this.logo = logo;
+        this.align = align;
     }
 
-    public PrintRow(String msg1, int fonzise1, int position1,String msg2, int fonzise2, int position2, int walkPaper) {
+    public PrintRow(String msg1, StyleConfig styleConfig) {
+        this.msg1 = msg1;
+        this.styleConfig = styleConfig;
+    }
+
+    public PrintRow(String msg1, String msg2) {
         this.msg1 = msg1;
         this.msg2 = msg2;
-        this.fonzise1 = fonzise1;
-        this.fonzise2 = fonzise2;
-        this.position1 = position1;
-        this.position2 = position2;
-        this.walkPaper = walkPaper;
+
     }
 
     public String getMsg1() {
@@ -47,43 +51,27 @@ public class PrintRow {
         this.msg2 = msg2;
     }
 
-    public int getFonzise1() {
-        return fonzise1;
+    public Bitmap getLogo() {
+        return logo;
     }
 
-    public void setFonzise1(int fonzise1) {
-        this.fonzise1 = fonzise1;
+    public void setLogo(Bitmap logo) {
+        this.logo = logo;
     }
 
-    public int getFonzise2() {
-        return fonzise2;
+    public StyleConfig getStyleConfig() {
+        return styleConfig;
     }
 
-    public void setFonzise2(int fonzise2) {
-        this.fonzise2 = fonzise2;
+    public void setStyleConfig(StyleConfig styleConfig) {
+        this.styleConfig = styleConfig;
     }
 
-    public int getPosition1() {
-        return position1;
+    public StyleConfig.Align getAlign() {
+        return align;
     }
 
-    public void setPosition1(int position1) {
-        this.position1 = position1;
-    }
-
-    public int getPosition2() {
-        return position2;
-    }
-
-    public void setPosition2(int position2) {
-        this.position2 = position2;
-    }
-
-    public int getWalkPaper() {
-        return walkPaper;
-    }
-
-    public void setWalkPaper(int walkPaper) {
-        this.walkPaper = walkPaper;
+    public void setAlign(StyleConfig.Align align) {
+        this.align = align;
     }
 }
