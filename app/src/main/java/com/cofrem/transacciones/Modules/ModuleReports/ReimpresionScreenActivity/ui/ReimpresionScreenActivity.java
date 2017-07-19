@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.cofrem.transacciones.ReportScreenActivity_;
 import com.cofrem.transacciones.lib.PrintHandler;
 import com.cofrem.transacciones.lib.PrinterHandler;
+import com.cofrem.transacciones.lib.StyleConfig;
 import com.cofrem.transacciones.models.PrintRow;
 import com.cofrem.transacciones.models.Reports;
 import com.cofrem.transacciones.Modules.ModuleReports.ReimpresionScreenActivity.ReimpresionScreenPresenter;
@@ -310,8 +311,14 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
 
 
         ArrayList<PrintRow> printRows = new ArrayList<PrintRow>();
-        printRows.add(new PrintRow("hola mundo",2,0,"nose",2,0,0));
-        printRows.add(new PrintRow("hola mundo2",2,1,100));
+        printRows.add(new PrintRow(logo, StyleConfig.Align.CENTER));
+
+        printRows.add(new PrintRow(this.getResources().getString(
+                R.string.recibo_reimpresion),new StyleConfig(StyleConfig.Align.CENTER,true) ));
+        printRows.add(new PrintRow(this.getResources().getString(
+                                    R.string.recibo_valor),"30.000"));
+        printRows.add(new PrintRow("num tarjeta ","****5674"));
+        printRows.add(new PrintRow("hola mundo2",new StyleConfig(StyleConfig.Align.LEFT,true) ));
 
         boolean respuesta = new PrinterHandler().imprimerTexto(printRows);
 

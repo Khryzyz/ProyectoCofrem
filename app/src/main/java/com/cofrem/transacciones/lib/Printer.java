@@ -132,6 +132,14 @@ public class Printer {
         }
     }
 
+    public static synchronized void printImage(Bitmap cutBitmap, StyleConfig.Align align) {
+        if(cutBitmap != null && printList != null) {
+                Bitmap newBitmap = adjustBitmap(cutBitmap, align);
+                printList.add(new Printer.PrintItem(newBitmap, new StyleConfig()));
+
+        }
+    }
+
     private static void commitOperation(List<Printer.PrintItem> contentList, ICommitCallback commitCallback) {
         boolean printFlag = false;
         Iterator printIterator = contentList.iterator();
@@ -455,6 +463,7 @@ public class Printer {
             printList.add(printItem);
         }
     }
+
 
     public static synchronized int getStatus() {
         Object var0 = lock;
