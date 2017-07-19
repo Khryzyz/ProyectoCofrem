@@ -1,9 +1,12 @@
 package com.cofrem.transacciones.Modules.ModuleTransaction.SaldoScreen;
 
+import android.content.Context;
+
 import com.cofrem.transacciones.Modules.ModuleTransaction.SaldoScreen.events.SaldoScreenEvent;
 import com.cofrem.transacciones.Modules.ModuleTransaction.SaldoScreen.ui.SaldoScreenView;
 import com.cofrem.transacciones.lib.EventBus;
 import com.cofrem.transacciones.lib.GreenRobotEventBus;
+import com.cofrem.transacciones.models.Transaccion;
 
 public class SaldoScreenPresenterImpl implements SaldoScreenPresenter {
 
@@ -63,7 +66,7 @@ public class SaldoScreenPresenterImpl implements SaldoScreenPresenter {
      * Metodo para la verificacion de los datos
      */
     @Override
-    public void VerifySuccess() {
+    public void registrarTransaccion(Context context, Transaccion transaccion) {
         if (saldoScreenView != null) {
             saldoScreenInteractor.validateAccess();
         }

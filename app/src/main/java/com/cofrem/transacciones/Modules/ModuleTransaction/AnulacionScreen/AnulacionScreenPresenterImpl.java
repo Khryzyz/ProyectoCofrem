@@ -1,9 +1,12 @@
 package com.cofrem.transacciones.Modules.ModuleTransaction.AnulacionScreen;
 
+import android.content.Context;
+
 import com.cofrem.transacciones.Modules.ModuleTransaction.AnulacionScreen.events.AnulacionScreenEvent;
 import com.cofrem.transacciones.Modules.ModuleTransaction.AnulacionScreen.ui.AnulacionScreenView;
 import com.cofrem.transacciones.lib.EventBus;
 import com.cofrem.transacciones.lib.GreenRobotEventBus;
+import com.cofrem.transacciones.models.Transaccion;
 
 public class AnulacionScreenPresenterImpl implements AnulacionScreenPresenter {
 
@@ -40,6 +43,16 @@ public class AnulacionScreenPresenterImpl implements AnulacionScreenPresenter {
         this.eventBus = GreenRobotEventBus.getInstance();
     }
 
+    @Override
+    public void validarPasswordAdministrador(Context context, String pass) {
+
+    }
+
+    @Override
+    public void registrarTransaccion(Context context, Transaccion transaccion) {
+
+    }
+
     /**
      * Sobrecarga del metodo onCreate de la interface AnulacionScreenPresenter "crear" el registro al bus de eventos
      */
@@ -57,16 +70,6 @@ public class AnulacionScreenPresenterImpl implements AnulacionScreenPresenter {
     public void onDestroy() {
         anulacionScreenView = null;
         eventBus.unregister(this);
-    }
-
-    /**
-     * Metodo para la verificacion de los datos
-     */
-    @Override
-    public void VerifySuccess() {
-        if (anulacionScreenView != null) {
-            anulacionScreenInteractor.validateAccess();
-        }
     }
 
     /**

@@ -1,6 +1,9 @@
 package com.cofrem.transacciones.Modules.ModuleTransaction.SaldoScreen;
 
+import android.content.Context;
+
 import com.cofrem.transacciones.Modules.ModuleTransaction.SaldoScreen.events.SaldoScreenEvent;
+import com.cofrem.transacciones.models.Transaccion;
 
 public interface SaldoScreenPresenter {
 
@@ -9,7 +12,7 @@ public interface SaldoScreenPresenter {
     /**
      * metodo presentador
      */
-    void VerifySuccess();
+    void registrarTransaccion(Context context, Transaccion transaccion);
 
     /**
      * Metodo para la creacion del presentador

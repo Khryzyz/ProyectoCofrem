@@ -7,7 +7,7 @@ buildscript {
     dependencies {
 
         // the latest version of the gradle
-        classpath 'com.android.tools.build:gradle:2.3.2'
+        classpath 'com.android.tools.build:gradle:2.3.3'
 
         // the latest version of the android-apt plugin
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
