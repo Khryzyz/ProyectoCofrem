@@ -34,10 +34,10 @@ public class PrinterHandler {
     }
 
 
-    public boolean imprimerTexto(ArrayList<PrintRow> modelRow){
-        Rows=modelRow;
-        handleMessage(InfoGlobalSettingsPrint.CODE_PRINTCONTENT);
-        return true;
+    public int imprimerTexto(ArrayList<PrintRow> modelRow) {
+        Rows = modelRow;
+//        handleMessage(InfoGlobalSettingsPrint.CODE_PRINTCONTENT);
+        return imprimir();
     }
 
     public static void handleMessage(int msg) {
@@ -83,11 +83,7 @@ public class PrinterHandler {
 //                new contentPrintThread().start();
 
 
-
-
-                imprimir ();
-
-
+                 imprimir();
 
 
 //                Boolean respuesta = true;
@@ -129,7 +125,7 @@ public class PrinterHandler {
                 break;
 
             case InfoGlobalSettingsPrint.CODE_EXECUTECOMMAND:
-               // new PrintHandler.executeCommand().start();
+                // new PrintHandler.executeCommand().start();
                 break;
 
             case InfoGlobalSettingsPrint.CODE_OVERHEAT:
@@ -160,43 +156,43 @@ public class PrinterHandler {
 //    }
 
 
-    public static void imprimir(){
+    public static int imprimir() {
 
         int res = Printer.connect();
 
+        int status = Printer.getStatus();
 
-        boolean bandera = true;
+        if (status == 0) {
+            for (PrintRow row : Rows) {
+                if (row.getMsg1() != null && row.getMsg2() != null) {
+                    Printer.printText(justificarTexto(row.getMsg1(), row.getMsg2()), new StyleConfig(StyleConfig.Align.LEFT, true));
+                } else if (row.getMsg1() != null) {
+                    Printer.printText(row.getMsg1(), row.getStyleConfig());
+                } else if (row.getLogo() != null) {
+                    Printer.printImage(row.getLogo(), row.getAlign());
+                    Printer.printText("", new StyleConfig(StyleConfig.Align.LEFT, true));
+                }
 
-        for (PrintRow row : Rows) {
-            if (row.getMsg1() != null && row.getMsg2() != null) {
-
-//                    Printer.printText(row.getMsg1(),new StyleConfig(StyleConfig.Align.LEFT,false));
-                Printer.printText(justificarTexto(row.getMsg1(),row.getMsg2()),new StyleConfig(StyleConfig.Align.LEFT,true));
-
-//                    bandera = imprimir(row.getMsg1(),row.getFonzise1(),row.getPosition1(),row.getWalkPaper());
-            }else if(row.getMsg1() != null){
-                Printer.printText(row.getMsg1(),row.getStyleConfig());
-            }else if (row.getLogo() != null){
-                Printer.printImage(row.getLogo(),row.getAlign());
-                Printer.printText("",new StyleConfig(StyleConfig.Align.LEFT,true));
+                Printer.commitOperation();
             }
-
+            Printer.printText("", new StyleConfig(StyleConfig.Align.LEFT, true));
+            Printer.printText("", new StyleConfig(StyleConfig.Align.LEFT, true));
             Printer.commitOperation();
         }
-//        Printer.feedPaper(100);
+        return status;
     }
 
 
-    public static String justificarTexto(String msg1,String msg2){
+    public static String justificarTexto(String msg1, String msg2) {
 
         int lengthMsg1 = msg1.length();
         int lengthMsg2 = msg2.length();
 
-        int lengthTotal =31- (lengthMsg1 + lengthMsg2) ;
+        int lengthTotal = 31 - (lengthMsg1 + lengthMsg2);
 
         String resul = msg1;
 
-        for(int i = 0; i < lengthTotal; i++){
+        for (int i = 0; i < lengthTotal; i++) {
             resul += " ";
         }
 
@@ -204,7 +200,6 @@ public class PrinterHandler {
 
         return resul;
     }
-
 
 
 //    private static class ImprimirTexto extends AsyncTask<ArrayList<PrintRow>, Integer, Boolean> {
@@ -331,7 +326,6 @@ public class PrinterHandler {
 //        }
 //
 //    }
-
 
 
 }

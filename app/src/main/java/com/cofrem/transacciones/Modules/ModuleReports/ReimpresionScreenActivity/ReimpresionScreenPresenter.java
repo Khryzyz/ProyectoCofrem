@@ -24,20 +24,32 @@ public interface ReimpresionScreenPresenter {
     void onDestroy();
 
     /**
-     * Metodo que Reimprime el ultimo recibo:
+     * Metodo que validara la existencia de un ultimo recibo el cual se pueda imprimir:
      *
      * @param context
      */
     void validarExistenciaUltimoRecibo(Context context);
 
     /**
-     * Metodo que Reimprime unm recibo por numero de cargo:
+     * Metodo que se encargara de imprimir el ultimo recibo
+     *
+     * @param context
+     */
+    void imprimirUltimoRecibo(Context context);
+
+    /**
+     * Metodo que validara la existencia de un recibo por numero de cargo:
      *
      * @param context , numCargo
      */
     void validarExistenciaReciboConNumCargo(Context context,String numCargo);
 
-
+    /**
+     * Metodo que se encargara de imprimir el recibo por número de cargo
+     *
+     * @param context
+     */
+    void imprimirReciboConNumCargo(Context context);
     /**
      * Metodo que validara la calve del administrador para dar paso a la reimpresion de recibos:
      *

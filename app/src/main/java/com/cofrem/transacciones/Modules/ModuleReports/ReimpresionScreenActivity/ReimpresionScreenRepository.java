@@ -17,6 +17,13 @@ public interface ReimpresionScreenRepository {
     void validarExistenciaUltimoRecibo(Context context);
 
     /**
+     * Metodo que se encargara de imprimir el ultimo recibo
+     *
+     * @param context
+     */
+    void imprimirUltimoRecibo(Context context);
+
+    /**
      * Metodo que validara la existencua de recibo especificando el numero de cargo
      *  - Si existe un recibo con el numero de cargo enviara un modelo de la transaccion
      *  - si NO exite un recibo solo notifica que no existe
@@ -25,6 +32,12 @@ public interface ReimpresionScreenRepository {
      */
     void validarExistenciaReciboConNumCargo(Context context,String numCargo);
 
+    /**
+     * Metodo que se encargara de imprimir el recibo por número de cargo
+     *
+     * @param context
+     */
+    void imprimirReciboConNumCargo(Context context);
     /**
      * Metodo que validara la clave del administrador para dar paso a la reimpresion de recibos:
      *

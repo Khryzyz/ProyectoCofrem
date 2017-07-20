@@ -48,4 +48,25 @@ public interface ReimpresionScreenView {
      */
     void handleVerifyExistenceReporteDetalleError();
 
+
+    /**
+     * Metodo para manejar la impresion del ultimo recibo exitosa
+     */
+    void handleImprimirUltimoReciboSuccess();
+
+    /**
+     * Metodo para manejar la impresion del ultimo recibo Error
+     */
+    void handleImprimirUltimoReciboError(String error);
+
+    /**
+     * Metodo para manejar la impresion exitosa del recibo por numero de cargo
+     */
+    void handleImprimirReciboPorNumCargoSuccess();
+
+    /**
+     * Metodo para manejar la impresion Error del recibo por numero de cargo
+     */
+    void handleImprimirReciboPorNumCargoError(String error);
+
 }

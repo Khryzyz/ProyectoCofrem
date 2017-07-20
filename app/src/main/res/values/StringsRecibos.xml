@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- Textos de errores ue pueden pasar con la impresora -->
+    <string name="printer_disconnect">Impresora desconectada</string>
+    <string name="printer_out_of_paper">Impresora sin papel</string>
+    <string name="printer_over_flow">Impresora con sobre calentamineto</string>
+    <string name="printer_over_heat">Sobrecarga de la impresora</string>
+    <string name="printer_error">Error al Imprimir</string>
 
     <!-- Textos de botones -->
     <string name="imprimir_recibo">"Tarjeta Numero:  %1$s \nvalor:  %2$s \nnumero de cargo:  %3$s \nGracias por su compra"</string>

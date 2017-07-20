@@ -9,9 +9,13 @@ import android.util.Log;
 import com.cofrem.transacciones.Modules.ModuleReports.ReimpresionScreenActivity.events.ReimpresionScreenEvent;
 import com.cofrem.transacciones.R;
 import com.cofrem.transacciones.database.AppDatabase;
+import com.cofrem.transacciones.global.InfoGlobalSettingsPrint;
 import com.cofrem.transacciones.lib.EventBus;
 import com.cofrem.transacciones.lib.GreenRobotEventBus;
 import com.cofrem.transacciones.lib.PrintHandler;
+import com.cofrem.transacciones.lib.PrinterHandler;
+import com.cofrem.transacciones.lib.StyleConfig;
+import com.cofrem.transacciones.models.PrintRow;
 import com.cofrem.transacciones.models.Transaccion;
 
 import java.text.SimpleDateFormat;
@@ -27,6 +31,8 @@ public class ReimpresionScreenRepositoryImpl implements ReimpresionScreenReposit
      * #############################################################################################
      */
 
+    private Transaccion modelTransaccion;
+    private ArrayList<Transaccion> listaDetalle;
 
     /**
      * #############################################################################################
@@ -54,7 +60,7 @@ public class ReimpresionScreenRepositoryImpl implements ReimpresionScreenReposit
 
     @Override
     public void validarExistenciaUltimoRecibo(Context context) {
-        Transaccion modelTransaccion = AppDatabase.getInstance(context).obtenerUltimaTransaccion();
+        modelTransaccion = AppDatabase.getInstance(context).obtenerUltimaTransaccion();
         if (modelTransaccion.getNumero_tarjeta() != null) {
             postEvent(ReimpresionScreenEvent.onVerifyExistenceUltimoReciboSuccess, modelTransaccion);
         } else {
@@ -64,10 +70,10 @@ public class ReimpresionScreenRepositoryImpl implements ReimpresionScreenReposit
 
     @Override
     public void validarExistenciaDetalleRecibos(Context context) {
-        ArrayList<Transaccion> listaDetalle = AppDatabase.getInstance(context).obtenerDetallesTransaccion();
+        listaDetalle = AppDatabase.getInstance(context).obtenerDetallesTransaccion();
 
         if(!listaDetalle.isEmpty()){
-            postEvent(ReimpresionScreenEvent.onVerifyExistenceReporteDetalleSuccess,listaDetalle);
+            postEvent(ReimpresionScreenEvent.onVerifyExistenceReporteDetalleSuccess, listaDetalle);
         }else{
             postEvent(ReimpresionScreenEvent.onVerifyExistenceReporteDetalleError);
         }
@@ -87,7 +93,7 @@ public class ReimpresionScreenRepositoryImpl implements ReimpresionScreenReposit
 
     @Override
     public void validarExistenciaReciboConNumCargo(Context context, String numCargo) {
-        Transaccion modelTransaccion = AppDatabase.getInstance(context).obtenerTransaccion(numCargo);
+         modelTransaccion = AppDatabase.getInstance(context).obtenerTransaccion(numCargo);
         if (modelTransaccion.getNumero_tarjeta() != null) {
             postEvent(ReimpresionScreenEvent.onVerifyExistenceReciboPorNumCargoSuccess, modelTransaccion);
         } else {
@@ -96,43 +102,64 @@ public class ReimpresionScreenRepositoryImpl implements ReimpresionScreenReposit
 
     }
 
-
+    @Override
     public void imprimirUltimoRecibo(Context context) {
+
         Bitmap logo = BitmapFactory.decodeResource(context.getResources(), R.mipmap.logo);
+
+        ArrayList<PrintRow> printRows = new ArrayList<PrintRow>();
+        printRows.add(new PrintRow(logo, StyleConfig.Align.CENTER));
+
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_reimpresion),new StyleConfig(StyleConfig.Align.CENTER,true) ));
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_valor),"30.000"));
+        printRows.add(new PrintRow("num tarjeta ","****5674"));
+        printRows.add(new PrintRow("hola mundo2",new StyleConfig(StyleConfig.Align.LEFT,true) ));
+
+        int status = new PrinterHandler().imprimerTexto(printRows);
+
+        if(status == InfoGlobalSettingsPrint.PRINTER_OK){
+            postEvent(ReimpresionScreenEvent.onImprimirUltimoReciboSuccess);
+        }else{
+            postEvent(ReimpresionScreenEvent.onImprimirUltimoReciboError,stringErrorPrinter(status,context),null,null);
+        }
+
+
 
 //        PrintHandler.getInstance(context).printPinture(logo);
 
-        Transaccion modelTransaccion = AppDatabase.getInstance(context).obtenerUltimaTransaccion();
-
-        String mensaje = context.getResources().getString(
-                R.string.reimprimir_recibo,
-                "hoy",
-                modelTransaccion.getNumero_tarjeta(),
-                String.valueOf(modelTransaccion.getValor()),
-                String.valueOf(modelTransaccion.getNumero_cargo())
-        );
-
-        PrintHandler.getInstance(context).printRecibo(logo,mensaje);
+//        Transaccion modelTransaccion = AppDatabase.getInstance(context).obtenerUltimaTransaccion();
+//
+//        String mensaje = context.getResources().getString(
+//                R.string.reimprimir_recibo,
+//                "hoy",
+//                modelTransaccion.getNumero_tarjeta(),
+//                String.valueOf(modelTransaccion.getValor()),
+//                String.valueOf(modelTransaccion.getNumero_cargo())
+//        );
+//
+//        PrintHandler.getInstance(context).printRecibo(logo,mensaje);
 
     }
 
+    @Override
+    public void imprimirReciboConNumCargo(Context context) {
 
-    public void imprimirConNumCargo(Context context, String numCargo) {
-
-        Transaccion modelTransaccion = AppDatabase.getInstance(context).obtenerTransaccion(numCargo);
-        String mensaje = " vacio ";
-        if (modelTransaccion.getNumero_tarjeta() == null) {
-            mensaje = "         COFREM \n" +
-                    "numero de la tarjeta: " + modelTransaccion.getNumero_tarjeta() + "\n" +
-                    "valor: $" + modelTransaccion.getValor() + "\n" +
-                    "numero de cargo: " + modelTransaccion.getNumero_cargo() + "\n" +
-                    "Gracias por su compra...@ ? ¡ $ % & "
-            ;
-
-            PrintHandler.getInstance(context).printMessage(mensaje);
-        }
-
-        Log.e("Reporte", mensaje);
+//        Transaccion modelTransaccion = AppDatabase.getInstance(context).obtenerTransaccion(numCargo);
+//        String mensaje = " vacio ";
+//        if (modelTransaccion.getNumero_tarjeta() == null) {
+//            mensaje = "         COFREM \n" +
+//                    "numero de la tarjeta: " + modelTransaccion.getNumero_tarjeta() + "\n" +
+//                    "valor: $" + modelTransaccion.getValor() + "\n" +
+//                    "numero de cargo: " + modelTransaccion.getNumero_cargo() + "\n" +
+//                    "Gracias por su compra...@ ? ¡ $ % & "
+//            ;
+//
+//            PrintHandler.getInstance(context).printMessage(mensaje);
+//        }
+//
+//        Log.e("Reporte", mensaje);
     }
 
     /**
@@ -140,6 +167,29 @@ public class ReimpresionScreenRepositoryImpl implements ReimpresionScreenReposit
      * Metodo propios de la clase
      * #############################################################################################
      */
+
+    private String stringErrorPrinter(int status,Context context){
+        String result="";
+        switch (status){
+            case InfoGlobalSettingsPrint.PRINTER_DISCONNECT:
+                result = context.getResources().getString(R.string.printer_disconnect);
+                break;
+            case InfoGlobalSettingsPrint.PRINTER_OUT_OF_PAPER:
+                result = context.getResources().getString(R.string.printer_out_of_paper);
+                break;
+            case InfoGlobalSettingsPrint.PRINTER_OVER_FLOW:
+                result = context.getResources().getString(R.string.printer_over_flow);
+                break;
+            case InfoGlobalSettingsPrint.PRINTER_OVER_HEAT:
+                result = context.getResources().getString(R.string.printer_over_heat);
+                break;
+            case InfoGlobalSettingsPrint.PRINTER_ERROR:
+                result = context.getResources().getString(R.string.printer_error);
+                break;
+        }
+        return result;
+    }
+
 
     /**
      * Metodo que registra los eventos

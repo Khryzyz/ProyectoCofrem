@@ -2,6 +2,15 @@ package com.cofrem.transacciones.global;
 
 public class InfoGlobalSettingsPrint {
 
+    //estados de la impresora
+
+    public final static int PRINTER_DISCONNECT = -1004;
+    public final static int PRINTER_OUT_OF_PAPER = -1001;
+    public final static int PRINTER_OVER_FLOW = -1003;
+    public final static int PRINTER_OVER_HEAT = -1002;
+    public final static int PRINTER_ERROR = -9999;
+    public final static int PRINTER_OK = 0;
+
     //0 - 255
     public final static int LEFT_DISTANCE = 1;
 
