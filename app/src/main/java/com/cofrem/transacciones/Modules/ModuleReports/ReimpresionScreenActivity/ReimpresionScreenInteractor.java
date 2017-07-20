@@ -7,7 +7,12 @@ interface ReimpresionScreenInteractor {
 
     void validarExistenciaUltimoRecibo(Context context);
 
-
+    /**
+     * Metodo que se encargara de imprimir el ultimo recibo
+     *
+     * @param context
+     */
+    void imprimirUltimoRecibo(Context context);
     /**
      * Metodo que Reimprime unm recibo por numero de cargo:
      *
@@ -16,6 +21,12 @@ interface ReimpresionScreenInteractor {
      */
     void validarExistenciaReciboConNumCargo(Context context,String numCargo);
 
+    /**
+     * Metodo que se encargara de imprimir el recibo por número de cargo
+     *
+     * @param context
+     */
+    void imprimirReciboConNumCargo(Context context);
 
     /**
      * Metodo que validara la calve del administrador para dar paso a la reimpresion de recibos:

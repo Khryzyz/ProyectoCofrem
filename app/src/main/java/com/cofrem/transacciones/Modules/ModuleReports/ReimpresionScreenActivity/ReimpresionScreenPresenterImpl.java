@@ -73,8 +73,18 @@ public class ReimpresionScreenPresenterImpl implements ReimpresionScreenPresente
     }
 
     @Override
+    public void imprimirUltimoRecibo(Context context) {
+        reimpresionScreenInteractor.imprimirUltimoRecibo(context);
+    }
+
+    @Override
     public void validarExistenciaReciboConNumCargo(Context context, String numCargo) {
         reimpresionScreenInteractor.validarExistenciaReciboConNumCargo(context, numCargo);
+    }
+
+    @Override
+    public void imprimirReciboConNumCargo(Context context) {
+        reimpresionScreenInteractor.imprimirReciboConNumCargo(context);
     }
 
     @Override
@@ -91,6 +101,7 @@ public class ReimpresionScreenPresenterImpl implements ReimpresionScreenPresente
            // reimpresionScreenInteractor.validarPasswordTecnico();
         }
     }
+
 
     /**
      * Sobrecarga del metodo onEventMainThread de la interface SaldoScreenPresenter para el manejo de eventos
@@ -125,7 +136,18 @@ public class ReimpresionScreenPresenterImpl implements ReimpresionScreenPresente
             case ReimpresionScreenEvent.onVerifyExistenceReporteDetalleError:
                 onVerifyExistenceReporteDetalleError();
                 break;
-
+            case ReimpresionScreenEvent.onImprimirUltimoReciboSuccess:
+                onImprimirUltimoReciboSuccess();
+                break;
+            case ReimpresionScreenEvent.onImprimirUltimoReciboError:
+                onImprimirUltimoReciboError(reimpresionScreenEvent.getErrorMessage());
+                break;
+            case ReimpresionScreenEvent.onImprimirUltimoReciboPorNumCargoSuccess:
+                onImprimirReciboPorNumCargoSuccess();
+                break;
+            case ReimpresionScreenEvent.onImprimirUltimoReciboPorNumCargoError:
+                onImprimirReciboPorNumCargoError(reimpresionScreenEvent.getErrorMessage());
+                break;
 
         }
     }
@@ -177,6 +199,22 @@ public class ReimpresionScreenPresenterImpl implements ReimpresionScreenPresente
     }
     private void onVerifyExistenceReporteDetalleError() {
         reimpresionScreenView.handleVerifyExistenceReporteDetalleError();
+    }
+
+    private void onImprimirUltimoReciboSuccess() {
+        reimpresionScreenView.handleImprimirUltimoReciboSuccess();
+    }
+
+    private void onImprimirUltimoReciboError(String error) {
+        reimpresionScreenView.handleImprimirUltimoReciboError(error);
+    }
+
+    private void onImprimirReciboPorNumCargoSuccess() {
+        reimpresionScreenView.handleImprimirReciboPorNumCargoSuccess();
+    }
+
+    private void onImprimirReciboPorNumCargoError(String error) {
+        reimpresionScreenView.handleImprimirReciboPorNumCargoError(error);
     }
 
 }

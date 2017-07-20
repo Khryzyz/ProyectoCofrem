@@ -235,6 +235,27 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
     public void handleVerifyExistenceReporteDetalleError() {
 
     }
+
+    @Override
+    public void handleImprimirUltimoReciboSuccess() {
+
+    }
+
+    @Override
+    public void handleImprimirUltimoReciboError(String error) {
+        Toast.makeText(this, error, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void handleImprimirReciboPorNumCargoSuccess() {
+
+    }
+
+    @Override
+    public void handleImprimirReciboPorNumCargoError(String error) {
+        Toast.makeText(this, error, Toast.LENGTH_LONG).show();
+    }
+
     /**
      * #############################################################################################
      * Metodo propios de la clase
@@ -297,30 +318,32 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
     @Click(R.id.btnReportReimpresionReciboImprimirRecibo)
     public void imprimirUltimoRecibo() {
 
-        Bitmap logo = BitmapFactory.decodeResource(this.getResources(), R.mipmap.logo);
-        String mensaje = this.getResources().getString(
-                R.string.reimprimir_recibo,
-                getDateTime(),
-                modelTransaccion.getNumero_tarjeta(),
-                String.valueOf(modelTransaccion.getValor()),
-                String.valueOf(modelTransaccion.getNumero_cargo())
-        );
-//        PrintHandler.getInstance(this).printMessage(mensaje);
-//        PrintHandler.getInstance(this).printPinture(logo);
-//        PrintHandler.getInstance(this).printMessage(mensaje);
+        reimpresionScreenPresenter.imprimirUltimoRecibo(this);
 
-
-        ArrayList<PrintRow> printRows = new ArrayList<PrintRow>();
-        printRows.add(new PrintRow(logo, StyleConfig.Align.CENTER));
-
-        printRows.add(new PrintRow(this.getResources().getString(
-                R.string.recibo_reimpresion),new StyleConfig(StyleConfig.Align.CENTER,true) ));
-        printRows.add(new PrintRow(this.getResources().getString(
-                                    R.string.recibo_valor),"30.000"));
-        printRows.add(new PrintRow("num tarjeta ","****5674"));
-        printRows.add(new PrintRow("hola mundo2",new StyleConfig(StyleConfig.Align.LEFT,true) ));
-
-        boolean respuesta = new PrinterHandler().imprimerTexto(printRows);
+//        Bitmap logo = BitmapFactory.decodeResource(this.getResources(), R.mipmap.logo);
+//        String mensaje = this.getResources().getString(
+//                R.string.reimprimir_recibo,
+//                getDateTime(),
+//                modelTransaccion.getNumero_tarjeta(),
+//                String.valueOf(modelTransaccion.getValor()),
+//                String.valueOf(modelTransaccion.getNumero_cargo())
+//        );
+////        PrintHandler.getInstance(this).printMessage(mensaje);
+////        PrintHandler.getInstance(this).printPinture(logo);
+////        PrintHandler.getInstance(this).printMessage(mensaje);
+//
+//
+//        ArrayList<PrintRow> printRows = new ArrayList<PrintRow>();
+//        printRows.add(new PrintRow(logo, StyleConfig.Align.CENTER));
+//
+//        printRows.add(new PrintRow(this.getResources().getString(
+//                R.string.recibo_reimpresion),new StyleConfig(StyleConfig.Align.CENTER,true) ));
+//        printRows.add(new PrintRow(this.getResources().getString(
+//                                    R.string.recibo_valor),"30.000"));
+//        printRows.add(new PrintRow("num tarjeta ","****5674"));
+//        printRows.add(new PrintRow("hola mundo2",new StyleConfig(StyleConfig.Align.LEFT,true) ));
+//
+//        new PrinterHandler().imprimerTexto(printRows);
 
     }
 
