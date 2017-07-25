@@ -140,6 +140,15 @@ public class Printer {
         }
     }
 
+    public static synchronized void printSalto() {
+        try {
+            ThermalPrinter.walkPaper(100);
+        } catch (TelpoException e) {
+            e.printStackTrace();
+        }
+    }
+
+
     private static void commitOperation(List<Printer.PrintItem> contentList, ICommitCallback commitCallback) {
         boolean printFlag = false;
         Iterator printIterator = contentList.iterator();

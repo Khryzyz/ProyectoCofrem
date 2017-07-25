@@ -156,8 +156,8 @@ public class DatabaseManager {
         public static final String COLUMN_ESTABLECIMIENTO_ESTADO = "estado";
 
         /**
-         * Scripts de la tabla producti
-         * Comando CREATE para la tabla Producto de la base de datos
+         * Scripts de la tabla establecimineto
+         * Comando CREATE para la tabla establecimineto de la base de datos
          */
         public static final String CREATE_TABLE_ESTABLECIMIENTO =
                 "CREATE TABLE " + TABLE_NAME_ESTABLECIMIENTO + "(" +
@@ -172,7 +172,7 @@ public class DatabaseManager {
 
         /**
          * Scripts de la tabla registro
-         * Comando DROP para la tabla Producto de la base de datos
+         * Comando DROP para la tabla establecimineto de la base de datos
          */
         public static final String DROP_TABLE_ESTABLECIMIENTO =
                 "DROP TABLE IF EXISTS '" + TABLE_NAME_ESTABLECIMIENTO + "'";

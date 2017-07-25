@@ -32,6 +32,24 @@ public class StyleConfig{
         this.align = align;
         this.newLine = newLine;
     }
+    public StyleConfig(StyleConfig.Align align, StyleConfig.FontStyle fontStyle) {
+        this.fontFamily = StyleConfig.FontFamily.DEFAULT;
+        this.fontSize = StyleConfig.FontSize.F2;
+        this.fontStyle = fontStyle;
+        this.gray = 11;
+        this.lineSpace = 1;
+        this.align = align;
+        this.newLine = true;
+    }
+    public StyleConfig(StyleConfig.Align align, int lineSpace) {
+        this.fontFamily = StyleConfig.FontFamily.DEFAULT;
+        this.fontSize = StyleConfig.FontSize.F2;
+        this.fontStyle = StyleConfig.FontStyle.NORMAL;
+        this.gray = 11;
+        this.lineSpace = lineSpace;
+        this.align = align;
+        this.newLine = true;
+    }
 
     public StyleConfig(StyleConfig.FontSize fontSize, StyleConfig.FontStyle fontStyle, StyleConfig.Align align, int gray, boolean newLine) {
         this.fontFamily = StyleConfig.FontFamily.DEFAULT;
