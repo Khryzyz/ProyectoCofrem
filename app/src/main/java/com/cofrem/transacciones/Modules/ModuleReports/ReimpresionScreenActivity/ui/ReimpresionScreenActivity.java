@@ -1,17 +1,8 @@
 package com.cofrem.transacciones.Modules.ModuleReports.ReimpresionScreenActivity.ui;
 
 import android.app.Activity;
-import android.content.ContentResolver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.AnyRes;
-import android.support.annotation.NonNull;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
@@ -19,10 +10,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cofrem.transacciones.ReportScreenActivity_;
-import com.cofrem.transacciones.lib.PrintHandler;
-import com.cofrem.transacciones.lib.PrinterHandler;
-import com.cofrem.transacciones.lib.StyleConfig;
-import com.cofrem.transacciones.models.PrintRow;
 import com.cofrem.transacciones.models.Reports;
 import com.cofrem.transacciones.Modules.ModuleReports.ReimpresionScreenActivity.ReimpresionScreenPresenter;
 import com.cofrem.transacciones.Modules.ModuleReports.ReimpresionScreenActivity.ReimpresionScreenPresenterImpl;
@@ -33,12 +20,6 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
-
-import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Locale;
 
 @EActivity(R.layout.activity_report_reimpresion_screen)
 public class ReimpresionScreenActivity extends Activity implements ReimpresionScreenView {
@@ -267,16 +248,7 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
      *
      * @return String fecha
      */
-    private String getDateTime() {
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat(
-                "yyyy-MM-dd HH:mm:ss",
-                Locale.getDefault());
-
-        Date date = new Date();
-
-        return dateFormat.format(date);
-    }
 
 
     /**
@@ -377,17 +349,17 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
 
     @Click(R.id.btnReportReimprimeonReciboImpresionBotonImprimir)
     public void imprimirReimprimirNumCargo(){
-        Bitmap logo = BitmapFactory.decodeResource(this.getResources(), R.mipmap.logo);
+//        Bitmap logo = BitmapFactory.decodeResource(this.getResources(), R.mipmap.logo);
+//
+//        String mensaje = this.getResources().getString(
+//                R.string.reimprimir_recibo,
+//                getDateTime(),
+//                modelTransaccion.getNumero_tarjeta(),
+//                String.valueOf(modelTransaccion.getValor()),
+//                String.valueOf(modelTransaccion.getNumero_cargo())
+//        );
 
-        String mensaje = this.getResources().getString(
-                R.string.reimprimir_recibo,
-                getDateTime(),
-                modelTransaccion.getNumero_tarjeta(),
-                String.valueOf(modelTransaccion.getValor()),
-                String.valueOf(modelTransaccion.getNumero_cargo())
-        );
-
-        PrintHandler.getInstance(this).printRecibo(logo,mensaje);
+//        PrintHandler.getInstance(this).printRecibo(logo,mensaje);
         edtReportReimprimeonReciboNummeroCargoContenidoClave.setText("");
 
     }

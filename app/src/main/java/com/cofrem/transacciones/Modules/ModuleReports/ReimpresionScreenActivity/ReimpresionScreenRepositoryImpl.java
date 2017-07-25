@@ -1,10 +1,8 @@
 package com.cofrem.transacciones.Modules.ModuleReports.ReimpresionScreenActivity;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.util.Log;
 
 import com.cofrem.transacciones.Modules.ModuleReports.ReimpresionScreenActivity.events.ReimpresionScreenEvent;
 import com.cofrem.transacciones.R;
@@ -12,7 +10,6 @@ import com.cofrem.transacciones.database.AppDatabase;
 import com.cofrem.transacciones.global.InfoGlobalSettingsPrint;
 import com.cofrem.transacciones.lib.EventBus;
 import com.cofrem.transacciones.lib.GreenRobotEventBus;
-import com.cofrem.transacciones.lib.PrintHandler;
 import com.cofrem.transacciones.lib.PrinterHandler;
 import com.cofrem.transacciones.lib.StyleConfig;
 import com.cofrem.transacciones.models.PrintRow;
@@ -22,7 +19,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
-import java.util.Objects;
 
 public class ReimpresionScreenRepositoryImpl implements ReimpresionScreenRepository {
     /**
@@ -30,8 +26,9 @@ public class ReimpresionScreenRepositoryImpl implements ReimpresionScreenReposit
      * Declaracion de componentes y variables
      * #############################################################################################
      */
-
+    // variable que almacenara una tansaccion para imprimirla
     private Transaccion modelTransaccion;
+    // lista de las transacciones que estan para imprimir en el reporte de Detalles
     private ArrayList<Transaccion> listaDetalle;
 
     /**
@@ -58,18 +55,38 @@ public class ReimpresionScreenRepositoryImpl implements ReimpresionScreenReposit
 
     }
 
+    /**
+     * Metodo que verifica:
+     * - La existencia de una ultima transaccion
+     *
+     * @param context
+     */
     @Override
     public void validarExistenciaUltimoRecibo(Context context) {
+        //Consulta la existencia del registro de la ultima transaccion
         modelTransaccion = AppDatabase.getInstance(context).obtenerUltimaTransaccion();
+        /**
+         * En caso de que no exista un registro de una transaccion no se mostrara la vista con el boton
+         * de imprimir sino que se no tificara que no existen transacciones para imprimir
+         */
         if (modelTransaccion.getNumero_tarjeta() != null) {
+            // Registra el evento de existencia de una transaccion para imprimir
             postEvent(ReimpresionScreenEvent.onVerifyExistenceUltimoReciboSuccess, modelTransaccion);
         } else {
+            // Registra el evento de la NO existencia de una transaccion para imprimir
             postEvent(ReimpresionScreenEvent.onVerifyExistenceUltimoReciboError);
         }
     }
 
+    /**
+     * Metodo que verifica:
+     * - La existencia de transacciones para imprimir el reporte detallado
+     *
+     * @param context
+     */
     @Override
     public void validarExistenciaDetalleRecibos(Context context) {
+        //Consulta la existencia del registros de transacciones
         listaDetalle = AppDatabase.getInstance(context).obtenerDetallesTransaccion();
 
         if(!listaDetalle.isEmpty()){
@@ -91,6 +108,12 @@ public class ReimpresionScreenRepositoryImpl implements ReimpresionScreenReposit
         }
     }
 
+    /**
+     * Metodo que verifica:
+     * - La existencia de una transaccion por número de Cargo
+     *
+     * @param context
+     */
     @Override
     public void validarExistenciaReciboConNumCargo(Context context, String numCargo) {
          modelTransaccion = AppDatabase.getInstance(context).obtenerTransaccion(numCargo);
@@ -111,12 +134,21 @@ public class ReimpresionScreenRepositoryImpl implements ReimpresionScreenReposit
         printRows.add(new PrintRow(logo, StyleConfig.Align.CENTER));
 
         printRows.add(new PrintRow(context.getResources().getString(
-                R.string.recibo_reimpresion),new StyleConfig(StyleConfig.Align.CENTER,true) ));
-        printRows.add(new PrintRow(context.getResources().getString(
-                R.string.recibo_valor),"30.000"));
-        printRows.add(new PrintRow("num tarjeta ","****5674"));
-        printRows.add(new PrintRow("hola mundo2",new StyleConfig(StyleConfig.Align.LEFT,true) ));
+                R.string.recibo_reimpresion),new StyleConfig(StyleConfig.Align.CENTER,StyleConfig.FontStyle.BOLD) ));
+        printRows.add(new PrintRow(getDateTime(),new StyleConfig(StyleConfig.Align.CENTER,20) ));
 
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_valor),String.valueOf(modelTransaccion.getValor()),new StyleConfig(StyleConfig.Align.LEFT, true)));
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_numero_tarjeta),modelTransaccion.getNumero_tarjeta(),new StyleConfig(StyleConfig.Align.LEFT, 20)));
+
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_ingresa_firma),new StyleConfig(StyleConfig.Align.LEFT,true) ));
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_ingresa_cc),new StyleConfig(StyleConfig.Align.LEFT,true) ));
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_ingresa_tel),new StyleConfig(StyleConfig.Align.LEFT,50) ));
+        printRows.add(new PrintRow(".",new StyleConfig(StyleConfig.Align.LEFT,true) ));
         int status = new PrinterHandler().imprimerTexto(printRows);
 
         if(status == InfoGlobalSettingsPrint.PRINTER_OK){
@@ -167,6 +199,19 @@ public class ReimpresionScreenRepositoryImpl implements ReimpresionScreenReposit
      * Metodo propios de la clase
      * #############################################################################################
      */
+
+
+    private String getDateTime() {
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat(
+                "yyyy-MM-dd HH:mm:ss",
+                Locale.getDefault());
+
+        Date date = new Date();
+
+        return dateFormat.format(date);
+    }
+
 
     private String stringErrorPrinter(int status,Context context){
         String result="";

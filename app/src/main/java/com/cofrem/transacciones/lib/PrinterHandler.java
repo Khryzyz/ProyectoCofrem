@@ -22,310 +22,97 @@ import java.util.concurrent.ExecutionException;
 
 public class PrinterHandler {
 
-    private static Context context;
-
-    private Bitmap bitmapOrigen;
-
     private static ArrayList<PrintRow> Rows;
 
 
+    /**
+     * Constructor de la clase
+     */
     public PrinterHandler() {
 
     }
 
-
+    /**
+     * metodo publico que recibe un array de rows para imprimir
+     * Retorna el estado de la impresora
+     *
+     * @param modelRow
+     * @return int
+     */
     public int imprimerTexto(ArrayList<PrintRow> modelRow) {
         Rows = modelRow;
-//        handleMessage(InfoGlobalSettingsPrint.CODE_PRINTCONTENT);
         return imprimir();
     }
 
-    public static void handleMessage(int msg) {
 
-        switch (msg) {
+    /**
+     * metodo privado encargado de comunicarse con la clase Printer
+     * Retorna el estado de la impresora
+     *
+     * @return int
+     */
+    private static int imprimir() {
 
-            case InfoGlobalSettingsPrint.CODE_NOPAPER:
-//                noPaperDlg();
-                break;
+        //inicializar el arraylist interno en Printer para recibir los string a imprimir
+        //inicializar el hilo de TermalPrinter
+        Printer.connect();
 
-            case InfoGlobalSettingsPrint.CODE_LOWBATTERY:
-/*
-                AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
-                alertDialog.setTitle(R.string.operation_result);
-                alertDialog.setMessageWS(getString(R.string.LowBattery));
-                alertDialog.setPositiveButton(getString(R.string.dlg_ok), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                    }
-                });
-                alertDialog.show();
-                */
-                break;
-
-            case InfoGlobalSettingsPrint.CODE_PRINTVERSION:
-                // dialog.dismiss();
-//                if (msg.obj.equals("1")) {
-//                    // txvPrintVersion.setText(printVersion);
-//                } else {
-//                    // Toast.makeText(context, R.string.operation_fail, Toast.LENGTH_LONG).show();
-//                }
-                break;
-
-            case InfoGlobalSettingsPrint.CODE_PRINTPICTURE:
-                // progressDialog=ProgressDialog.show(PrinterActivity.this,getString(R.string.bl_dy),getString(R.string.printing_wait));
-                // printting = CODE_PRINTPICTURE;
-                //new PrintHandler.printPicture().start();
-                break;
-
-            case InfoGlobalSettingsPrint.CODE_PRINTCONTENT:
-                // progressDialog=ProgressDialog.show(PrinterActivity.this,getString(R.string.bl_dy),getString(R.string.printing_wait));
-                // printting = CODE_PRINTCONTENT;
-//                new contentPrintThread().start();
-
-
-                 imprimir();
-
-
-//                Boolean respuesta = true;
-//
-//                try {
-//                    respuesta = new PrinterHandler.ImprimirTexto(new PrintHandler.ImprimirTexto.ResponseImprimirTexto(){
-//
-//                        @Override
-//                        public boolean processFinish(boolean exito) {
-//                            return exito;
-//                        }
-//                    }).execute(Rows).get();
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                } catch (ExecutionException e) {
-//                    e.printStackTrace();
-//                }
-//
-//                if(respuesta){
-//                    Log.e("impriminso","exito") ;
-//                }else{
-//                    Log.e("impriminso","error") ;
-//                }
-
-                break;
-
-            case InfoGlobalSettingsPrint.CODE_PRINTCERIBO:
-                // progressDialog=ProgressDialog.show(PrinterActivity.this,getString(R.string.bl_dy),getString(R.string.printing_wait));
-                // printting = CODE_PRINTPICTURE;
-                //new PrintHandler.PrintRecibo().start();
-                break;
-
-            case InfoGlobalSettingsPrint.CODE_CANCELPROMPT:
-                /*
-                if (progressDialog != null && !PrinterActivity.this.isFinishing()) {
-                    progressDialog.dismiss();
-                    progressDialog = null;
-                }*/
-                break;
-
-            case InfoGlobalSettingsPrint.CODE_EXECUTECOMMAND:
-                // new PrintHandler.executeCommand().start();
-                break;
-
-            case InfoGlobalSettingsPrint.CODE_OVERHEAT:
-               /* AlertDialog.Builder overHeatDialog = new AlertDialog.Builder(context);
-                overHeatDialog.setTitle(R.string.operation_result);
-                overHeatDialog.setMessageWS(getString(R.string.overTemp));
-                overHeatDialog.setPositiveButton(getString(R.string.dlg_ok), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                    }
-                });
-                overHeatDialog.show();*/
-                break;
-
-            default:
-                Toast.makeText(context, "Print Error!", Toast.LENGTH_LONG).show();
-                break;
-        }
-    }
-
-
-//    private boolean manejadorDeHilo(String msg,String fontzise,Strio){
-//        Boolean respuesta = true;
-//
-//
-//
-//        return respuesta;
-//    }
-
-
-    public static int imprimir() {
-
-        int res = Printer.connect();
-
+        //obtener el estasdo de la impresora
         int status = Printer.getStatus();
 
+        //validar que el estado sea igual a Ok para poder seguir con el proceso de imprimir
         if (status == 0) {
+
+            //recorrer el ArrayList de rows a imprimir
             for (PrintRow row : Rows) {
+                //validar si el row tiene 2 String. De ser así
+                // el primer String se imprime a la izquierda y el segundo a la derecha
                 if (row.getMsg1() != null && row.getMsg2() != null) {
-                    Printer.printText(justificarTexto(row.getMsg1(), row.getMsg2()), new StyleConfig(StyleConfig.Align.LEFT, true));
+                    Printer.printText(justificarTexto(row.getMsg1(), row.getMsg2()), row.getStyleConfig());
                 } else if (row.getMsg1() != null) {
                     Printer.printText(row.getMsg1(), row.getStyleConfig());
                 } else if (row.getLogo() != null) {
                     Printer.printImage(row.getLogo(), row.getAlign());
                     Printer.printText("", new StyleConfig(StyleConfig.Align.LEFT, true));
                 }
-
+                //dar la orden a Printer de que imprima el renglon
                 Printer.commitOperation();
             }
-            Printer.printText("", new StyleConfig(StyleConfig.Align.LEFT, true));
-            Printer.printText("", new StyleConfig(StyleConfig.Align.LEFT, true));
-            Printer.commitOperation();
+//            Printer.printSalto();
         }
         return status;
     }
 
+    /**
+     * metodo privado encargado de justificar el texto recibido en los dos String
+     * Retorna un String justificado
+     *
+     * @param msg1
+     * @param msg2
+     * @return String resul
+     */
+    private static String justificarTexto(String msg1, String msg2) {
 
-    public static String justificarTexto(String msg1, String msg2) {
-
+        //calculado el tamaño de cada unos de los String
         int lengthMsg1 = msg1.length();
         int lengthMsg2 = msg2.length();
 
+        //con el tipo de letra actual que es el tamaño 2 cada renglon tiene 31 caracteres
+        //espero no los String que se envien a justificar no suoperen los 31 caracteres para no tener problemas
         int lengthTotal = 31 - (lengthMsg1 + lengthMsg2);
 
+        //colocar el primer Strin en la parte Izquierda del renglon
         String resul = msg1;
 
+        //completar con espacion en blanco parta que se vean justificados los dos Strings
         for (int i = 0; i < lengthTotal; i++) {
             resul += " ";
         }
-
+        // Colocar el segundo String en la parte derecha del renglon
         resul += msg2;
 
+        // retornar el String con los dos String recibido mas los espacios entre ellos
         return resul;
     }
-
-
-//    private static class ImprimirTexto extends AsyncTask<ArrayList<PrintRow>, Integer, Boolean> {
-//
-//        public interface ResponseImprimirTexto{
-//            boolean processFinish(boolean exito);
-//        }
-//
-//        public PrintHandler.ImprimirTexto.ResponseImprimirTexto delegate =null;
-//
-//        public ImprimirTexto(PrintHandler.ImprimirTexto.ResponseImprimirTexto response) {
-//            this.delegate = response;
-//        }
-//
-//        @Override
-//        protected Boolean doInBackground(ArrayList<PrintRow>... arrayLists) {
-//            Printer.connect();
-//
-//                        boolean bandera = true;
-//
-//            for (PrintRow row : arrayLists[0]) {
-//                if (row.getMsg1() != null) {
-//
-////                    Printer.printText(row.getMsg1(),new StyleConfig(StyleConfig.Align.LEFT,false));
-//                    Printer.printText(row.getMsg1(),new StyleConfig(StyleConfig.Align.LEFT,false));
-//
-////                    bandera = imprimir(row.getMsg1(),row.getFonzise1(),row.getPosition1(),row.getWalkPaper());
-//                }
-//
-//                if (row.getMsg2() != null) {
-//                    Printer.printText(row.getMsg2(),new StyleConfig(StyleConfig.Align.RIGHT,true));
-//
-//
-////                    Printer.printText(row.getMsg2(),new StyleConfig());
-//                    //bandera = imprimir(row.getMsg2()+"\n",row.getFonzise2(),row.getPosition2(),row.getWalkPaper());
-//                }
-//                Printer.commitOperation();
-//            }
-//
-//
-//
-//
-////            try {
-////                ThermalPrinter.start();
-////                ThermalPrinter.reset();
-////            } catch (TelpoException e) {
-////                e.printStackTrace();
-////            }
-////
-////            boolean bandera = true;
-////            for (PrintRow row : arrayLists[0]) {
-////                if (row.getMsg1() != null) {
-////                    bandera = imprimir(row.getMsg1(),row.getFonzise1(),row.getPosition1(),row.getWalkPaper());
-////                }
-////
-////                if (row.getMsg2() != null) {
-////                    bandera = imprimir(row.getMsg2()+"\n",row.getFonzise2(),row.getPosition2(),row.getWalkPaper());
-////                }
-////
-////            }
-//
-////
-////            try {
-////                ThermalPrinter.clearString();
-////                ThermalPrinter.walkPaper(100);
-////            } catch (TelpoException e) {
-////                e.printStackTrace();
-////            }
-//
-//            return true;
-//        }
-//
-//        protected boolean imprimir(String msg, int fonzise, int position, int walkPaper){
-//            Boolean nopaper = false;
-//            String Result;
-//            try {
-//                ThermalPrinter.setAlgin(position);
-//                ThermalPrinter.setLeftIndent(InfoGlobalSettingsPrint.LEFT_DISTANCE);
-//                ThermalPrinter.setLineSpace(InfoGlobalSettingsPrint.LINE_DISTANCE);
-//                if (InfoGlobalSettingsPrint.FONT_SIZE == 4) {
-//                    ThermalPrinter.setFontSize(2);
-//                    ThermalPrinter.enlargeFontSize(2, 2);
-//                } else if (InfoGlobalSettingsPrint.FONT_SIZE == 3) {
-//                    ThermalPrinter.setFontSize(1);
-//                    ThermalPrinter.enlargeFontSize(2, 2);
-//                } else if (InfoGlobalSettingsPrint.FONT_SIZE == 2) {
-//                    ThermalPrinter.setFontSize(2);
-//                } else if (InfoGlobalSettingsPrint.FONT_SIZE == 1) {
-//                    ThermalPrinter.setFontSize(1);
-//                }
-//                ThermalPrinter.setGray(InfoGlobalSettingsPrint.GRAY_LEVEL);
-//                ThermalPrinter.addString(msg);
-//                ThermalPrinter.printString();
-//
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//                Result = e.toString();
-//                if (Result.equals("com.telpo.tps550.api.printer.NoPaperException")) {
-//                    nopaper = true;
-//                    // return;
-//                } else if (Result.equals("com.telpo.tps550.api.printer.OverHeatException")) {
-//                    handleMessage(InfoGlobalSettingsPrint.CODE_OVERHEAT);
-//                    //singleton.sendMessage(singleton.obtainMessage(InfoGlobalSettingsPrint.CODE_OVERHEAT, 1, 0, null));
-//                } else {
-//                    handleMessage(InfoGlobalSettingsPrint.CODE_PRINTERR);
-////                    singleton.sendMessage(singleton.obtainMessage(InfoGlobalSettingsPrint.CODE_PRINTERR, 1, 0, null));
-//                }
-//            } finally {
-//                // lock.release();
-//                handleMessage(InfoGlobalSettingsPrint.CODE_CANCELPROMPT);
-//                //singleton.sendMessage(singleton.obtainMessage(InfoGlobalSettingsPrint.CODE_CANCELPROMPT, 1, 0, null));
-//                if (nopaper)
-//                    handleMessage(InfoGlobalSettingsPrint.CODE_NOPAPER);
-//                //singleton.sendMessage(singleton.obtainMessage(InfoGlobalSettingsPrint.CODE_NOPAPER, 1, 0, null));
-//                ThermalPrinter.stop();
-//                nopaper = false;
-//            }
-//            return true;
-//        }
-//
-//        @Override
-//        protected void onPostExecute(Boolean aBoolean) {
-//            delegate.processFinish(aBoolean);
-//        }
-//
-//    }
-
 
 }

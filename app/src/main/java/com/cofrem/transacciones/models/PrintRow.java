@@ -29,9 +29,10 @@ public class PrintRow {
         this.styleConfig = styleConfig;
     }
 
-    public PrintRow(String msg1, String msg2) {
+    public PrintRow(String msg1, String msg2, StyleConfig styleConfig) {
         this.msg1 = msg1;
         this.msg2 = msg2;
+        this.styleConfig = styleConfig;
 
     }
 
