@@ -3,7 +3,9 @@ package com.cofrem.transacciones.Modules.ModuleReports.ReimpresionScreenActivity
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -34,6 +36,8 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
 
     private static final int PASO_ULTIMO_RECIBO = 1;
     private static final int PASO_NUMERO_CARGO = 2;
+    private static final int PASO_DETALLE= 3;
+    private static final int PASO_GENERAL = 4;
 
     private int paso;
 
@@ -64,6 +68,9 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
     TextView txvReportReimprimeonReciboImpresionSaldoCantidad;
     @ViewById
     EditText edtReportReimpresionReciboClaveAdministradorContenidoClave;
+
+    @ViewById
+    Button btnReportReimpresionReciboImprimirRecibo;
 
 
     Transaccion modelTransaccion;
@@ -101,7 +108,8 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
                 bodyContentReimpresionRecibo.setVisibility(View.VISIBLE);
                 break;
             case Reports.reportReporteDetalle:
-                bodyContentReporteDetallesImpresion.setVisibility(View.VISIBLE);
+                paso = PASO_DETALLE;
+                reimpresionScreenPresenter.validarExistenciaDetalleRecibos(this);
                 break;
             case Reports.reportReporteGeneral:
                 bodyContentReporteGeneralImpresion.setVisibility(View.VISIBLE);
@@ -197,6 +205,9 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
                bodyContentReimpresionReciboImpresion.setVisibility(View.VISIBLE);
                txvReportReimprimeonReciboImpresionSaldoCantidad.setText(String.valueOf(modelTransaccion.getNumero_cargo()));
                break;
+           case  PASO_DETALLE:
+               bodyContentReporteDetallesImpresion.setVisibility(View.VISIBLE);
+               break;
        }
         edtReportReimpresionReciboClaveAdministradorContenidoClave.setText("");
     }
@@ -204,22 +215,24 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
 // texto quemado hay que pitarlo
     @Override
     public void handleVerifyClaveAdministradorError() {
-        Toast.makeText(this, this.getString(R.string.report_text_message_No_existen_recibo_num_cargo), Toast.LENGTH_LONG).show();
+        Toast.makeText(this, this.getString(R.string.report_text_message_clave_admin_incorrecta), Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void handleVerifyExistenceReporteDetalleSuccess() {
-
+        bodyContentReimpresionReciboClaveAdministrador.setVisibility(View.VISIBLE);
     }
+
 
     @Override
     public void handleVerifyExistenceReporteDetalleError() {
-
+        Toast.makeText(this, this.getString(R.string.report_text_message_No_existen_recibos), Toast.LENGTH_LONG).show();
+        regresarDesdeReimpimirRecibo();
     }
 
     @Override
     public void handleImprimirUltimoReciboSuccess() {
-
+        regresarDesdeReimpimirRecibo(2000);
     }
 
     @Override
@@ -229,12 +242,32 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
 
     @Override
     public void handleImprimirReciboPorNumCargoSuccess() {
-
+        regresarDesdeReimpimirRecibo(2000);
     }
 
     @Override
     public void handleImprimirReciboPorNumCargoError(String error) {
         Toast.makeText(this, error, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void handleImprimirReporteDetalleSuccess() {
+
+    }
+
+    @Override
+    public void handleImprimirReporteDetalleError(String error) {
+
+    }
+
+    @Override
+    public void handleImprimirReporteGeneralSuccess() {
+
+    }
+
+    @Override
+    public void handleImprimirReporteGeneralError(String error) {
+
     }
 
     /**
@@ -277,7 +310,9 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
         reimpresionScreenPresenter.validarExistenciaUltimoRecibo(this);
     }
 
-
+    /**
+     * Metodo que se encargara de validar la clave del administrador
+     */
     @Click(R.id.btnReportReimpresionReciboClaveAdministradorBotonAceptar)
     public void validarClaveAdministrador(){
         reimpresionScreenPresenter.validarClaveAdministrador(this,
@@ -289,33 +324,8 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
      */
     @Click(R.id.btnReportReimpresionReciboImprimirRecibo)
     public void imprimirUltimoRecibo() {
-
+        btnReportReimpresionReciboImprimirRecibo.setEnabled(false);
         reimpresionScreenPresenter.imprimirUltimoRecibo(this);
-
-//        Bitmap logo = BitmapFactory.decodeResource(this.getResources(), R.mipmap.logo);
-//        String mensaje = this.getResources().getString(
-//                R.string.reimprimir_recibo,
-//                getDateTime(),
-//                modelTransaccion.getNumero_tarjeta(),
-//                String.valueOf(modelTransaccion.getValor()),
-//                String.valueOf(modelTransaccion.getNumero_cargo())
-//        );
-////        PrintHandler.getInstance(this).printMessage(mensaje);
-////        PrintHandler.getInstance(this).printPinture(logo);
-////        PrintHandler.getInstance(this).printMessage(mensaje);
-//
-//
-//        ArrayList<PrintRow> printRows = new ArrayList<PrintRow>();
-//        printRows.add(new PrintRow(logo, StyleConfig.Align.CENTER));
-//
-//        printRows.add(new PrintRow(this.getResources().getString(
-//                R.string.recibo_reimpresion),new StyleConfig(StyleConfig.Align.CENTER,true) ));
-//        printRows.add(new PrintRow(this.getResources().getString(
-//                                    R.string.recibo_valor),"30.000"));
-//        printRows.add(new PrintRow("num tarjeta ","****5674"));
-//        printRows.add(new PrintRow("hola mundo2",new StyleConfig(StyleConfig.Align.LEFT,true) ));
-//
-//        new PrinterHandler().imprimerTexto(printRows);
 
     }
 
@@ -349,17 +359,8 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
 
     @Click(R.id.btnReportReimprimeonReciboImpresionBotonImprimir)
     public void imprimirReimprimirNumCargo(){
-//        Bitmap logo = BitmapFactory.decodeResource(this.getResources(), R.mipmap.logo);
-//
-//        String mensaje = this.getResources().getString(
-//                R.string.reimprimir_recibo,
-//                getDateTime(),
-//                modelTransaccion.getNumero_tarjeta(),
-//                String.valueOf(modelTransaccion.getValor()),
-//                String.valueOf(modelTransaccion.getNumero_cargo())
-//        );
 
-//        PrintHandler.getInstance(this).printRecibo(logo,mensaje);
+        reimpresionScreenPresenter.imprimirReciboConNumCargo(this);
         edtReportReimprimeonReciboNummeroCargoContenidoClave.setText("");
 
     }
@@ -373,26 +374,9 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
 
 
     @Click(R.id.btnReportReporteDetallesImpresionBotonImprimir)
-    public  void validarExistenciaDestalleRecibos(){
-        reimpresionScreenPresenter.validarExistenciaDetalleRecibos(this);
+    public  void imprimirReporteDetalle(){
+        reimpresionScreenPresenter.imprimirReporteDetalle(this);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     @Click({R.id.btnTransactionScreenBack
             ,R.id.btnReportReporteDetallesImpresionBotonSalir
@@ -403,6 +387,16 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
     public void regresarDesdeReimpimirRecibo(){
         Intent intent = new Intent(this, ReportScreenActivity_.class);
         startActivity(intent);
+    }
+
+    public void regresarDesdeReimpimirRecibo(int timer){
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                regresarDesdeReimpimirRecibo();
+            }
+        }, timer);
     }
 
 

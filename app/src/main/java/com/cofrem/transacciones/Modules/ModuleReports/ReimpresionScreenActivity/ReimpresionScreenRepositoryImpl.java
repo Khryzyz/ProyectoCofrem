@@ -90,20 +90,83 @@ public class ReimpresionScreenRepositoryImpl implements ReimpresionScreenReposit
         listaDetalle = AppDatabase.getInstance(context).obtenerDetallesTransaccion();
 
         if(!listaDetalle.isEmpty()){
+            // Registra el evento de existencia de transacciones para imprimir el reporte
             postEvent(ReimpresionScreenEvent.onVerifyExistenceReporteDetalleSuccess, listaDetalle);
         }else{
+            // Registra el evento de la NO existencia de transacciones para imprimir el reporte
             postEvent(ReimpresionScreenEvent.onVerifyExistenceReporteDetalleError);
         }
-
-
 
     }
 
     @Override
+    public void imprimirReporteDetalle(Context context) {
+        //logo de COFREM que se imprime al inicio del recibo
+        Bitmap logo = BitmapFactory.decodeResource(context.getResources(), R.mipmap.logo);
+
+        // creamos el ArrayList se que encarga de almacenar los rows del recibo
+        ArrayList<PrintRow> printRows = new ArrayList<PrintRow>();
+
+        //Se agrega el logo al primer renglon del recibo y se coloca en el centro
+        printRows.add(new PrintRow(logo, StyleConfig.Align.CENTER));
+
+        //se siguen agregando cado auno de los String a los renglones (Rows) del recibo para imprimir
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.report_text_button_detalle),new StyleConfig(StyleConfig.Align.CENTER,StyleConfig.FontStyle.BOLD) ));
+        printRows.add(new PrintRow(getDateTime(),new StyleConfig(StyleConfig.Align.CENTER,20) ));
+
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_num_transacciones),String.valueOf(listaDetalle.size()),new StyleConfig(StyleConfig.Align.LEFT, true)));
+
+
+        for(Transaccion modelTransaccion : listaDetalle){
+            printRows.add(new PrintRow(context.getResources().getString(
+                    R.string.recibo_separador_linea),new StyleConfig(StyleConfig.Align.LEFT,10) ));
+            printRows.add(new PrintRow(context.getResources().getString(
+                    R.string.recibo_numero_transaccion),String.valueOf(modelTransaccion.getNumero_cargo()),new StyleConfig(StyleConfig.Align.LEFT, true)));
+            printRows.add(new PrintRow(context.getResources().getString(
+                    R.string.recibo_valor),String.valueOf(modelTransaccion.getValor()),new StyleConfig(StyleConfig.Align.LEFT, true)));
+
+        }
+
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_separador_linea),new StyleConfig(StyleConfig.Align.LEFT,50) ));
+        printRows.add(new PrintRow(".",new StyleConfig(StyleConfig.Align.LEFT,true) ));
+
+        int status = new PrinterHandler().imprimerTexto(printRows);
+
+        if(status == InfoGlobalSettingsPrint.PRINTER_OK){
+            postEvent(ReimpresionScreenEvent.onImprimirReporteDetalleSuccess);
+        }else{
+            postEvent(ReimpresionScreenEvent.onImprimirReporteDetalleError,stringErrorPrinter(status,context),null,null);
+        }
+    }
+
+    @Override
+    public void imprimirReporteGeneral(Context context) {
+
+    }
+
+
+    /**
+     * Metodo que valida la contraseña del administrador para reimprimir los recibos:
+     *
+     * @param context
+     * @param clave
+     */
+    @Override
     public void validarClaveAdministrador(Context context, String clave) {
+
+        //Consulta la clave del administrador para compararla con la ingresada en la vista
+
+
+
+        //conparar la clave del administrador
         if(clave.equals("123")){
+            // Registra el evento de que la clave es correcta
             postEvent(ReimpresionScreenEvent.onVerifyClaveAdministradorSuccess);
         }else{
+            // Registra el evento de que la clave es Incorrecta
             postEvent(ReimpresionScreenEvent.onVerifyClaveAdministradorError);
         }
     }
@@ -116,27 +179,90 @@ public class ReimpresionScreenRepositoryImpl implements ReimpresionScreenReposit
      */
     @Override
     public void validarExistenciaReciboConNumCargo(Context context, String numCargo) {
+
+        //Consulta la existencia del registro de una transaccion por numero de Cargo
          modelTransaccion = AppDatabase.getInstance(context).obtenerTransaccion(numCargo);
+
         if (modelTransaccion.getNumero_tarjeta() != null) {
+            // Registra el evento de existencia de la transaccion para imprimir
             postEvent(ReimpresionScreenEvent.onVerifyExistenceReciboPorNumCargoSuccess, modelTransaccion);
         } else {
+            // Registra el evento de la NO existencia de la transaccion para imprimir
             postEvent(ReimpresionScreenEvent.onVerifyExistenceReciboPorNumCargoError);
         }
 
     }
 
+
+    /**
+     * Metodo que se encartga:
+     * - hacer el llamado para imprimir la ultima transaccion
+     * - notificar los diferentes estados de la impresora, por si no se pudio imprimir
+     *
+     * @param context
+     */
     @Override
     public void imprimirUltimoRecibo(Context context) {
 
+        int status = imprimirRecibo(context);
+
+        if(status == InfoGlobalSettingsPrint.PRINTER_OK){
+            postEvent(ReimpresionScreenEvent.onImprimirUltimoReciboSuccess);
+        }else{
+            postEvent(ReimpresionScreenEvent.onImprimirUltimoReciboError,stringErrorPrinter(status,context),null,null);
+        }
+
+    }
+
+    /**
+     * Metodo que se encartga:
+     * - hacer el llamado para imprimir una transaccion por numero de cargo
+     * - notificar los diferentes estados de la impresora, por si no se pudio imprimir
+     *
+     * @param context
+     */
+    @Override
+    public void imprimirReciboConNumCargo(Context context) {
+
+
+        int status = imprimirRecibo(context);
+
+        if(status == InfoGlobalSettingsPrint.PRINTER_OK){
+            postEvent(ReimpresionScreenEvent.onImprimirReciboPorNumCargoSuccess);
+        }else{
+            postEvent(ReimpresionScreenEvent.onImprimirReciboPorNumCargoError,stringErrorPrinter(status,context),null,null);
+        }
+    }
+
+    /**
+     * #############################################################################################
+     * Metodo propios de la clase
+     * #############################################################################################
+     */
+
+    /**
+     * Metodo que se encartga de imprimir :
+     *
+     * @param context
+     */
+    private  int imprimirRecibo(Context context){
+
+        //logo de COFREM que se imprime al inicio del recibo
         Bitmap logo = BitmapFactory.decodeResource(context.getResources(), R.mipmap.logo);
 
+        // creamos el ArrayList se que encarga de almacenar los rows del recibo
         ArrayList<PrintRow> printRows = new ArrayList<PrintRow>();
+
+        //Se agrega el logo al primer renglon del recibo y se coloca en el centro
         printRows.add(new PrintRow(logo, StyleConfig.Align.CENTER));
 
+        //se siguen agregando cado auno de los String a los renglones (Rows) del recibo para imprimir
         printRows.add(new PrintRow(context.getResources().getString(
                 R.string.recibo_reimpresion),new StyleConfig(StyleConfig.Align.CENTER,StyleConfig.FontStyle.BOLD) ));
         printRows.add(new PrintRow(getDateTime(),new StyleConfig(StyleConfig.Align.CENTER,20) ));
 
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_numero_transaccion),String.valueOf(modelTransaccion.getNumero_cargo()),new StyleConfig(StyleConfig.Align.LEFT, true)));
         printRows.add(new PrintRow(context.getResources().getString(
                 R.string.recibo_valor),String.valueOf(modelTransaccion.getValor()),new StyleConfig(StyleConfig.Align.LEFT, true)));
         printRows.add(new PrintRow(context.getResources().getString(
@@ -149,58 +275,17 @@ public class ReimpresionScreenRepositoryImpl implements ReimpresionScreenReposit
         printRows.add(new PrintRow(context.getResources().getString(
                 R.string.recibo_ingresa_tel),new StyleConfig(StyleConfig.Align.LEFT,50) ));
         printRows.add(new PrintRow(".",new StyleConfig(StyleConfig.Align.LEFT,true) ));
-        int status = new PrinterHandler().imprimerTexto(printRows);
 
-        if(status == InfoGlobalSettingsPrint.PRINTER_OK){
-            postEvent(ReimpresionScreenEvent.onImprimirUltimoReciboSuccess);
-        }else{
-            postEvent(ReimpresionScreenEvent.onImprimirUltimoReciboError,stringErrorPrinter(status,context),null,null);
-        }
-
-
-
-//        PrintHandler.getInstance(context).printPinture(logo);
-
-//        Transaccion modelTransaccion = AppDatabase.getInstance(context).obtenerUltimaTransaccion();
-//
-//        String mensaje = context.getResources().getString(
-//                R.string.reimprimir_recibo,
-//                "hoy",
-//                modelTransaccion.getNumero_tarjeta(),
-//                String.valueOf(modelTransaccion.getValor()),
-//                String.valueOf(modelTransaccion.getNumero_cargo())
-//        );
-//
-//        PrintHandler.getInstance(context).printRecibo(logo,mensaje);
-
+        //retornamos el estado de la impresora tras enviar los rows para imprimir
+        return new PrinterHandler().imprimerTexto(printRows);
     }
 
-    @Override
-    public void imprimirReciboConNumCargo(Context context) {
-
-//        Transaccion modelTransaccion = AppDatabase.getInstance(context).obtenerTransaccion(numCargo);
-//        String mensaje = " vacio ";
-//        if (modelTransaccion.getNumero_tarjeta() == null) {
-//            mensaje = "         COFREM \n" +
-//                    "numero de la tarjeta: " + modelTransaccion.getNumero_tarjeta() + "\n" +
-//                    "valor: $" + modelTransaccion.getValor() + "\n" +
-//                    "numero de cargo: " + modelTransaccion.getNumero_cargo() + "\n" +
-//                    "Gracias por su compra...@ ? ¡ $ % & "
-//            ;
-//
-//            PrintHandler.getInstance(context).printMessage(mensaje);
-//        }
-//
-//        Log.e("Reporte", mensaje);
-    }
 
     /**
-     * #############################################################################################
-     * Metodo propios de la clase
-     * #############################################################################################
+     * Metodo auxiliar que se encarga de obtener la fecha y hora del sistema :
+     *
+     * @return date
      */
-
-
     private String getDateTime() {
 
         SimpleDateFormat dateFormat = new SimpleDateFormat(
@@ -213,6 +298,11 @@ public class ReimpresionScreenRepositoryImpl implements ReimpresionScreenReposit
     }
 
 
+    /**
+     * Metodo auxiliar que se encarga de retornar el String correspondiente al estado de la impresora
+     *
+     * @return String
+     */
     private String stringErrorPrinter(int status,Context context){
         String result="";
         switch (status){

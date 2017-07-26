@@ -54,6 +54,19 @@ public interface ReimpresionScreenRepository {
      */
     void validarExistenciaDetalleRecibos(Context context);
 
+    /**
+     * Metodo que se encargara de imprimir el reporte Detalle
+     *
+     * @param context
+     */
+    void imprimirReporteDetalle(Context context);
+
+    /**
+     * Metodo que se encargara de imprimir el reporte General
+     *
+     * @param context
+     */
+    void imprimirReporteGeneral(Context context);
 
 
 
