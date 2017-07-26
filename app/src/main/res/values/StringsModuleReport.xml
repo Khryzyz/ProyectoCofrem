@@ -37,6 +37,8 @@
 
     <!-- Textos adicionales mensajes -->
     <string name="report_text_message_No_existen_recibo_num_cargo">No existen un Recibo con este número de Cargo</string>
+    <string name="report_text_message_No_existen_recibos">No existen transacciones para generar el reporte</string>
+    <string name="report_text_message_clave_admin_incorrecta">La clave del adminstrador es incorrecta</string>
 
 
 </resources>

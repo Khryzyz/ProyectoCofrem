@@ -11,6 +11,11 @@ import com.cofrem.transacciones.models.Transaccion;
 public class ReimpresionScreenPresenterImpl implements ReimpresionScreenPresenter {
 
 
+    @Override
+    public void imprimirReporteGeneral(Context context) {
+
+    }
+
     /**
      * #############################################################################################
      * Declaracion de componentes y variables
@@ -92,6 +97,11 @@ public class ReimpresionScreenPresenterImpl implements ReimpresionScreenPresente
         reimpresionScreenInteractor.validarExistenciaDetalleRecibos(context);
     }
 
+    @Override
+    public void imprimirReporteDetalle(Context context) {
+        reimpresionScreenInteractor.imprimirReporteDetalle(context);
+    }
+
     /**
      * Metodo para la verificacion de los datos
      */
@@ -142,10 +152,10 @@ public class ReimpresionScreenPresenterImpl implements ReimpresionScreenPresente
             case ReimpresionScreenEvent.onImprimirUltimoReciboError:
                 onImprimirUltimoReciboError(reimpresionScreenEvent.getErrorMessage());
                 break;
-            case ReimpresionScreenEvent.onImprimirUltimoReciboPorNumCargoSuccess:
+            case ReimpresionScreenEvent.onImprimirReciboPorNumCargoSuccess:
                 onImprimirReciboPorNumCargoSuccess();
                 break;
-            case ReimpresionScreenEvent.onImprimirUltimoReciboPorNumCargoError:
+            case ReimpresionScreenEvent.onImprimirReciboPorNumCargoError:
                 onImprimirReciboPorNumCargoError(reimpresionScreenEvent.getErrorMessage());
                 break;
 

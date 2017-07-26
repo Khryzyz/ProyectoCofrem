@@ -12,15 +12,19 @@ public class ReimpresionScreenEvent {
     public final static int onImprimirUltimoReciboSuccess = 3;
     public final static int onImprimirUltimoReciboError = 4;
     public final static int onVerifyExistenceReciboPorNumCargoSuccess = 5;
-    public final static int onVerifyExistenceReciboPorNumCargoError =6;
-    public final static int onImprimirUltimoReciboPorNumCargoSuccess = 7;
-    public final static int onImprimirUltimoReciboPorNumCargoError = 8;
+    public final static int onVerifyExistenceReciboPorNumCargoError = 6;
+    public final static int onImprimirReciboPorNumCargoSuccess = 7;
+    public final static int onImprimirReciboPorNumCargoError = 8;
     public final static int onVerifyExistenceReporteDetalleSuccess = 9;
     public final static int onVerifyExistenceReporteDetalleError = 10;
-    public final static int onVerifyExistenceReporteGeneralSuccess = 11;
-    public final static int onVerifyExistenceReporteGeneralError = 12;
-    public final static int onVerifyClaveAdministradorSuccess = 13;
-    public final static int onVerifyClaveAdministradorError = 14;
+    public final static int onImprimirReporteDetalleSuccess = 11;
+    public final static int onImprimirReporteDetalleError = 12;
+    public final static int onVerifyExistenceReporteGeneralSuccess = 13;
+    public final static int onVerifyExistenceReporteGeneralError = 14;
+    public final static int onImprimirReporteGeneralSuccess = 15;
+    public final static int onImprimirReporteGeneralError = 16;
+    public final static int onVerifyClaveAdministradorSuccess = 17;
+    public final static int onVerifyClaveAdministradorError = 18;
 
 
     // Variable que maneja los tipos de eventos

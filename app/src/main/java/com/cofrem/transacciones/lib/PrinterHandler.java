@@ -1,20 +1,9 @@
 package com.cofrem.transacciones.lib;
 
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.os.AsyncTask;
-import android.os.Message;
-import android.util.Log;
-import android.widget.Toast;
 
-import com.cofrem.transacciones.global.InfoGlobalSettingsPrint;
 import com.cofrem.transacciones.models.PrintRow;
-import com.telpo.tps550.api.TelpoException;
-import com.telpo.tps550.api.printer.ThermalPrinter;
-//import com.telpo.tps550.api.printer.Printer;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.concurrent.ExecutionException;
+
 
 /**
  * Created by luispineda on 12/07/17.
