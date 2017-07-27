@@ -237,6 +237,7 @@ public class SaldoScreenActivity extends Activity implements SaldoScreenView {
         // Muestra la barra  de progreso
         frlPgbHldTransactionSaldo.setVisibility(View.VISIBLE);
         frlPgbHldTransactionSaldo.bringToFront();
+        frlPgbHldTransactionSaldo.invalidate();
     }
 
     /**

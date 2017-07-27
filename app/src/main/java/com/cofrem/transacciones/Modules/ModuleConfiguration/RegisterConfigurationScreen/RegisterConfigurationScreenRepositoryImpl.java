@@ -99,9 +99,12 @@ public class RegisterConfigurationScreenRepositoryImpl implements RegisterConfig
                         //Evento Correcto de registro de informacion del establecimiento desde el WS
                         // y actualizacion de accesos
                         postEvent(RegisterConfigurationScreenEvent.onProccessInformacionEstablecimientoSuccess);
+
                     } else {
+
                         //Evento Erroneo de registro de informacion del establecimiento desde el WS y actualizacion de accesos
                         postEvent(RegisterConfigurationScreenEvent.onProccessInformacionEstablecimientoError);
+
                     }
 
                 } else {

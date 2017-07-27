@@ -7,6 +7,7 @@ import com.telpo.tps550.api.TimeoutException;
 import com.telpo.tps550.api.magnetic.MagneticCard;
 
 public class MagneticAsync extends AsyncTask<Void, Integer, String[]> {
+
     /**
      * Interface para el callback de datos
      */
@@ -17,8 +18,16 @@ public class MagneticAsync extends AsyncTask<Void, Integer, String[]> {
     //Call back interface
     public ResponseMagneticAsync delegate = null;
 
+
     /**
-     * Metodo de la interface de devolucion
+     * Constructor vacio de la clase
+     */
+    public MagneticAsync() {
+    }
+
+    /**
+     * Constructor de la clase que recibe una instancia de la interface ResponseMagneticAsync
+     * para la devolucion del proceso
      *
      * @param response
      */
@@ -30,7 +39,7 @@ public class MagneticAsync extends AsyncTask<Void, Integer, String[]> {
     @Override
     protected String[] doInBackground(Void... params) {
 
-        String[] TracData;
+        String[] TracData = null;
 
         MagneticCard.startReading();
 
@@ -41,8 +50,6 @@ public class MagneticAsync extends AsyncTask<Void, Integer, String[]> {
             try {
 
                 TracData = MagneticCard.check(500);
-
-                return TracData;
 
             } catch (TimeoutException e) {
 
@@ -58,12 +65,12 @@ public class MagneticAsync extends AsyncTask<Void, Integer, String[]> {
 
         }
 
-        return null;
+        return TracData;
 
     }
 
     @Override
-    protected void onPreExecute(){
+    protected void onPreExecute() {
 
         try {
             MagneticCard.open();
@@ -80,6 +87,28 @@ public class MagneticAsync extends AsyncTask<Void, Integer, String[]> {
 
         //Delegado que retorna
         delegate.processFinish(result);
+    }
+
+    public boolean testMagneticDevice() {
+
+        boolean resultTestMagneticDevice = false;
+
+        try {
+
+            MagneticCard.open();
+
+            MagneticCard.close();
+
+            resultTestMagneticDevice = true;
+
+        } catch (TelpoException e) {
+
+            e.printStackTrace();
+
+        }
+
+        return resultTestMagneticDevice;
+
     }
 
 }

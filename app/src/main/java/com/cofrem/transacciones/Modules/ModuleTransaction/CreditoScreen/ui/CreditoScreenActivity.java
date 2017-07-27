@@ -314,6 +314,7 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
         // Muestra la barra  de progreso
         frlPgbHldTransactionCredito.setVisibility(View.VISIBLE);
         frlPgbHldTransactionCredito.bringToFront();
+        frlPgbHldTransactionCredito.invalidate();
     }
 
     /**

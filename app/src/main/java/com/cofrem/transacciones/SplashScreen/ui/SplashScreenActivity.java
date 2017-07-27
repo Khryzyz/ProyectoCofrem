@@ -3,11 +3,8 @@ package com.cofrem.transacciones.SplashScreen.ui;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.graphics.Point;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
-import android.view.Display;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -17,7 +14,6 @@ import com.cofrem.transacciones.Modules.ModuleConfiguration.RegisterConfiguratio
 import com.cofrem.transacciones.R;
 import com.cofrem.transacciones.SplashScreen.SplashScreenPresenter;
 import com.cofrem.transacciones.SplashScreen.SplashScreenPresenterImpl;
-import com.cofrem.transacciones.lib.MagneticHandler;
 import com.cofrem.transacciones.models.Configurations;
 
 import org.androidannotations.annotations.AfterViews;
@@ -126,8 +122,6 @@ public class SplashScreenActivity extends Activity implements SplashScreenView {
                 getString(R.string.general_message_verify_configuration_initial_no_existe)
         );
 
-        //Navegando a la ventana de configuración
-        navigateToRegisterConfiguracionScreen();
     }
 
     /**
@@ -148,18 +142,65 @@ public class SplashScreenActivity extends Activity implements SplashScreenView {
     }
 
     /**
-     * Metodo para manejar el error al registrar el valor de acceso
+     * Metodo para manejar la existencia de la configuracion de acceso
      */
     @Override
-    public void handleInsertRegistroValorAccesoError() {
+    public void handleRegistroConfiguracionAccesoExiste() {
+
+        //Agrega el texto de informacion del manejador de registro de configuracion inicial existente
+        txvSplashScreenInfo.setText(txvSplashScreenInfo.getText() +
+                "\n" +
+                getString(R.string.general_message_configuracion_acceso_existe)
+        );
+
+        //Navegando a la ventana de configuración
+        navigateToRegisterConfiguracionScreen();
+
+    }
+
+    /**
+     * Metodo para manejar la no existencia de la configuracion de acceso
+     */
+    @Override
+    public void handleRegistroConfiguracionAccesoNoExiste() {
+
+        //Agrega el texto de informacion del manejador de registro de configuracion inicial no existente
+        txvSplashScreenInfo.setText(txvSplashScreenInfo.getText() +
+                "\n" +
+                getString(R.string.general_message_configuracion_acceso_no_existe)
+        );
+    }
+
+    /**
+     * Metodo para manejar el registro de la configuracion de acceso exitosa
+     */
+    @Override
+    public void handleInsertRegistroConfiguracionAccesoSuccess() {
+
+        //Agrega el texto de informacion del manejador de insercion de registro de configuracion inicial satisfactoria
+        txvSplashScreenInfo.setText(txvSplashScreenInfo.getText() +
+                "\n" +
+                getString(R.string.general_message_insert_configuracion_acceso_success)
+        );
+
+        //Navegando a la ventana de configuración
+        navigateToRegisterConfiguracionScreen();
+
+    }
+
+    /**
+     * Metodo para manejar el registro de la configuracion de acceso erronea
+     */
+    @Override
+    public void handleInsertRegistroConfiguracionAccesoError() {
 
         //Oculta la barra de progreso
         hideProgress();
 
-        //Agrega el texto de error del manejador de verificacion inicial no valida
+        //Agrega el texto de informacion del manejador de insercion de registro de configuracion inicial erronea
         txvSplashScreenInfo.setText(txvSplashScreenInfo.getText() +
                 "\n" +
-                getString(R.string.general_message_verify_register_valor_acceso)
+                getString(R.string.general_message_insert_configuracion_acceso_error)
         );
     }
 

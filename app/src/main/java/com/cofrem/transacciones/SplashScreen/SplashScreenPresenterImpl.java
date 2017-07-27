@@ -111,8 +111,20 @@ public class SplashScreenPresenterImpl implements SplashScreenPresenter {
                 onVerifyInitialConfigNoValida();
                 break;
 
-            case SplashScreenEvent.onInsertRegistroValorAccesoError:
-                onInsertRegistroValorAccesoError();
+            case SplashScreenEvent.onRegistroConfiguracionAccesoExiste:
+                onRegistroConfiguracionAccesoExiste();
+                break;
+
+            case SplashScreenEvent.onRegistroConfiguracionAccesoNoExiste:
+                onRegistroConfiguracionAccesoNoExiste();
+                break;
+
+            case SplashScreenEvent.onInsertRegistroConfiguracionAccesoSuccess:
+                onInsertRegistroConfiguracionAccesoSuccess();
+                break;
+
+            case SplashScreenEvent.onInsertRegistroConfiguracionAccesoError:
+                onInsertRegistroConfiguracionAccesoError();
                 break;
 
             case SplashScreenEvent.onVerifySuccess:
@@ -154,7 +166,6 @@ public class SplashScreenPresenterImpl implements SplashScreenPresenter {
             case SplashScreenEvent.onPrinterDeviceError:
                 onPrinterDeviceError();
                 break;
-
         }
     }
 
@@ -192,11 +203,38 @@ public class SplashScreenPresenterImpl implements SplashScreenPresenter {
     }
 
     /**
-     * Metodo para manejar el error al registrar el valor de acceso
+     * Metodo para manejar la existencia de la configuracion de acceso
      */
-    private void onInsertRegistroValorAccesoError() {
+    private void onRegistroConfiguracionAccesoExiste() {
         if (splashScreenView != null) {
-            splashScreenView.handleInsertRegistroValorAccesoError();
+            splashScreenView.handleRegistroConfiguracionAccesoExiste();
+        }
+    }
+
+    /**
+     * Metodo para manejar la no existencia de la configuracion de acceso
+     */
+    private void onRegistroConfiguracionAccesoNoExiste() {
+        if (splashScreenView != null) {
+            splashScreenView.handleRegistroConfiguracionAccesoNoExiste();
+        }
+    }
+
+    /**
+     * Metodo para manejar el registro de la configuracion de acceso exitosa
+     */
+    private void onInsertRegistroConfiguracionAccesoSuccess() {
+        if (splashScreenView != null) {
+            splashScreenView.handleInsertRegistroConfiguracionAccesoSuccess();
+        }
+    }
+
+    /**
+     * Metodo para manejar el registro de la configuracion de acceso erronea
+     */
+    private void onInsertRegistroConfiguracionAccesoError() {
+        if (splashScreenView != null) {
+            splashScreenView.handleInsertRegistroConfiguracionAccesoError();
         }
     }
 

@@ -1,7 +1,5 @@
 package com.cofrem.transacciones.lib;
 
-import com.telpo.tps550.api.magnetic.MagneticCard;
-
 import java.util.concurrent.ExecutionException;
 
 public class MagneticHandler {
@@ -42,6 +40,15 @@ public class MagneticHandler {
 
         return magneticRead;
 
+    }
+
+    /**
+     * Metodo que retorna la prueba del dispositivo de lectura de banda magnetica
+     *
+     * @return
+     */
+    public boolean testMagneticDevice() {
+        return new MagneticAsync().testMagneticDevice();
     }
 
 }
