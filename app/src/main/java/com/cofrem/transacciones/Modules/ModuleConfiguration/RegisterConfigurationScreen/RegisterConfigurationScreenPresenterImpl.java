@@ -98,9 +98,11 @@ public class RegisterConfigurationScreenPresenterImpl implements RegisterConfigu
             case RegisterConfigurationScreenEvent.onValorAccesoValido:
                 onPasswordTecnicoValido();
                 break;
+
             case RegisterConfigurationScreenEvent.onValorAccesoNoValido:
                 onPasswordTecnicoNoValido();
                 break;
+
             case RegisterConfigurationScreenEvent.onValorAccesoError:
                 onPasswordTecnicoError();
                 break;
@@ -108,6 +110,7 @@ public class RegisterConfigurationScreenPresenterImpl implements RegisterConfigu
             case RegisterConfigurationScreenEvent.onRegistroConfigConexionSuccess:
                 onRegistroConfigConexionSuccess();
                 break;
+
             case RegisterConfigurationScreenEvent.onRegistroConfigConexionError:
                 onRegistroConfigConexionError();
                 break;
@@ -115,9 +118,11 @@ public class RegisterConfigurationScreenPresenterImpl implements RegisterConfigu
             case RegisterConfigurationScreenEvent.onInformacionDispositivoSuccess:
                 onInformacionDispositivoSuccess();
                 break;
+
             case RegisterConfigurationScreenEvent.onInformacionDispositivoErrorConexion:
                 onInformacionDispositivoErrorConexion();
                 break;
+
             case RegisterConfigurationScreenEvent.onInformacionDispositivoErrorInformacion:
                 onInformacionDispositivoErrorInformacion();
                 break;
@@ -125,6 +130,7 @@ public class RegisterConfigurationScreenPresenterImpl implements RegisterConfigu
             case RegisterConfigurationScreenEvent.onProccessInformacionEstablecimientoSuccess:
                 onProccessInformacionEstablecimientoSuccess();
                 break;
+
             case RegisterConfigurationScreenEvent.onProccessInformacionEstablecimientoError:
                 onProccessInformacionEstablecimientoError();
                 break;

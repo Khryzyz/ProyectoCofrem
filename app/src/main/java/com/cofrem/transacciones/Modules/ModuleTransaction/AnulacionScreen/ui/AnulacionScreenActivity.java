@@ -283,6 +283,7 @@ public class AnulacionScreenActivity extends Activity implements AnulacionScreen
         // Muestra la barra  de progreso
         frlPgbHldTransactionAnulacion.setVisibility(View.VISIBLE);
         frlPgbHldTransactionAnulacion.bringToFront();
+        frlPgbHldTransactionAnulacion.invalidate();
     }
 
     /**

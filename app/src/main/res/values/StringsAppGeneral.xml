@@ -71,10 +71,14 @@
 
     <string name="general_message_press_back">Sí deseas volver a la vista anterior, debes presionar el boton</string>
 
-    <string name="general_message_verify_configuration_initial_existe">Configuración Inicial existente.</string>
-    <string name="general_message_verify_configuration_initial_no_existe">Configuración Inicial NO existente.</string>
-    <string name="general_message_verify_configuration_initial_no_valida">Configuración Inicial NO valida.</string>
-    <string name="general_message_verify_register_valor_acceso">No se pudo registrar el valor de acceso, verifique el dispositivo e intentelo nuevamente.</string>
+    <string name="general_message_verify_configuration_initial_existe">Configuración de conexión inicial existente.</string>
+    <string name="general_message_verify_configuration_initial_no_existe">Configuración de conexión inicial NO existente.</string>
+    <string name="general_message_verify_configuration_initial_no_valida">Configuración de conexión inicial NO valida.</string>
+
+    <string name="general_message_configuracion_acceso_existe">Configuración de acceso inicial existente.</string>
+    <string name="general_message_configuracion_acceso_no_existe">Configuración de acceso inicial NO existente.</string>
+    <string name="general_message_insert_configuracion_acceso_success">Registro correcto de la configuración de acceso inicial.</string>
+    <string name="general_message_insert_configuracion_acceso_error">No se pudo registrar la configuración de acceso inicial, verifique el dispositivo e intentelo nuevamente.</string>
 
     <string name="general_message_verify_success">Verificación exitosa</string>
     <string name="general_message_verify_error">Verificación fallida</string>

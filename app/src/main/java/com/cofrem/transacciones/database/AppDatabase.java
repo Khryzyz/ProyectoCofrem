@@ -115,15 +115,37 @@ public final class AppDatabase extends SQLiteOpenHelper {
         contentValues.put(DatabaseManager.TableProducto.COLUMN_PRODUCTO_ESTADO, 1);
 
         // Insercion del registro en la base de datos
-        int count = (int) getWritableDatabase().insert(
-                DatabaseManager.TableProducto.TABLE_NAME_PRODUCTO,
-                null,
-                contentValues
-        );
+        int count = 0;
+
+        try {
+
+            count = (int) getWritableDatabase().insert(
+                    DatabaseManager.TableProducto.TABLE_NAME_PRODUCTO,
+                    null,
+                    contentValues
+            );
+
+        } catch (SQLException e) {
+
+            e.printStackTrace();
+
+        }
+
         if (count == 1) {
+
+
+            //TODO: Borrar estas lineas ya que son los registro de prueba de productos
+            insertRegistroPruebaTransaction(1, 123456, "1234 5678 9012 3456", 600000);
+            insertRegistroPruebaTransaction(2, 654321, "8899 2001 9012 3562", 1000000);
+            insertRegistroPruebaTransaction(3, 123654, "9237 3056 6629 3456", 33000000);
+            insertRegistroPruebaTransaction(4, 321456, "5219 1894 9012 2605", 40000);
+
             return true;
+
         } else {
+
             return false;
+
         }
 
     }
@@ -144,42 +166,78 @@ public final class AppDatabase extends SQLiteOpenHelper {
         contentValues.put(DatabaseManager.TableConfiguracionAcceso.COLUMN_CONFIGURACION_ACCESO_ESTADO, 1);
 
         // Insercion del registro en la base de datos
-        int count = (int) getWritableDatabase().insert(
-                DatabaseManager.TableConfiguracionAcceso.TABLE_NAME_CONFIGURACION_ACCESO,
-                null,
-                contentValues
-        );
+        int count = 0;
+
+        try {
+
+            count = (int) getWritableDatabase().insert(
+                    DatabaseManager.TableConfiguracionAcceso.TABLE_NAME_CONFIGURACION_ACCESO,
+                    null,
+                    contentValues
+            );
+
+        } catch (SQLException e) {
+
+            e.printStackTrace();
+
+        }
+
         if (count == 1) {
+
             return true;
+
         } else {
+
             return false;
+
         }
 
     }
 
+
     /**
-     * Metodo para insertar registro inicial en la Base de Datos
+     * Metodo para insertar registro inicial de transacciones en la Base de Datos
+     *
+     * @param producto_id
+     * @param numero_cargo
+     * @param numero_tarjeta
+     * @param valor
+     * @return
      */
-    //TODO: METODO DE PRUEBA HAY QUE BORRAR ESTA VUELTA
-    public boolean insertRegistroPruebaTransaction(int producto_id) {
+    //TODO: Borra este metodo de prueba
+    public boolean insertRegistroPruebaTransaction(int producto_id,
+                                                   int numero_cargo,
+                                                   String numero_tarjeta,
+                                                   int valor) {
 
         // Inicializacion de la variable de contenidos del registro
         ContentValues contentValues = new ContentValues();
 
         // Almacena los valores a insertar
         contentValues.put(DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_PRODUCTO_ID, producto_id);
-        contentValues.put(DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_NUMERO_CARGO, 25639687);
-        contentValues.put(DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_NUMERO_TARJETA, "256389562154");
-        contentValues.put(DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_VALOR, 140000);
+        contentValues.put(DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_NUMERO_CARGO, numero_cargo);
+        contentValues.put(DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_NUMERO_TARJETA, numero_tarjeta.trim());
+        contentValues.put(DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_VALOR, valor);
         contentValues.put(DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_REGISTRO, getDateTime());
         contentValues.put(DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_ESTADO, 1);
 
         // Insercion del registro en la base de datos
-        int count = (int) getWritableDatabase().insert(
-                DatabaseManager.TableTransacciones.TABLE_NAME_TRANSACCIONES,
-                null,
-                contentValues
-        );
+        int count = 0;
+
+        try {
+
+            count = (int) getWritableDatabase().insert(
+                    DatabaseManager.TableTransacciones.TABLE_NAME_TRANSACCIONES,
+                    null,
+                    contentValues
+            );
+
+        } catch (SQLException e) {
+
+            e.printStackTrace();
+
+        }
+
         if (count == 1) {
             return true;
         } else {
@@ -442,7 +500,7 @@ public final class AppDatabase extends SQLiteOpenHelper {
      */
 
 
-        /**
+    /**
      * Metodo para Obtener ultima  transaccion
      */
     public Transaccion obtenerUltimaTransaccion() {
@@ -496,7 +554,6 @@ public final class AppDatabase extends SQLiteOpenHelper {
     }
 
 
-
     /**
      * Metodo para Obtener una  transaccion segun el numero de cargo
      */
@@ -505,7 +562,7 @@ public final class AppDatabase extends SQLiteOpenHelper {
         ArrayList<Transaccion> lista = new ArrayList<Transaccion>();
         Cursor cursor;
         cursor = getWritableDatabase().rawQuery(
-                "SELECT * FROM " + DatabaseManager.TableTransacciones.TABLE_NAME_TRANSACCIONES , null
+                "SELECT * FROM " + DatabaseManager.TableTransacciones.TABLE_NAME_TRANSACCIONES, null
         );
 
         while (cursor.moveToNext()) {

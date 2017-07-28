@@ -8,8 +8,7 @@ import com.cofrem.transacciones.SplashScreen.events.SplashScreenEvent;
 import com.cofrem.transacciones.database.AppDatabase;
 import com.cofrem.transacciones.lib.EventBus;
 import com.cofrem.transacciones.lib.GreenRobotEventBus;
-import com.cofrem.transacciones.lib.KsoapAsync;
-import com.cofrem.transacciones.models.Transaccion;
+import com.cofrem.transacciones.lib.MagneticHandler;
 
 public class SplashScreenRepositoryImpl implements SplashScreenRepository {
 
@@ -55,7 +54,6 @@ public class SplashScreenRepositoryImpl implements SplashScreenRepository {
             //Consulta la existencia del registro de configuracion
             int conteoRegistrosConfiguracionInicial = AppDatabase.getInstance(context).conteoConfiguracionConexion();
 
-
             switch (conteoRegistrosConfiguracionInicial) {
 
                 /**
@@ -65,7 +63,9 @@ public class SplashScreenRepositoryImpl implements SplashScreenRepository {
                  */
                 case 0:
 
-                    //Consulta la existencia del registro de valor de acceso al dispositivo
+                    postEvent(SplashScreenEvent.onVerifyInitialConfigNoExiste);
+
+                    //Consulta la existencia del registro de contraseña tecnica por defecto en el dispositivo
                     int conteoRegistroConfiguracionAcceso = AppDatabase.getInstance(context).conteoConfiguracionAcceso();
 
                     /**
@@ -73,19 +73,22 @@ public class SplashScreenRepositoryImpl implements SplashScreenRepository {
                      */
                     if (conteoRegistroConfiguracionAcceso == 0) {
 
-                        //Registra el valor de acceso
-                        if (AppDatabase.getInstance(context).insertRegistroInicialConfiguracionAcceso())
-                            postEvent(SplashScreenEvent.onVerifyInitialConfigExiste);
+                        postEvent(SplashScreenEvent.onRegistroConfiguracionAccesoNoExiste);
 
+                        //Registra el valor de acceso
                         if (AppDatabase.getInstance(context).insertRegistroInicialConfiguracionAcceso()) {
-                            postEvent(SplashScreenEvent.onVerifyInitialConfigNoExiste);
+
+                            postEvent(SplashScreenEvent.onInsertRegistroConfiguracionAccesoSuccess);
 
                         } else {
-                            postEvent(SplashScreenEvent.onVerifyInitialConfigExiste);
+
+                            postEvent(SplashScreenEvent.onInsertRegistroConfiguracionAccesoError);
                         }
 
                     } else {
-                        postEvent(SplashScreenEvent.onVerifyInitialConfigExiste);
+
+                        postEvent(SplashScreenEvent.onRegistroConfiguracionAccesoExiste);
+
                     }
 
                     break;
@@ -118,10 +121,10 @@ public class SplashScreenRepositoryImpl implements SplashScreenRepository {
     @Override
     public void validateAcces(final Context context) {
 
-        boolean deviceMagneticReader = verifyDeviceMagneticReader(context);
+        boolean deviceMagneticReader = verifyDeviceMagneticReader();
         boolean internetConnection = verifyInternetConnection(context);
-        boolean devicePrinter = verifyDevicePrinter(context);
-        boolean deviceNFC = verifyDeviceNFC(context);
+        boolean devicePrinter = verifyDevicePrinter();
+        boolean deviceNFC = verifyDeviceNFC();
 
         if ((deviceMagneticReader || deviceNFC) && devicePrinter && internetConnection) {
 
@@ -160,31 +163,36 @@ public class SplashScreenRepositoryImpl implements SplashScreenRepository {
      * Metodo propios de la clase
      * #############################################################################################
      */
+
     /**
+     * Metodo que verifica la existencia del registro inicial
+     *
      * @param context
      * @return
      */
     private boolean verifyInitialRegister(Context context) {
+
+        boolean resultVerifyInitialRegister = false;
+
+        //TODO: Validacion de productos registrados en el sistema debe trasladarse a un WS / FASE 1
+
+        // Validacion en caso de que no existan productos registrados en el sistema
         if (AppDatabase.getInstance(context).obtenerConteoRegistroProductos() == 0) {
+
             if (AppDatabase.getInstance(context).insertRegistroInicialProductos()) {
 
-                int prueba = 0;
-                if (AppDatabase.getInstance(context).insertRegistroPruebaTransaction(1)) {
-                    prueba++;
-                }
-                if (AppDatabase.getInstance(context).insertRegistroPruebaTransaction(2)) {
-                    prueba++;
-
-                }
-                if (prueba==2)
-                return true;
+                resultVerifyInitialRegister = true;
 
             }
+
         } else {
-            Transaccion modelTransaccion = AppDatabase.getInstance(context).obtenerUltimaTransaccion();
-            return true;
+
+            resultVerifyInitialRegister = true;
+
         }
-        return true;
+
+        return resultVerifyInitialRegister;
+
     }
 
 
@@ -196,43 +204,51 @@ public class SplashScreenRepositoryImpl implements SplashScreenRepository {
      */
     private boolean verifyInternetConnection(Context context) {
 
+        boolean resultVerifyInternetConnection = false;
+
         ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 
-        if (networkInfo != null && networkInfo.isConnected())
-            return true;
-        else
-            return false;
+        if (networkInfo != null && networkInfo.isConnected()) {
+            resultVerifyInternetConnection = true;
+        }
+
+        return resultVerifyInternetConnection;
+
     }
 
     /**
      * Metodo que verifica la existencia de un lector NFC en el dispositivo
      *
-     * @param context
      * @return
      */
-    private boolean verifyDeviceNFC(Context context) {
+    private boolean verifyDeviceNFC() {
+
+        // TODO: Realizar proceso de comprobacion de dispositivo NFC / FASE 1
         return true;
     }
 
     /**
      * Metodo que verifica la existencia de un lector de banda ma en el dispositivo
      *
-     * @param context
      * @return
      */
-    private boolean verifyDeviceMagneticReader(Context context) {
-        return true;
+    private boolean verifyDeviceMagneticReader() {
+
+        // Solicitud de prueba de dispositivo de lectura de banda magnetica
+        return new MagneticHandler().testMagneticDevice();
+
     }
 
     /**
      * Metodo que verifica la existencia de una impresora en el dispositivo
      *
-     * @param context
      * @return
      */
-    private boolean verifyDevicePrinter(Context context) {
+    private boolean verifyDevicePrinter() {
+
+        // TODO: Realizar proceso de comprobacion de dispositivo de impresion / FASE
         return true;
     }
 

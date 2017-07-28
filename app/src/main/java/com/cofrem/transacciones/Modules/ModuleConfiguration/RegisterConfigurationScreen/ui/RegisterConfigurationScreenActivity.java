@@ -25,6 +25,7 @@ import com.cofrem.transacciones.models.Configurations;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.FocusChange;
 import org.androidannotations.annotations.ViewById;
 
 import static android.view.KeyEvent.KEYCODE_ENTER;
@@ -174,10 +175,7 @@ public class RegisterConfigurationScreenActivity extends Activity implements Reg
         valorRetorno = args.getInt(Configurations.keyConfiguration);
 
         if (valorRetorno == Configurations.configuracionRegistrarConfigInicial) {
-            btnConfiguracionRegisterPassTecnicoBotonCancelar.setVisibility(View.GONE);
-            btnConfiguracionRegisterHostBotonCancelar.setVisibility(View.GONE);
-            btnConfiguracionRegisterPortBotonCancelar.setVisibility(View.GONE);
-            btnConfiguracionRegisterDispositivoBotonCancelar.setVisibility(View.GONE);
+            ocultarBotonesBack();
         }
 
         //Seteando el valor del filtro en el EditText
@@ -519,6 +517,7 @@ public class RegisterConfigurationScreenActivity extends Activity implements Reg
         // Muestra la barra  de progreso
         frlPgbHldRegisterScreen.setVisibility(View.VISIBLE);
         frlPgbHldRegisterScreen.bringToFront();
+        frlPgbHldRegisterScreen.invalidate();
     }
 
     /**
@@ -542,9 +541,23 @@ public class RegisterConfigurationScreenActivity extends Activity implements Reg
     }
 
     /**
+     * Metodo que oculta por defecto los botones back
+     */
+    private void ocultarBotonesBack() {
+        btnConfiguracionRegisterPassTecnicoBotonCancelar.setVisibility(View.GONE);
+        btnConfiguracionRegisterHostBotonCancelar.setVisibility(View.GONE);
+        btnConfiguracionRegisterPortBotonCancelar.setVisibility(View.GONE);
+        btnConfiguracionRegisterDispositivoBotonCancelar.setVisibility(View.GONE);
+    }
+
+    /**
      * Metodo que oculta el teclado al presionar el EditText
      */
     @Click({R.id.edtConfiguracionRegisterPassTecnicoContenidoClave,
+            R.id.edtConfiguracionRegisterHostContenidoValor,
+            R.id.edtConfiguracionRegisterPortContenidoValor
+    })
+    @FocusChange({R.id.edtConfiguracionRegisterPassTecnicoContenidoClave,
             R.id.edtConfiguracionRegisterHostContenidoValor,
             R.id.edtConfiguracionRegisterPortContenidoValor
     })
