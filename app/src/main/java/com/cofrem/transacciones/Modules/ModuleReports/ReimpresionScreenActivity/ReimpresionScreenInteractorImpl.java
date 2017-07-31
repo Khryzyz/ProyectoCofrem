@@ -65,7 +65,7 @@ class ReimpresionScreenInteractorImpl implements ReimpresionScreenInteractor {
 
     @Override
     public void imprimirReporteGeneral(Context context) {
-
+        reimpresionScreenRepository.imprimirReporteGeneral(context);
     }
     /**
      * #############################################################################################
