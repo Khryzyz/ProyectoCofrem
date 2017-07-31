@@ -89,10 +89,10 @@ public class ReimpresionScreenRepositoryImpl implements ReimpresionScreenReposit
         //Consulta la existencia del registros de transacciones
         listaDetalle = AppDatabase.getInstance(context).obtenerDetallesTransaccion();
 
-        if(!listaDetalle.isEmpty()){
+        if (!listaDetalle.isEmpty()) {
             // Registra el evento de existencia de transacciones para imprimir el reporte
             postEvent(ReimpresionScreenEvent.onVerifyExistenceReporteDetalleSuccess, listaDetalle);
-        }else{
+        } else {
             // Registra el evento de la NO existencia de transacciones para imprimir el reporte
             postEvent(ReimpresionScreenEvent.onVerifyExistenceReporteDetalleError);
         }
@@ -112,39 +112,85 @@ public class ReimpresionScreenRepositoryImpl implements ReimpresionScreenReposit
 
         //se siguen agregando cado auno de los String a los renglones (Rows) del recibo para imprimir
         printRows.add(new PrintRow(context.getResources().getString(
-                R.string.report_text_button_detalle),new StyleConfig(StyleConfig.Align.CENTER,StyleConfig.FontStyle.BOLD) ));
-        printRows.add(new PrintRow(getDateTime(),new StyleConfig(StyleConfig.Align.CENTER,20) ));
+                R.string.report_text_button_detalle), new StyleConfig(StyleConfig.Align.CENTER, StyleConfig.FontStyle.BOLD)));
+        printRows.add(new PrintRow(getDateTime(), new StyleConfig(StyleConfig.Align.CENTER, 20)));
 
         printRows.add(new PrintRow(context.getResources().getString(
-                R.string.recibo_num_transacciones),String.valueOf(listaDetalle.size()),new StyleConfig(StyleConfig.Align.LEFT, true)));
+                R.string.recibo_num_transacciones), String.valueOf(listaDetalle.size()), new StyleConfig(StyleConfig.Align.LEFT, true)));
 
 
-        for(Transaccion modelTransaccion : listaDetalle){
+        for (Transaccion modelTransaccion : listaDetalle) {
             printRows.add(new PrintRow(context.getResources().getString(
-                    R.string.recibo_separador_linea),new StyleConfig(StyleConfig.Align.LEFT,10) ));
+                    R.string.recibo_separador_linea), new StyleConfig(StyleConfig.Align.LEFT, 10)));
             printRows.add(new PrintRow(context.getResources().getString(
-                    R.string.recibo_numero_transaccion),String.valueOf(modelTransaccion.getNumero_cargo()),new StyleConfig(StyleConfig.Align.LEFT, true)));
+                    R.string.recibo_numero_transaccion), String.valueOf(modelTransaccion.getNumero_cargo()), new StyleConfig(StyleConfig.Align.LEFT, true)));
             printRows.add(new PrintRow(context.getResources().getString(
-                    R.string.recibo_valor),String.valueOf(modelTransaccion.getValor()),new StyleConfig(StyleConfig.Align.LEFT, true)));
+                    R.string.recibo_valor), String.valueOf(modelTransaccion.getValor()), new StyleConfig(StyleConfig.Align.LEFT, true)));
 
         }
 
         printRows.add(new PrintRow(context.getResources().getString(
-                R.string.recibo_separador_linea),new StyleConfig(StyleConfig.Align.LEFT,50) ));
-        printRows.add(new PrintRow(".",new StyleConfig(StyleConfig.Align.LEFT,true) ));
+                R.string.recibo_separador_linea), new StyleConfig(StyleConfig.Align.LEFT, 50)));
+        printRows.add(new PrintRow(".", new StyleConfig(StyleConfig.Align.LEFT, true)));
 
         int status = new PrinterHandler().imprimerTexto(printRows);
 
-        if(status == InfoGlobalSettingsPrint.PRINTER_OK){
+        if (status == InfoGlobalSettingsPrint.PRINTER_OK) {
             postEvent(ReimpresionScreenEvent.onImprimirReporteDetalleSuccess);
-        }else{
-            postEvent(ReimpresionScreenEvent.onImprimirReporteDetalleError,stringErrorPrinter(status,context),null,null);
+        } else {
+            postEvent(ReimpresionScreenEvent.onImprimirReporteDetalleError, stringErrorPrinter(status, context), null, null);
         }
     }
 
     @Override
     public void imprimirReporteGeneral(Context context) {
 
+        ArrayList<Transaccion> listaDetalle = AppDatabase.getInstance(context).obtenerDetallesTransaccion();
+
+        int valor = 0;
+
+        //logo de COFREM que se imprime al inicio del recibo
+        Bitmap logo = BitmapFactory.decodeResource(context.getResources(), R.mipmap.logo);
+
+        // creamos el ArrayList se que encarga de almacenar los rows del recibo
+        ArrayList<PrintRow> printRows = new ArrayList<PrintRow>();
+
+        //Se agrega el logo al primer renglon del recibo y se coloca en el centro
+        printRows.add(new PrintRow(logo, StyleConfig.Align.CENTER));
+
+        //se siguen agregando cado auno de los String a los renglones (Rows) del recibo para imprimir
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.report_text_button_detalle), new StyleConfig(StyleConfig.Align.CENTER, StyleConfig.FontStyle.BOLD)));
+        printRows.add(new PrintRow(getDateTime(), new StyleConfig(StyleConfig.Align.CENTER, 20)));
+
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_num_transacciones), String.valueOf(listaDetalle.size()), new StyleConfig(StyleConfig.Align.LEFT, true)));
+
+
+        for (Transaccion modelTransaccion : listaDetalle) {
+//            printRows.add(new PrintRow(context.getResources().getString(
+//                    R.string.recibo_separador_linea), new StyleConfig(StyleConfig.Align.LEFT, 10)));
+//            printRows.add(new PrintRow(context.getResources().getString(
+//                    R.string.recibo_numero_transaccion), String.valueOf(modelTransaccion.getNumero_cargo()), new StyleConfig(StyleConfig.Align.LEFT, true)));
+//            printRows.add(new PrintRow(context.getResources().getString(
+//                    R.string.recibo_valor), String.valueOf(modelTransaccion.getValor()), new StyleConfig(StyleConfig.Align.LEFT, true)));
+
+            valor += modelTransaccion.getValor();
+        }
+            printRows.add(new PrintRow(context.getResources().getString(
+                    R.string.recibo_valor), String.valueOf(valor), new StyleConfig(StyleConfig.Align.LEFT, true)));
+
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_separador_linea), new StyleConfig(StyleConfig.Align.LEFT, 50)));
+        printRows.add(new PrintRow(".", new StyleConfig(StyleConfig.Align.LEFT, true)));
+
+        int status = new PrinterHandler().imprimerTexto(printRows);
+
+        if (status == InfoGlobalSettingsPrint.PRINTER_OK) {
+            postEvent(ReimpresionScreenEvent.onImprimirReporteGeneralSuccess);
+        } else {
+            postEvent(ReimpresionScreenEvent.onImprimirReporteGeneralError, stringErrorPrinter(status, context), null, null);
+        }
     }
 
 
@@ -160,12 +206,11 @@ public class ReimpresionScreenRepositoryImpl implements ReimpresionScreenReposit
         //Consulta la clave del administrador para compararla con la ingresada en la vista
 
 
-
         //conparar la clave del administrador
-        if(clave.equals("123")){
+        if (clave.equals("123")) {
             // Registra el evento de que la clave es correcta
             postEvent(ReimpresionScreenEvent.onVerifyClaveAdministradorSuccess);
-        }else{
+        } else {
             // Registra el evento de que la clave es Incorrecta
             postEvent(ReimpresionScreenEvent.onVerifyClaveAdministradorError);
         }
@@ -181,7 +226,7 @@ public class ReimpresionScreenRepositoryImpl implements ReimpresionScreenReposit
     public void validarExistenciaReciboConNumCargo(Context context, String numCargo) {
 
         //Consulta la existencia del registro de una transaccion por numero de Cargo
-         modelTransaccion = AppDatabase.getInstance(context).obtenerTransaccion(numCargo);
+        modelTransaccion = AppDatabase.getInstance(context).obtenerTransaccion(numCargo);
 
         if (modelTransaccion.getNumero_tarjeta() != null) {
             // Registra el evento de existencia de la transaccion para imprimir
@@ -206,10 +251,10 @@ public class ReimpresionScreenRepositoryImpl implements ReimpresionScreenReposit
 
         int status = imprimirRecibo(context);
 
-        if(status == InfoGlobalSettingsPrint.PRINTER_OK){
+        if (status == InfoGlobalSettingsPrint.PRINTER_OK) {
             postEvent(ReimpresionScreenEvent.onImprimirUltimoReciboSuccess);
-        }else{
-            postEvent(ReimpresionScreenEvent.onImprimirUltimoReciboError,stringErrorPrinter(status,context),null,null);
+        } else {
+            postEvent(ReimpresionScreenEvent.onImprimirUltimoReciboError, stringErrorPrinter(status, context), null, null);
         }
 
     }
@@ -227,10 +272,10 @@ public class ReimpresionScreenRepositoryImpl implements ReimpresionScreenReposit
 
         int status = imprimirRecibo(context);
 
-        if(status == InfoGlobalSettingsPrint.PRINTER_OK){
+        if (status == InfoGlobalSettingsPrint.PRINTER_OK) {
             postEvent(ReimpresionScreenEvent.onImprimirReciboPorNumCargoSuccess);
-        }else{
-            postEvent(ReimpresionScreenEvent.onImprimirReciboPorNumCargoError,stringErrorPrinter(status,context),null,null);
+        } else {
+            postEvent(ReimpresionScreenEvent.onImprimirReciboPorNumCargoError, stringErrorPrinter(status, context), null, null);
         }
     }
 
@@ -245,7 +290,7 @@ public class ReimpresionScreenRepositoryImpl implements ReimpresionScreenReposit
      *
      * @param context
      */
-    private  int imprimirRecibo(Context context){
+    private int imprimirRecibo(Context context) {
 
         //logo de COFREM que se imprime al inicio del recibo
         Bitmap logo = BitmapFactory.decodeResource(context.getResources(), R.mipmap.logo);
@@ -258,23 +303,23 @@ public class ReimpresionScreenRepositoryImpl implements ReimpresionScreenReposit
 
         //se siguen agregando cado auno de los String a los renglones (Rows) del recibo para imprimir
         printRows.add(new PrintRow(context.getResources().getString(
-                R.string.recibo_reimpresion),new StyleConfig(StyleConfig.Align.CENTER,StyleConfig.FontStyle.BOLD) ));
-        printRows.add(new PrintRow(getDateTime(),new StyleConfig(StyleConfig.Align.CENTER,20) ));
+                R.string.recibo_reimpresion), new StyleConfig(StyleConfig.Align.CENTER, StyleConfig.FontStyle.BOLD)));
+        printRows.add(new PrintRow(getDateTime(), new StyleConfig(StyleConfig.Align.CENTER, 20)));
 
         printRows.add(new PrintRow(context.getResources().getString(
-                R.string.recibo_numero_transaccion),String.valueOf(modelTransaccion.getNumero_cargo()),new StyleConfig(StyleConfig.Align.LEFT, true)));
+                R.string.recibo_numero_transaccion), String.valueOf(modelTransaccion.getNumero_cargo()), new StyleConfig(StyleConfig.Align.LEFT, true)));
         printRows.add(new PrintRow(context.getResources().getString(
-                R.string.recibo_valor),String.valueOf(modelTransaccion.getValor()),new StyleConfig(StyleConfig.Align.LEFT, true)));
+                R.string.recibo_valor), String.valueOf(modelTransaccion.getValor()), new StyleConfig(StyleConfig.Align.LEFT, true)));
         printRows.add(new PrintRow(context.getResources().getString(
-                R.string.recibo_numero_tarjeta),modelTransaccion.getNumero_tarjeta(),new StyleConfig(StyleConfig.Align.LEFT, 20)));
+                R.string.recibo_numero_tarjeta), modelTransaccion.getNumero_tarjeta(), new StyleConfig(StyleConfig.Align.LEFT, 20)));
 
         printRows.add(new PrintRow(context.getResources().getString(
-                R.string.recibo_ingresa_firma),new StyleConfig(StyleConfig.Align.LEFT,true) ));
+                R.string.recibo_ingresa_firma), new StyleConfig(StyleConfig.Align.LEFT, true)));
         printRows.add(new PrintRow(context.getResources().getString(
-                R.string.recibo_ingresa_cc),new StyleConfig(StyleConfig.Align.LEFT,true) ));
+                R.string.recibo_ingresa_cc), new StyleConfig(StyleConfig.Align.LEFT, true)));
         printRows.add(new PrintRow(context.getResources().getString(
-                R.string.recibo_ingresa_tel),new StyleConfig(StyleConfig.Align.LEFT,50) ));
-        printRows.add(new PrintRow(".",new StyleConfig(StyleConfig.Align.LEFT,true) ));
+                R.string.recibo_ingresa_tel), new StyleConfig(StyleConfig.Align.LEFT, 50)));
+        printRows.add(new PrintRow(".", new StyleConfig(StyleConfig.Align.LEFT, true)));
 
         //retornamos el estado de la impresora tras enviar los rows para imprimir
         return new PrinterHandler().imprimerTexto(printRows);
@@ -303,9 +348,9 @@ public class ReimpresionScreenRepositoryImpl implements ReimpresionScreenReposit
      *
      * @return String
      */
-    private String stringErrorPrinter(int status,Context context){
-        String result="";
-        switch (status){
+    private String stringErrorPrinter(int status, Context context) {
+        String result = "";
+        switch (status) {
             case InfoGlobalSettingsPrint.PRINTER_DISCONNECT:
                 result = context.getResources().getString(R.string.printer_disconnect);
                 break;
@@ -332,7 +377,7 @@ public class ReimpresionScreenRepositoryImpl implements ReimpresionScreenReposit
      * @param type
      * @param errorMessage
      */
-    private void postEvent(int type,String errorMessage ,Transaccion modalTransaccion ,ArrayList<Transaccion> lista) {
+    private void postEvent(int type, String errorMessage, Transaccion modalTransaccion, ArrayList<Transaccion> lista) {
         ReimpresionScreenEvent reimpresionScreenEvent = new ReimpresionScreenEvent();
         reimpresionScreenEvent.setEventType(type);
         if (errorMessage != null) {
@@ -355,9 +400,10 @@ public class ReimpresionScreenRepositoryImpl implements ReimpresionScreenReposit
      */
     private void postEvent(int type, ArrayList<Transaccion> lista) {
 
-        postEvent(type,null , null,lista);
+        postEvent(type, null, null, lista);
 
     }
+
     /**
      * Sobrecarga del metodo postevent
      *
@@ -365,7 +411,7 @@ public class ReimpresionScreenRepositoryImpl implements ReimpresionScreenReposit
      */
     private void postEvent(int type, Transaccion modelTransaccion) {
 
-        postEvent(type,null , modelTransaccion,null);
+        postEvent(type, null, modelTransaccion, null);
 
     }
 
@@ -376,7 +422,7 @@ public class ReimpresionScreenRepositoryImpl implements ReimpresionScreenReposit
      */
     private void postEvent(int type) {
 
-        postEvent(type, null, null,null);
+        postEvent(type, null, null, null);
 
     }
 }

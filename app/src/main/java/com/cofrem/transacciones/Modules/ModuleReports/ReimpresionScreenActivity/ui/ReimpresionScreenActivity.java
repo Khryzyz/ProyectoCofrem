@@ -112,7 +112,8 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
                 reimpresionScreenPresenter.validarExistenciaDetalleRecibos(this);
                 break;
             case Reports.reportReporteGeneral:
-                bodyContentReporteGeneralImpresion.setVisibility(View.VISIBLE);
+                paso = PASO_GENERAL;
+                bodyContentReimpresionReciboClaveAdministrador.setVisibility(View.VISIBLE);
                 break;
             case Reports.reportCierreLote:
                 bodyContentCierreLoteClaveDispositivo.setVisibility(View.VISIBLE);
@@ -207,6 +208,9 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
                break;
            case  PASO_DETALLE:
                bodyContentReporteDetallesImpresion.setVisibility(View.VISIBLE);
+               break;
+           case  PASO_GENERAL:
+               bodyContentReporteGeneralImpresion.setVisibility(View.VISIBLE);
                break;
        }
         edtReportReimpresionReciboClaveAdministradorContenidoClave.setText("");
@@ -377,6 +381,12 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
     public  void imprimirReporteDetalle(){
         reimpresionScreenPresenter.imprimirReporteDetalle(this);
     }
+
+    @Click(R.id.btnReportReporteGeneralImpresionBotonImprimir)
+    public  void imprimirReporteGeneral(){
+        reimpresionScreenPresenter.imprimirReporteGeneral(this);
+    }
+
 
     @Click({R.id.btnTransactionScreenBack
             ,R.id.btnReportReporteDetallesImpresionBotonSalir
