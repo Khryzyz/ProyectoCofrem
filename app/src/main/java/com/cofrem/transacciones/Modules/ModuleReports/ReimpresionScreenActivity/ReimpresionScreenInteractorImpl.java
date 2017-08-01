@@ -57,6 +57,16 @@ class ReimpresionScreenInteractorImpl implements ReimpresionScreenInteractor {
     public void validarExistenciaDetalleRecibos(Context context) {
         reimpresionScreenRepository.validarExistenciaDetalleRecibos(context);
     }
+
+    @Override
+    public void imprimirReporteDetalle(Context context) {
+        reimpresionScreenRepository.imprimirReporteDetalle(context);
+    }
+
+    @Override
+    public void imprimirReporteGeneral(Context context) {
+
+    }
     /**
      * #############################################################################################
      * Metodos sobrecargados de la interface
