@@ -6,6 +6,8 @@
 
     <!-- Textos usados en la Configuration Screen -->
     <string name="configuration_text_button_configuracion">Configuración</string>
+    <string name="configuration_text_button_configuracion_dispositivo">Configuración del Dispositivo</string>
+    <string name="configuration_text_button_configuracion_printer">Configuración de la Impresora</string>
     <string name="configuration_text_button_prueba">Prueba Comunicación</string>
 
     <!-- Titulos de vistas -->

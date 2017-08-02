@@ -135,6 +135,8 @@ public class SplashScreenRepositoryImpl implements SplashScreenRepository {
                 postEvent(SplashScreenEvent.onVerifySuccess);
             else
                 postEvent(SplashScreenEvent.onVerifyError);
+
+
         } else {
             if (!deviceMagneticReader) {
 
@@ -198,7 +200,36 @@ public class SplashScreenRepositoryImpl implements SplashScreenRepository {
 
     }
 
+    /**
+     * Metodo que verifica la existencia del registro inicial
+     *
+     * @param context
+     * @return
+     */
+    private boolean verifyInitialRegisterPrinter(Context context) {
 
+        boolean resultVerifyInitialRegister = false;
+
+        //TODO: Validacion de la configuracion inicial de la impresora esto debe ser de la FASE I
+
+        // Validacion en caso de que no exista configuracion inicial para la impresora
+        if (AppDatabase.getInstance(context).conteoConfigurationPrinter() == 0) {
+
+            if (AppDatabase.getInstance(context).insertRegistroInicialConfiguracionPrinter()) {
+
+                resultVerifyInitialRegister = true;
+
+            }
+
+        } else {
+
+            resultVerifyInitialRegister = true;
+
+        }
+
+        return resultVerifyInitialRegister;
+
+    }
     /**
      * Metodo que verifica la existencia de conexion a internet en el dispositivo
      *

@@ -265,4 +265,45 @@ public class DatabaseManager {
         public static final String DROP_TABLE_CONFIGURACION_ACCESO =
                 "DROP TABLE IF EXISTS '" + TABLE_NAME_CONFIGURACION_ACCESO + "'";
     }
+
+    /**
+     * #############################################################################################
+     * Tabla ConfiguraciónPrinter:
+     * - Modelado de la tabla para la configuracion de la impresora
+     * - Scripts de la tabla ConfiguraciónPrinter
+     * #############################################################################################
+     */
+    public static class TableConfigurationPrinter{
+
+        /**
+         * Modelado de la tabla
+         * Nombre de la tabla
+         */
+        public static final String TABLE_NAME_CONFIGURACION_PRINTER = "printer";
+
+        /**
+         * Modelado de la tabla
+         * Columnas de la tabla
+         */
+        public static final String COLUMN_CONFIGURACION_PRINTER_FONT_SIZE = "font_size";
+        public static final String COLUMN_CONFIGURACION_PRINTER_GRAY_LEVEL = "gray_level";
+
+
+        /**
+         * Scripts de la tabla producti
+         * Comando CREATE para la tabla Producto de la base de datos
+         */
+        public static final String CREATE_TABLE_CONFIGURACION_PRINTER =
+                "CREATE TABLE " + TABLE_NAME_CONFIGURACION_PRINTER + "(" +
+                        COLUMN_CONFIGURACION_PRINTER_FONT_SIZE + " " + INT_TYPE + " " + ATTR_NOT_NULL + "," +
+                        COLUMN_CONFIGURACION_PRINTER_GRAY_LEVEL + " " + INT_TYPE + " " + ATTR_NOT_NULL + ")";
+
+        /**
+         * Scripts de la tabla registro
+         * Comando DROP para la tabla Producto de la base de datos
+         */
+        public static final String DROP_TABLE_CONFIGURACION_PRINTER =
+                "DROP TABLE IF EXISTS '" + TABLE_NAME_CONFIGURACION_PRINTER + "'";
+    }
+
 }
