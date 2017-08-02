@@ -55,6 +55,14 @@
         android:visibility="gone" />
 
     <include
+        android:id="@+id/bodyContentTransactionLecturaIncorrecta"
+        layout="@layout/content_transaction_credito_paso_lectura_incorrecta"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/headerContent"
+        android:visibility="gone" />
+
+    <include
         android:id="@+id/bodyContentTransactionPassUsuario"
         layout="@layout/content_transaction_credito_paso_clave_usuario"
         android:layout_width="match_parent"
