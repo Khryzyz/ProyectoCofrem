@@ -51,6 +51,12 @@ public class MagneticAsync extends AsyncTask<Void, Integer, String[]> {
 
                 TracData = MagneticCard.check(500);
 
+                if (TracData != null) {
+
+                    break;
+
+                }
+
             } catch (TimeoutException e) {
 
                 e.printStackTrace();

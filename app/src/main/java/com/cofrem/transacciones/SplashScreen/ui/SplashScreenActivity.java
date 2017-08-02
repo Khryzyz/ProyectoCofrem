@@ -50,14 +50,10 @@ public class SplashScreenActivity extends Activity implements SplashScreenView {
     @AfterViews
     void SplashInit() {
 
-        /**
-         * Instanciamiento e inicializacion del presentador
-         */
+        //Instanciamiento e inicializacion del presentador
         splashScreenPresenter = new SplashScreenPresenterImpl(this);
 
-        /**
-         * Llamada al metodo onCreate del presentador para el registro del bus de datos
-         */
+        // Llamada al metodo onCreate del presentador para el registro del bus de datos
         splashScreenPresenter.onCreate();
 
         // Metodo para colocar la orientacion de la app
@@ -378,7 +374,9 @@ public class SplashScreenActivity extends Activity implements SplashScreenView {
      */
     private void navigateToMainScreen() {
 
+        //Oculta la barra de progreso
         hideProgress();
+
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {

@@ -87,8 +87,8 @@ public class RegisterConfigurationScreenRepositoryImpl implements RegisterConfig
 
                 MessageWS messageWS = establecimiento.getMessageWS();
 
-                if (messageWS.getCodigoMensaje() == MessageWS.statusTerminalTransactionSuccess ||
-                        messageWS.getCodigoMensaje() == MessageWS.statusTerminalExist) {
+                if (messageWS.getCodigoMensaje() == MessageWS.statusConsultaExitosa ||
+                        messageWS.getCodigoMensaje() == MessageWS.statusTerminalExiste) {
 
                     //Evento Correcto de recepcion de informacion del establecimiento desde el WS
                     postEvent(RegisterConfigurationScreenEvent.onInformacionDispositivoSuccess);
@@ -181,11 +181,7 @@ public class RegisterConfigurationScreenRepositoryImpl implements RegisterConfig
 
             }).execute(transactionWS).get();
 
-        } catch (InterruptedException e) {
-
-            e.printStackTrace();
-
-        } catch (ExecutionException e) {
+        } catch (InterruptedException | ExecutionException e) {
 
             e.printStackTrace();
 
@@ -200,8 +196,10 @@ public class RegisterConfigurationScreenRepositoryImpl implements RegisterConfig
             switch (messageWS.getCodigoMensaje()) {
 
                 //Informacion encontrada
-                case MessageWS.statusTerminalTransactionSuccess:
-                case MessageWS.statusTerminalExist:
+                case MessageWS.statusTransaccionExitosa:
+                case MessageWS.statusTerminalExiste:
+                case MessageWS.statusConsultaExitosa:
+
 
                     //Inicializacion del modelo InformacionEstablecimiento
                     InformacionEstablecimiento informacionEstablecimiento = new InformacionEstablecimiento((SoapObject) soapTransaction.getProperty(1));
@@ -217,16 +215,9 @@ public class RegisterConfigurationScreenRepositoryImpl implements RegisterConfig
                     );
                     break;
 
-                //Transaccion sin resultados
-                case MessageWS.statusTerminalTransactionNoResult:
-                    //Inicializacion del modelo establecimiento
-                    establecimiento = new Establecimiento(
-                            messageWS
-                    );
-                    break;
 
                 //Terminal no existe
-                case MessageWS.statusTerminalNotExist:
+                case MessageWS.statusTerminalNoExiste:
                     //Inicializacion del modelo establecimiento
                     establecimiento = new Establecimiento(
                             messageWS

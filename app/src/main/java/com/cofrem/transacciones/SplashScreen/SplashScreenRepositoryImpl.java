@@ -35,7 +35,9 @@ public class SplashScreenRepositoryImpl implements SplashScreenRepository {
 
     /**
      * Metodo que verifica:
-     * - La existencia de la configuración inicial
+     *  - La existencia de la configuración inicial
+     *  - En caso de no existir mostrará la vista de configuración
+     *  - En caso de existir validara el acceso
      *
      * @param context
      */
@@ -113,8 +115,9 @@ public class SplashScreenRepositoryImpl implements SplashScreenRepository {
 
     /**
      * Metodo que verifica:
-     * - Existencia de datos
-     * - Validez de datos
+     *  - Conexion a internet
+     *  - Existencia datos en DB interna
+     *  - Coherencia de datos con el servidor
      *
      * @param context
      */
@@ -174,12 +177,12 @@ public class SplashScreenRepositoryImpl implements SplashScreenRepository {
 
         boolean resultVerifyInitialRegister = false;
 
-        //TODO: Validacion de productos registrados en el sistema debe trasladarse a un WS / FASE 1
+        AppDatabase.getInstance(context).registroInicialProductos();
 
         // Validacion en caso de que no existan productos registrados en el sistema
         if (AppDatabase.getInstance(context).obtenerConteoRegistroProductos() == 0) {
 
-            if (AppDatabase.getInstance(context).insertRegistroInicialProductos()) {
+            if (AppDatabase.getInstance(context).registroInicialProductos()) {
 
                 resultVerifyInitialRegister = true;
 

@@ -29,7 +29,7 @@ public class DatabaseManager {
     public static class DatabaseApp {
 
         public static final String DATABASE_NAME = "app_cofrem_transactions.db";
-        public static final int DATABASE_VERSION = 50;
+        public static final int DATABASE_VERSION = 54;
 
     }
 
@@ -64,7 +64,7 @@ public class DatabaseManager {
          */
         public static final String CREATE_TABLE_PRODUCTO =
                 "CREATE TABLE " + TABLE_NAME_PRODUCTO + "(" +
-                        COLUMN_PRODUCTO_ID + " " + INT_TYPE + " " + PRIMARY_KEY + " " + AUTOINCREMENT + "," +
+                        COLUMN_PRODUCTO_ID + " " + INT_TYPE + " " + PRIMARY_KEY + "," +
                         COLUMN_PRODUCTO_NOMBRE + " " + STRING_TYPE + " " + ATTR_NOT_NULL + "," +
                         COLUMN_PRODUCTO_DESCRIPCION + " " + STRING_TYPE + " " + ATTR_NOT_NULL + "," +
                         COLUMN_PRODUCTO_REGISTRO + " " + STRING_TYPE + " " + ATTR_NOT_NULL + "," +

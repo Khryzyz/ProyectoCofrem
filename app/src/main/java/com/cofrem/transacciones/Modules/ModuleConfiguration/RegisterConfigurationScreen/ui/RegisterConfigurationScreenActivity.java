@@ -2,6 +2,7 @@ package com.cofrem.transacciones.Modules.ModuleConfiguration.RegisterConfigurati
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.InputFilter;
@@ -148,19 +149,16 @@ public class RegisterConfigurationScreenActivity extends Activity implements Reg
     @AfterViews
     void ConfigurationInit() {
 
-        /**
-         * Instanciamiento e inicializacion del presentador
-         */
+        //Instanciamiento e inicializacion del presentador
         registerConfigurationScreenPresenter = new RegisterConfigurationScreenPresenterImpl(this);
 
-        /**
-         * Llamada al metodo onCreate del presentador para el registro del bus de datos
-         */
+        //Llamada al metodo onCreate del presentador para el registro del bus de datos
         registerConfigurationScreenPresenter.onCreate();
 
-        /**
-         * Metodo que oculta por defecto los include de la vista
-         */
+        // Metodo para colocar la orientacion de la app
+        setOrientation();
+
+        //Metodo que oculta por defecto los include de la vista
         inicializarOcultamientoVistas();
 
         //Inicializa el paso del registro de la configuracion
@@ -526,6 +524,13 @@ public class RegisterConfigurationScreenActivity extends Activity implements Reg
     private void hideProgress() {
         //Oculta la barra de progreso
         frlPgbHldRegisterScreen.setVisibility(View.GONE);
+    }
+
+    /**
+     * Metodo que coloca la orientacion de la App de forma predeterminada
+     */
+    private void setOrientation() {
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
 
     /**

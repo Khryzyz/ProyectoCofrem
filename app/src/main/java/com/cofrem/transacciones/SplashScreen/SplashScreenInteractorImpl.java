@@ -36,7 +36,9 @@ public class SplashScreenInteractorImpl implements SplashScreenInteractor {
 
     /**
      * Metodo que verifica:
-     * - La existencia de la configuración inicial
+     *  - La existencia de la configuración inicial
+     *  - En caso de no existir mostrará la vista de configuración
+     *  - En caso de existir validara el acceso
      *
      * @param context
      */
@@ -47,8 +49,9 @@ public class SplashScreenInteractorImpl implements SplashScreenInteractor {
 
     /**
      * Metodo que verifica:
-     * - Existencia de datos
-     * - Validez de datos
+     *  - Conexion a internet
+     *  - Existencia datos en DB interna
+     *  - Coherencia de datos con el servidor
      *
      * @param context
      */

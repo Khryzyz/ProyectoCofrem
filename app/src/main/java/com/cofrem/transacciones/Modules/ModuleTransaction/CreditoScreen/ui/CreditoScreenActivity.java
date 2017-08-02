@@ -2,6 +2,7 @@ package com.cofrem.transacciones.Modules.ModuleTransaction.CreditoScreen.ui;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Handler;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -10,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cofrem.transacciones.MainScreenActivity_;
@@ -52,6 +54,8 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
     @ViewById
     RelativeLayout bodyContentTransactionDesliceTarjeta;
     @ViewById
+    RelativeLayout bodyContentTransactionLecturaIncorrecta;
+    @ViewById
     RelativeLayout bodyContentTransactionPassUsuario;
     @ViewById
     RelativeLayout bodyContentTransactionTransaccionExitosa;
@@ -73,6 +77,10 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
     //Paso transaction_credito_paso_verificacion_valor
     @ViewById
     Button btnCreditoTransactionVerificacionDatosBotonCancelar;
+    @ViewById
+    TextView txvCreditoTransactionVerificacionDatosValorCantidad;
+    @ViewById
+    TextView txvCreditoTransactionVerificacionDatosNumeroDocumento;
 
     //Paso transaction_credito_paso_clave_usuario
     @ViewById
@@ -116,23 +124,23 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
     @AfterViews
     void MainInit() {
 
-        /**
-         * Instanciamiento e inicializacion del presentador
-         */
+        //Instanciamiento e inicializacion del presentador
         creditoScreenPresenter = new CreditoScreenPresenterImpl(this);
 
-        /**
-         * Llamada al metodo onCreate del presentador para el registro del bus de datos
-         */
+        //Llamada al metodo onCreate del presentador para el registro del bus de datos
         creditoScreenPresenter.onCreate();
 
-        /**
-         * Metodo que oculta por defecto los include de la vista
-         */
+        // Metodo para colocar la orientacion de la app
+        setOrientation();
+
+        // Metodo que oculta por defecto los include de la vista
         inicializarOcultamientoVistas();
 
         //Inicializa el paso del registro de la transaccion
         pasoCreditoTransaction = PASO_VALOR_COMPRA;
+
+        //Se registra consumo como el tipo de transaccion
+        modelTransaccion.setTipo_transaccion(Transaccion.CODIGO_TIPO_TRANSACCION_CONSUMO);
 
         //Primera ventana visible
         bodyContentTransactionValorCompra.setVisibility(View.VISIBLE);
@@ -326,6 +334,13 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
     }
 
     /**
+     * Metodo que coloca la orientacion de la App de forma predeterminada
+     */
+    private void setOrientation() {
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+    }
+
+    /**
      * Metodo que oculta por defecto los include de la vista
      */
     private void inicializarOcultamientoVistas() {
@@ -384,17 +399,48 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
     @Click(R.id.btnCreditoTransactionValorCompraBotonAceptar)
     public void registrarValorCompra() {
 
-        //Registra el valor de compra en el modelo de la transaccion
-        modelTransaccion.setValor(Integer.parseInt(edtCreditoTransactionValorCompraValor.getText().toString()));
+        // Se obtiene el texto de la contraseña
+        String valorCompra = edtCreditoTransactionValorCompraValor.getText().toString();
 
-        //Oculta la vista del Valor de compra
-        bodyContentTransactionValorCompra.setVisibility(View.GONE);
+        if (valorCompra.length() > 0 && Integer.parseInt(valorCompra) >= 10000 && Integer.parseInt(valorCompra) <= 3000000) {
 
-        //Muestra la vista del Numero de documento
-        bodyContentTransactionNumeroDocumento.setVisibility(View.VISIBLE);
+            //Registra el valor de compra en el modelo de la transaccion
+            modelTransaccion.setValor(Integer.parseInt(valorCompra));
 
-        //Actualiza el paso actual
-        pasoCreditoTransaction++;
+            //Oculta la vista del Valor de compra
+            bodyContentTransactionValorCompra.setVisibility(View.GONE);
+
+            //Muestra la vista del Numero de documento
+            bodyContentTransactionNumeroDocumento.setVisibility(View.VISIBLE);
+
+            //Actualiza el paso actual
+            pasoCreditoTransaction++;
+
+        } else if (valorCompra.length() == 0) {
+
+            //Vacia la caja de contraseña
+            edtCreditoTransactionValorCompraValor.setText("");
+
+            //Muestra el mensaje de error de formato de la contraseña
+            Toast.makeText(this, R.string.transaction_error_valor, Toast.LENGTH_SHORT).show();
+
+        } else if (Integer.parseInt(valorCompra) < 10000) {
+
+            //Vacia la caja de contraseña
+            edtCreditoTransactionValorCompraValor.setText("");
+
+            //Muestra el mensaje de error de formato de la contraseña
+            Toast.makeText(this, R.string.transaction_error_valor_monto_minimo, Toast.LENGTH_SHORT).show();
+
+        } else if (Integer.parseInt(valorCompra) > 3000000) {
+
+            //Vacia la caja de contraseña
+            edtCreditoTransactionValorCompraValor.setText("");
+
+            //Muestra el mensaje de error de formato de la contraseña
+            Toast.makeText(this, R.string.transaction_error_valor_monto_maximo, Toast.LENGTH_SHORT).show();
+
+        }
 
     }
 
@@ -404,17 +450,44 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
     @Click(R.id.btnCreditoTransactionNumeroDocumentoBotonAceptar)
     public void registrarNumeroDocumento() {
 
-        //Registra el valor del numero de documento en el modelo de transaccion
-        modelTransaccion.setNumero_documento(edtCreditoTransactionNumeroDocumentoValor.getText().toString());
 
-        //Oculta la vista del numero de documento
-        bodyContentTransactionNumeroDocumento.setVisibility(View.GONE);
+        // Se obtiene el texto de la contraseña
+        String numeroDocumento = edtCreditoTransactionNumeroDocumentoValor.getText().toString();
 
-        //Muestra la vista de verificacion del valor
-        bodyContentTransactionVerificacionValor.setVisibility(View.VISIBLE);
+        if (numeroDocumento.length() > 0) {
 
-        //Actualiza el paso actual
-        pasoCreditoTransaction++;
+            //Registra el valor del numero de documento en el modelo de transaccion
+            modelTransaccion.setNumero_documento(numeroDocumento);
+
+
+            txvCreditoTransactionVerificacionDatosValorCantidad.setText(
+                    String.valueOf(modelTransaccion.getValor())
+            );
+
+            txvCreditoTransactionVerificacionDatosNumeroDocumento.setText(
+                    String.valueOf(modelTransaccion.getNumero_documento())
+            );
+
+            //Oculta la vista del numero de documento
+            bodyContentTransactionNumeroDocumento.setVisibility(View.GONE);
+
+            //Muestra la vista de verificacion del valor
+            bodyContentTransactionVerificacionValor.setVisibility(View.VISIBLE);
+
+            //Actualiza el paso actual
+            pasoCreditoTransaction++;
+
+        } else {
+
+            //Vacia la caja de contraseña
+            edtCreditoTransactionValorCompraValor.setText("");
+
+            //Muestra el mensaje de error de formato de la contraseña
+            Toast.makeText(this, R.string.transaction_error_numero_documento, Toast.LENGTH_SHORT).show();
+
+        }
+
+
     }
 
     /**
@@ -432,6 +505,13 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
         //Actualiza el paso actual
         pasoCreditoTransaction++;
 
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                deslizarTarjeta();
+            }
+        }, 1000);
+
     }
 
     /**
@@ -441,8 +521,50 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
 
         String[] magneticHandler = new MagneticHandler().readMagnetic();
 
-        //Registra el valor del numero de tarjeta en el modelo de la transaccion
-        modelTransaccion.setNumero_tarjeta(magneticHandler[1]);
+        if (magneticHandler[1] != null) {
+
+
+            String clave = magneticHandler[1]
+                    .replace(";", "")
+                    .replace("!", "")
+                    .replace("#", "")
+                    .replace("$", "")
+                    .replace("&", "")
+                    .replace("/", "")
+                    .replace("|", "")
+                    .replace("(", "")
+                    .replace(")", "")
+                    .replace("=", "")
+                    .replace("?", "")
+                    .replace("¿", "")
+                    .replace("¿", "")
+                    .replace("¡", "")
+                    .replace("*", "")
+                    .replace("{", "")
+                    .replace("}", "")
+                    .replace("[", "")
+                    .replace("]", "")
+                    .replace(",", "")
+                    .replace(".", "")
+                    .replace("-", "")
+                    .replace("_", "")
+                    .replace("%", "");
+
+            //Registra el valor del numero de tarjeta en el modelo de la transaccion
+            modelTransaccion.setNumero_tarjeta(clave);
+
+            lecturaTarjetaCorrecta();
+
+        } else {
+            lecturaTarjetaErronea();
+        }
+
+    }
+
+    /**
+     * Metodo para mostrar la lectura correcta de tarjeta
+     */
+    public void lecturaTarjetaCorrecta() {
 
         //Oculta la vista de deslizar tarjeta
         bodyContentTransactionDesliceTarjeta.setVisibility(View.GONE);
@@ -452,6 +574,19 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
 
         //Actualiza el paso actual
         pasoCreditoTransaction++;
+    }
+
+    /**
+     * Metodo para mostrar la lectura erronea de tarjeta
+     */
+    public void lecturaTarjetaErronea() {
+
+
+        //Oculta la vista de deslizar tarjeta
+        bodyContentTransactionDesliceTarjeta.setVisibility(View.GONE);
+
+        //Muestra la vista de contraseña de usuario
+        bodyContentTransactionLecturaIncorrecta.setVisibility(View.VISIBLE);
 
     }
 
@@ -468,6 +603,17 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
 
             //Mostrar la barra de progreso
             showProgress();
+
+            //Se registra la contraseña en el modelo
+            modelTransaccion.setClave(Integer.valueOf(passwordUser));
+
+            //TODO: agregar las diferentes encriptaciones
+            //Se registra el tipo de encriptacion en el modelo
+            modelTransaccion.setTipo_encriptacion(Transaccion.CODIGO_ENCR_NO_ENCRIPTADO);
+
+            //TODO: agregar los diferentes tipos de productos
+            //Se registra el tipo de producto en el modelo
+            modelTransaccion.setTipo_producto(Transaccion.CODIGO_PRODUCTO_CUPO_ROTATIVO);
 
             //Registra la transaccion
             creditoScreenPresenter.registrarTransaccion(this, modelTransaccion);

@@ -14,10 +14,62 @@ public class MessageWS {
     /**
      * STATUS METHOD TERMINAL
      */
-    public final static int statusTerminalTransactionNoResult = 0;
-    public final static int statusTerminalTransactionSuccess = 11;
-    public final static int statusTerminalNotExist = 12;
-    public final static int statusTerminalExist = 13;
+    /**
+     * ## TABLA ENTREGADA POR COFREM ########
+     * ## Version 2017/07/27 ################
+     * Valores posibles que puede tomar el atributo tipo encriptacion
+     * 00	TRANSACCIÓN EXITOSA
+     * 01	TARJETAHABIENTE NO EXISTE
+     * 02	CLAVE ERRARA
+     * 03	TARJETAHABIENTE INACTIVO
+     * 04	TARJETAHABIENTE EN MORA
+     * 05	TARJETAHABIENTE SIN CUPO DISPONIBLE
+     * 06	EMPRESA NO EXISTE
+     * 07	EMPRESA INACTIVA
+     * 08	EMPRESA EN MORA
+     * 09	TRANSACCIÓN NO ENCONTRADA
+     * 10	CEDULA Y TARJETA NO EXISTE
+     * 11	CONSULTA EXITOSA
+     * 12	TERMINAL NO EXISTE
+     * 13	TERMINAL YA EXISTE
+     * 14	PUNTO NO EXISTE
+     * 15	…
+     * 16	LA TERMINAL YA TIENE UN UUID ASIGNADO
+     * 17	UUID YA EXISTE EN OTRA TERMINAL
+     * 18	UUID NO VALIDO
+     * 19	LA TERMINAL YA TIENE UNA MAC ASIGNADA
+     * 20	LA MAC YA EXISTE EN OTRA TERMINAL
+     * 21	MAC NO VALIDO
+     * 22	NO SE PUDO ACTUALIZAR LA INFORMACIÓN
+     * 30	TARJETA NO PERMITIDA EN ESTA TERMINAL
+     * 98	NO HAY CONEXIÓN CON LA BASE DE DATOS
+     * 99	ERROR INTERSECTADO: ERROR EXCEPCIÓN
+     */
+    public final static int statusTransaccionExitosa = 0;
+    public final static int statusTarjetaHabienteNoExiste = 1;
+    public final static int statusClaveErrada = 2;
+    public final static int statusTarjetHabienteInactivo = 3;
+    public final static int statusTarjetaHabienteMora = 4;
+    public final static int statusTarjetaHabienteSinCupoDisponible = 5;
+    public final static int statusEmpresaNoExiste = 6;
+    public final static int statusEmpresaInactiva = 7;
+    public final static int statusEmpresaMora = 8;
+    public final static int statusTransaccionNoEncontrada = 9;
+    public final static int statusCedulaTarjetaNoExiste = 10;
+    public final static int statusConsultaExitosa = 11;
+    public final static int statusTerminalNoExiste = 12;
+    public final static int statusTerminalExiste = 13;
+    public final static int statusPuntoNoExiste = 14;
+    public final static int statusEmpty = 15;
+    public final static int statusTerminalUUIDYaAsignado = 16;
+    public final static int statusTerminalUUIDExistente = 17;
+    public final static int statusTerminalUUIDNoValido = 18;
+    public final static int statusTerminalMACYaAsignada = 19;
+    public final static int statusTerminalMACExistente = 20;
+    public final static int statusTerminalMACNoValida = 21;
+    public final static int statusActualizacionNoRealizada = 22;
+    public final static int statusTarjetaNoPermitidaEnTerminal = 30;
+    public final static int statusErrorDatabase = 98;
     public final static int statusTerminalErrorException = 99;
 
     //Informacion del detalleMensaje
@@ -31,7 +83,7 @@ public class MessageWS {
      */
     public MessageWS(SoapObject soap) {
 
-        this.codigoMensaje = soap.getPropertyAsString(CODIGO_MESSAGE_KEY).equals("anyType{}") ? statusTerminalTransactionNoResult : Integer.parseInt(soap.getPropertyAsString(CODIGO_MESSAGE_KEY));
+        this.codigoMensaje = soap.getPropertyAsString(CODIGO_MESSAGE_KEY).equals("anyType{}") ? statusTransaccionExitosa : Integer.parseInt(soap.getPropertyAsString(CODIGO_MESSAGE_KEY));
 
         this.detalleMensaje = soap.getPropertyAsString(DETALLE_MESSAGE_KEY).equals("anyType{}") ? "" : soap.getPropertyAsString(DETALLE_MESSAGE_KEY);
 

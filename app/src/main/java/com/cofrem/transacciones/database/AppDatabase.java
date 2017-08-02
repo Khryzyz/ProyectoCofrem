@@ -14,6 +14,7 @@ import com.cofrem.transacciones.models.ModelsWS.ModelEstablecimiento.Establecimi
 import com.cofrem.transacciones.models.ModelsWS.ModelEstablecimiento.InformacionEstablecimiento;
 import com.cofrem.transacciones.models.Transaccion;
 
+import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -101,16 +102,52 @@ public final class AppDatabase extends SQLiteOpenHelper {
      */
 
     /**
-     * Metodo para insertar registro inicial en la Base de Datos
+     * Metodo para insertar registro inicial de productos en la Base de Datos
      */
-    public boolean insertRegistroInicialProductos() {
+    public boolean registroInicialProductos() {
+
+        // Eliminacion de registros anteriores en la base de datos
+        getWritableDatabase().delete(
+                DatabaseManager.TableProducto.TABLE_NAME_PRODUCTO,
+                "",
+                null
+        );
+
+        // Almacena los valores a insertar
+        insertRegistroInicialProductos(1, "CUPO ROTATIVO", "Producto cupo rotativo Cofrem");
+        insertRegistroInicialProductos(2, "BONO DE BIENESTAR", "Producto bono de bienestar Cofrem");
+        insertRegistroInicialProductos(3, "TARJETA REGALO", "Producto tarjeta regalo Cofrem");
+        insertRegistroInicialProductos(4, "BONO ALIMENTARIO FOSFEC", "Producto bono alimentario fosfec Cofrem");
+        insertRegistroInicialProductos(5, "CUOTA MONETARIA FOSFEC", "Producto cuota monetaria fosfec Cofrem");
+        insertRegistroInicialProductos(6, "CUOTA MONETARIA", "Producto cuota monetaria Cofrem");
+
+        //TODO: Borrar estas lineas ya que son los registro de prueba de productos
+        insertRegistroPruebaTransaction(1, 123456, "1234 5678 9012 3456", 600000);
+        insertRegistroPruebaTransaction(2, 654321, "8899 2001 9012 3562", 1000000);
+        insertRegistroPruebaTransaction(3, 123654, "9237 3056 6629 3456", 33000000);
+        insertRegistroPruebaTransaction(4, 321456, "5219 1894 9012 2605", 40000);
+
+
+        return true;
+
+    }
+
+    /**
+     * Metodo para insertar registro inicial de productos en la Base de Datos
+     */
+    public boolean insertRegistroInicialProductos(int producto_id,
+                                                  String producto_nombre,
+                                                  String producto_descripcion) {
+
+        boolean transaction = false;
 
         // Inicializacion de la variable de contenidos del registro
         ContentValues contentValues = new ContentValues();
 
         // Almacena los valores a insertar
-        contentValues.put(DatabaseManager.TableProducto.COLUMN_PRODUCTO_NOMBRE, "CREDITO ROTATIVO");
-        contentValues.put(DatabaseManager.TableProducto.COLUMN_PRODUCTO_DESCRIPCION, "Credito rotativo");
+        contentValues.put(DatabaseManager.TableProducto.COLUMN_PRODUCTO_ID, producto_id);
+        contentValues.put(DatabaseManager.TableProducto.COLUMN_PRODUCTO_NOMBRE, producto_nombre);
+        contentValues.put(DatabaseManager.TableProducto.COLUMN_PRODUCTO_DESCRIPCION, producto_descripcion);
         contentValues.put(DatabaseManager.TableProducto.COLUMN_PRODUCTO_REGISTRO, getDateTime());
         contentValues.put(DatabaseManager.TableProducto.COLUMN_PRODUCTO_ESTADO, 1);
 
@@ -132,22 +169,10 @@ public final class AppDatabase extends SQLiteOpenHelper {
         }
 
         if (count == 1) {
-
-
-            //TODO: Borrar estas lineas ya que son los registro de prueba de productos
-            insertRegistroPruebaTransaction(1, 123456, "1234 5678 9012 3456", 600000);
-            insertRegistroPruebaTransaction(2, 654321, "8899 2001 9012 3562", 1000000);
-            insertRegistroPruebaTransaction(3, 123654, "9237 3056 6629 3456", 33000000);
-            insertRegistroPruebaTransaction(4, 321456, "5219 1894 9012 2605", 40000);
-
-            return true;
-
-        } else {
-
-            return false;
-
+            transaction = true;
         }
 
+        return transaction;
     }
 
     /**
@@ -155,7 +180,10 @@ public final class AppDatabase extends SQLiteOpenHelper {
      * Usado en:
      * Inicio por primera vez de la APP
      */
+
     public boolean insertRegistroInicialConfiguracionAcceso() {
+
+        boolean transaction = false;
 
         // Inicializacion de la variable de contenidos del registro
         ContentValues contentValues = new ContentValues();
@@ -184,13 +212,11 @@ public final class AppDatabase extends SQLiteOpenHelper {
 
         if (count == 1) {
 
-            return true;
-
-        } else {
-
-            return false;
+            transaction = true;
 
         }
+
+        return transaction;
 
     }
 
@@ -209,6 +235,8 @@ public final class AppDatabase extends SQLiteOpenHelper {
                                                    int numero_cargo,
                                                    String numero_tarjeta,
                                                    int valor) {
+
+        boolean transaction = false;
 
         // Inicializacion de la variable de contenidos del registro
         ContentValues contentValues = new ContentValues();
@@ -239,10 +267,10 @@ public final class AppDatabase extends SQLiteOpenHelper {
         }
 
         if (count == 1) {
-            return true;
-        } else {
-            return false;
+            transaction = true;
         }
+
+        return transaction;
 
     }
 
@@ -340,6 +368,8 @@ public final class AppDatabase extends SQLiteOpenHelper {
      */
     public boolean insertConfiguracionConexion(Configurations configurations) {
 
+        boolean transaction = false;
+
         int count = 0;
 
         try {
@@ -380,10 +410,10 @@ public final class AppDatabase extends SQLiteOpenHelper {
 
         }
         if (count == 1) {
-            return true;
-        } else {
-            return false;
+            transaction = true;
         }
+
+        return transaction;
     }
 
     /**
@@ -517,7 +547,7 @@ public final class AppDatabase extends SQLiteOpenHelper {
 
         if (cursor.moveToFirst()) {
             modelTransaccion.setId(cursor.getInt(0));
-            modelTransaccion.setProducto_id(cursor.getInt(1));
+            modelTransaccion.setTipo_producto(cursor.getInt(1));
             modelTransaccion.setNumero_cargo(cursor.getInt(2));
             modelTransaccion.setNumero_tarjeta(cursor.getString(3));
             modelTransaccion.setValor(cursor.getInt(4));
@@ -543,7 +573,7 @@ public final class AppDatabase extends SQLiteOpenHelper {
 
         if (cursor.moveToFirst()) {
             modelTransaccion.setId(cursor.getInt(0));
-            modelTransaccion.setProducto_id(cursor.getInt(1));
+            modelTransaccion.setTipo_producto(cursor.getInt(1));
             modelTransaccion.setNumero_cargo(cursor.getInt(2));
             modelTransaccion.setNumero_tarjeta(cursor.getString(3));
             modelTransaccion.setValor(cursor.getInt(4));
@@ -569,7 +599,7 @@ public final class AppDatabase extends SQLiteOpenHelper {
             Transaccion modelTransaccion = new Transaccion();
 
             modelTransaccion.setId(cursor.getInt(0));
-            modelTransaccion.setProducto_id(cursor.getInt(1));
+            modelTransaccion.setTipo_producto(cursor.getInt(1));
             modelTransaccion.setNumero_cargo(cursor.getInt(2));
             modelTransaccion.setNumero_tarjeta(cursor.getString(3));
             modelTransaccion.setValor(cursor.getInt(4));
@@ -604,31 +634,6 @@ public final class AppDatabase extends SQLiteOpenHelper {
         count = cursorQuery.getInt(0);
 
         return count;
-    }
-
-    /**
-     * Metodo para Obtener todos los registros de la tabla base_financiera
-     *
-     * @return cursor con los registros
-     */
-    public int obtenerProductoIdByNombre(String NOMBRE_PRODUCTO) {
-
-        int producto_id;
-
-        Cursor queryIdProducto;
-
-        queryIdProducto = getWritableDatabase().rawQuery(
-                "SELECT " + DatabaseManager.TableProducto.COLUMN_PRODUCTO_ID + " AS ID " +
-                        " FROM " + DatabaseManager.TableProducto.TABLE_NAME_PRODUCTO +
-                        " WHERE " + DatabaseManager.TableProducto.COLUMN_PRODUCTO_NOMBRE + " = '" + NOMBRE_PRODUCTO + "'",
-                null
-        );
-
-        queryIdProducto.moveToFirst();
-
-        producto_id = queryIdProducto.getInt(0);
-
-        return producto_id;
     }
 
     /**
