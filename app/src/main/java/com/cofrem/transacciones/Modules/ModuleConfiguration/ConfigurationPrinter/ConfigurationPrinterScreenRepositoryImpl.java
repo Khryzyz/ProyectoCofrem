@@ -1,16 +1,16 @@
-package com.cofrem.transacciones.SplashScreen;
+package com.cofrem.transacciones.Modules.ModuleConfiguration.ConfigurationPrinter;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
-import com.cofrem.transacciones.SplashScreen.events.SplashScreenEvent;
+import com.cofrem.transacciones.Modules.ModuleConfiguration.ConfigurationPrinter.events.ConfigurationPrinterScreenEvent;
 import com.cofrem.transacciones.database.AppDatabase;
 import com.cofrem.transacciones.lib.EventBus;
 import com.cofrem.transacciones.lib.GreenRobotEventBus;
 import com.cofrem.transacciones.lib.MagneticHandler;
 
-public class SplashScreenRepositoryImpl implements SplashScreenRepository {
+public class ConfigurationPrinterScreenRepositoryImpl implements ConfigurationPrinterScreenRepository {
 
     /**
      * #############################################################################################
@@ -24,7 +24,7 @@ public class SplashScreenRepositoryImpl implements SplashScreenRepository {
      * Constructor de la clase
      * #############################################################################################
      */
-    public SplashScreenRepositoryImpl() {
+    public ConfigurationPrinterScreenRepositoryImpl() {
     }
 
     /**
@@ -51,7 +51,7 @@ public class SplashScreenRepositoryImpl implements SplashScreenRepository {
         if (internetConnection) {
 
             // Registra el evento de existencia de conexion a internet
-            postEvent(SplashScreenEvent.onInternetConnectionSuccess);
+            postEvent(ConfigurationPrinterScreenEvent.onInternetConnectionSuccess);
 
             //Consulta la existencia del registro de configuracion
             int conteoRegistrosConfiguracionInicial = AppDatabase.getInstance(context).conteoConfiguracionConexion();
@@ -65,7 +65,7 @@ public class SplashScreenRepositoryImpl implements SplashScreenRepository {
                  */
                 case 0:
 
-                    postEvent(SplashScreenEvent.onVerifyInitialConfigNoExiste);
+                    postEvent(ConfigurationPrinterScreenEvent.onVerifyInitialConfigNoExiste);
 
                     //Consulta la existencia del registro de contraseña tecnica por defecto en el dispositivo
                     int conteoRegistroConfiguracionAcceso = AppDatabase.getInstance(context).conteoConfiguracionAcceso();
@@ -75,21 +75,21 @@ public class SplashScreenRepositoryImpl implements SplashScreenRepository {
                      */
                     if (conteoRegistroConfiguracionAcceso == 0) {
 
-                        postEvent(SplashScreenEvent.onRegistroConfiguracionAccesoNoExiste);
+                        postEvent(ConfigurationPrinterScreenEvent.onRegistroConfiguracionAccesoNoExiste);
 
                         //Registra el valor de acceso
                         if (AppDatabase.getInstance(context).insertRegistroInicialConfiguracionAcceso()) {
 
-                            postEvent(SplashScreenEvent.onInsertRegistroConfiguracionAccesoSuccess);
+                            postEvent(ConfigurationPrinterScreenEvent.onInsertRegistroConfiguracionAccesoSuccess);
 
                         } else {
 
-                            postEvent(SplashScreenEvent.onInsertRegistroConfiguracionAccesoError);
+                            postEvent(ConfigurationPrinterScreenEvent.onInsertRegistroConfiguracionAccesoError);
                         }
 
                     } else {
 
-                        postEvent(SplashScreenEvent.onRegistroConfiguracionAccesoExiste);
+                        postEvent(ConfigurationPrinterScreenEvent.onRegistroConfiguracionAccesoExiste);
 
                     }
 
@@ -97,19 +97,19 @@ public class SplashScreenRepositoryImpl implements SplashScreenRepository {
 
                 case 1:
 
-                    postEvent(SplashScreenEvent.onVerifyInitialConfigExiste);
+                    postEvent(ConfigurationPrinterScreenEvent.onVerifyInitialConfigExiste);
 
                     break;
 
                 default:
 
-                    postEvent(SplashScreenEvent.onVerifyInitialConfigNoValida);
+                    postEvent(ConfigurationPrinterScreenEvent.onVerifyInitialConfigNoValida);
 
                     break;
 
             }
         } else {
-            postEvent(SplashScreenEvent.onInternetConnectionError);
+            postEvent(ConfigurationPrinterScreenEvent.onInternetConnectionError);
         }
     }
 
@@ -132,30 +132,30 @@ public class SplashScreenRepositoryImpl implements SplashScreenRepository {
         if ((deviceMagneticReader || deviceNFC) && devicePrinter && internetConnection) {
 
             if (verifyInitialRegister(context))
-                postEvent(SplashScreenEvent.onVerifySuccess);
+                postEvent(ConfigurationPrinterScreenEvent.onVerifySuccess);
             else
-                postEvent(SplashScreenEvent.onVerifyError);
+                postEvent(ConfigurationPrinterScreenEvent.onVerifyError);
 
 
         } else {
             if (!deviceMagneticReader) {
 
-                postEvent(SplashScreenEvent.onMagneticReaderDeviceError);
+                postEvent(ConfigurationPrinterScreenEvent.onMagneticReaderDeviceError);
 
             }
             if (!deviceNFC) {
 
-                postEvent(SplashScreenEvent.onNFCDeviceError);
+                postEvent(ConfigurationPrinterScreenEvent.onNFCDeviceError);
 
             }
             if (!devicePrinter) {
 
-                postEvent(SplashScreenEvent.onPrinterDeviceError);
+                postEvent(ConfigurationPrinterScreenEvent.onPrinterDeviceError);
 
             }
             if (!internetConnection) {
 
-                postEvent(SplashScreenEvent.onInternetConnectionError);
+                postEvent(ConfigurationPrinterScreenEvent.onInternetConnectionError);
 
             }
         }
@@ -294,15 +294,15 @@ public class SplashScreenRepositoryImpl implements SplashScreenRepository {
      * @param errorMessage
      */
     private void postEvent(int type, String errorMessage) {
-        SplashScreenEvent splashScreenEvent = new SplashScreenEvent();
-        splashScreenEvent.setEventType(type);
+        ConfigurationPrinterScreenEvent configurationPrinterScreenEvent = new ConfigurationPrinterScreenEvent();
+        configurationPrinterScreenEvent.setEventType(type);
         if (errorMessage != null) {
-            splashScreenEvent.setErrorMessage(errorMessage);
+            configurationPrinterScreenEvent.setErrorMessage(errorMessage);
         }
 
         EventBus eventBus = GreenRobotEventBus.getInstance();
 
-        eventBus.post(splashScreenEvent);
+        eventBus.post(configurationPrinterScreenEvent);
     }
 
     /**

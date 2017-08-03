@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Estilos de los progress bar y progress bar holder usados en la aplicacion -->
+
+    <style name="StyleSeekBar">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+
+        <item name="android:padding">@dimen/appPadding</item>
+    </style>
+
+</resources>
