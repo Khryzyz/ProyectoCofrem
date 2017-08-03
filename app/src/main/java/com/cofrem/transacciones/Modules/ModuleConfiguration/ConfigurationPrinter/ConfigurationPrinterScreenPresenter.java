@@ -4,7 +4,7 @@ import android.content.Context;
 
 import com.cofrem.transacciones.Modules.ModuleConfiguration.ConfigurationPrinter.events.ConfigurationPrinterScreenEvent;
 
-public interface SplashScreenPresenter {
+public interface ConfigurationPrinterScreenPresenter {
 
     /**
      * Metodo para la creacion del presentador

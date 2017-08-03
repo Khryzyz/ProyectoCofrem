@@ -3,7 +3,7 @@ package com.cofrem.transacciones.Modules.ModuleConfiguration.ConfigurationPrinte
 /**
  * Interface usada en la actividad de la Pantalla principal
  */
-public interface SplashScreenView {
+public interface ConfigurationPrinterScreenView {
 
     /**
      * Metodo para manejar la existencia de la configuracion inicial

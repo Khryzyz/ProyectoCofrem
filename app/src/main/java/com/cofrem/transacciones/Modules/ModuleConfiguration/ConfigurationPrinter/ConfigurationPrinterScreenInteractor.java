@@ -1,8 +1,8 @@
-package com.cofrem.transacciones.SplashScreen;
+package com.cofrem.transacciones.Modules.ModuleConfiguration.ConfigurationPrinter;
 
 import android.content.Context;
 
-public interface SplashScreenInteractor {
+public interface ConfigurationPrinterScreenInteractor {
 
     /**
      * Metodo que verifica:

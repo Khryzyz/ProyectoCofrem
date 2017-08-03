@@ -1,9 +1,9 @@
-package com.cofrem.transacciones.SplashScreen.events;
+package com.cofrem.transacciones.Modules.ModuleConfiguration.ConfigurationPrinter.events;
 
 /**
  * Clase que maneja los eventos de la Pantalla de Inicio
  */
-public class SplashScreenEvent {
+public class ConfigurationPrinterScreenEvent {
 
     /**
      * Eventos asociados a la Pantalla de Inicio

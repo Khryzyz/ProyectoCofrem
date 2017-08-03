@@ -1,8 +1,8 @@
-package com.cofrem.transacciones.SplashScreen;
+package com.cofrem.transacciones.Modules.ModuleConfiguration.ConfigurationPrinter;
 
 import android.content.Context;
 
-public class SplashScreenInteractorImpl implements SplashScreenInteractor {
+public class ConfigurationPrinterScreenInteractorImpl implements ConfigurationPrinterScreenInteractor {
 
     /**
      * #############################################################################################
@@ -15,16 +15,16 @@ public class SplashScreenInteractorImpl implements SplashScreenInteractor {
      * Instanciamientos de las clases
      * #############################################################################################
      */
-    private SplashScreenRepository splashScreenRepository;
+    private ConfigurationPrinterScreenRepository configurationPrinterScreenRepository;
 
     /**
      * #############################################################################################
      * Constructor de la clase
      * #############################################################################################
      */
-    public SplashScreenInteractorImpl() {
+    public ConfigurationPrinterScreenInteractorImpl() {
 
-        splashScreenRepository = new SplashScreenRepositoryImpl();
+        configurationPrinterScreenRepository = new ConfigurationPrinterScreenRepositoryImpl();
 
     }
 
@@ -44,7 +44,7 @@ public class SplashScreenInteractorImpl implements SplashScreenInteractor {
      */
     @Override
     public void validateInitialConfig(Context context) {
-        splashScreenRepository.validateInitialConfig(context);
+        configurationPrinterScreenRepository.validateInitialConfig(context);
     }
 
     /**
@@ -58,6 +58,6 @@ public class SplashScreenInteractorImpl implements SplashScreenInteractor {
     @Override
     public void validateAccess(Context context) {
         //Valida el acceso a la app
-        splashScreenRepository.validateAcces(context);
+        configurationPrinterScreenRepository.validateAcces(context);
     }
 }

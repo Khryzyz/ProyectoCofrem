@@ -10,7 +10,7 @@ import com.cofrem.transacciones.lib.EventBus;
 import com.cofrem.transacciones.lib.GreenRobotEventBus;
 import com.cofrem.transacciones.lib.MagneticHandler;
 
-public class SplashScreenRepositoryImpl implements SplashScreenRepository {
+public class ConfigurationPrinterScreenRepositoryImpl implements ConfigurationPrinterScreenRepository {
 
     /**
      * #############################################################################################
@@ -24,7 +24,7 @@ public class SplashScreenRepositoryImpl implements SplashScreenRepository {
      * Constructor de la clase
      * #############################################################################################
      */
-    public SplashScreenRepositoryImpl() {
+    public ConfigurationPrinterScreenRepositoryImpl() {
     }
 
     /**

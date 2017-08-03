@@ -5,7 +5,7 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/txvConfiguracionRegisterDispositivoTitle"
+        android:id="@+id/txvConfigurationPrinterTitle"
         style="@style/StyleTextPrimaryLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -14,34 +14,77 @@
         android:text="@string/configuration_text_title_configuracion" />
 
     <TextView
-        android:id="@+id/txvConfiguracionRegisterDispositivoValor"
+        android:id="@+id/txvConfigurationPrinterInsertGrayLevel"
         style="@style/StyleTextPrimaryMedium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/txvConfiguracionRegisterDispositivoTitle"
+        android:layout_below="@id/txvConfigurationPrinterTitle"
         android:layout_marginBottom="@dimen/appMarginBottom"
-        android:text="@string/configuration_text_ingresar_dispositivo" />
+        android:text="@string/configuration_text_insert_gray_level" />
 
 
     <SeekBar
-        android:id="@+id/seekBar2"
+        android:id="@+id/seekBarGrayLevel"
+        style="@style/StyleSeekBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/txvConfiguracionRegisterDispositivoValor"
-        android:layout_centerHorizontal="true" />
+        android:layout_below="@+id/txvConfigurationPrinterInsertGrayLevel"
+        android:layout_centerHorizontal="true"
+        android:max="12" />
+    <TextView
+        android:id="@+id/txvConfigurationPrinterValorGrayLevel"
+        style="@style/StyleTextPrimarySmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/seekBarGrayLevel"
+        android:layout_marginBottom="@dimen/appMarginBottom"
+        android:layout_centerHorizontal="true"
+        android:text="@string/configuration_text_gray_level" />
+
+
+
+    <TextView
+        android:id="@+id/txvConfigurationPrinterInsertFontSize"
+        style="@style/StyleTextPrimaryMedium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txvConfigurationPrinterValorGrayLevel"
+        android:layout_marginBottom="@dimen/appMarginBottom"
+        android:text="@string/configuration_text_insert_font_size" />
+
+
+    <SeekBar
+        android:id="@+id/seekBarFontSize"
+        style="@style/StyleSeekBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txvConfigurationPrinterInsertFontSize"
+        android:layout_centerHorizontal="true"
+        android:max="12" />
+    <TextView
+        android:id="@+id/txvConfigurationPrinterValorFontSize"
+        style="@style/StyleTextPrimarySmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/seekBarFontSize"
+        android:layout_marginBottom="@dimen/appMarginBottom"
+        android:layout_centerHorizontal="true"
+        android:text="@string/configuration_text_font_size" />
+
+
 
     <Button
-        android:id="@+id/btnConfiguracionRegisterDispositivoBotonCancelar"
+        android:id="@+id/btnConfigurationPrinterBotonCancelar"
         style="@style/StyleButtonCancel"
         android:layout_alignParentStart="true"
-        android:layout_below="@id/seekBar2"
+        android:layout_below="@id/txvConfigurationPrinterValorFontSize"
         android:text="@string/general_text_button_cancelar" />
 
     <Button
-        android:id="@+id/btnConfiguracionRegisterDispositivoBotonAceptar"
+        android:id="@+id/btnConfigurationPrinterBotonAceptar"
         style="@style/StyleButtonAccept"
         android:layout_alignParentEnd="true"
-        android:layout_below="@id/seekBar2"
+        android:layout_below="@id/txvConfigurationPrinterValorFontSize"
         android:text="@string/general_text_button_aceptar" />
 
 

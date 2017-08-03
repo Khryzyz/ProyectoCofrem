@@ -21,7 +21,7 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
 @EActivity(R.layout.activity_splash_screen)
-public class SplashScreenActivity extends Activity implements SplashScreenView {
+public class ConfigurationPrinterScreenActivity extends Activity implements ConfigurationPrinterScreenView {
 
     /**
      * #############################################################################################
@@ -380,7 +380,7 @@ public class SplashScreenActivity extends Activity implements SplashScreenView {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(SplashScreenActivity.this, MainScreenActivity_.class);
+                Intent intent = new Intent(ConfigurationPrinterScreenActivity.this, MainScreenActivity_.class);
                 //Agregadas  ventanas para no retorno
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
                         | Intent.FLAG_ACTIVITY_NEW_TASK
@@ -408,7 +408,7 @@ public class SplashScreenActivity extends Activity implements SplashScreenView {
 
                 args.putInt(Configurations.keyConfiguration, Configurations.configuracionRegistrarConfigInicial);
 
-                Intent intent = new Intent(SplashScreenActivity.this, RegisterConfigurationScreenActivity_.class);
+                Intent intent = new Intent(ConfigurationPrinterScreenActivity.this, RegisterConfigurationScreenActivity_.class);
                 //Agregadas banderas para no retorno
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
                         | Intent.FLAG_ACTIVITY_NEW_TASK

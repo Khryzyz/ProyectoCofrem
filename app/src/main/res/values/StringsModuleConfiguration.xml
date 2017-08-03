@@ -49,4 +49,11 @@
     <string name="configuration_text_procesar_informacion_dispositivo_success">Información del dispositivo registrada correctamente.</string>
     <string name="configuration_text_procesar_informacion_dispositivo_error">Error en el registro de la información del dispositivo.</string>
 
+
+    <string name="configuration_text_insert_gray_level">Ingrese el nivel de intensidad de la impresora </string>
+    <string name="configuration_text_insert_font_size">Ingrese el tamaño de la letra </string>
+    <string name="configuration_text_gray_level">el nivel es : </string>
+    <string name="configuration_text_font_size">el tamaño es : </string>
+
+
 </resources>

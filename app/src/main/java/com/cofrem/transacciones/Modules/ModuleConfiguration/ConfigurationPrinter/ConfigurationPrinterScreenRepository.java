@@ -2,7 +2,7 @@ package com.cofrem.transacciones.Modules.ModuleConfiguration.ConfigurationPrinte
 
 import android.content.Context;
 
-public interface SplashScreenRepository {
+public interface ConfigurationPrinterScreenRepository {
 
     /**
      * Metodo que verifica:

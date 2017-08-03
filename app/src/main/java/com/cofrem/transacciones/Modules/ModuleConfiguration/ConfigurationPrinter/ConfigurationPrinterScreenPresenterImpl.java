@@ -3,11 +3,11 @@ package com.cofrem.transacciones.Modules.ModuleConfiguration.ConfigurationPrinte
 import android.content.Context;
 
 import com.cofrem.transacciones.Modules.ModuleConfiguration.ConfigurationPrinter.events.ConfigurationPrinterScreenEvent;
-import com.cofrem.transacciones.Modules.ModuleConfiguration.ConfigurationPrinter.ui.SplashScreenView;
+import com.cofrem.transacciones.Modules.ModuleConfiguration.ConfigurationPrinter.ui.ConfigurationPrinterScreenView;
 import com.cofrem.transacciones.lib.EventBus;
 import com.cofrem.transacciones.lib.GreenRobotEventBus;
 
-public class SplashScreenPresenterImpl implements ConfigurationPrinterScreenPresenter {
+public class ConfigurationPrinterScreenPresenterImpl implements ConfigurationPrinterScreenPresenter {
 
     /**
      * #############################################################################################
@@ -22,8 +22,8 @@ public class SplashScreenPresenterImpl implements ConfigurationPrinterScreenPres
      * Instanciamientos de las clases
      * #############################################################################################
      */
-    //Instanciamiento de la interface SplashScreenView
-    private SplashScreenView splashScreenView;
+    //Instanciamiento de la interface ConfigurationPrinterScreenView
+    private ConfigurationPrinterScreenView configurationPrinterScreenView;
 
     //Instanciamiento de la interface ConfigurationPrinterScreenInteractor
     private ConfigurationPrinterScreenInteractor configurationPrinterScreenInteractor;
@@ -33,10 +33,10 @@ public class SplashScreenPresenterImpl implements ConfigurationPrinterScreenPres
      * Constructor de la clase
      * #############################################################################################
      *
-     * @param splashScreenView
+     * @param configurationPrinterScreenView
      */
-    public SplashScreenPresenterImpl(SplashScreenView splashScreenView) {
-        this.splashScreenView = splashScreenView;
+    public ConfigurationPrinterScreenPresenterImpl(ConfigurationPrinterScreenView configurationPrinterScreenView) {
+        this.configurationPrinterScreenView = configurationPrinterScreenView;
         this.configurationPrinterScreenInteractor = new ConfigurationPrinterScreenInteractorImpl();
         this.eventBus = GreenRobotEventBus.getInstance();
     }
@@ -62,7 +62,7 @@ public class SplashScreenPresenterImpl implements ConfigurationPrinterScreenPres
      */
     @Override
     public void onDestroy() {
-        splashScreenView = null;
+        configurationPrinterScreenView = null;
         eventBus.unregister(this);
     }
 
@@ -76,7 +76,7 @@ public class SplashScreenPresenterImpl implements ConfigurationPrinterScreenPres
      */
     @Override
     public void validateInitialConfig(Context context) {
-        if (splashScreenView != null) {
+        if (configurationPrinterScreenView != null) {
             configurationPrinterScreenInteractor.validateInitialConfig(context);
         }
     }
@@ -91,7 +91,7 @@ public class SplashScreenPresenterImpl implements ConfigurationPrinterScreenPres
      */
     @Override
     public void validateAccess(Context context) {
-        if (splashScreenView != null) {
+        if (configurationPrinterScreenView != null) {
             configurationPrinterScreenInteractor.validateAccess(context);
         }
     }
@@ -185,8 +185,8 @@ public class SplashScreenPresenterImpl implements ConfigurationPrinterScreenPres
      * Metodo para manejar la verificacion exitosa
      */
     private void onVerifyInitialConfigExiste() {
-        if (splashScreenView != null) {
-            splashScreenView.handleVerifyInitialConfigExiste();
+        if (configurationPrinterScreenView != null) {
+            configurationPrinterScreenView.handleVerifyInitialConfigExiste();
         }
     }
 
@@ -194,8 +194,8 @@ public class SplashScreenPresenterImpl implements ConfigurationPrinterScreenPres
      * Metodo para manejar la verificacion exitosa
      */
     private void onVerifyInitialConfigNoExiste() {
-        if (splashScreenView != null) {
-            splashScreenView.handleVerifyInitialConfigNoExiste();
+        if (configurationPrinterScreenView != null) {
+            configurationPrinterScreenView.handleVerifyInitialConfigNoExiste();
         }
     }
 
@@ -203,8 +203,8 @@ public class SplashScreenPresenterImpl implements ConfigurationPrinterScreenPres
      * Metodo para manejar la existencia de la configuracion inicial NO valida
      */
     private void onVerifyInitialConfigNoValida() {
-        if (splashScreenView != null) {
-            splashScreenView.handleVerifyInitialConfigNoValida();
+        if (configurationPrinterScreenView != null) {
+            configurationPrinterScreenView.handleVerifyInitialConfigNoValida();
         }
     }
 
@@ -212,8 +212,8 @@ public class SplashScreenPresenterImpl implements ConfigurationPrinterScreenPres
      * Metodo para manejar la existencia de la configuracion de acceso
      */
     private void onRegistroConfiguracionAccesoExiste() {
-        if (splashScreenView != null) {
-            splashScreenView.handleRegistroConfiguracionAccesoExiste();
+        if (configurationPrinterScreenView != null) {
+            configurationPrinterScreenView.handleRegistroConfiguracionAccesoExiste();
         }
     }
 
@@ -221,8 +221,8 @@ public class SplashScreenPresenterImpl implements ConfigurationPrinterScreenPres
      * Metodo para manejar la no existencia de la configuracion de acceso
      */
     private void onRegistroConfiguracionAccesoNoExiste() {
-        if (splashScreenView != null) {
-            splashScreenView.handleRegistroConfiguracionAccesoNoExiste();
+        if (configurationPrinterScreenView != null) {
+            configurationPrinterScreenView.handleRegistroConfiguracionAccesoNoExiste();
         }
     }
 
@@ -230,8 +230,8 @@ public class SplashScreenPresenterImpl implements ConfigurationPrinterScreenPres
      * Metodo para manejar el registro de la configuracion de acceso exitosa
      */
     private void onInsertRegistroConfiguracionAccesoSuccess() {
-        if (splashScreenView != null) {
-            splashScreenView.handleInsertRegistroConfiguracionAccesoSuccess();
+        if (configurationPrinterScreenView != null) {
+            configurationPrinterScreenView.handleInsertRegistroConfiguracionAccesoSuccess();
         }
     }
 
@@ -239,8 +239,8 @@ public class SplashScreenPresenterImpl implements ConfigurationPrinterScreenPres
      * Metodo para manejar el registro de la configuracion de acceso erronea
      */
     private void onInsertRegistroConfiguracionAccesoError() {
-        if (splashScreenView != null) {
-            splashScreenView.handleInsertRegistroConfiguracionAccesoError();
+        if (configurationPrinterScreenView != null) {
+            configurationPrinterScreenView.handleInsertRegistroConfiguracionAccesoError();
         }
     }
 
@@ -248,8 +248,8 @@ public class SplashScreenPresenterImpl implements ConfigurationPrinterScreenPres
      * Metodo para manejar la verificacion exitosa
      */
     private void onVerifySuccess() {
-        if (splashScreenView != null) {
-            splashScreenView.handleVerifySuccess();
+        if (configurationPrinterScreenView != null) {
+            configurationPrinterScreenView.handleVerifySuccess();
         }
     }
 
@@ -257,8 +257,8 @@ public class SplashScreenPresenterImpl implements ConfigurationPrinterScreenPres
      * Metodo para manejar la verificacion erronea
      */
     private void onVerifyError() {
-        if (splashScreenView != null) {
-            splashScreenView.handleVerifyError();
+        if (configurationPrinterScreenView != null) {
+            configurationPrinterScreenView.handleVerifyError();
         }
     }
 
@@ -266,8 +266,8 @@ public class SplashScreenPresenterImpl implements ConfigurationPrinterScreenPres
      * Metodo para manejar la conexion a internet exitosa
      */
     private void onInternetConnectionSuccess() {
-        if (splashScreenView != null) {
-            splashScreenView.handleInternetConnectionSuccess();
+        if (configurationPrinterScreenView != null) {
+            configurationPrinterScreenView.handleInternetConnectionSuccess();
         }
     }
 
@@ -275,8 +275,8 @@ public class SplashScreenPresenterImpl implements ConfigurationPrinterScreenPres
      * Metodo para manejar la conexion a internet erronea
      */
     private void onInternetConnectionError() {
-        if (splashScreenView != null) {
-            splashScreenView.handleInternetConnectionError();
+        if (configurationPrinterScreenView != null) {
+            configurationPrinterScreenView.handleInternetConnectionError();
         }
     }
 
@@ -284,8 +284,8 @@ public class SplashScreenPresenterImpl implements ConfigurationPrinterScreenPres
      * Metodo para manejar la conexion al dispositivo lector de banda magnetica exitosa
      */
     private void onMagneticReaderDeviceSuccess() {
-        if (splashScreenView != null) {
-            splashScreenView.handleMagneticReaderDeviceSuccess();
+        if (configurationPrinterScreenView != null) {
+            configurationPrinterScreenView.handleMagneticReaderDeviceSuccess();
         }
     }
 
@@ -293,8 +293,8 @@ public class SplashScreenPresenterImpl implements ConfigurationPrinterScreenPres
      * Metodo para manejar la conexion al dispositivo lector de banda magnetica erronea
      */
     private void onMagneticReaderDeviceError() {
-        if (splashScreenView != null) {
-            splashScreenView.handleMagneticReaderDeviceError();
+        if (configurationPrinterScreenView != null) {
+            configurationPrinterScreenView.handleMagneticReaderDeviceError();
         }
     }
 
@@ -302,8 +302,8 @@ public class SplashScreenPresenterImpl implements ConfigurationPrinterScreenPres
      * Metodo para manejar la conexion al dispositivo NFC exitosa
      */
     private void onNFCDeviceSuccess() {
-        if (splashScreenView != null) {
-            splashScreenView.handleNFCDeviceSuccess();
+        if (configurationPrinterScreenView != null) {
+            configurationPrinterScreenView.handleNFCDeviceSuccess();
         }
     }
 
@@ -311,8 +311,8 @@ public class SplashScreenPresenterImpl implements ConfigurationPrinterScreenPres
      * Metodo para manejar la conexion al dispositivo NFC erronea
      */
     private void onNFCDeviceError() {
-        if (splashScreenView != null) {
-            splashScreenView.handleNFCDeviceError();
+        if (configurationPrinterScreenView != null) {
+            configurationPrinterScreenView.handleNFCDeviceError();
         }
     }
 
@@ -320,8 +320,8 @@ public class SplashScreenPresenterImpl implements ConfigurationPrinterScreenPres
      * Metodo para manejar la conexion al dispositivo de impresion exitosa
      */
     private void onPrinterDeviceSuccess() {
-        if (splashScreenView != null) {
-            splashScreenView.handlePrinterDeviceSuccess();
+        if (configurationPrinterScreenView != null) {
+            configurationPrinterScreenView.handlePrinterDeviceSuccess();
         }
     }
 
@@ -329,8 +329,8 @@ public class SplashScreenPresenterImpl implements ConfigurationPrinterScreenPres
      * Metodo para manejar la conexion al dispositivo de impresion erronea
      */
     private void onPrinterDeviceError() {
-        if (splashScreenView != null) {
-            splashScreenView.handlePrinterDeviceError();
+        if (configurationPrinterScreenView != null) {
+            configurationPrinterScreenView.handlePrinterDeviceError();
         }
     }
 }
