@@ -53,13 +53,13 @@ public class KsoapAsync extends AsyncTask<TransactionWS, Integer, SoapObject> {
         //se crea un nuevo Soap Request
         SoapObject soapRequest = new SoapObject(transactionWs.getNameSpaceTransaction(), transactionWs.getMethodNameTransaction());
 
-        //Se inicializa una propiedad
-        PropertyInfo propertyInfo = new PropertyInfo();
-
         String[] parameters;
 
         //Se recorren los parametros y se agregan a la peticion
         for (int i = 0; i < mapParams.length; i++) {
+
+            //Se inicializa una propiedad
+            PropertyInfo propertyInfo = new PropertyInfo();
 
             parameters = mapParams[i];
 

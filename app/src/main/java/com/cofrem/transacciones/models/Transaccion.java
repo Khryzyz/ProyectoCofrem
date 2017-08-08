@@ -36,7 +36,7 @@ public class Transaccion {
     /**
      * ## TABLA ENTREGADA POR COFREM ########
      * ## Version 2017/07/27 ################
-     * Valores posibles que puede tomar el atributo tipo_producto
+     * Valores posibles que puede tomar el atributo tipo_servicio
      * 01	CUPO ROTATIVO
      * 02	BONO DE BIENESTAR
      * 03	TARJETA REGALO
@@ -63,7 +63,7 @@ public class Transaccion {
     private String numero_tarjeta;
 
     //Array de servicios
-    private int tipo_producto;
+    private int tipo_servicio;
     private int valor;
 
     private int tipo_encriptacion;
@@ -84,7 +84,7 @@ public class Transaccion {
             int numero_cargo,
             String numero_documento,
             int clave, String numero_tarjeta,
-            int tipo_producto,
+            int tipo_servicio,
             int valor,
             int tipo_encriptacion,
             int tipo_transaccion,
@@ -95,7 +95,7 @@ public class Transaccion {
         this.numero_documento = numero_documento;
         this.clave = clave;
         this.numero_tarjeta = numero_tarjeta;
-        this.tipo_producto = tipo_producto;
+        this.tipo_servicio = tipo_servicio;
         this.valor = valor;
         this.tipo_encriptacion = tipo_encriptacion;
         this.tipo_transaccion = tipo_transaccion;
@@ -143,12 +143,12 @@ public class Transaccion {
         this.numero_tarjeta = numero_tarjeta;
     }
 
-    public int getTipo_producto() {
-        return tipo_producto;
+    public int getTipo_servicio() {
+        return tipo_servicio;
     }
 
-    public void setTipo_producto(int tipo_producto) {
-        this.tipo_producto = tipo_producto;
+    public void setTipo_servicio(int tipo_servicio) {
+        this.tipo_servicio = tipo_servicio;
     }
 
     public int getValor() {
