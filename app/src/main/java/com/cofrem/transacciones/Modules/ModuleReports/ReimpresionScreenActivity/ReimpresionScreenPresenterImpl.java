@@ -10,12 +10,6 @@ import com.cofrem.transacciones.models.Transaccion;
 
 public class ReimpresionScreenPresenterImpl implements ReimpresionScreenPresenter {
 
-
-    @Override
-    public void imprimirReporteGeneral(Context context) {
-
-    }
-
     /**
      * #############################################################################################
      * Declaracion de componentes y variables
@@ -102,6 +96,10 @@ public class ReimpresionScreenPresenterImpl implements ReimpresionScreenPresente
         reimpresionScreenInteractor.imprimirReporteDetalle(context);
     }
 
+    @Override
+    public void imprimirReporteGeneral(Context context) {
+        reimpresionScreenInteractor.imprimirReporteGeneral(context);
+    }
     /**
      * Metodo para la verificacion de los datos
      */

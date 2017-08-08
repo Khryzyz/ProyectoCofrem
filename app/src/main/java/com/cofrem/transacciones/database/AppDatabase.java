@@ -70,6 +70,7 @@ public final class AppDatabase extends SQLiteOpenHelper {
         db.execSQL(DatabaseManager.TableEstablecimiento.CREATE_TABLE_ESTABLECIMIENTO);
         db.execSQL(DatabaseManager.TableConfiguracionConexion.CREATE_TABLE_CONFIGURACION_CONEXION);
         db.execSQL(DatabaseManager.TableConfiguracionAcceso.CREATE_TABLE_CONFIGURACION_ACCESO);
+        db.execSQL(DatabaseManager.TableConfigurationPrinter.CREATE_TABLE_CONFIGURACION_PRINTER);
 
     }
 
@@ -90,6 +91,7 @@ public final class AppDatabase extends SQLiteOpenHelper {
         db.execSQL(DatabaseManager.TableEstablecimiento.DROP_TABLE_ESTABLECIMIENTO);
         db.execSQL(DatabaseManager.TableConfiguracionConexion.DROP_TABLE_CONFIGURACION_CONEXION);
         db.execSQL(DatabaseManager.TableConfiguracionAcceso.DROP_TABLE_CONFIGURACION_ACCESO);
+        db.execSQL(DatabaseManager.TableConfigurationPrinter.DROP_TABLE_CONFIGURACION_PRINTER);
 
         onCreate(db);
     }
@@ -303,6 +305,50 @@ public final class AppDatabase extends SQLiteOpenHelper {
     }
 
     /**
+     * Metodo para insertar registro inicial en la Base de Datos de la configuracion para la impresora
+     * Usado en:
+     * Inicio por primera vez de la APP
+     */
+    public boolean insertRegistroInicialConfiguracionPrinter() {
+
+        // Inicializacion de la variable de contenidos del registro
+        ContentValues contentValues = new ContentValues();
+
+        // Almacena los valores a insertar
+        contentValues.put(DatabaseManager.TableConfigurationPrinter.COLUMN_CONFIGURACION_PRINTER_FONT_SIZE, 2);
+        contentValues.put(DatabaseManager.TableConfigurationPrinter.COLUMN_CONFIGURACION_PRINTER_GRAY_LEVEL, 11);
+
+        // Insercion del registro en la base de datos
+        int count = 0;
+
+        try {
+
+            count = (int) getWritableDatabase().insert(
+                    DatabaseManager.TableConfigurationPrinter.TABLE_NAME_CONFIGURACION_PRINTER,
+                    null,
+                    contentValues
+            );
+
+        } catch (SQLException e) {
+
+            e.printStackTrace();
+
+        }
+
+        if (count == 1) {
+
+            return true;
+
+        } else {
+
+            return false;
+
+        }
+
+    }
+
+
+    /**
      * #############################################################################################
      * AREA MODULE CONFIGURACION
      * #############################################################################################
@@ -390,6 +436,34 @@ public final class AppDatabase extends SQLiteOpenHelper {
 
         return count;
     }
+
+    /**
+     * Metodo para validar si existe registro inicial en la Base de Datos para la configuracion inical de la impresora
+     * Usado en modulos:
+     * - Configuracion
+     *
+     * @return
+     */
+    public int conteoConfigurationPrinter() {
+
+        int count;
+
+        Cursor cursorQuery;
+
+        cursorQuery = getWritableDatabase().rawQuery(
+                "SELECT COUNT("+DatabaseManager.TableConfigurationPrinter.COLUMN_CONFIGURACION_PRINTER_FONT_SIZE+") FROM " +
+                        DatabaseManager.TableConfigurationPrinter.TABLE_NAME_CONFIGURACION_PRINTER,
+                null
+        );
+
+        cursorQuery.moveToFirst();
+
+        count = cursorQuery.getInt(0);
+
+        return count;
+
+    }
+
 
     /**
      * Metodo para insertar registro de la configuracion de la conexion
