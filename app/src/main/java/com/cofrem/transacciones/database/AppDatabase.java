@@ -14,7 +14,6 @@ import com.cofrem.transacciones.models.ModelsWS.ModelEstablecimiento.Establecimi
 import com.cofrem.transacciones.models.ModelsWS.ModelEstablecimiento.InformacionEstablecimiento;
 import com.cofrem.transacciones.models.Transaccion;
 
-import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -93,6 +92,35 @@ public final class AppDatabase extends SQLiteOpenHelper {
         db.execSQL(DatabaseManager.TableConfiguracionAcceso.DROP_TABLE_CONFIGURACION_ACCESO);
 
         onCreate(db);
+    }
+
+    /**
+     * #############################################################################################
+     * AREA CONSULTAS GENERALES
+     * #############################################################################################
+     */
+
+    /**
+     * Metodo para Obtener ultima  transaccion
+     */
+    public String obtenerCodigoTerminal() {
+
+        String codigoTerminal = "";
+
+        Cursor cursor;
+
+        cursor = getWritableDatabase().rawQuery(
+                "SELECT " + DatabaseManager.TableConfiguracionConexion.COLUMN_CONFIGURACION_CONEXION_DISPOSITIVO +
+                        " FROM " + DatabaseManager.TableConfiguracionConexion.TABLE_NAME_CONFIGURACION_CONEXION +
+                        " WHERE " + DatabaseManager.TableConfiguracionConexion.COLUMN_CONFIGURACION_CONEXION_ESTADO + " = 1 " +
+                        " LIMIT 1", null
+        );
+
+        if (cursor.moveToFirst()) {
+            codigoTerminal = cursor.getString(0);
+        }
+
+        return codigoTerminal;
     }
 
     /**
@@ -529,7 +557,6 @@ public final class AppDatabase extends SQLiteOpenHelper {
      * #############################################################################################
      */
 
-
     /**
      * Metodo para Obtener ultima  transaccion
      */
@@ -542,12 +569,15 @@ public final class AppDatabase extends SQLiteOpenHelper {
         Cursor cursor;
 
         cursor = getWritableDatabase().rawQuery(
-                "SELECT * FROM " + DatabaseManager.TableTransacciones.TABLE_NAME_TRANSACCIONES + " ORDER BY " + DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_REGISTRO + " ASC LIMIT 1", null
+                "SELECT * " +
+                        " FROM " + DatabaseManager.TableTransacciones.TABLE_NAME_TRANSACCIONES +
+                        " ORDER BY " + DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_REGISTRO + " ASC " +
+                        " LIMIT 1", null
         );
 
         if (cursor.moveToFirst()) {
             modelTransaccion.setId(cursor.getInt(0));
-            modelTransaccion.setTipo_producto(cursor.getInt(1));
+            modelTransaccion.setTipo_servicio(cursor.getInt(1));
             modelTransaccion.setNumero_cargo(cursor.getInt(2));
             modelTransaccion.setNumero_tarjeta(cursor.getString(3));
             modelTransaccion.setValor(cursor.getInt(4));
@@ -573,7 +603,7 @@ public final class AppDatabase extends SQLiteOpenHelper {
 
         if (cursor.moveToFirst()) {
             modelTransaccion.setId(cursor.getInt(0));
-            modelTransaccion.setTipo_producto(cursor.getInt(1));
+            modelTransaccion.setTipo_servicio(cursor.getInt(1));
             modelTransaccion.setNumero_cargo(cursor.getInt(2));
             modelTransaccion.setNumero_tarjeta(cursor.getString(3));
             modelTransaccion.setValor(cursor.getInt(4));
@@ -599,7 +629,7 @@ public final class AppDatabase extends SQLiteOpenHelper {
             Transaccion modelTransaccion = new Transaccion();
 
             modelTransaccion.setId(cursor.getInt(0));
-            modelTransaccion.setTipo_producto(cursor.getInt(1));
+            modelTransaccion.setTipo_servicio(cursor.getInt(1));
             modelTransaccion.setNumero_cargo(cursor.getInt(2));
             modelTransaccion.setNumero_tarjeta(cursor.getString(3));
             modelTransaccion.setValor(cursor.getInt(4));

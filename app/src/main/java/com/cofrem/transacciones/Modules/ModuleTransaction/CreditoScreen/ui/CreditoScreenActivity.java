@@ -375,7 +375,8 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
     @Click({R.id.btnCreditoTransactionValorCompraBotonCancelar,
             R.id.btnCreditoTransactionNumeroDocumentoBotonCancelar,
             R.id.btnCreditoTransactionVerificacionDatosBotonCancelar,
-            R.id.btnCreditoTransactionClaveUsuarioBotonCancelar
+            R.id.btnCreditoTransactionClaveUsuarioBotonCancelar,
+            R.id.btnCreditoTransactionExitosaBotonSalir
     })
     public void navigateToTransactionScreen() {
         new Handler().postDelayed(new Runnable() {
@@ -391,6 +392,7 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
                 startActivity(intent);
             }
         }, 1000);
+
     }
 
     /**
@@ -402,7 +404,7 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
         // Se obtiene el texto de la contraseña
         String valorCompra = edtCreditoTransactionValorCompraValor.getText().toString();
 
-        if (valorCompra.length() > 0 && Integer.parseInt(valorCompra) >= 10000 && Integer.parseInt(valorCompra) <= 3000000) {
+        if (valorCompra.length() > 0 && Integer.parseInt(valorCompra) >= 1 && Integer.parseInt(valorCompra) <= 3000000) {
 
             //Registra el valor de compra en el modelo de la transaccion
             modelTransaccion.setValor(Integer.parseInt(valorCompra));
@@ -424,7 +426,7 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
             //Muestra el mensaje de error de formato de la contraseña
             Toast.makeText(this, R.string.transaction_error_valor, Toast.LENGTH_SHORT).show();
 
-        } else if (Integer.parseInt(valorCompra) < 10000) {
+        } else if (Integer.parseInt(valorCompra) < 1) {
 
             //Vacia la caja de contraseña
             edtCreditoTransactionValorCompraValor.setText("");
@@ -459,7 +461,6 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
             //Registra el valor del numero de documento en el modelo de transaccion
             modelTransaccion.setNumero_documento(numeroDocumento);
 
-
             txvCreditoTransactionVerificacionDatosValorCantidad.setText(
                     String.valueOf(modelTransaccion.getValor())
             );
@@ -486,7 +487,6 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
             Toast.makeText(this, R.string.transaction_error_numero_documento, Toast.LENGTH_SHORT).show();
 
         }
-
 
     }
 
@@ -553,10 +553,14 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
             //Registra el valor del numero de tarjeta en el modelo de la transaccion
             modelTransaccion.setNumero_tarjeta(clave);
 
+            //En caso de la lectura correcta se continua el proceso
             lecturaTarjetaCorrecta();
 
         } else {
+
+            //En caso de la lectura erronea se muestra la pantalla de error
             lecturaTarjetaErronea();
+
         }
 
     }
@@ -613,7 +617,7 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
 
             //TODO: agregar los diferentes tipos de productos
             //Se registra el tipo de producto en el modelo
-            modelTransaccion.setTipo_producto(Transaccion.CODIGO_PRODUCTO_CUPO_ROTATIVO);
+            modelTransaccion.setTipo_servicio(Transaccion.CODIGO_PRODUCTO_CUPO_ROTATIVO);
 
             //Registra la transaccion
             creditoScreenPresenter.registrarTransaccion(this, modelTransaccion);
@@ -636,20 +640,11 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
      */
     public void finalizarTransaccion() {
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
+        //Oculta la vista de contraseña de usuario
+        bodyContentTransactionPassUsuario.setVisibility(View.GONE);
 
-                Intent intent = new Intent(CreditoScreenActivity.this, MainScreenActivity_.class);
-
-                //Agregadas banderas para no retorno
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
-                        | Intent.FLAG_ACTIVITY_NEW_TASK
-                        | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-
-                startActivity(intent);
-            }
-        }, 1000);
+        //Muestra la vista de transaccion Exitosa
+        bodyContentTransactionTransaccionExitosa.setVisibility(View.VISIBLE);
 
     }
 

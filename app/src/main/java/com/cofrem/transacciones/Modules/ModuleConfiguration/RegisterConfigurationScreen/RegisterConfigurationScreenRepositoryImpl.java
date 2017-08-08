@@ -151,7 +151,7 @@ public class RegisterConfigurationScreenRepositoryImpl implements RegisterConfig
         Establecimiento establecimiento = null;
 
         //Inicializacion y declaracion de parametros para la peticion web service
-        String[] params = new String[]{InfoGlobalTransaccionSOAP.PARAM_NAME_CODIGO_TERMINAL, codigoDispositivo};
+        String[] params = new String[]{InfoGlobalTransaccionSOAP.PARAM_NAME_TERMINAL_CODIGO_TERMINAL, codigoDispositivo};
 
         //Creacion del modelo TransactionWS para ser usado dentro del webservice
         TransactionWS transactionWS = new TransactionWS(
