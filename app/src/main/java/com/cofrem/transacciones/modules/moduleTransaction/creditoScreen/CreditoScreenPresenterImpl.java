@@ -96,6 +96,12 @@ public class CreditoScreenPresenterImpl implements CreditoScreenPresenter {
             case CreditoScreenEvent.onTransaccionDBRegisterError:
                 onTransaccionDBRegisterError();
                 break;
+            case CreditoScreenEvent.onImprecionReciboSuccess:
+
+                break;
+            case CreditoScreenEvent.onImprecionReciboError:
+
+                break;
 
         }
     }

@@ -138,7 +138,7 @@ public class ReimpresionScreenRepositoryImpl implements ReimpresionScreenReposit
         if (status == InfoGlobalSettingsPrint.PRINTER_OK) {
             postEvent(ReimpresionScreenEvent.onImprimirReporteDetalleSuccess);
         } else {
-            postEvent(ReimpresionScreenEvent.onImprimirReporteDetalleError, stringErrorPrinter(status, context), null, null);
+            postEvent(ReimpresionScreenEvent.onImprimirReporteDetalleError, PrinterHandler.stringErrorPrinter(status, context), null, null);
         }
     }
 
@@ -189,7 +189,7 @@ public class ReimpresionScreenRepositoryImpl implements ReimpresionScreenReposit
         if (status == InfoGlobalSettingsPrint.PRINTER_OK) {
             postEvent(ReimpresionScreenEvent.onImprimirReporteGeneralSuccess);
         } else {
-            postEvent(ReimpresionScreenEvent.onImprimirReporteGeneralError, stringErrorPrinter(status, context), null, null);
+            postEvent(ReimpresionScreenEvent.onImprimirReporteGeneralError, PrinterHandler.stringErrorPrinter(status, context), null, null);
         }
     }
 
@@ -254,7 +254,7 @@ public class ReimpresionScreenRepositoryImpl implements ReimpresionScreenReposit
         if (status == InfoGlobalSettingsPrint.PRINTER_OK) {
             postEvent(ReimpresionScreenEvent.onImprimirUltimoReciboSuccess);
         } else {
-            postEvent(ReimpresionScreenEvent.onImprimirUltimoReciboError, stringErrorPrinter(status, context), null, null);
+            postEvent(ReimpresionScreenEvent.onImprimirUltimoReciboError, PrinterHandler.stringErrorPrinter(status, context), null, null);
         }
 
     }
@@ -275,7 +275,7 @@ public class ReimpresionScreenRepositoryImpl implements ReimpresionScreenReposit
         if (status == InfoGlobalSettingsPrint.PRINTER_OK) {
             postEvent(ReimpresionScreenEvent.onImprimirReciboPorNumCargoSuccess);
         } else {
-            postEvent(ReimpresionScreenEvent.onImprimirReciboPorNumCargoError, stringErrorPrinter(status, context), null, null);
+            postEvent(ReimpresionScreenEvent.onImprimirReciboPorNumCargoError, PrinterHandler.stringErrorPrinter(status, context), null, null);
         }
     }
 
@@ -341,35 +341,6 @@ public class ReimpresionScreenRepositoryImpl implements ReimpresionScreenReposit
 
         return dateFormat.format(date);
     }
-
-
-    /**
-     * Metodo auxiliar que se encarga de retornar el String correspondiente al estado de la impresora
-     *
-     * @return String
-     */
-    private String stringErrorPrinter(int status, Context context) {
-        String result = "";
-        switch (status) {
-            case InfoGlobalSettingsPrint.PRINTER_DISCONNECT:
-                result = context.getResources().getString(R.string.printer_disconnect);
-                break;
-            case InfoGlobalSettingsPrint.PRINTER_OUT_OF_PAPER:
-                result = context.getResources().getString(R.string.printer_out_of_paper);
-                break;
-            case InfoGlobalSettingsPrint.PRINTER_OVER_FLOW:
-                result = context.getResources().getString(R.string.printer_over_flow);
-                break;
-            case InfoGlobalSettingsPrint.PRINTER_OVER_HEAT:
-                result = context.getResources().getString(R.string.printer_over_heat);
-                break;
-            case InfoGlobalSettingsPrint.PRINTER_ERROR:
-                result = context.getResources().getString(R.string.printer_error);
-                break;
-        }
-        return result;
-    }
-
 
     /**
      * Metodo que registra los eventos
