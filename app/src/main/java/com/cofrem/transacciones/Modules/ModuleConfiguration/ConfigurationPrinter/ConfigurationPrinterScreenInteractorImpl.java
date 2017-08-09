@@ -1,9 +1,11 @@
 package com.cofrem.transacciones.Modules.ModuleConfiguration.ConfigurationPrinter;
 
+
 import android.content.Context;
 
-public class ConfigurationPrinterScreenInteractorImpl implements ConfigurationPrinterScreenInteractor {
+import com.cofrem.transacciones.models.ConfigurationPrinter;
 
+class ConfigurationPrinterScreenInteractorImpl implements ConfigurationPrinterScreenInteractor {
     /**
      * #############################################################################################
      * Declaracion de componentes y variables
@@ -27,37 +29,23 @@ public class ConfigurationPrinterScreenInteractorImpl implements ConfigurationPr
         configurationPrinterScreenRepository = new ConfigurationPrinterScreenRepositoryImpl();
 
     }
-
     /**
      * #############################################################################################
      * Metodos sobrecargados de la interface
      * #############################################################################################
      */
 
-    /**
-     * Metodo que verifica:
-     *  - La existencia de la configuración inicial
-     *  - En caso de no existir mostrará la vista de configuración
-     *  - En caso de existir validara el acceso
-     *
-     * @param context
-     */
     @Override
-    public void validateInitialConfig(Context context) {
-        configurationPrinterScreenRepository.validateInitialConfig(context);
+    public void saveConfigurationPrinter(Context context, ConfigurationPrinter configuration) {
+        configurationPrinterScreenRepository.saveConfigurationPrinter(context,configuration);
     }
 
     /**
-     * Metodo que verifica:
-     *  - Conexion a internet
-     *  - Existencia datos en DB interna
-     *  - Coherencia de datos con el servidor
      *
-     * @param context
      */
     @Override
-    public void validateAccess(Context context) {
+    public void VerifyConfigurationInitialPrinter(Context context) {
         //Valida el acceso a la app
-        configurationPrinterScreenRepository.validateAcces(context);
+        configurationPrinterScreenRepository.VerifyConfigurationInitialPrinter(context);
     }
 }

@@ -1,13 +1,16 @@
 package com.cofrem.transacciones.Modules.ModuleConfiguration.ConfigurationPrinter;
 
+
 import android.content.Context;
 
 import com.cofrem.transacciones.Modules.ModuleConfiguration.ConfigurationPrinter.events.ConfigurationPrinterScreenEvent;
 import com.cofrem.transacciones.Modules.ModuleConfiguration.ConfigurationPrinter.ui.ConfigurationPrinterScreenView;
 import com.cofrem.transacciones.lib.EventBus;
 import com.cofrem.transacciones.lib.GreenRobotEventBus;
+import com.cofrem.transacciones.models.ConfigurationPrinter;
 
 public class ConfigurationPrinterScreenPresenterImpl implements ConfigurationPrinterScreenPresenter {
+
 
     /**
      * #############################################################################################
@@ -22,7 +25,7 @@ public class ConfigurationPrinterScreenPresenterImpl implements ConfigurationPri
      * Instanciamientos de las clases
      * #############################################################################################
      */
-    //Instanciamiento de la interface ConfigurationPrinterScreenView
+    //Instanciamiento de la interface configurationPrinterScreenView
     private ConfigurationPrinterScreenView configurationPrinterScreenView;
 
     //Instanciamiento de la interface ConfigurationPrinterScreenInteractor
@@ -42,13 +45,7 @@ public class ConfigurationPrinterScreenPresenterImpl implements ConfigurationPri
     }
 
     /**
-     * #############################################################################################
-     * Metodos sobrecargados de la interface
-     * #############################################################################################
-     */
-
-    /**
-     * Sobrecarga del metodo onCreate de la interface ConfigurationPrinterScreenPresenter "crear" el registro al bus de eventos
+     * Sobrecarga del metodo onCreate de la interface SaldoScreenPresenter "crear" el registro al bus de eventos
      */
     @Override
     public void onCreate() {
@@ -58,7 +55,7 @@ public class ConfigurationPrinterScreenPresenterImpl implements ConfigurationPri
     }
 
     /**
-     * Sobrecarga del metodo onDestroy de la interface ConfigurationPrinterScreenPresenter para "eliminar"  el registro al bus de eventos
+     * Sobrecarga del metodo onDestroy de la interface SaldoScreenPresenter para "eliminar"  el registro al bus de eventos
      */
     @Override
     public void onDestroy() {
@@ -67,37 +64,27 @@ public class ConfigurationPrinterScreenPresenterImpl implements ConfigurationPri
     }
 
     /**
-     * Metodo que verifica:
-     *  - La existencia de la configuración inicial
-     *  - En caso de no existir mostrará la vista de configuración
-     *  - En caso de existir validara el acceso
-     *
-     * @param context
+     * metodo que se encarga de verificar la existencia de la configuracion de la impresora
      */
     @Override
-    public void validateInitialConfig(Context context) {
+    public void VerifyConfigurationInitialPrinter(Context context) {
         if (configurationPrinterScreenView != null) {
-            configurationPrinterScreenInteractor.validateInitialConfig(context);
+            configurationPrinterScreenInteractor.VerifyConfigurationInitialPrinter(context);
         }
     }
 
     /**
-     * Metodo que verifica:
-     *  - Conexion a internet
-     *  - Existencia datos en DB interna
-     *  - Coherencia de datos con el servidor
-     *
-     * @param context
+     * metodo que se encarga guardar la configuracion de la impresora
      */
     @Override
-    public void validateAccess(Context context) {
+    public void saveConfigurationPrinter(Context context, ConfigurationPrinter configuration) {
         if (configurationPrinterScreenView != null) {
-            configurationPrinterScreenInteractor.validateAccess(context);
+            configurationPrinterScreenInteractor.saveConfigurationPrinter(context,configuration);
         }
     }
 
     /**
-     * Sobrecarga del metodo onEventMainThread de la interface ConfigurationPrinterScreenPresenter para el manejo de eventos
+     * Sobrecarga del metodo onEventMainThread de la interface SaldoScreenPresenter para el manejo de eventos
      *
      * @param configurationPrinterScreenEvent
      */
@@ -105,77 +92,22 @@ public class ConfigurationPrinterScreenPresenterImpl implements ConfigurationPri
     public void onEventMainThread(ConfigurationPrinterScreenEvent configurationPrinterScreenEvent) {
         switch (configurationPrinterScreenEvent.getEventType()) {
 
-            case ConfigurationPrinterScreenEvent.onVerifyInitialConfigExiste:
-                onVerifyInitialConfigExiste();
+            case ConfigurationPrinterScreenEvent.onVerifyConfigurationInitialSuccess:
+                onVerifyConfigurationInitialPrinterSuccess(configurationPrinterScreenEvent.getConfigurationPrinter());
+                break;
+            case ConfigurationPrinterScreenEvent.onVerifyConfigurationInitialError:
+                break;
+            case ConfigurationPrinterScreenEvent.onSaveConfigurationPrinterSuccess:
+                onSaveConfigurationPrinterSuccess();
+                break;
+            case ConfigurationPrinterScreenEvent.onSaveConfigurationPrinterError:
+                onSaveConfigurationPrinterError();
                 break;
 
-            case ConfigurationPrinterScreenEvent.onVerifyInitialConfigNoExiste:
-                onVerifyInitialConfigNoExiste();
-                break;
-
-            case ConfigurationPrinterScreenEvent.onVerifyInitialConfigNoValida:
-                onVerifyInitialConfigNoValida();
-                break;
-
-            case ConfigurationPrinterScreenEvent.onRegistroConfiguracionAccesoExiste:
-                onRegistroConfiguracionAccesoExiste();
-                break;
-
-            case ConfigurationPrinterScreenEvent.onRegistroConfiguracionAccesoNoExiste:
-                onRegistroConfiguracionAccesoNoExiste();
-                break;
-
-            case ConfigurationPrinterScreenEvent.onInsertRegistroConfiguracionAccesoSuccess:
-                onInsertRegistroConfiguracionAccesoSuccess();
-                break;
-
-            case ConfigurationPrinterScreenEvent.onInsertRegistroConfiguracionAccesoError:
-                onInsertRegistroConfiguracionAccesoError();
-                break;
-
-            case ConfigurationPrinterScreenEvent.onVerifySuccess:
-                onVerifySuccess();
-                break;
-
-            case ConfigurationPrinterScreenEvent.onVerifyError:
-                onVerifyError();
-                break;
-
-            case ConfigurationPrinterScreenEvent.onInternetConnectionSuccess:
-                onInternetConnectionSuccess();
-                break;
-
-            case ConfigurationPrinterScreenEvent.onInternetConnectionError:
-                onInternetConnectionError();
-                break;
-
-            case ConfigurationPrinterScreenEvent.onMagneticReaderDeviceSuccess:
-                onMagneticReaderDeviceSuccess();
-                break;
-
-            case ConfigurationPrinterScreenEvent.onMagneticReaderDeviceError:
-                onMagneticReaderDeviceError();
-                break;
-
-            case ConfigurationPrinterScreenEvent.onNFCDeviceSuccess:
-                onNFCDeviceSuccess();
-                break;
-
-            case ConfigurationPrinterScreenEvent.onNFCDeviceError:
-                onNFCDeviceError();
-                break;
-
-            case ConfigurationPrinterScreenEvent.onPrinterDeviceSuccess:
-                onPrinterDeviceSuccess();
-                break;
-
-            case ConfigurationPrinterScreenEvent.onPrinterDeviceError:
-                onPrinterDeviceError();
-                break;
         }
     }
 
-    /**
+/**
      * #############################################################################################
      * Metodo propios de la clase
      * #############################################################################################
@@ -184,153 +116,35 @@ public class ConfigurationPrinterScreenPresenterImpl implements ConfigurationPri
     /**
      * Metodo para manejar la verificacion exitosa
      */
-    private void onVerifyInitialConfigExiste() {
+    private void onVerifyConfigurationInitialPrinterSuccess(ConfigurationPrinter configuration) {
         if (configurationPrinterScreenView != null) {
-            configurationPrinterScreenView.handleVerifyInitialConfigExiste();
+            configurationPrinterScreenView.handleVerifyConfigurationInitialPrinterSuccess(configuration);
+        }
+    }
+
+
+    /**
+     * Metodo para manejar la verificacion Errada
+     */
+    private void onVerifyConfigurationInitialPrinterError() {
+        if (configurationPrinterScreenView != null) {
         }
     }
 
     /**
-     * Metodo para manejar la verificacion exitosa
+     * Metodo para manejar el insert de la configuracion exitosa
      */
-    private void onVerifyInitialConfigNoExiste() {
+    private void onSaveConfigurationPrinterSuccess() {
         if (configurationPrinterScreenView != null) {
-            configurationPrinterScreenView.handleVerifyInitialConfigNoExiste();
+            configurationPrinterScreenView.handleSaveConfigurationPrinterSuccess();
         }
     }
-
     /**
-     * Metodo para manejar la existencia de la configuracion inicial NO valida
+     * Metodo para manejar el insert de la configuracion con error
      */
-    private void onVerifyInitialConfigNoValida() {
+    private void onSaveConfigurationPrinterError() {
         if (configurationPrinterScreenView != null) {
-            configurationPrinterScreenView.handleVerifyInitialConfigNoValida();
-        }
-    }
-
-    /**
-     * Metodo para manejar la existencia de la configuracion de acceso
-     */
-    private void onRegistroConfiguracionAccesoExiste() {
-        if (configurationPrinterScreenView != null) {
-            configurationPrinterScreenView.handleRegistroConfiguracionAccesoExiste();
-        }
-    }
-
-    /**
-     * Metodo para manejar la no existencia de la configuracion de acceso
-     */
-    private void onRegistroConfiguracionAccesoNoExiste() {
-        if (configurationPrinterScreenView != null) {
-            configurationPrinterScreenView.handleRegistroConfiguracionAccesoNoExiste();
-        }
-    }
-
-    /**
-     * Metodo para manejar el registro de la configuracion de acceso exitosa
-     */
-    private void onInsertRegistroConfiguracionAccesoSuccess() {
-        if (configurationPrinterScreenView != null) {
-            configurationPrinterScreenView.handleInsertRegistroConfiguracionAccesoSuccess();
-        }
-    }
-
-    /**
-     * Metodo para manejar el registro de la configuracion de acceso erronea
-     */
-    private void onInsertRegistroConfiguracionAccesoError() {
-        if (configurationPrinterScreenView != null) {
-            configurationPrinterScreenView.handleInsertRegistroConfiguracionAccesoError();
-        }
-    }
-
-    /**
-     * Metodo para manejar la verificacion exitosa
-     */
-    private void onVerifySuccess() {
-        if (configurationPrinterScreenView != null) {
-            configurationPrinterScreenView.handleVerifySuccess();
-        }
-    }
-
-    /**
-     * Metodo para manejar la verificacion erronea
-     */
-    private void onVerifyError() {
-        if (configurationPrinterScreenView != null) {
-            configurationPrinterScreenView.handleVerifyError();
-        }
-    }
-
-    /**
-     * Metodo para manejar la conexion a internet exitosa
-     */
-    private void onInternetConnectionSuccess() {
-        if (configurationPrinterScreenView != null) {
-            configurationPrinterScreenView.handleInternetConnectionSuccess();
-        }
-    }
-
-    /**
-     * Metodo para manejar la conexion a internet erronea
-     */
-    private void onInternetConnectionError() {
-        if (configurationPrinterScreenView != null) {
-            configurationPrinterScreenView.handleInternetConnectionError();
-        }
-    }
-
-    /**
-     * Metodo para manejar la conexion al dispositivo lector de banda magnetica exitosa
-     */
-    private void onMagneticReaderDeviceSuccess() {
-        if (configurationPrinterScreenView != null) {
-            configurationPrinterScreenView.handleMagneticReaderDeviceSuccess();
-        }
-    }
-
-    /**
-     * Metodo para manejar la conexion al dispositivo lector de banda magnetica erronea
-     */
-    private void onMagneticReaderDeviceError() {
-        if (configurationPrinterScreenView != null) {
-            configurationPrinterScreenView.handleMagneticReaderDeviceError();
-        }
-    }
-
-    /**
-     * Metodo para manejar la conexion al dispositivo NFC exitosa
-     */
-    private void onNFCDeviceSuccess() {
-        if (configurationPrinterScreenView != null) {
-            configurationPrinterScreenView.handleNFCDeviceSuccess();
-        }
-    }
-
-    /**
-     * Metodo para manejar la conexion al dispositivo NFC erronea
-     */
-    private void onNFCDeviceError() {
-        if (configurationPrinterScreenView != null) {
-            configurationPrinterScreenView.handleNFCDeviceError();
-        }
-    }
-
-    /**
-     * Metodo para manejar la conexion al dispositivo de impresion exitosa
-     */
-    private void onPrinterDeviceSuccess() {
-        if (configurationPrinterScreenView != null) {
-            configurationPrinterScreenView.handlePrinterDeviceSuccess();
-        }
-    }
-
-    /**
-     * Metodo para manejar la conexion al dispositivo de impresion erronea
-     */
-    private void onPrinterDeviceError() {
-        if (configurationPrinterScreenView != null) {
-            configurationPrinterScreenView.handlePrinterDeviceError();
+            configurationPrinterScreenView.handleSaveConfigurationPrinterError();
         }
     }
 }

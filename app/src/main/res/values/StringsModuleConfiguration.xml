@@ -12,6 +12,7 @@
 
     <!-- Titulos de vistas -->
     <string name="configuration_text_title_configuracion">Configuración</string>
+    <string name="configuration_text_title_configuracion_printer">Configurar Impresora</string>
     <string name="configuration_text_title_conexion">Comunicación</string>
 
     <!-- Textos adicionales -->
@@ -52,8 +53,11 @@
 
     <string name="configuration_text_insert_gray_level">Ingrese el nivel de intensidad de la impresora </string>
     <string name="configuration_text_insert_font_size">Ingrese el tamaño de la letra </string>
-    <string name="configuration_text_gray_level">el nivel es : </string>
-    <string name="configuration_text_font_size">el tamaño es : </string>
+    <string name="configuration_text_gray_level">el nivel es : %d</string>
+    <string name="configuration_text_font_size">el tamaño es : %d</string>
+
+    <string name="configuration_text_registro_printer_success">Configuración de la impresora registrada correctamente.</string>
+    <string name="configuration_text_registro_printer_error">Error en el registro de la configuración de la impresora.</string>
 
 
 </resources>

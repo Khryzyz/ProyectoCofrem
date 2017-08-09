@@ -1,94 +1,26 @@
 package com.cofrem.transacciones.Modules.ModuleConfiguration.ConfigurationPrinter.ui;
 
-/**
- * Interface usada en la actividad de la Pantalla principal
- */
+import com.cofrem.transacciones.models.ConfigurationPrinter;
+
 public interface ConfigurationPrinterScreenView {
-
-    /**
-     * Metodo para manejar la existencia de la configuracion inicial
-     */
-    void handleVerifyInitialConfigExiste();
-
-    /**
-     * Metodo para manejar la NO existencia de la configuracion inicial
-     */
-    void handleVerifyInitialConfigNoExiste();
-
-    /**
-     * Metodo para manejar la existencia de la configuracion inicial NO valida
-     */
-    void handleVerifyInitialConfigNoValida();
-
-    /**
-     * Metodo para manejar la existencia de la configuracion de acceso
-     */
-    void handleRegistroConfiguracionAccesoExiste();
-
-    /**
-     * Metodo para manejar la no existencia de la configuracion de acceso
-     */
-    void handleRegistroConfiguracionAccesoNoExiste();
-
-    /**
-     * Metodo para manejar el registro de la configuracion de acceso exitosa
-     */
-    void handleInsertRegistroConfiguracionAccesoSuccess();
-
-    /**
-     * Metodo para manejar el registro de la configuracion de acceso erronea
-     */
-    void handleInsertRegistroConfiguracionAccesoError();
 
     /**
      * Metodo para manejar la verificacion exitosa
      */
-    void handleVerifySuccess();
+    void handleVerifyConfigurationInitialPrinterSuccess(ConfigurationPrinter configuration);
 
     /**
-     * Metodo para manejar la verificacion erronea
+     * Metodo para manejar la verificacion con error
      */
-    void handleVerifyError();
+    void handleVerifyConfigurationInitialPrinterError();
 
     /**
-     * Metodo para manejar la conexion a internet exitosa
+     * Metodo para manejar el insert exitoso de la configuración de la impresora
      */
-    void handleInternetConnectionSuccess();
+    void handleSaveConfigurationPrinterSuccess();
 
     /**
-     * Metodo para manejar la conexion a internet erronea
+     * Metodo para manejar el insert con error de la configuración de la impresora
      */
-    void handleInternetConnectionError();
-
-    /**
-     * Metodo para manejar la conexion al dispositivo lector de banda magnetica exitosa
-     */
-    void handleMagneticReaderDeviceSuccess();
-
-    /**
-     * Metodo para manejar la conexion al dispositivo lector de banda magnetica erronea
-     */
-    void handleMagneticReaderDeviceError();
-
-    /**
-     * Metodo para manejar la conexion al dispositivo NFC exitosa
-     */
-    void handleNFCDeviceSuccess();
-
-    /**
-     * Metodo para manejar la conexion al dispositivo NFC erronea
-     */
-    void handleNFCDeviceError();
-
-    /**
-     * Metodo para manejar la conexion al dispositivo de impresion exitosa
-     */
-    void handlePrinterDeviceSuccess();
-
-    /**
-     * Metodo para manejar la conexion al dispositivo de impresion erronea
-     */
-    void handlePrinterDeviceError();
-
-
+    void handleSaveConfigurationPrinterError();
 }

@@ -29,7 +29,7 @@ public class DatabaseManager {
     public static class DatabaseApp {
 
         public static final String DATABASE_NAME = "app_cofrem_transactions.db";
-        public static final int DATABASE_VERSION = 55;
+        public static final int DATABASE_VERSION = 60;
 
     }
 
@@ -287,6 +287,7 @@ public class DatabaseManager {
          */
         public static final String COLUMN_CONFIGURACION_PRINTER_FONT_SIZE = "font_size";
         public static final String COLUMN_CONFIGURACION_PRINTER_GRAY_LEVEL = "gray_level";
+        public static final String COLUMN_CONFIGURACION_PRINTER_ESTADO = "estado";
 
 
         /**
@@ -296,6 +297,7 @@ public class DatabaseManager {
         public static final String CREATE_TABLE_CONFIGURACION_PRINTER =
                 "CREATE TABLE " + TABLE_NAME_CONFIGURACION_PRINTER + "(" +
                         COLUMN_CONFIGURACION_PRINTER_FONT_SIZE + " " + INT_TYPE + " " + ATTR_NOT_NULL + "," +
+                        COLUMN_CONFIGURACION_PRINTER_ESTADO + " " + INT_TYPE + " " + ATTR_NOT_NULL + "," +
                         COLUMN_CONFIGURACION_PRINTER_GRAY_LEVEL + " " + INT_TYPE + " " + ATTR_NOT_NULL + ")";
 
         /**

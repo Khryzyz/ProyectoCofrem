@@ -13,8 +13,8 @@
         android:layout_marginBottom="@dimen/appMarginBottom" />
 
     <include
-        android:id="@+id/bodyContentConfigurationExito"
-        layout="@layout/content_configuracion_register_paso_exitosa"
+        android:id="@+id/bodyContentConfigurationPrinter"
+        layout="@layout/content_configuracion_printer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/headerContent"

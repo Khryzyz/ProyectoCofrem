@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.widget.Toast;
 
+import com.cofrem.transacciones.Modules.ModuleConfiguration.ConfigurationPrinter.ui.ConfigurationPrinterScreenActivity;
+import com.cofrem.transacciones.Modules.ModuleConfiguration.ConfigurationPrinter.ui.ConfigurationPrinterScreenActivity_;
 import com.cofrem.transacciones.Modules.ModuleConfiguration.RegisterConfigurationScreen.ui.RegisterConfigurationScreenActivity_;
 import com.cofrem.transacciones.Modules.ModuleConfiguration.TestCommunicationScreen.ui.TestCommunicationScreenActivity_;
 import com.cofrem.transacciones.models.Configurations;
@@ -76,6 +78,28 @@ public class ConfigurationScreenActivity extends Activity {
                         | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
                 intent.putExtras(args);
+
+                startActivity(intent);
+            }
+        }, 1000);
+
+    }
+
+
+    /**
+     * Metodo para navegar a la ventana principal
+     */
+    @Click(R.id.btnConfigurationScreenModuleRegisterConfigurationPrinter)
+    public void navigateToConfigurationPrinter() {
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(ConfigurationScreenActivity.this, ConfigurationPrinterScreenActivity_.class);
+                //Agregadas banderas para no retorno
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
+                        | Intent.FLAG_ACTIVITY_NEW_TASK
+                        | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
                 startActivity(intent);
             }

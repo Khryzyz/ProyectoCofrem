@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/appMarginBottom"
-        android:text="@string/configuration_text_title_configuracion" />
+        android:text="@string/configuration_text_title_configuracion_printer" />
 
     <TextView
         android:id="@+id/txvConfigurationPrinterInsertGrayLevel"
@@ -30,7 +30,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/txvConfigurationPrinterInsertGrayLevel"
         android:layout_centerHorizontal="true"
-        android:max="12" />
+        android:max="11" />
     <TextView
         android:id="@+id/txvConfigurationPrinterValorGrayLevel"
         style="@style/StyleTextPrimarySmall"
@@ -60,7 +60,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/txvConfigurationPrinterInsertFontSize"
         android:layout_centerHorizontal="true"
-        android:max="12" />
+        android:max="3" />
     <TextView
         android:id="@+id/txvConfigurationPrinterValorFontSize"
         style="@style/StyleTextPrimarySmall"
