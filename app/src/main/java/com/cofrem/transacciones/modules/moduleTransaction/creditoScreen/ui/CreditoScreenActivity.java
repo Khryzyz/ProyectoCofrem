@@ -342,7 +342,7 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
         hideProgress();
 
         //Muestra el mensaje de error del registro de informacion del dispositivo incorrecto
-        Toast.makeText(this, R.string.transaction_info_status_error_general, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show();
 
         //Regresa a la vista de transacciones
         navigateToTransactionScreen();
@@ -469,7 +469,8 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
             R.id.btnCreditoTransactionVerificacionDatosBotonCancelar,
             R.id.btnCreditoTransactionClaveUsuarioBotonCancelar,
             R.id.btnCreditoTransactionExitosaBotonSalir,
-            R.id.btnCreditoTransactionErrorBotonSalir
+            R.id.btnCreditoTransactionErrorBotonSalir,
+            R.id.btnCreditoTransactionLecturaIncorrectaBotonAceptar
     })
     public void navigateToTransactionScreen() {
         new Handler().postDelayed(new Runnable() {
@@ -622,8 +623,7 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
 
         String[] magneticHandler = new MagneticHandler().readMagnetic();
 
-        if (magneticHandler[1] != null) {
-
+        if (magneticHandler != null) {
 
             String clave = magneticHandler[1]
                     .replace(";", "")

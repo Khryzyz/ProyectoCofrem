@@ -56,7 +56,7 @@
 
     <string name="general_text_valor_cero">$0.00</string>
 
-    <string name="general_text_texto_vacio">...</string>
+    <string name="general_text_texto_vacio">…</string>
 
     <string name="general_text_button_aceptar">Aceptar</string>
 
@@ -68,7 +68,9 @@
 
     <string name="general_text_button_salir">Salir</string>
 
-    <string name="general_message_deslice_tarjeta">Deslice la tarjeta...</string>
+    <string name="general_message_deslice_tarjeta">Deslice la tarjeta…</string>
+
+    <string name="general_message_lectura_incorrecta">Lectura incorrecta de tarjeta</string>
 
     <string name="general_text_clave_dispositivo">Clave del dispositivo:</string>
 
