@@ -2,6 +2,7 @@ package com.cofrem.transacciones.modules.moduleReports.reimpresionScreen.ui;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cofrem.transacciones.ReportScreenActivity_;
+import com.cofrem.transacciones.models.InfoHeaderApp;
 import com.cofrem.transacciones.models.Reports;
 import com.cofrem.transacciones.modules.moduleReports.reimpresionScreen.ReimpresionScreenPresenter;
 import com.cofrem.transacciones.modules.moduleReports.reimpresionScreen.ReimpresionScreenPresenterImpl;
@@ -28,15 +30,28 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
 
     /**
      * #############################################################################################
-     * Instanciamientos de las clases
+     * Declaracion de componentes y variables
      * #############################################################################################
      */
-    //Instanciamiento de la interface SaldoScreenPresenter
-    private ReimpresionScreenPresenter reimpresionScreenPresenter;
+
+    /**
+     * Declaracion de los Contoles
+     */
+
+    // Controles del header
+
+    @ViewById
+    TextView txvHeaderIdDispositivo;
+    @ViewById
+    TextView txvHeaderIdPunto;
+    @ViewById
+    TextView txvHeaderEstablecimiento;
+    @ViewById
+    TextView txvHeaderPunto;
 
     private static final int PASO_ULTIMO_RECIBO = 1;
     private static final int PASO_NUMERO_CARGO = 2;
-    private static final int PASO_DETALLE= 3;
+    private static final int PASO_DETALLE = 3;
     private static final int PASO_GENERAL = 4;
 
     private int paso;
@@ -77,6 +92,14 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
 
     /**
      * #############################################################################################
+     * Instanciamientos de las clases
+     * #############################################################################################
+     */
+    //Instanciamiento de la interface SaldoScreenPresenter
+    private ReimpresionScreenPresenter reimpresionScreenPresenter;
+
+    /**
+     * #############################################################################################
      * Constructor  de  la clase
      * #############################################################################################
      */
@@ -99,7 +122,14 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
         //TODO: crear metodos
         reimpresionScreenPresenter.VerifySuccess();
 
+        // Metodo para colocar la orientacion de la app
+        setOrientation();
+
+        // Metodo que oculta por defecto los include de la vista
         inicializarOcultamientoVistas();
+
+        // Metodo que llena el header de la App
+        setInfoHeader();
 
         Bundle args = getIntent().getExtras();
 
@@ -198,25 +228,25 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
     @Override
     public void handleVerifyClaveAdministradorSuccess() {
         bodyContentReimpresionReciboClaveAdministrador.setVisibility(View.GONE);
-       switch (paso){
-           case PASO_ULTIMO_RECIBO:
-               bodyContentReimpresionReciboUltimo.setVisibility(View.VISIBLE);
-               break;
-           case PASO_NUMERO_CARGO:
-               bodyContentReimpresionReciboImpresion.setVisibility(View.VISIBLE);
-               txvReportReimprimeonReciboImpresionSaldoCantidad.setText(String.valueOf(modelTransaccion.getNumero_cargo()));
-               break;
-           case  PASO_DETALLE:
-               bodyContentReporteDetallesImpresion.setVisibility(View.VISIBLE);
-               break;
-           case  PASO_GENERAL:
-               bodyContentReporteGeneralImpresion.setVisibility(View.VISIBLE);
-               break;
-       }
+        switch (paso) {
+            case PASO_ULTIMO_RECIBO:
+                bodyContentReimpresionReciboUltimo.setVisibility(View.VISIBLE);
+                break;
+            case PASO_NUMERO_CARGO:
+                bodyContentReimpresionReciboImpresion.setVisibility(View.VISIBLE);
+                txvReportReimprimeonReciboImpresionSaldoCantidad.setText(String.valueOf(modelTransaccion.getNumero_cargo()));
+                break;
+            case PASO_DETALLE:
+                bodyContentReporteDetallesImpresion.setVisibility(View.VISIBLE);
+                break;
+            case PASO_GENERAL:
+                bodyContentReporteGeneralImpresion.setVisibility(View.VISIBLE);
+                break;
+        }
         edtReportReimpresionReciboClaveAdministradorContenidoClave.setText("");
     }
 
-// texto quemado hay que pitarlo
+    // texto quemado hay que pitarlo
     @Override
     public void handleVerifyClaveAdministradorError() {
         Toast.makeText(this, this.getString(R.string.report_text_message_clave_admin_incorrecta), Toast.LENGTH_SHORT).show();
@@ -281,12 +311,11 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
      */
 
     /**
-     * Metodo para Obtener el String de fecha y hora
-     *
-     * @return String fecha
+     * Metodo que coloca la orientacion de la App de forma predeterminada
      */
-
-
+    private void setOrientation() {
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+    }
 
     /**
      * Metodo que oculta por defecto los include de la vista
@@ -305,6 +334,42 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
 
     }
 
+
+    /**
+     * Metodo que llena el header de la App
+     */
+    private void setInfoHeader() {
+
+        txvHeaderIdDispositivo.setText(
+                String.format(
+                        getString(R.string.header_text_id_dispositivo_registrado)
+                        , InfoHeaderApp.getInstance().getIdDispositivo()
+                )
+        );
+
+        txvHeaderIdPunto.setText(
+                String.format(
+                        getString(R.string.header_text_id_punto_registrado)
+                        , InfoHeaderApp.getInstance().getIdPunto()
+                )
+        );
+
+        txvHeaderEstablecimiento.setText(
+                String.format(
+                        getString(R.string.header_text_nombre_establecimiento_registrado)
+                        , InfoHeaderApp.getInstance().getNombreEstablecimiento()
+                )
+        );
+
+        txvHeaderPunto.setText(
+                String.format(
+                        getString(R.string.header_text_nombre_punto_registrado)
+                        , InfoHeaderApp.getInstance().getNombrePunto()
+                )
+        );
+
+    }
+
     /**
      * Metodo para validar la existencia de un ultimo recibo para Reimprimir
      */
@@ -318,7 +383,7 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
      * Metodo que se encargara de validar la clave del administrador
      */
     @Click(R.id.btnReportReimpresionReciboClaveAdministradorBotonAceptar)
-    public void validarClaveAdministrador(){
+    public void validarClaveAdministrador() {
         reimpresionScreenPresenter.validarClaveAdministrador(this,
                 edtReportReimpresionReciboClaveAdministradorContenidoClave.getText().toString());
     }
@@ -362,7 +427,7 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
 
 
     @Click(R.id.btnReportReimprimeonReciboImpresionBotonImprimir)
-    public void imprimirReimprimirNumCargo(){
+    public void imprimirReimprimirNumCargo() {
 
         reimpresionScreenPresenter.imprimirReciboConNumCargo(this);
         edtReportReimprimeonReciboNummeroCargoContenidoClave.setText("");
@@ -370,7 +435,7 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
     }
 
     @Click(R.id.btnReportReimprimeonReciboImpresionBotonSalir)
-    public void cancelReimprimirNumCargo(){
+    public void cancelReimprimirNumCargo() {
         bodyContentReimpresionReciboImpresion.setVisibility(View.GONE);
         bodyContentReimpresionRecibo.setVisibility(View.VISIBLE);
 
@@ -378,28 +443,28 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
 
 
     @Click(R.id.btnReportReporteDetallesImpresionBotonImprimir)
-    public  void imprimirReporteDetalle(){
+    public void imprimirReporteDetalle() {
         reimpresionScreenPresenter.imprimirReporteDetalle(this);
     }
 
     @Click(R.id.btnReportReporteGeneralImpresionBotonImprimir)
-    public  void imprimirReporteGeneral(){
+    public void imprimirReporteGeneral() {
         reimpresionScreenPresenter.imprimirReporteGeneral(this);
     }
 
 
     @Click({R.id.btnTransactionScreenBack
-            ,R.id.btnReportReporteDetallesImpresionBotonSalir
-            ,R.id.btnReportReporteGeneralImpresionBotonSalir
-            ,R.id.btnReportCierreLoteClaveDispositivoBotonCancelar
-            ,R.id.btnReportCierreLoteImpresionBotonSalir
-            ,R.id.btnReportReimprimeonReciboNummeroCargoBotonCancelar})
-    public void regresarDesdeReimpimirRecibo(){
+            , R.id.btnReportReporteDetallesImpresionBotonSalir
+            , R.id.btnReportReporteGeneralImpresionBotonSalir
+            , R.id.btnReportCierreLoteClaveDispositivoBotonCancelar
+            , R.id.btnReportCierreLoteImpresionBotonSalir
+            , R.id.btnReportReimprimeonReciboNummeroCargoBotonCancelar})
+    public void regresarDesdeReimpimirRecibo() {
         Intent intent = new Intent(this, ReportScreenActivity_.class);
         startActivity(intent);
     }
 
-    public void regresarDesdeReimpimirRecibo(int timer){
+    public void regresarDesdeReimpimirRecibo(int timer) {
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
@@ -408,9 +473,6 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
             }
         }, timer);
     }
-
-
-
 
 
 }

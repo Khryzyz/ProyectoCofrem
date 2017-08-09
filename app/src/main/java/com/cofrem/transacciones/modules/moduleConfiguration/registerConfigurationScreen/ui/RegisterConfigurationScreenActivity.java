@@ -13,9 +13,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cofrem.transacciones.ConfigurationScreenActivity_;
+import com.cofrem.transacciones.models.InfoHeaderApp;
 import com.cofrem.transacciones.modules.moduleConfiguration.registerConfigurationScreen.RegisterConfigurationScreenPresenter;
 import com.cofrem.transacciones.modules.moduleConfiguration.registerConfigurationScreen.RegisterConfigurationScreenPresenterImpl;
 import com.cofrem.transacciones.R;
@@ -47,6 +49,16 @@ public class RegisterConfigurationScreenActivity extends Activity implements Reg
      * Declaracion de los Contoles
      */
 
+    // Controles del header
+
+    @ViewById
+    TextView txvHeaderIdDispositivo;
+    @ViewById
+    TextView txvHeaderIdPunto;
+    @ViewById
+    TextView txvHeaderEstablecimiento;
+    @ViewById
+    TextView txvHeaderPunto;
     // Contents del modulo
     @ViewById
     RelativeLayout bodyContentConfigurationPassTecnico;
@@ -542,6 +554,41 @@ public class RegisterConfigurationScreenActivity extends Activity implements Reg
         bodyContentConfigurationPort.setVisibility(View.GONE);
         bodyContentConfigurationDispositivo.setVisibility(View.GONE);
         bodyContentConfigurationExito.setVisibility(View.GONE);
+
+    }
+
+    /**
+     * Metodo que llena el header de la App
+     */
+    private void setInfoHeader() {
+
+        txvHeaderIdDispositivo.setText(
+                String.format(
+                        getString(R.string.header_text_id_dispositivo_registrado)
+                        , InfoHeaderApp.getInstance().getIdDispositivo()
+                )
+        );
+
+        txvHeaderIdPunto.setText(
+                String.format(
+                        getString(R.string.header_text_id_punto_registrado)
+                        , InfoHeaderApp.getInstance().getIdPunto()
+                )
+        );
+
+        txvHeaderEstablecimiento.setText(
+                String.format(
+                        getString(R.string.header_text_nombre_establecimiento_registrado)
+                        , InfoHeaderApp.getInstance().getNombreEstablecimiento()
+                )
+        );
+
+        txvHeaderPunto.setText(
+                String.format(
+                        getString(R.string.header_text_nombre_punto_registrado)
+                        , InfoHeaderApp.getInstance().getNombrePunto()
+                )
+        );
 
     }
 

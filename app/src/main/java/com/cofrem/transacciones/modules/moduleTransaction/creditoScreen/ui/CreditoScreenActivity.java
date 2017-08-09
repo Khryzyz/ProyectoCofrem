@@ -398,6 +398,20 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
     }
 
     /**
+     * Metodo que oculta por defecto los include de la vista
+     */
+    private void inicializarOcultamientoVistas() {
+
+        bodyContentTransactionValorCompra.setVisibility(View.GONE);
+        bodyContentTransactionNumeroDocumento.setVisibility(View.GONE);
+        bodyContentTransactionVerificacionValor.setVisibility(View.GONE);
+        bodyContentTransactionDesliceTarjeta.setVisibility(View.GONE);
+        bodyContentTransactionPassUsuario.setVisibility(View.GONE);
+        bodyContentTransactionTransaccionExitosa.setVisibility(View.GONE);
+
+    }
+
+    /**
      * Metodo que llena el header de la App
      */
     private void setInfoHeader() {
@@ -429,20 +443,6 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
                         , InfoHeaderApp.getInstance().getNombrePunto()
                 )
         );
-
-    }
-
-    /**
-     * Metodo que oculta por defecto los include de la vista
-     */
-    private void inicializarOcultamientoVistas() {
-
-        bodyContentTransactionValorCompra.setVisibility(View.GONE);
-        bodyContentTransactionNumeroDocumento.setVisibility(View.GONE);
-        bodyContentTransactionVerificacionValor.setVisibility(View.GONE);
-        bodyContentTransactionDesliceTarjeta.setVisibility(View.GONE);
-        bodyContentTransactionPassUsuario.setVisibility(View.GONE);
-        bodyContentTransactionTransaccionExitosa.setVisibility(View.GONE);
 
     }
 
