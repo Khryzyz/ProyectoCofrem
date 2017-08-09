@@ -6,10 +6,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.widget.Toast;
 
-import com.cofrem.transacciones.Modules.ModuleConfiguration.ConfigurationPrinter.ui.ConfigurationPrinterScreenActivity;
-import com.cofrem.transacciones.Modules.ModuleConfiguration.ConfigurationPrinter.ui.ConfigurationPrinterScreenActivity_;
-import com.cofrem.transacciones.Modules.ModuleConfiguration.RegisterConfigurationScreen.ui.RegisterConfigurationScreenActivity_;
-import com.cofrem.transacciones.Modules.ModuleConfiguration.TestCommunicationScreen.ui.TestCommunicationScreenActivity_;
+import com.cofrem.transacciones.modules.moduleConfiguration.configurationPrinter.ui.ConfigurationPrinterScreenActivity_;
+import com.cofrem.transacciones.modules.moduleConfiguration.registerConfigurationScreen.ui.RegisterConfigurationScreenActivity_;
+import com.cofrem.transacciones.modules.moduleConfiguration.testCommunicationScreen.ui.TestCommunicationScreenActivity_;
 import com.cofrem.transacciones.models.Configurations;
 
 import org.androidannotations.annotations.AfterViews;
