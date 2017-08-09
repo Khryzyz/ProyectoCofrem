@@ -4,8 +4,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cofrem.transacciones.models.InfoHeaderApp;
 import com.cofrem.transacciones.modules.moduleConfiguration.configurationPrinter.ui.ConfigurationPrinterScreenActivity_;
 import com.cofrem.transacciones.modules.moduleConfiguration.registerConfigurationScreen.ui.RegisterConfigurationScreenActivity_;
 import com.cofrem.transacciones.modules.moduleConfiguration.testCommunicationScreen.ui.TestCommunicationScreenActivity_;
@@ -14,15 +16,24 @@ import com.cofrem.transacciones.models.Configurations;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.ViewById;
 
 @EActivity(R.layout.activity_configuration_screen)
 public class ConfigurationScreenActivity extends Activity {
 
     /**
      * #############################################################################################
-     * Instanciamientos de las clases
+     * Definición de variables
      * #############################################################################################
      */
+    @ViewById
+    TextView txvHeaderIdDispositivo;
+    @ViewById
+    TextView txvHeaderIdPunto;
+    @ViewById
+    TextView txvHeaderEstablecimiento;
+    @ViewById
+    TextView txvHeaderPunto;
 
     /**
      * #############################################################################################
@@ -31,7 +42,7 @@ public class ConfigurationScreenActivity extends Activity {
      */
     @AfterViews
     void ConfigurationInit() {
-
+        setInfoHeader();
     }
 
     /**
@@ -54,6 +65,40 @@ public class ConfigurationScreenActivity extends Activity {
      * Metodo propios de la clase
      * #############################################################################################
      */
+    /**
+     * Metodo que llena el header de la App
+     */
+    private void setInfoHeader() {
+
+        txvHeaderIdDispositivo.setText(
+                String.format(
+                        getString(R.string.header_text_id_dispositivo_registrado)
+                        , InfoHeaderApp.getInstance().getIdDispositivo()
+                )
+        );
+
+        txvHeaderIdPunto.setText(
+                String.format(
+                        getString(R.string.header_text_id_punto_registrado)
+                        , InfoHeaderApp.getInstance().getIdPunto()
+                )
+        );
+
+        txvHeaderEstablecimiento.setText(
+                String.format(
+                        getString(R.string.header_text_nombre_establecimiento_registrado)
+                        , InfoHeaderApp.getInstance().getNombreEstablecimiento()
+                )
+        );
+
+        txvHeaderPunto.setText(
+                String.format(
+                        getString(R.string.header_text_nombre_punto_registrado)
+                        , InfoHeaderApp.getInstance().getNombrePunto()
+                )
+        );
+
+    }
 
     /**
      * Metodo para navegar a la ventana principal

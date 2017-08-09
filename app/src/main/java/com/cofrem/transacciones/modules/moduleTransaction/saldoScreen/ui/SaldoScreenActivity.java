@@ -2,6 +2,7 @@ package com.cofrem.transacciones.modules.moduleTransaction.saldoScreen.ui;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Handler;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -10,8 +11,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cofrem.transacciones.models.InfoHeaderApp;
 import com.cofrem.transacciones.modules.moduleTransaction.saldoScreen.SaldoScreenPresenter;
 import com.cofrem.transacciones.modules.moduleTransaction.saldoScreen.SaldoScreenPresenterImpl;
 import com.cofrem.transacciones.R;
@@ -40,6 +43,17 @@ public class SaldoScreenActivity extends Activity implements SaldoScreenView {
     /**
      * Declaracion de los Contoles
      */
+
+    // Controles del header
+
+    @ViewById
+    TextView txvHeaderIdDispositivo;
+    @ViewById
+    TextView txvHeaderIdPunto;
+    @ViewById
+    TextView txvHeaderEstablecimiento;
+    @ViewById
+    TextView txvHeaderPunto;
 
     // Contents del modulo
     @ViewById
@@ -94,20 +108,20 @@ public class SaldoScreenActivity extends Activity implements SaldoScreenView {
     @AfterViews
     void MainInit() {
 
-        /**
-         * Instanciamiento e inicializacion del presentador
-         */
+        // Instanciamiento e inicializacion del presentador
         saldoScreenPresenter = new SaldoScreenPresenterImpl(this);
 
-        /**
-         * Llamada al metodo onCreate del presentador para el registro del bus de datos
-         */
+        // Llamada al metodo onCreate del presentador para el registro del bus de datos
         saldoScreenPresenter.onCreate();
 
-        /**
-         * Metodo que oculta por defecto los include de la vista
-         */
+        // Metodo para colocar la orientacion de la app
+        setOrientation();
+
+        // Metodo que oculta por defecto los include de la vista
         inicializarOcultamientoVistas();
+
+        // Metodo que llena el header de la App
+        setInfoHeader();
 
         //Inicializa el paso del registro de la configuracion
         pasoCreditoTransaction = PASO_DESLIZAR_TARJETA;
@@ -249,6 +263,14 @@ public class SaldoScreenActivity extends Activity implements SaldoScreenView {
     }
 
     /**
+     * Metodo que coloca la orientacion de la App de forma predeterminada
+     */
+    private void setOrientation() {
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+    }
+
+
+    /**
      * Metodo que oculta por defecto los include de la vista
      */
     private void inicializarOcultamientoVistas() {
@@ -256,6 +278,41 @@ public class SaldoScreenActivity extends Activity implements SaldoScreenView {
         bodyContentDeslizarTarjeta.setVisibility(View.GONE);
         bodyContentClaveUsuario.setVisibility(View.GONE);
         bodyContentTransaccionExitosa.setVisibility(View.GONE);
+
+    }
+
+    /**
+     * Metodo que llena el header de la App
+     */
+    private void setInfoHeader() {
+
+        txvHeaderIdDispositivo.setText(
+                String.format(
+                        getString(R.string.header_text_id_dispositivo_registrado)
+                        , InfoHeaderApp.getInstance().getIdDispositivo()
+                )
+        );
+
+        txvHeaderIdPunto.setText(
+                String.format(
+                        getString(R.string.header_text_id_punto_registrado)
+                        , InfoHeaderApp.getInstance().getIdPunto()
+                )
+        );
+
+        txvHeaderEstablecimiento.setText(
+                String.format(
+                        getString(R.string.header_text_nombre_establecimiento_registrado)
+                        , InfoHeaderApp.getInstance().getNombreEstablecimiento()
+                )
+        );
+
+        txvHeaderPunto.setText(
+                String.format(
+                        getString(R.string.header_text_nombre_punto_registrado)
+                        , InfoHeaderApp.getInstance().getNombrePunto()
+                )
+        );
 
     }
 
