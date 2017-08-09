@@ -25,8 +25,7 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        android:fullBackupContent="">
+        android:theme="@style/AppTheme">
         <!--Splash Screen-->
         <activity
             android:name=".splashScreen.ui.SplashScreenActivity_"
