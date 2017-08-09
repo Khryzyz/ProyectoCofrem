@@ -9,6 +9,8 @@ import com.cofrem.transacciones.lib.EventBus;
 import com.cofrem.transacciones.lib.GreenRobotEventBus;
 import com.cofrem.transacciones.lib.KsoapAsync;
 import com.cofrem.transacciones.models.ModelsWS.MessageWS;
+import com.cofrem.transacciones.models.ModelsWS.ModelTransaccion.InformacionTransaccion;
+import com.cofrem.transacciones.models.ModelsWS.ModelTransaccion.ResultadoTransaccion;
 import com.cofrem.transacciones.models.ModelsWS.TransactionWS;
 import com.cofrem.transacciones.models.Transaccion;
 
@@ -17,6 +19,7 @@ import org.ksoap2.serialization.SoapObject;
 import java.util.concurrent.ExecutionException;
 
 public class CreditoScreenRepositoryImpl implements CreditoScreenRepository {
+
     /**
      * #############################################################################################
      * Declaracion de componentes y variables
@@ -47,31 +50,36 @@ public class CreditoScreenRepositoryImpl implements CreditoScreenRepository {
     @Override
     public void registrarTransaccion(Context context, Transaccion transaccion) {
 
+        ResultadoTransaccion resultadoTransaccion = registrarTransaccionConsumoWS(context, transaccion);
+
         //Registra mediante el WS la transaccion
-        if (registrarTransaccionConsumoWS(context, transaccion)) {
+        if (resultadoTransaccion != null) {
 
-            postEvent(CreditoScreenEvent.onTransaccionWSRegisterSuccess);
+            MessageWS messageWS = resultadoTransaccion.getMessageWS();
 
-            //Registro en la base de datos de la transaccion
-            if (registrarTransaccionConsumoDB(context, transaccion)) {
+            if (messageWS.getCodigoMensaje() == MessageWS.statusTransaccionExitosa) {
 
-                postEvent(CreditoScreenEvent.onTransaccionDBRegisterSuccess);
+                //Registro en la base de datos de la transaccion
+                if (registrarTransaccionConsumoDB(context, resultadoTransaccion.getInformacionTransaccion())) {
 
-                //Imprime el recibo
-                imprimirRecibo(context);
+                    postEvent(CreditoScreenEvent.onTransaccionSuccess);
 
+                    //Imprime el recibo
+                    imprimirRecibo(context);
+
+                } else {
+
+                    //Error en el registro en la Base de Datos la transaccion
+                    postEvent(CreditoScreenEvent.onTransaccionDBRegisterError);
+
+                }
             } else {
-
-                //Error en el registro en la Base de Datos la transaccion
-                postEvent(CreditoScreenEvent.onTransaccionDBRegisterError);
-
+                //Error en el registro de la transaccion del web service
+                postEvent(CreditoScreenEvent.onTransaccionWSRegisterError, messageWS.getDetalleMensaje());
             }
-
         } else {
-
-            //Error en el registro mediante el WS la transaccion
-            postEvent(CreditoScreenEvent.onTransaccionWSRegisterError);
-
+            //Error en la conexion con el Web Service
+            postEvent(CreditoScreenEvent.onTransaccionWSConexionError);
         }
 
     }
@@ -93,10 +101,10 @@ public class CreditoScreenRepositoryImpl implements CreditoScreenRepository {
      * @return
      */
 
-    private boolean registrarTransaccionConsumoWS(Context context, Transaccion transaccion) {
+    private ResultadoTransaccion registrarTransaccionConsumoWS(Context context, Transaccion transaccion) {
 
         //Se crea una variable de estado de la transaccion
-        boolean statusTransaction = true;
+        ResultadoTransaccion resultadoTransaccion = null;
 
         //Inicializacion y declaracion de parametros para la peticion web service
         String[][] params = {
@@ -155,79 +163,50 @@ public class CreditoScreenRepositoryImpl implements CreditoScreenRepository {
                 //Transaccion exitosa
                 case MessageWS.statusTransaccionExitosa:
 
+                    InformacionTransaccion informacionTransaccion = new InformacionTransaccion((SoapObject) soapTransaction.getProperty(1));
+                    resultadoTransaccion = new ResultadoTransaccion(
+                            informacionTransaccion,
+                            messageWS
+                    );
                     break;
 
-                //Tarjeta habiente no existe
                 case MessageWS.statusTarjetaHabienteNoExiste:
-
-                    break;
-
-                //Clave errada
                 case MessageWS.statusClaveErrada:
-
-                    break;
-
-                //Tarjeta habiente inactivo
                 case MessageWS.statusTarjetHabienteInactivo:
-
-                    break;
-
-                //Tarjeta habiente en mora
                 case MessageWS.statusTarjetaHabienteMora:
-
-                    break;
-
-                //Tarjeta habiente sin cupo disponible
                 case MessageWS.statusTarjetaHabienteSinCupoDisponible:
-
-                    break;
-
-                //Tarjeta cedula no existe
                 case MessageWS.statusCedulaTarjetaNoExiste:
-
-                    break;
-
-                //Tarjeta terminal no existe
                 case MessageWS.statusTerminalNoExiste:
-
-                    break;
-
-                //Transaccion no permitida en terminal
                 case MessageWS.statusTarjetaNoPermitidaEnTerminal:
-
-                    break;
-
-                //Error en base de datos
                 case MessageWS.statusErrorDatabase:
-
-                    break;
-
-                //Error general en la transaccion
                 case MessageWS.statusTerminalErrorException:
-
+                    resultadoTransaccion = new ResultadoTransaccion(
+                            messageWS
+                    );
                     break;
             }
 
         }
 
         //Retorno de estado de transaccion
-        return statusTransaction;
+        return resultadoTransaccion;
     }
 
     /**
      * Metodo que registra en la base de datos interna la transaccion
      *
      * @param context
-     * @param transaccion
      * @return
      */
-    private boolean registrarTransaccionConsumoDB(Context context, Transaccion transaccion) {
+    private boolean registrarTransaccionConsumoDB(Context context, InformacionTransaccion informacionTransaccion) {
 
         //Se crea una variable de estado de la transaccion
-        boolean statusTransaction = true;
+        boolean statusTransaction = false;
 
-
-        //TODO: IMPLEMENTAR WEB SERVICE DE REGISTRO DE TRANSACCION
+        //Se registra la transaccion
+        if (AppDatabase.getInstance(context).insertRegistroTransaction(informacionTransaccion)) {
+            statusTransaction = true;
+        }
 
         return statusTransaction;
     }

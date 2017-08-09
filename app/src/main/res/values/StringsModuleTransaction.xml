@@ -25,7 +25,13 @@
 
     <!-- Textos adicionales -->
 
-    <string name="transaction_text_exitosa">Transacción exitosa</string>
+    <string name="transaction_text_exitosa">TRANSACCIÓN EXITOSA</string>
+
+    <string name="transaction_text_erronea">TRANSACCIÓN ERRONEA</string>
+
+    <string name="transaction_text_erronea_detalle">Detalle del error:</string>
+
+    <string name="transaction_text_erronea_detalle_texto">…</string>
 
     <string name="transaction_text_saldo">Saldo disponible</string>
 
@@ -52,5 +58,9 @@
     <string name="transaction_error_format_clave_usuario">La contraseña debe tener exactamente 4 caracteres.</string>
 
     <string name="transaction_error_format_clave_administrador">La contraseña de administración debe tener exactamente 4 caracteres.</string>
+
+    <!-- Respuestas de estado de la transaccion -->
+
+    <string name="transaction_info_status_error_general">Error general de Conexión.</string>
 
 </resources>

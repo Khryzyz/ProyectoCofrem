@@ -2,29 +2,28 @@ package com.cofrem.transacciones.models.ModelsWS.ModelTransaccion;
 
 import com.cofrem.transacciones.models.ModelsWS.MessageWS;
 
-public class Transaction {
-
+public class ResultadoTransaccion {
 
     //Modelo usado en la respuesta del WS para la respuesta transacResult
-    private ResultadoTransaccion resultadoTransaccion;
+    private InformacionTransaccion informacionTransaccion;
     private MessageWS messageWS;
 
-    public Transaction(MessageWS messageWS) {
+    public ResultadoTransaccion(MessageWS messageWS) {
         this.messageWS = messageWS;
     }
 
-    public Transaction(ResultadoTransaccion resultadoTransaccion,
-                       MessageWS messageWS) {
-        this.resultadoTransaccion = resultadoTransaccion;
+    public ResultadoTransaccion(InformacionTransaccion informacionTransaccion,
+                                MessageWS messageWS) {
+        this.informacionTransaccion = informacionTransaccion;
         this.messageWS = messageWS;
     }
 
-    public ResultadoTransaccion getResultadoTransaccion() {
-        return resultadoTransaccion;
+    public InformacionTransaccion getInformacionTransaccion() {
+        return informacionTransaccion;
     }
 
-    public void setResultadoTransaccion(ResultadoTransaccion resultadoTransaccion) {
-        this.resultadoTransaccion = resultadoTransaccion;
+    public void setInformacionTransaccion(InformacionTransaccion informacionTransaccion) {
+        this.informacionTransaccion = informacionTransaccion;
     }
 
     public MessageWS getMessageWS() {

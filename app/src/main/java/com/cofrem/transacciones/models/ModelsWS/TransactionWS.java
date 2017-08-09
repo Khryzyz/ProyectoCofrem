@@ -2,14 +2,22 @@ package com.cofrem.transacciones.models.ModelsWS;
 
 public class TransactionWS {
 
+    /**
+     * Atributos de la clase
+     */
     private String urlTransaction;
     private String nameSpaceTransaction;
     private String methodNameTransaction;
     private String[][] paramsTransaction;
 
-    public TransactionWS() {
-    }
-
+    /**
+     * Constructor de la clase TransactionWS para el modelado de las peticiones a los Web Services
+     *
+     * @param urlTransaction
+     * @param nameSpaceTransaction
+     * @param methodNameTransaction
+     * @param paramsTransaction
+     */
     public TransactionWS(String urlTransaction, String nameSpaceTransaction, String methodNameTransaction, String[][] paramsTransaction) {
         this.urlTransaction = urlTransaction;
         this.nameSpaceTransaction = nameSpaceTransaction;
@@ -17,6 +25,9 @@ public class TransactionWS {
         this.paramsTransaction = paramsTransaction;
     }
 
+    /**
+     * Getters y Setters
+     */
     public String getUrlTransaction() {
         return urlTransaction;
     }

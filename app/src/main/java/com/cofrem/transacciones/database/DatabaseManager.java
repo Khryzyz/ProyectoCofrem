@@ -29,7 +29,7 @@ public class DatabaseManager {
     public static class DatabaseApp {
 
         public static final String DATABASE_NAME = "app_cofrem_transactions.db";
-        public static final int DATABASE_VERSION = 54;
+        public static final int DATABASE_VERSION = 55;
 
     }
 
@@ -112,10 +112,10 @@ public class DatabaseManager {
         public static final String CREATE_TABLE_TRANSACCIONES =
                 "CREATE TABLE " + TABLE_NAME_TRANSACCIONES + "(" +
                         COLUMN_TRANSACCIONES_ID + " " + INT_TYPE + " " + PRIMARY_KEY + " " + AUTOINCREMENT + "," +
-                        COLUMN_TRANSACCIONES_PRODUCTO_ID + " " + INT_TYPE + " " + ATTR_NOT_NULL + "," +
-                        COLUMN_TRANSACCIONES_NUMERO_CARGO + " " + INT_TYPE + " " + ATTR_NOT_NULL + "," +
+                        COLUMN_TRANSACCIONES_PRODUCTO_ID + " " + STRING_TYPE + " " + ATTR_NOT_NULL + "," +
+                        COLUMN_TRANSACCIONES_NUMERO_CARGO + " " + STRING_TYPE + " " + ATTR_NOT_NULL + "," +
                         COLUMN_TRANSACCIONES_NUMERO_TARJETA + " " + STRING_TYPE + " " + ATTR_NOT_NULL + "," +
-                        COLUMN_TRANSACCIONES_VALOR + " " + INT_TYPE + " " + ATTR_NOT_NULL + "," +
+                        COLUMN_TRANSACCIONES_VALOR + " " + STRING_TYPE + " " + ATTR_NOT_NULL + "," +
                         COLUMN_TRANSACCIONES_REGISTRO + " " + TIMESTAMP_TYPE + " " + ATTR_NOT_NULL + "," +
                         COLUMN_TRANSACCIONES_ESTADO + " " + INT_TYPE + " " + ATTR_NOT_NULL + ")";
 

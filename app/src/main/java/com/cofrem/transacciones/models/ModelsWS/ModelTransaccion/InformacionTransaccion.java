@@ -2,7 +2,7 @@ package com.cofrem.transacciones.models.ModelsWS.ModelTransaccion;
 
 import org.ksoap2.serialization.SoapObject;
 
-public class ResultadoTransaccion {
+public class InformacionTransaccion {
 
 
     //Modelo usado en la respuesta del WS para la respuesta terminalResult
@@ -18,6 +18,7 @@ public class ResultadoTransaccion {
     public static final String NUMERO_APROBACION = "numeroAprobacion";
     public static final String NUMERO_TARJETA = "numeroTarjeta";
     public static final String TIPO_TRANSACCION = "tipoTransaccion";
+    public static final String DETALLE_VALOR = "valorResult";
     public static final String DETALLE_TIPO_SERVICIO = "detalleTipoServicio";
     public static final String TIPO_SERVICIO = "tipoServicio";
     public static final String VALOR = "valor";
@@ -40,7 +41,7 @@ public class ResultadoTransaccion {
     /**
      * Constructor vacio de la clase
      */
-    public ResultadoTransaccion() {
+    public InformacionTransaccion() {
     }
 
     /**
@@ -48,7 +49,7 @@ public class ResultadoTransaccion {
      *
      * @param soap
      */
-    public ResultadoTransaccion(SoapObject soap) {
+    public InformacionTransaccion(SoapObject soap) {
 
         this.cedulaUsuario = soap.getPropertyAsString(CEDULA_USUARIO).equals("anyType{}") ? "" : soap.getPropertyAsString(CEDULA_USUARIO);
 
@@ -70,11 +71,13 @@ public class ResultadoTransaccion {
 
         this.tipoTransaccion = soap.getPropertyAsString(TIPO_TRANSACCION).equals("anyType{}") ? "" : soap.getPropertyAsString(TIPO_TRANSACCION);
 
-        this.detalleTipoServicio = soap.getPropertyAsString(DETALLE_TIPO_SERVICIO).equals("anyType{}") ? "" : soap.getPropertyAsString(DETALLE_TIPO_SERVICIO);
+        SoapObject soapDetalleValor = (SoapObject) soap.getProperty(DETALLE_VALOR);
 
-        this.tipoServicio = soap.getPropertyAsString(TIPO_SERVICIO).equals("anyType{}") ? "" : soap.getPropertyAsString(TIPO_SERVICIO);
+        this.detalleTipoServicio = soapDetalleValor.getPropertyAsString(DETALLE_TIPO_SERVICIO).equals("anyType{}") ? "" : soapDetalleValor.getPropertyAsString(DETALLE_TIPO_SERVICIO);
 
-        this.valor = soap.getPropertyAsString(VALOR).equals("anyType{}") ? "" : soap.getPropertyAsString(VALOR);
+        this.tipoServicio = soapDetalleValor.getPropertyAsString(TIPO_SERVICIO).equals("anyType{}") ? "" : soapDetalleValor.getPropertyAsString(TIPO_SERVICIO);
+
+        this.valor = soapDetalleValor.getPropertyAsString(VALOR).equals("anyType{}") ? "" : soapDetalleValor.getPropertyAsString(VALOR);
 
     }
 

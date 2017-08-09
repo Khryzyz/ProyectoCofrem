@@ -6,12 +6,15 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.database.sqlite.SQLiteStatement;
 
 import com.cofrem.transacciones.lib.MD5;
 import com.cofrem.transacciones.models.Configurations;
 import com.cofrem.transacciones.models.ModelsWS.ModelEstablecimiento.ConexionEstablecimiento;
 import com.cofrem.transacciones.models.ModelsWS.ModelEstablecimiento.Establecimiento;
 import com.cofrem.transacciones.models.ModelsWS.ModelEstablecimiento.InformacionEstablecimiento;
+import com.cofrem.transacciones.models.ModelsWS.ModelTransaccion.InformacionTransaccion;
+import com.cofrem.transacciones.models.ModelsWS.ModelTransaccion.ResultadoTransaccion;
 import com.cofrem.transacciones.models.Transaccion;
 
 import java.text.SimpleDateFormat;
@@ -305,6 +308,174 @@ public final class AppDatabase extends SQLiteOpenHelper {
     }
 
     /**
+     * Metodo para insertar registro de transacciones en la Base de Datos
+     *
+     * @param informacionTransaccion
+     * @return
+     */
+    public boolean insertRegistroTransaction(InformacionTransaccion informacionTransaccion) {
+
+        boolean transaction = false;
+
+        long conteo = 0;
+
+        // Inicializacion de la variable de contenidos del registro
+        ContentValues contentValues = new ContentValues();
+
+        // Almacena los valores a insertar
+        contentValues.put(
+                DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_PRODUCTO_ID,
+                obtenerProductoIdByNombre(informacionTransaccion.getDetalleTipoServicio())
+        );
+        contentValues.put(
+                DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_NUMERO_CARGO,
+                informacionTransaccion.getNumeroAprobacion()
+        );
+        contentValues.put(
+                DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_NUMERO_TARJETA,
+                informacionTransaccion.getNumeroTarjeta()
+        );
+        contentValues.put(DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_VALOR,
+                informacionTransaccion.getValor()
+        );
+        contentValues.put(
+                DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_REGISTRO,
+                getDateTime());
+
+        contentValues.put(
+                DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_ESTADO,
+                1);
+
+        try {
+
+            getWritableDatabase().insert(
+                    DatabaseManager.TableTransacciones.TABLE_NAME_TRANSACCIONES,
+                    null,
+                    contentValues
+            );
+
+            // Insercion del registro en la base de datos
+            conteo = obtenerConteoCambios();
+
+        } catch (SQLException e) {
+
+            e.printStackTrace();
+
+        }
+
+        if (conteo == 1) {
+            transaction = true;
+        }
+
+        return transaction;
+
+    }
+
+    /**
+     * Metodo para validar si existe registro inicial en la Base de Datos de la clave de acceso a dispositivo
+     * Usado en modulos:
+     * - Configuracion
+     */
+    public int conteoTransaccionesByNumeroCargo(String numeroCargo) {
+
+        int count;
+
+        Cursor cursorQuery;
+
+        cursorQuery = getWritableDatabase().rawQuery(
+                "SELECT COUNT(1) FROM " +
+                        DatabaseManager.TableTransacciones.TABLE_NAME_TRANSACCIONES +
+                        " WHERE " + DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_NUMERO_CARGO + " = '" + numeroCargo + "'",
+                null
+        );
+
+        cursorQuery.moveToFirst();
+
+        count = cursorQuery.getInt(0);
+
+        return count;
+
+    }
+
+    /**
+     * Metodo para validar si existe registro inicial en la Base de Datos de la clave de acceso a dispositivo
+     * Usado en modulos:
+     * - Configuracion
+     */
+    public int conteoTransacciones() {
+
+        int count;
+
+        Cursor cursorQuery;
+
+        cursorQuery = getWritableDatabase().rawQuery(
+                "SELECT COUNT(1) FROM " +
+                        DatabaseManager.TableTransacciones.TABLE_NAME_TRANSACCIONES,
+                null
+        );
+
+        cursorQuery.moveToFirst();
+
+        count = cursorQuery.getInt(0);
+
+        return count;
+
+    }
+
+    /**
+     * Metodo para validar si existe registro inicial en la Base de Datos de la clave de acceso a dispositivo
+     * Usado en modulos:
+     * - Configuracion
+     */
+    public int obtenerUltimoIdTransacciones() {
+
+        int lastId;
+
+        Cursor cursorQuery;
+
+        cursorQuery = getWritableDatabase().rawQuery(
+                "SELECT " + DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_ID + " AS ID " +
+                        " FROM " + DatabaseManager.TableTransacciones.TABLE_NAME_TRANSACCIONES +
+                        " ORDER BY " + DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_ID + " DESC LIMIT 1"
+                ,
+                null
+        );
+
+        cursorQuery.moveToFirst();
+
+        lastId = cursorQuery.getInt(0);
+
+        return lastId;
+
+    }
+
+    /**
+     * Metodo para Obtener el id del producto segun su nombre extraido del web service
+     *
+     * @param nombreProducto
+     * @return
+     */
+    public int obtenerProductoIdByNombre(String nombreProducto) {
+
+        int producto_id;
+
+        Cursor queryIdProducto;
+
+        queryIdProducto = getWritableDatabase().rawQuery(
+                "SELECT " + DatabaseManager.TableProducto.COLUMN_PRODUCTO_ID + " AS ID " +
+                        " FROM " + DatabaseManager.TableProducto.TABLE_NAME_PRODUCTO +
+                        " WHERE " + DatabaseManager.TableProducto.COLUMN_PRODUCTO_NOMBRE + " = '" + nombreProducto + "'" +
+                        " LIMIT 1", null
+        );
+
+        queryIdProducto.moveToFirst();
+
+        producto_id = queryIdProducto.getInt(0);
+
+        return producto_id;
+    }
+
+    /**
      * Metodo para insertar registro inicial en la Base de Datos de la configuracion para la impresora
      * Usado en:
      * Inicio por primera vez de la APP
@@ -451,7 +622,7 @@ public final class AppDatabase extends SQLiteOpenHelper {
         Cursor cursorQuery;
 
         cursorQuery = getWritableDatabase().rawQuery(
-                "SELECT COUNT("+DatabaseManager.TableConfigurationPrinter.COLUMN_CONFIGURACION_PRINTER_FONT_SIZE+") FROM " +
+                "SELECT COUNT(" + DatabaseManager.TableConfigurationPrinter.COLUMN_CONFIGURACION_PRINTER_FONT_SIZE + ") FROM " +
                         DatabaseManager.TableConfigurationPrinter.TABLE_NAME_CONFIGURACION_PRINTER,
                 null
         );
@@ -762,5 +933,14 @@ public final class AppDatabase extends SQLiteOpenHelper {
         return dateFormat.format(date);
     }
 
+    /**
+     * Metodo que obtiene los cambios registrados en la ultima sesion de lla base de datos
+     *
+     * @return
+     */
+    private long obtenerConteoCambios() {
+        SQLiteStatement statement = getWritableDatabase().compileStatement("SELECT changes()");
+        return statement.simpleQueryForLong();
+    }
 
 }
