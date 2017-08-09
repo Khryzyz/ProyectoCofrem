@@ -12,7 +12,6 @@ import java.io.IOException;
 
 public class KsoapTransaction {
 
-
     /**
      * Metodo que hace la Transaccion de datos a un Servicio SOAP
      *

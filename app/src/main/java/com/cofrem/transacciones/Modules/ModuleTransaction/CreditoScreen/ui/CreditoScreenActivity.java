@@ -60,6 +60,8 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
     @ViewById
     RelativeLayout bodyContentTransactionTransaccionExitosa;
     @ViewById
+    RelativeLayout bodyContentTransactionTransaccionErronea;
+    @ViewById
     FrameLayout frlPgbHldTransactionCredito;
 
     //Paso transaction_credito_paso_valor_compra
@@ -213,8 +215,7 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
                         break;
 
                     case PASO_TRANSACCION_EXITOSA:
-                        //Metodo para finalizar la transaccion
-                        finalizarTransaccion();
+
                         break;
                 }
                 break;
@@ -272,19 +273,9 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
      */
 
     /**
-     * Metodo para manejar la verificacion exitosa
+     * Metodo para manejar la transaccion exitosa
      */
-    public void handleTransaccionWSRegisterSuccess() {
-
-    }
-
-    @Override
-    public void handleTransaccionWSRegisterError() {
-
-    }
-
-    @Override
-    public void handleTransaccionDBRegisterSuccess() {
+    public void handleTransaccionSuccess() {
 
         //Oculta la barra de progreso
         hideProgress();
@@ -298,13 +289,60 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
         //Actualiza el paso actual
         pasoCreditoTransaction++;
 
-        //Metodo que finaliza la transaccion
-        finalizarTransaccion();
+    }
+
+    /**
+     * Metodo para manejar la conexion del Web Service Erronea
+     */
+    @Override
+    public void handleTransaccionWSConexionError() {
+
+        //Oculta la barra de progreso
+        hideProgress();
+
+        //Oculta la vista del Host de conexion
+        bodyContentTransactionPassUsuario.setVisibility(View.GONE);
+
+        //Muestra la vista del Port de conexion
+        bodyContentTransactionTransaccionExitosa.setVisibility(View.VISIBLE);
+
+        //Actualiza el paso actual
+        pasoCreditoTransaction++;
 
     }
 
+    /**
+     * Metodo para manejar la transaccion erronea desde el Web Service
+     *
+     * @param errorMessage
+     */
+    @Override
+    public void handleTransaccionWSRegisterError(String errorMessage) {
+
+        //Oculta la barra de progreso
+        hideProgress();
+
+        //Muestra el mensaje de error del registro de informacion del dispositivo incorrecto
+        Toast.makeText(this, R.string.transaction_info_status_error_general, Toast.LENGTH_SHORT).show();
+
+        //Regresa a la vista de transacciones
+        navigateToTransactionScreen();
+    }
+
+    /**
+     * Metodo para manejar la transaccion erronea desde la base de datos
+     */
     @Override
     public void handleTransaccionDBRegisterError() {
+
+        //Oculta la barra de progreso
+        hideProgress();
+
+        //Oculta la vista del Host de conexion
+        bodyContentTransactionPassUsuario.setVisibility(View.GONE);
+
+        //Muestra la vista del Port de conexion
+        bodyContentTransactionTransaccionErronea.setVisibility(View.VISIBLE);
 
     }
 
@@ -376,7 +414,8 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
             R.id.btnCreditoTransactionNumeroDocumentoBotonCancelar,
             R.id.btnCreditoTransactionVerificacionDatosBotonCancelar,
             R.id.btnCreditoTransactionClaveUsuarioBotonCancelar,
-            R.id.btnCreditoTransactionExitosaBotonSalir
+            R.id.btnCreditoTransactionExitosaBotonSalir,
+            R.id.btnCreditoTransactionErrorBotonSalir
     })
     public void navigateToTransactionScreen() {
         new Handler().postDelayed(new Runnable() {
@@ -619,6 +658,9 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
             //Se registra el tipo de producto en el modelo
             modelTransaccion.setTipo_servicio(Transaccion.CODIGO_PRODUCTO_CUPO_ROTATIVO);
 
+            //Actualiza el paso actual
+            pasoCreditoTransaction++;
+
             //Registra la transaccion
             creditoScreenPresenter.registrarTransaccion(this, modelTransaccion);
 
@@ -632,19 +674,6 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
             Toast.makeText(this, R.string.transaction_error_format_clave_usuario, Toast.LENGTH_SHORT).show();
 
         }
-
-    }
-
-    /**
-     * Metodo para finalizar la transaccion
-     */
-    public void finalizarTransaccion() {
-
-        //Oculta la vista de contraseña de usuario
-        bodyContentTransactionPassUsuario.setVisibility(View.GONE);
-
-        //Muestra la vista de transaccion Exitosa
-        bodyContentTransactionTransaccionExitosa.setVisibility(View.VISIBLE);
 
     }
 

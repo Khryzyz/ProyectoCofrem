@@ -84,14 +84,14 @@ public class CreditoScreenPresenterImpl implements CreditoScreenPresenter {
     public void onEventMainThread(CreditoScreenEvent creditoScreenEvent) {
         switch (creditoScreenEvent.getEventType()) {
 
-            case CreditoScreenEvent.onTransaccionWSRegisterSuccess:
-                onTransaccionWSRegisterSuccess();
+            case CreditoScreenEvent.onTransaccionSuccess:
+                onTransaccionSuccess();
+                break;
+            case CreditoScreenEvent.onTransaccionWSConexionError:
+                onTransaccionWSConexionError();
                 break;
             case CreditoScreenEvent.onTransaccionWSRegisterError:
-                onTransaccionWSRegisterError();
-                break;
-            case CreditoScreenEvent.onTransaccionDBRegisterSuccess:
-                onTransaccionDBRegisterSuccess();
+                onTransaccionWSRegisterError(creditoScreenEvent.getErrorMessage());
                 break;
             case CreditoScreenEvent.onTransaccionDBRegisterError:
                 onTransaccionDBRegisterError();
@@ -110,32 +110,34 @@ public class CreditoScreenPresenterImpl implements CreditoScreenPresenter {
     /**
      * Metodo para manejar la transaccion del Web Service Correcta
      */
-    private void onTransaccionWSRegisterSuccess() {
+    private void onTransaccionSuccess() {
         if (creditoScreenView != null) {
-            creditoScreenView.handleTransaccionWSRegisterSuccess();
+            creditoScreenView.handleTransaccionSuccess();
         }
     }
 
     /**
-     * Metodo para manejar la transaccion del Web Service Erronea
+     * Metodo para manejar la conexion del Web Service Erronea
      */
-    private void onTransaccionWSRegisterError() {
+    private void onTransaccionWSConexionError() {
         if (creditoScreenView != null) {
-            creditoScreenView.handleTransaccionWSRegisterError();
+            creditoScreenView.handleTransaccionWSConexionError();
         }
     }
 
     /**
-     * Metodo para manejar la transaccion de la Base de datos Correcta
+     * Metodo para manejar la transaccion erronea desde el Web Service
+     *
+     * @param errorMessage
      */
-    private void onTransaccionDBRegisterSuccess() {
+    private void onTransaccionWSRegisterError(String errorMessage) {
         if (creditoScreenView != null) {
-            creditoScreenView.handleTransaccionDBRegisterSuccess();
+            creditoScreenView.handleTransaccionWSRegisterError(errorMessage);
         }
     }
 
     /**
-     * Metodo para manejar la transaccion de la Base de datos Erronea
+     * Metodo para manejar la transaccion erronea desde la base de datos
      */
     private void onTransaccionDBRegisterError() {
         if (creditoScreenView != null) {

@@ -172,7 +172,7 @@ public class ReimpresionScreenPresenterImpl implements ReimpresionScreenPresente
      */
     private void onVerifySuccess() {
         if (reimpresionScreenView != null) {
-            //  reimpresionScreenView.handleTransaccionWSRegisterSuccess();
+            //  reimpresionScreenView.handleTransaccionSuccess();
         }
     }
 

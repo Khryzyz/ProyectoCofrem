@@ -5,20 +5,22 @@ public interface CreditoScreenView {
     /**
      * Metodo para manejar la transaccion del Web Service Correcta
      */
-    void handleTransaccionWSRegisterSuccess();
+    void handleTransaccionSuccess();
 
     /**
-     * Metodo para manejar la transaccion del Web Service Erronea
+     * Metodo para manejar la conexion del Web Service Erronea
      */
-    void handleTransaccionWSRegisterError();
+    void handleTransaccionWSConexionError();
 
     /**
-     * Metodo para manejar la transaccion de la Base de datos Correcta
+     * Metodo para manejar la transaccion erronea desde el Web Service
+     *
+     * @param errorMessage
      */
-    void handleTransaccionDBRegisterSuccess();
+    void handleTransaccionWSRegisterError(String errorMessage);
 
     /**
-     * Metodo para manejar la transaccion de la Base de datos Erronea
+     * Metodo para manejar la transaccion erronea desde la base de datos
      */
     void handleTransaccionDBRegisterError();
 }
