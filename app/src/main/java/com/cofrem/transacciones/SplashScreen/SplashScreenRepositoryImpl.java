@@ -177,26 +177,44 @@ public class SplashScreenRepositoryImpl implements SplashScreenRepository {
      */
     private boolean verifyInitialRegister(Context context) {
 
-        boolean resultVerifyInitialRegister = false;
+        boolean resultVerifyInitialRegisterProducto = false;
+        boolean resultVerifyInitialRegisterConfigPrinter = false;
 
         AppDatabase.getInstance(context).registroInicialProductos();
+
+
 
         // Validacion en caso de que no existan productos registrados en el sistema
         if (AppDatabase.getInstance(context).obtenerConteoRegistroProductos() == 0) {
 
             if (AppDatabase.getInstance(context).registroInicialProductos()) {
 
-                resultVerifyInitialRegister = true;
+                resultVerifyInitialRegisterProducto = true;
 
             }
 
         } else {
 
-            resultVerifyInitialRegister = true;
+            resultVerifyInitialRegisterProducto = true;
 
         }
 
-        return resultVerifyInitialRegister;
+        // Validacion en caso de que no exista configuracion inicial para la impresora
+        if (AppDatabase.getInstance(context).conteoConfigurationPrinter() == 0) {
+
+            if (AppDatabase.getInstance(context).insertRegistroInicialConfiguracionPrinter()) {
+
+                resultVerifyInitialRegisterConfigPrinter = true;
+
+            }
+
+        } else {
+
+            resultVerifyInitialRegisterConfigPrinter = true;
+
+        }
+
+        return (resultVerifyInitialRegisterProducto && resultVerifyInitialRegisterConfigPrinter);
 
     }
 

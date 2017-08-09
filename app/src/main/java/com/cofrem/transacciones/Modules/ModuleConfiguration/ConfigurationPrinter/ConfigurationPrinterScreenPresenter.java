@@ -1,10 +1,25 @@
 package com.cofrem.transacciones.Modules.ModuleConfiguration.ConfigurationPrinter;
 
+
 import android.content.Context;
 
 import com.cofrem.transacciones.Modules.ModuleConfiguration.ConfigurationPrinter.events.ConfigurationPrinterScreenEvent;
+import com.cofrem.transacciones.models.ConfigurationPrinter;
 
 public interface ConfigurationPrinterScreenPresenter {
+
+    //Todo: crear metodos presentador
+
+    /**
+     * metodo que se encarga de verificar la existencia de la configuracion de la impresora
+     */
+    void VerifyConfigurationInitialPrinter(Context context);
+
+
+    /**
+     * metodo que se encarga guardar la configuracion de la impresora
+     */
+    void saveConfigurationPrinter(Context context, ConfigurationPrinter configuration);
 
     /**
      * Metodo para la creacion del presentador
@@ -16,31 +31,12 @@ public interface ConfigurationPrinterScreenPresenter {
      */
     void onDestroy();
 
-    /**
-     * Metodo que verifica:
-     *  - La existencia de la configuración inicial
-     *  - En caso de no existir mostrará la vista de configuración
-     *  - En caso de existir validara el acceso
-     *
-     * @param context
-     */
-    void validateInitialConfig(Context context);
-
-    /**
-     * Metodo que verifica:
-     *  - Conexion a internet
-     *  - Existencia datos en DB interna
-     *  - Coherencia de datos con el servidor
-     *
-     * @param context
-     */
-    void validateAccess(Context context);
 
     /**
      * Metodo para recibir los eventos generados
      *
-     * @param configurationPrinterScreenEvent
+     * @param splashScreenEvent
      */
-    void onEventMainThread(ConfigurationPrinterScreenEvent configurationPrinterScreenEvent);
+    void onEventMainThread(ConfigurationPrinterScreenEvent splashScreenEvent);
 
 }

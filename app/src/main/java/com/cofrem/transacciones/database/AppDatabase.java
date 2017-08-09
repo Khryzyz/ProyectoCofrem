@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteStatement;
 
 import com.cofrem.transacciones.lib.MD5;
+import com.cofrem.transacciones.models.ConfigurationPrinter;
 import com.cofrem.transacciones.models.Configurations;
 import com.cofrem.transacciones.models.ModelsWS.ModelEstablecimiento.ConexionEstablecimiento;
 import com.cofrem.transacciones.models.ModelsWS.ModelEstablecimiento.Establecimiento;
@@ -487,6 +488,7 @@ public final class AppDatabase extends SQLiteOpenHelper {
 
         // Almacena los valores a insertar
         contentValues.put(DatabaseManager.TableConfigurationPrinter.COLUMN_CONFIGURACION_PRINTER_FONT_SIZE, 2);
+        contentValues.put(DatabaseManager.TableConfigurationPrinter.COLUMN_CONFIGURACION_PRINTER_ESTADO, 1);
         contentValues.put(DatabaseManager.TableConfigurationPrinter.COLUMN_CONFIGURACION_PRINTER_GRAY_LEVEL, 11);
 
         // Insercion del registro en la base de datos
@@ -635,6 +637,83 @@ public final class AppDatabase extends SQLiteOpenHelper {
 
     }
 
+    /**
+     * Metodo para Obtener la configuracion de la impresora
+     */
+    public ConfigurationPrinter getConfigurationPrinter() {
+
+        ConfigurationPrinter modelConfigurationPrinter = new ConfigurationPrinter();
+
+        Cursor cursorQuery;
+
+        Cursor cursor;
+
+        cursor = getWritableDatabase().rawQuery(
+                "SELECT * FROM " + DatabaseManager.TableConfigurationPrinter.TABLE_NAME_CONFIGURACION_PRINTER +
+                        " WHERE " + DatabaseManager.TableConfigurationPrinter.COLUMN_CONFIGURACION_PRINTER_ESTADO + " = '1'", null
+        );
+
+        if (cursor.moveToFirst()) {
+            modelConfigurationPrinter.setFont_size(cursor.getInt(0));
+            modelConfigurationPrinter.setGray_level(cursor.getInt(2));
+
+        }
+
+
+        return modelConfigurationPrinter;
+    }
+
+
+    /**
+     * Metodo para insertar registro de la configuracion de la Impresora
+     */
+    public boolean insertConfigurationPrinter(ConfigurationPrinter configuration) {
+
+        boolean transaction = false;
+
+        int count = 0;
+
+        try {
+            getWritableDatabase().beginTransaction();
+
+            // Eliminacion de registros anteriores en la base de datos
+            getWritableDatabase().delete(
+                    DatabaseManager.TableConfigurationPrinter.TABLE_NAME_CONFIGURACION_PRINTER,
+                    "",
+                    null
+            );
+
+            // Inicializacion de la variable de contenidos del registro
+            ContentValues contentValuesInsert = new ContentValues();
+
+            // Almacena los valores a insertar
+            contentValuesInsert.put(DatabaseManager.TableConfigurationPrinter.COLUMN_CONFIGURACION_PRINTER_FONT_SIZE, configuration.getFont_size());
+            contentValuesInsert.put(DatabaseManager.TableConfigurationPrinter.COLUMN_CONFIGURACION_PRINTER_GRAY_LEVEL, configuration.getGray_level());
+            contentValuesInsert.put(DatabaseManager.TableConfigurationPrinter.COLUMN_CONFIGURACION_PRINTER_ESTADO, 1);
+
+            // Insercion del registro en la base de datos
+            count = (int) getWritableDatabase().insert(
+                    DatabaseManager.TableConfigurationPrinter.TABLE_NAME_CONFIGURACION_PRINTER,
+                    null,
+                    contentValuesInsert
+            );
+
+
+            getWritableDatabase().setTransactionSuccessful();
+
+        } catch (SQLException e) {
+
+        } finally {
+
+            getWritableDatabase().endTransaction();
+
+        }
+        if (count == 1) {
+            transaction = true;
+        }
+
+        return transaction;
+    }
 
     /**
      * Metodo para insertar registro de la configuracion de la conexion
@@ -857,7 +936,6 @@ public final class AppDatabase extends SQLiteOpenHelper {
         }
         return modelTransaccion;
     }
-
 
     /**
      * Metodo para Obtener una  transaccion segun el numero de cargo

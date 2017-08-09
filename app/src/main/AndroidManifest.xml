@@ -83,6 +83,11 @@
             android:windowSoftInputMode="stateHidden|stateAlwaysHidden"></activity>
         <!-- Configuration Screen / Module TestCommunication-->
         <activity
+            android:name=".Modules.ModuleConfiguration.ConfigurationPrinter.ui.ConfigurationPrinterScreenActivity_"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:windowSoftInputMode="stateHidden|stateAlwaysHidden"></activity>
+        <!-- Configuration Screen / Module TestCommunication-->
+        <activity
             android:name=".Modules.ModuleConfiguration.TestCommunicationScreen.ui.TestCommunicationScreenActivity_"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
             android:windowSoftInputMode="stateHidden|stateAlwaysHidden"></activity>

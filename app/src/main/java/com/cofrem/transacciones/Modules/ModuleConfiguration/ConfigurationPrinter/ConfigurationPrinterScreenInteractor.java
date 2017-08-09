@@ -2,26 +2,14 @@ package com.cofrem.transacciones.Modules.ModuleConfiguration.ConfigurationPrinte
 
 import android.content.Context;
 
-public interface ConfigurationPrinterScreenInteractor {
+import com.cofrem.transacciones.models.ConfigurationPrinter;
+
+interface ConfigurationPrinterScreenInteractor {
+
+    void VerifyConfigurationInitialPrinter(Context context);
 
     /**
-     * Metodo que verifica:
-     *  - La existencia de la configuración inicial
-     *  - En caso de no existir mostrará la vista de configuración
-     *  - En caso de existir validara el acceso
-     *
-     * @param context
+     * metodo que se encarga guardar la configuracion de la impresora
      */
-    void validateInitialConfig(Context context);
-
-    /**
-     * Metodo que verifica:
-     *  - Conexion a internet
-     *  - Existencia datos en DB interna
-     *  - Coherencia de datos con el servidor
-     *
-     * @param context
-     */
-    void validateAccess(Context context);
-
+    void saveConfigurationPrinter(Context context, ConfigurationPrinter configuration);
 }
