@@ -1,5 +1,7 @@
 package com.cofrem.transacciones.splashScreen.ui;
 
+import com.cofrem.transacciones.models.InfoHeaderApp;
+
 /**
  * Interface usada en la actividad de la Pantalla principal
  */

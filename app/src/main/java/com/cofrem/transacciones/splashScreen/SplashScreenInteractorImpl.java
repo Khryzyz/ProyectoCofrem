@@ -36,9 +36,9 @@ public class SplashScreenInteractorImpl implements SplashScreenInteractor {
 
     /**
      * Metodo que verifica:
-     *  - La existencia de la configuración inicial
-     *  - En caso de no existir mostrará la vista de configuración
-     *  - En caso de existir validara el acceso
+     * - La existencia de la configuración inicial
+     * - En caso de no existir mostrará la vista de configuración
+     * - En caso de existir validara el acceso
      *
      * @param context
      */
@@ -49,9 +49,9 @@ public class SplashScreenInteractorImpl implements SplashScreenInteractor {
 
     /**
      * Metodo que verifica:
-     *  - Conexion a internet
-     *  - Existencia datos en DB interna
-     *  - Coherencia de datos con el servidor
+     * - Conexion a internet
+     * - Existencia datos en DB interna
+     * - Coherencia de datos con el servidor
      *
      * @param context
      */
@@ -59,5 +59,15 @@ public class SplashScreenInteractorImpl implements SplashScreenInteractor {
     public void validateAccess(Context context) {
         //Valida el acceso a la app
         splashScreenRepository.validateAcces(context);
+    }
+
+    /**
+     * Metodo que consulta la informacion del header
+     *
+     * @param context
+     */
+    @Override
+    public void setInfoHeader(Context context) {
+        splashScreenRepository.setInfoHeader(context);
     }
 }

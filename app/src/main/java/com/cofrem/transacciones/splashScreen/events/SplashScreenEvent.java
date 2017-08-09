@@ -1,5 +1,7 @@
 package com.cofrem.transacciones.splashScreen.events;
 
+import com.cofrem.transacciones.models.InfoHeaderApp;
+
 /**
  * Clase que maneja los eventos de la Pantalla de Inicio
  */

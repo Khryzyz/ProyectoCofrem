@@ -3,6 +3,13 @@
 
     <!--Estilos de los textos usados en la aplicacion-->
 
+    <style name="StyleTextPrimaryExtraSmall">
+        <item name="android:textColor">@color/appColorPrimaryText</item>
+        <item name="android:textSize">@dimen/appTxtSizeXs</item>
+        <item name="android:typeface">sans</item>
+        <item name="android:background">@color/appColorTransparent</item>
+    </style>
+
     <style name="StyleTextPrimarySmall">
         <item name="android:textColor">@color/appColorPrimaryText</item>
         <item name="android:textSize">@dimen/appTxtSizeSm</item>

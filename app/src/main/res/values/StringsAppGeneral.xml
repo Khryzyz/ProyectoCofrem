@@ -47,6 +47,11 @@
     <string name="header_text_nombre_establecimiento_no_registrado">Establecimiento: NO REGISTRADO</string>
     <string name="header_text_nombre_establecimiento_registrado">Establecimiento: %s</string>
 
+    <string name="header_text_nombre_punto_no_registrado">Terminal: NO REGISTRADO</string>
+    <string name="header_text_nombre_punto_registrado">Terminal: %s</string>
+
+    <string name="header_error_no_disponible">La información del dispositivo no esta disponible.</string>
+
     <!-- Textos usados recurrentemente en toda la App -->
 
     <string name="general_text_valor_cero">$0.00</string>

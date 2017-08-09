@@ -30,12 +30,22 @@
         android:text="@string/header_text_id_punto_no_registrado" />
 
     <TextView
-        android:id="@+id/txvHeaderIdEstablecimiento"
-        style="@style/StyleTextPrimarySmall"
+        android:id="@+id/txvHeaderEstablecimiento"
+        style="@style/StyleTextPrimaryExtraSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/txvHeaderIdPunto"
         android:layout_marginBottom="@dimen/appMarginBottom"
         android:layout_marginStart="@dimen/appMarginStart"
         android:text="@string/header_text_nombre_establecimiento_no_registrado" />
+
+    <TextView
+        android:id="@+id/txvHeaderPunto"
+        style="@style/StyleTextPrimaryExtraSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txvHeaderEstablecimiento"
+        android:layout_marginBottom="@dimen/appMarginBottom"
+        android:layout_marginStart="@dimen/appMarginStart"
+        android:text="@string/header_text_nombre_punto_no_registrado" />
 </RelativeLayout>

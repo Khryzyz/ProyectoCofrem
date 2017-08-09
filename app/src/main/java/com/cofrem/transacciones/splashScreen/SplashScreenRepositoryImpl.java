@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
+import com.cofrem.transacciones.models.InfoHeaderApp;
 import com.cofrem.transacciones.splashScreen.events.SplashScreenEvent;
 import com.cofrem.transacciones.database.AppDatabase;
 import com.cofrem.transacciones.lib.EventBus;
@@ -35,9 +36,9 @@ public class SplashScreenRepositoryImpl implements SplashScreenRepository {
 
     /**
      * Metodo que verifica:
-     *  - La existencia de la configuración inicial
-     *  - En caso de no existir mostrará la vista de configuración
-     *  - En caso de existir validara el acceso
+     * - La existencia de la configuración inicial
+     * - En caso de no existir mostrará la vista de configuración
+     * - En caso de existir validara el acceso
      *
      * @param context
      */
@@ -115,9 +116,9 @@ public class SplashScreenRepositoryImpl implements SplashScreenRepository {
 
     /**
      * Metodo que verifica:
-     *  - Conexion a internet
-     *  - Existencia datos en DB interna
-     *  - Coherencia de datos con el servidor
+     * - Conexion a internet
+     * - Existencia datos en DB interna
+     * - Coherencia de datos con el servidor
      *
      * @param context
      */
@@ -135,7 +136,6 @@ public class SplashScreenRepositoryImpl implements SplashScreenRepository {
                 postEvent(SplashScreenEvent.onVerifySuccess);
             else
                 postEvent(SplashScreenEvent.onVerifyError);
-
 
         } else {
             if (!deviceMagneticReader) {
@@ -164,6 +164,29 @@ public class SplashScreenRepositoryImpl implements SplashScreenRepository {
     }
 
     /**
+     * Metodo que consulta la informacion del header
+     *
+     * @param context
+     */
+    @Override
+    public void setInfoHeader(Context context) {
+
+        if (AppDatabase.getInstance(context).obtenerInfoHeader()) {
+
+            postEvent(SplashScreenEvent.onGetInfoHeaderSuccess);
+
+
+
+        } else {
+
+            postEvent(SplashScreenEvent.onGetInfoHeaderError);
+
+        }
+
+
+    }
+
+    /**
      * #############################################################################################
      * Metodo propios de la clase
      * #############################################################################################
@@ -181,7 +204,6 @@ public class SplashScreenRepositoryImpl implements SplashScreenRepository {
         boolean resultVerifyInitialRegisterConfigPrinter = false;
 
         AppDatabase.getInstance(context).handlerRegistroInicialProductos();
-
 
 
         // Validacion en caso de que no existan productos registrados en el sistema
@@ -228,8 +250,6 @@ public class SplashScreenRepositoryImpl implements SplashScreenRepository {
 
         boolean resultVerifyInitialRegister = false;
 
-        //TODO: Validacion de la configuracion inicial de la impresora esto debe ser de la FASE I
-
         // Validacion en caso de que no exista configuracion inicial para la impresora
         if (AppDatabase.getInstance(context).conteoConfigurationPrinter() == 0) {
 
@@ -248,6 +268,7 @@ public class SplashScreenRepositoryImpl implements SplashScreenRepository {
         return resultVerifyInitialRegister;
 
     }
+
     /**
      * Metodo que verifica la existencia de conexion a internet en el dispositivo
      *
@@ -311,9 +332,12 @@ public class SplashScreenRepositoryImpl implements SplashScreenRepository {
      * @param type
      * @param errorMessage
      */
-    private void postEvent(int type, String errorMessage) {
+    private void postEvent(int type, String errorMessage, InfoHeaderApp infoHeaderApp) {
+
         SplashScreenEvent splashScreenEvent = new SplashScreenEvent();
+
         splashScreenEvent.setEventType(type);
+
         if (errorMessage != null) {
             splashScreenEvent.setErrorMessage(errorMessage);
         }
@@ -330,7 +354,7 @@ public class SplashScreenRepositoryImpl implements SplashScreenRepository {
      */
     private void postEvent(int type) {
 
-        postEvent(type, null);
+        postEvent(type, null, null);
 
     }
 

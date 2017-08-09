@@ -2,6 +2,7 @@ package com.cofrem.transacciones.splashScreen;
 
 import android.content.Context;
 
+import com.cofrem.transacciones.models.InfoHeaderApp;
 import com.cofrem.transacciones.splashScreen.events.SplashScreenEvent;
 import com.cofrem.transacciones.splashScreen.ui.SplashScreenView;
 import com.cofrem.transacciones.lib.EventBus;
@@ -78,6 +79,18 @@ public class SplashScreenPresenterImpl implements SplashScreenPresenter {
     public void validateInitialConfig(Context context) {
         if (splashScreenView != null) {
             splashScreenInteractor.validateInitialConfig(context);
+        }
+    }
+
+    /**
+     * Metodo que consulta la informacion del header
+     *
+     * @param context
+     */
+    @Override
+    public void setInfoHeader(Context context) {
+        if (splashScreenView != null) {
+            splashScreenInteractor.setInfoHeader(context);
         }
     }
 
