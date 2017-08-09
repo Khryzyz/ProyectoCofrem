@@ -379,6 +379,9 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
     @Override
     public void handleImprimirReciboError() {
 
+        //Muestra el mensaje de error de formato de la contraseña
+        Toast.makeText(this, R.string.transaction_text_printer_error, Toast.LENGTH_SHORT).show();
+
     }
     /**
      * #############################################################################################
@@ -501,6 +504,18 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
                 startActivity(intent);
             }
         }, 1000);
+
+    }
+
+    /**
+     * Metodo para regresar a la ventana de transaccion
+     */
+    @Click({R.id.btnCreditoTransactionExitosaBotonImprimir
+    })
+    public void imprimirRecibo() {
+
+        //Imprime el recibo
+        creditoScreenPresenter.imprimirRecibo(this);
 
     }
 
@@ -754,7 +769,7 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
 
     }
 
-    public void regresarDesdeImpimirRecibo(int timer){
+    public void regresarDesdeImpimirRecibo(int timer) {
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override

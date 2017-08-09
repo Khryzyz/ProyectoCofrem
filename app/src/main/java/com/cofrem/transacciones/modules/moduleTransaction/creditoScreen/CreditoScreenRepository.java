@@ -13,4 +13,12 @@ public interface CreditoScreenRepository {
      * @param transaccion
      */
     void registrarTransaccion(Context context, Transaccion transaccion);
+
+    /**
+     * Metodo que imprime el recibo de la transaccion
+     *
+     * @param context
+     */
+    void imprimirRecibo(Context context);
+
 }

@@ -1,5 +1,7 @@
 package com.cofrem.transacciones.modules.moduleTransaction.anulacionScreen;
 
+import android.content.Context;
+
 class AnulacionScreenInteractorImpl implements AnulacionScreenInteractor {
     /**
      * #############################################################################################
@@ -34,8 +36,8 @@ class AnulacionScreenInteractorImpl implements AnulacionScreenInteractor {
      *
      */
     @Override
-    public void validateAccess() {
+    public void validarPasswordAdministrador(Context context, String pass) {
         //Valida el acceso a la app
-        anulacionScreenRepository.validateAcces();
+        anulacionScreenRepository.validarPasswordAdministrador(context, pass);
     }
 }
