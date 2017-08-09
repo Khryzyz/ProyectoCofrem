@@ -6,6 +6,9 @@ public class CreditoScreenEvent {
     public final static int onTransaccionWSConexionError = 1;
     public final static int onTransaccionWSRegisterError = 2;
     public final static int onTransaccionDBRegisterError = 3;
+    public final static int onImprecionReciboSuccess = 4;
+    public final static int onImprecionReciboError = 5;
+
 
     // Variable que maneja los tipos de eventos
     private int eventType;
