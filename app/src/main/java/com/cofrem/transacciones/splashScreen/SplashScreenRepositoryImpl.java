@@ -180,14 +180,14 @@ public class SplashScreenRepositoryImpl implements SplashScreenRepository {
         boolean resultVerifyInitialRegisterProducto = false;
         boolean resultVerifyInitialRegisterConfigPrinter = false;
 
-        AppDatabase.getInstance(context).registroInicialProductos();
+        AppDatabase.getInstance(context).handlerRegistroInicialProductos();
 
 
 
         // Validacion en caso de que no existan productos registrados en el sistema
         if (AppDatabase.getInstance(context).obtenerConteoRegistroProductos() == 0) {
 
-            if (AppDatabase.getInstance(context).registroInicialProductos()) {
+            if (AppDatabase.getInstance(context).handlerRegistroInicialProductos()) {
 
                 resultVerifyInitialRegisterProducto = true;
 

@@ -34,6 +34,9 @@ public class SplashScreenEvent {
     public final static int onPrinterDeviceSuccess = 15;
     public final static int onPrinterDeviceError = 16;
 
+    public final static int onGetInfoHeaderSuccess = 17;
+    public final static int onGetInfoHeaderError = 18;
+
 
     // Variable que maneja los tipos de eventos
     private int eventType;

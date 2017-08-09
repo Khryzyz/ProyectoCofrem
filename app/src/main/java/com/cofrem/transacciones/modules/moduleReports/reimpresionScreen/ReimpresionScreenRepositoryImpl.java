@@ -226,7 +226,7 @@ public class ReimpresionScreenRepositoryImpl implements ReimpresionScreenReposit
     public void validarExistenciaReciboConNumCargo(Context context, String numCargo) {
 
         //Consulta la existencia del registro de una transaccion por numero de Cargo
-        modelTransaccion = AppDatabase.getInstance(context).obtenerTransaccion(numCargo);
+        modelTransaccion = AppDatabase.getInstance(context).obtenerTransaccionByNumeroCargo(numCargo);
 
         if (modelTransaccion.getNumero_tarjeta() != null) {
             // Registra el evento de existencia de la transaccion para imprimir

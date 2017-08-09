@@ -210,6 +210,8 @@ public class SplashScreenActivity extends Activity implements SplashScreenView {
                 getString(R.string.general_message_verify_success)
         );
 
+        setInfoHeader();
+
         navigateToMainScreen();
 
     }
@@ -323,6 +325,28 @@ public class SplashScreenActivity extends Activity implements SplashScreenView {
     }
 
     /**
+     * Metodo para manejar la obtencion de la informacion del header exitosa
+     */
+    @Override
+    public void handleGetInfoHeaderSuccess() {
+        txvSplashScreenInfo.setText(txvSplashScreenInfo.getText() +
+                "\n" +
+                getString(R.string.general_message_printer_device_info)
+        );
+    }
+
+    /**
+     * Metodo para manejar la obtencion de la informacion del header erronea
+     */
+    @Override
+    public void handleGetInfoHeaderError() {
+        txvSplashScreenInfo.setText(txvSplashScreenInfo.getText() +
+                "\n" +
+                getString(R.string.general_message_printer_device_error)
+        );
+    }
+
+    /**
      * #############################################################################################
      * Metodo propios de la clase
      * #############################################################################################
@@ -365,6 +389,15 @@ public class SplashScreenActivity extends Activity implements SplashScreenView {
          *  - En caso de no existir mostrará la vista de configuración
          *  - En caso de existir validara el acceso
          */
+        splashScreenPresenter.validateInitialConfig(this);
+
+    }
+
+    /**
+     * Metodo para llenar la informacion de los encabezados
+     */
+    private void setInfoHeader() {
+
         splashScreenPresenter.validateInitialConfig(this);
 
     }

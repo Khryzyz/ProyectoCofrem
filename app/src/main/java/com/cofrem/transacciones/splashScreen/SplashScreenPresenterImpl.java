@@ -68,9 +68,9 @@ public class SplashScreenPresenterImpl implements SplashScreenPresenter {
 
     /**
      * Metodo que verifica:
-     *  - La existencia de la configuración inicial
-     *  - En caso de no existir mostrará la vista de configuración
-     *  - En caso de existir validara el acceso
+     * - La existencia de la configuración inicial
+     * - En caso de no existir mostrará la vista de configuración
+     * - En caso de existir validara el acceso
      *
      * @param context
      */
@@ -83,9 +83,9 @@ public class SplashScreenPresenterImpl implements SplashScreenPresenter {
 
     /**
      * Metodo que verifica:
-     *  - Conexion a internet
-     *  - Existencia datos en DB interna
-     *  - Coherencia de datos con el servidor
+     * - Conexion a internet
+     * - Existencia datos en DB interna
+     * - Coherencia de datos con el servidor
      *
      * @param context
      */
@@ -171,6 +171,14 @@ public class SplashScreenPresenterImpl implements SplashScreenPresenter {
 
             case SplashScreenEvent.onPrinterDeviceError:
                 onPrinterDeviceError();
+                break;
+
+            case SplashScreenEvent.onGetInfoHeaderSuccess:
+                onGetInfoHeaderSuccess();
+                break;
+
+            case SplashScreenEvent.onGetInfoHeaderError:
+                onGetInfoHeaderError();
                 break;
         }
     }
@@ -331,6 +339,24 @@ public class SplashScreenPresenterImpl implements SplashScreenPresenter {
     private void onPrinterDeviceError() {
         if (splashScreenView != null) {
             splashScreenView.handlePrinterDeviceError();
+        }
+    }
+
+    /**
+     * Metodo para manejar la obtencion de la informacion del header exitosa
+     */
+    private void onGetInfoHeaderSuccess() {
+        if (splashScreenView != null) {
+            splashScreenView.handleGetInfoHeaderSuccess();
+        }
+    }
+
+    /**
+     * Metodo para manejar la obtencion de la informacion del header erronea
+     */
+    private void onGetInfoHeaderError() {
+        if (splashScreenView != null) {
+            splashScreenView.handleGetInfoHeaderError();
         }
     }
 }

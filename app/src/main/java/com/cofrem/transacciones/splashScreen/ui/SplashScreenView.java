@@ -90,5 +90,15 @@ public interface SplashScreenView {
      */
     void handlePrinterDeviceError();
 
+    /**
+     * Metodo para manejar la obtencion de la informacion del header exitosa
+     */
+    void handleGetInfoHeaderSuccess();
+
+    /**
+     * Metodo para manejar la obtencion de la informacion del header erronea
+     */
+    void handleGetInfoHeaderError();
+
 
 }

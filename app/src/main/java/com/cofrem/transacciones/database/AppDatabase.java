@@ -36,7 +36,7 @@ public final class AppDatabase extends SQLiteOpenHelper {
      * Constructor de la clase
      * Crea la base de datos si no existe
      *
-     * @param context
+     * @param context instancia desde la que se llaman los metodos
      */
     private AppDatabase(Context context) {
         super(context,
@@ -63,7 +63,7 @@ public final class AppDatabase extends SQLiteOpenHelper {
      * Metodo ejecutado en el evento de la instalacion de la aplicacion
      * Crea las tablas necesarias para el funcionamiento de la aplicacion
      *
-     * @param db
+     * @param db Database
      */
     @Override
     public void onCreate(SQLiteDatabase db) {
@@ -80,9 +80,9 @@ public final class AppDatabase extends SQLiteOpenHelper {
     /**
      * Metodo ejecutado en la actualizacion de la aplicacion
      *
-     * @param db
-     * @param oldVersion
-     * @param newVersion
+     * @param db         Database
+     * @param oldVersion Version Anterior
+     * @param newVersion Version Actual
      */
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -99,45 +99,51 @@ public final class AppDatabase extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    /**
-     * #############################################################################################
-     * AREA CONSULTAS GENERALES
-     * #############################################################################################
+    /*
+      #############################################################################################
+      AREA CONSULTAS GENERALES
+      #############################################################################################
      */
 
     /**
-     * Metodo para Obtener ultima  transaccion
+     * Metodo para Obtener el codigo de la terminal
+     *
+     * @return String codigo de la terminal
      */
     public String obtenerCodigoTerminal() {
 
         String codigoTerminal = "";
 
-        Cursor cursor;
+        Cursor cursorQuery;
 
-        cursor = getWritableDatabase().rawQuery(
+        cursorQuery = getWritableDatabase().rawQuery(
                 "SELECT " + DatabaseManager.TableConfiguracionConexion.COLUMN_CONFIGURACION_CONEXION_DISPOSITIVO +
                         " FROM " + DatabaseManager.TableConfiguracionConexion.TABLE_NAME_CONFIGURACION_CONEXION +
                         " WHERE " + DatabaseManager.TableConfiguracionConexion.COLUMN_CONFIGURACION_CONEXION_ESTADO + " = 1 " +
                         " LIMIT 1", null
         );
 
-        if (cursor.moveToFirst()) {
-            codigoTerminal = cursor.getString(0);
+        if (cursorQuery.moveToFirst()) {
+            codigoTerminal = cursorQuery.getString(0);
         }
+
+        cursorQuery.close();
 
         return codigoTerminal;
     }
 
-    /**
-     * #############################################################################################
-     * AREA REGISTROS INICIALES
-     * #############################################################################################
+    /*
+      #############################################################################################
+      AREA REGISTROS INICIALES
+      #############################################################################################
      */
 
     /**
-     * Metodo para insertar registro inicial de productos en la Base de Datos
+     * Metodo para manejar la informacion que se insertara en el registro inicial de productos en la Base de Datos
+     *
+     * @return Boolean estado del registro de los productos iniciales
      */
-    public boolean registroInicialProductos() {
+    public boolean handlerRegistroInicialProductos() {
 
         // Eliminacion de registros anteriores en la base de datos
         getWritableDatabase().delete(
@@ -154,25 +160,25 @@ public final class AppDatabase extends SQLiteOpenHelper {
         insertRegistroInicialProductos(5, "CUOTA MONETARIA FOSFEC", "Producto cuota monetaria fosfec Cofrem");
         insertRegistroInicialProductos(6, "CUOTA MONETARIA", "Producto cuota monetaria Cofrem");
 
-        //TODO: Borrar estas lineas ya que son los registro de prueba de productos
-        insertRegistroPruebaTransaction(1, 123456, "1234 5678 9012 3456", 600000);
-        insertRegistroPruebaTransaction(2, 654321, "8899 2001 9012 3562", 1000000);
-        insertRegistroPruebaTransaction(3, 123654, "9237 3056 6629 3456", 33000000);
-        insertRegistroPruebaTransaction(4, 321456, "5219 1894 9012 2605", 40000);
-
-
         return true;
 
     }
 
     /**
      * Metodo para insertar registro inicial de productos en la Base de Datos
+     *
+     * @param producto_id          int ID del producto
+     * @param producto_nombre      String Nombre del producto
+     * @param producto_descripcion String Descripcion del producto
+     * @return Boolean estado de la transaccion del registro inicial de los productos
      */
-    public boolean insertRegistroInicialProductos(int producto_id,
-                                                  String producto_nombre,
-                                                  String producto_descripcion) {
+    private boolean insertRegistroInicialProductos(int producto_id,
+                                                   String producto_nombre,
+                                                   String producto_descripcion) {
 
         boolean transaction = false;
+
+        long conteo = 0;
 
         // Inicializacion de la variable de contenidos del registro
         ContentValues contentValues = new ContentValues();
@@ -184,16 +190,15 @@ public final class AppDatabase extends SQLiteOpenHelper {
         contentValues.put(DatabaseManager.TableProducto.COLUMN_PRODUCTO_REGISTRO, getDateTime());
         contentValues.put(DatabaseManager.TableProducto.COLUMN_PRODUCTO_ESTADO, 1);
 
-        // Insercion del registro en la base de datos
-        int count = 0;
-
         try {
 
-            count = (int) getWritableDatabase().insert(
+            getWritableDatabase().insert(
                     DatabaseManager.TableProducto.TABLE_NAME_PRODUCTO,
                     null,
                     contentValues
             );
+
+            conteo = obtenerConteoCambios();
 
         } catch (SQLException e) {
 
@@ -201,7 +206,7 @@ public final class AppDatabase extends SQLiteOpenHelper {
 
         }
 
-        if (count == 1) {
+        if (conteo == 1) {
             transaction = true;
         }
 
@@ -212,11 +217,14 @@ public final class AppDatabase extends SQLiteOpenHelper {
      * Metodo para insertar registro inicial en la Base de Datos de la clave de acceso a dispositivo
      * Usado en:
      * Inicio por primera vez de la APP
+     *
+     * @return Boolean estado de la transaccion del registro inicial de la configuracion de acceso
      */
-
     public boolean insertRegistroInicialConfiguracionAcceso() {
 
         boolean transaction = false;
+
+        long conteo = 0;
 
         // Inicializacion de la variable de contenidos del registro
         ContentValues contentValues = new ContentValues();
@@ -226,72 +234,15 @@ public final class AppDatabase extends SQLiteOpenHelper {
         contentValues.put(DatabaseManager.TableConfiguracionAcceso.COLUMN_CONFIGURACION_ACCESO_REGISTRO, getDateTime());
         contentValues.put(DatabaseManager.TableConfiguracionAcceso.COLUMN_CONFIGURACION_ACCESO_ESTADO, 1);
 
-        // Insercion del registro en la base de datos
-        int count = 0;
-
         try {
 
-            count = (int) getWritableDatabase().insert(
+            getWritableDatabase().insert(
                     DatabaseManager.TableConfiguracionAcceso.TABLE_NAME_CONFIGURACION_ACCESO,
                     null,
                     contentValues
             );
 
-        } catch (SQLException e) {
-
-            e.printStackTrace();
-
-        }
-
-        if (count == 1) {
-
-            transaction = true;
-
-        }
-
-        return transaction;
-
-    }
-
-
-    /**
-     * Metodo para insertar registro inicial de transacciones en la Base de Datos
-     *
-     * @param producto_id
-     * @param numero_cargo
-     * @param numero_tarjeta
-     * @param valor
-     * @return
-     */
-    //TODO: Borra este metodo de prueba
-    public boolean insertRegistroPruebaTransaction(int producto_id,
-                                                   int numero_cargo,
-                                                   String numero_tarjeta,
-                                                   int valor) {
-
-        boolean transaction = false;
-
-        // Inicializacion de la variable de contenidos del registro
-        ContentValues contentValues = new ContentValues();
-
-        // Almacena los valores a insertar
-        contentValues.put(DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_PRODUCTO_ID, producto_id);
-        contentValues.put(DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_NUMERO_CARGO, numero_cargo);
-        contentValues.put(DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_NUMERO_TARJETA, numero_tarjeta.trim());
-        contentValues.put(DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_VALOR, valor);
-        contentValues.put(DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_REGISTRO, getDateTime());
-        contentValues.put(DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_ESTADO, 1);
-
-        // Insercion del registro en la base de datos
-        int count = 0;
-
-        try {
-
-            count = (int) getWritableDatabase().insert(
-                    DatabaseManager.TableTransacciones.TABLE_NAME_TRANSACCIONES,
-                    null,
-                    contentValues
-            );
+            conteo = obtenerConteoCambios();
 
         } catch (SQLException e) {
 
@@ -299,8 +250,10 @@ public final class AppDatabase extends SQLiteOpenHelper {
 
         }
 
-        if (count == 1) {
+        if (conteo == 1) {
+
             transaction = true;
+
         }
 
         return transaction;
@@ -310,8 +263,8 @@ public final class AppDatabase extends SQLiteOpenHelper {
     /**
      * Metodo para insertar registro de transacciones en la Base de Datos
      *
-     * @param informacionTransaccion
-     * @return
+     * @param informacionTransaccion Informacion de la transaccion realizada
+     * @return Boolean estado del registro de la transaccion
      */
     public boolean insertRegistroTransaction(InformacionTransaccion informacionTransaccion) {
 
@@ -354,7 +307,6 @@ public final class AppDatabase extends SQLiteOpenHelper {
                     contentValues
             );
 
-            // Insercion del registro en la base de datos
             conteo = obtenerConteoCambios();
 
         } catch (SQLException e) {
@@ -372,105 +324,29 @@ public final class AppDatabase extends SQLiteOpenHelper {
     }
 
     /**
-     * Metodo para validar si existe registro inicial en la Base de Datos de la clave de acceso a dispositivo
-     * Usado en modulos:
-     * - Configuracion
-     */
-    public int conteoTransaccionesByNumeroCargo(String numeroCargo) {
-
-        int count;
-
-        Cursor cursorQuery;
-
-        cursorQuery = getWritableDatabase().rawQuery(
-                "SELECT COUNT(1) FROM " +
-                        DatabaseManager.TableTransacciones.TABLE_NAME_TRANSACCIONES +
-                        " WHERE " + DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_NUMERO_CARGO + " = '" + numeroCargo + "'",
-                null
-        );
-
-        cursorQuery.moveToFirst();
-
-        count = cursorQuery.getInt(0);
-
-        return count;
-
-    }
-
-    /**
-     * Metodo para validar si existe registro inicial en la Base de Datos de la clave de acceso a dispositivo
-     * Usado en modulos:
-     * - Configuracion
-     */
-    public int conteoTransacciones() {
-
-        int count;
-
-        Cursor cursorQuery;
-
-        cursorQuery = getWritableDatabase().rawQuery(
-                "SELECT COUNT(1) FROM " +
-                        DatabaseManager.TableTransacciones.TABLE_NAME_TRANSACCIONES,
-                null
-        );
-
-        cursorQuery.moveToFirst();
-
-        count = cursorQuery.getInt(0);
-
-        return count;
-
-    }
-
-    /**
-     * Metodo para validar si existe registro inicial en la Base de Datos de la clave de acceso a dispositivo
-     * Usado en modulos:
-     * - Configuracion
-     */
-    public int obtenerUltimoIdTransacciones() {
-
-        int lastId;
-
-        Cursor cursorQuery;
-
-        cursorQuery = getWritableDatabase().rawQuery(
-                "SELECT " + DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_ID + " AS ID " +
-                        " FROM " + DatabaseManager.TableTransacciones.TABLE_NAME_TRANSACCIONES +
-                        " ORDER BY " + DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_ID + " DESC LIMIT 1"
-                ,
-                null
-        );
-
-        cursorQuery.moveToFirst();
-
-        lastId = cursorQuery.getInt(0);
-
-        return lastId;
-
-    }
-
-    /**
      * Metodo para Obtener el id del producto segun su nombre extraido del web service
      *
-     * @param nombreProducto
-     * @return
+     * @param nombreProducto String nombre del producto a consultar
+     * @return int id del producto consultado por nombre
      */
-    public int obtenerProductoIdByNombre(String nombreProducto) {
+    private int obtenerProductoIdByNombre(String nombreProducto) {
 
         int producto_id;
 
-        Cursor queryIdProducto;
+        Cursor cursorQuery;
 
-        queryIdProducto = getWritableDatabase().rawQuery(
+        cursorQuery = getWritableDatabase().rawQuery(
                 "SELECT " + DatabaseManager.TableProducto.COLUMN_PRODUCTO_ID + " AS ID " +
                         " FROM " + DatabaseManager.TableProducto.TABLE_NAME_PRODUCTO +
                         " WHERE " + DatabaseManager.TableProducto.COLUMN_PRODUCTO_NOMBRE + " = '" + nombreProducto + "'" +
                         " LIMIT 1", null
         );
 
-        queryIdProducto.moveToFirst();
+        cursorQuery.moveToFirst();
 
-        producto_id = queryIdProducto.getInt(0);
+        producto_id = cursorQuery.getInt(0);
+
+        cursorQuery.close();
 
         return producto_id;
     }
@@ -479,8 +355,14 @@ public final class AppDatabase extends SQLiteOpenHelper {
      * Metodo para insertar registro inicial en la Base de Datos de la configuracion para la impresora
      * Usado en:
      * Inicio por primera vez de la APP
+     *
+     * @return Boolean estado de la transaccion para el registro inicial de la configuracion de la impresora
      */
     public boolean insertRegistroInicialConfiguracionPrinter() {
+
+        boolean transaction = false;
+
+        long conteo = 0;
 
         // Inicializacion de la variable de contenidos del registro
         ContentValues contentValues = new ContentValues();
@@ -490,16 +372,15 @@ public final class AppDatabase extends SQLiteOpenHelper {
         contentValues.put(DatabaseManager.TableConfigurationPrinter.COLUMN_CONFIGURACION_PRINTER_ESTADO, 1);
         contentValues.put(DatabaseManager.TableConfigurationPrinter.COLUMN_CONFIGURACION_PRINTER_GRAY_LEVEL, 11);
 
-        // Insercion del registro en la base de datos
-        int count = 0;
-
         try {
 
-            count = (int) getWritableDatabase().insert(
+            getWritableDatabase().insert(
                     DatabaseManager.TableConfigurationPrinter.TABLE_NAME_CONFIGURACION_PRINTER,
                     null,
                     contentValues
             );
+
+            conteo = obtenerConteoCambios();
 
         } catch (SQLException e) {
 
@@ -507,29 +388,29 @@ public final class AppDatabase extends SQLiteOpenHelper {
 
         }
 
-        if (count == 1) {
+        if (conteo == 1) {
 
-            return true;
-
-        } else {
-
-            return false;
+            transaction = true;
 
         }
+
+        return transaction;
 
     }
 
 
-    /**
-     * #############################################################################################
-     * AREA MODULE CONFIGURACION
-     * #############################################################################################
+    /*
+      #############################################################################################
+      AREA MODULE CONFIGURACION
+      #############################################################################################
      */
 
     /**
      * Metodo para validar si existe registro inicial en la Base de Datos de la clave de acceso a dispositivo
      * Usado en modulos:
      * - Configuracion
+     *
+     * @return int conteo de los registro de configuracion de acceso
      */
     public int conteoConfiguracionAcceso() {
 
@@ -548,6 +429,8 @@ public final class AppDatabase extends SQLiteOpenHelper {
 
         count = cursorQuery.getInt(0);
 
+        cursorQuery.close();
+
         return count;
 
     }
@@ -557,8 +440,8 @@ public final class AppDatabase extends SQLiteOpenHelper {
      * Usado en modulos:
      * - Configuracion
      *
-     * @param claveTecnica
-     * @return
+     * @param claveTecnica String clave para realizar
+     * @return int conteo de refgistrs de configuracion de acceso por clave tecnica
      */
     public int conteoConfiguracionAccesoByClaveTecnica(String claveTecnica) {
 
@@ -578,6 +461,8 @@ public final class AppDatabase extends SQLiteOpenHelper {
 
         count = cursorQuery.getInt(0);
 
+        cursorQuery.close();
+
         return count;
 
     }
@@ -587,7 +472,7 @@ public final class AppDatabase extends SQLiteOpenHelper {
      * Usado en modulos:
      * - Configuracion
      *
-     * @return conteo de los registros
+     * @return int conteo de los registros
      */
     public int conteoConfiguracionConexion() {
 
@@ -606,6 +491,8 @@ public final class AppDatabase extends SQLiteOpenHelper {
 
         count = cursorQuery.getInt(0);
 
+        cursorQuery.close();
+
         return count;
     }
 
@@ -614,7 +501,7 @@ public final class AppDatabase extends SQLiteOpenHelper {
      * Usado en modulos:
      * - Configuracion
      *
-     * @return
+     * @return int conteo de los registros de la configuracion de la impresora
      */
     public int conteoConfigurationPrinter() {
 
@@ -632,12 +519,16 @@ public final class AppDatabase extends SQLiteOpenHelper {
 
         count = cursorQuery.getInt(0);
 
+        cursorQuery.close();
+
         return count;
 
     }
 
     /**
      * Metodo para Obtener la configuracion de la impresora
+     *
+     * @return ConfigurationPrinter configuracion de la impresora registrada
      */
     public ConfigurationPrinter getConfigurationPrinter() {
 
@@ -645,19 +536,18 @@ public final class AppDatabase extends SQLiteOpenHelper {
 
         Cursor cursorQuery;
 
-        Cursor cursor;
-
-        cursor = getWritableDatabase().rawQuery(
+        cursorQuery = getWritableDatabase().rawQuery(
                 "SELECT * FROM " + DatabaseManager.TableConfigurationPrinter.TABLE_NAME_CONFIGURACION_PRINTER +
                         " WHERE " + DatabaseManager.TableConfigurationPrinter.COLUMN_CONFIGURACION_PRINTER_ESTADO + " = '1'", null
         );
 
-        if (cursor.moveToFirst()) {
-            modelConfigurationPrinter.setFont_size(cursor.getInt(0));
-            modelConfigurationPrinter.setGray_level(cursor.getInt(2));
+        if (cursorQuery.moveToFirst()) {
+            modelConfigurationPrinter.setFont_size(cursorQuery.getInt(0));
+            modelConfigurationPrinter.setGray_level(cursorQuery.getInt(2));
 
         }
 
+        cursorQuery.close();
 
         return modelConfigurationPrinter;
     }
@@ -665,12 +555,15 @@ public final class AppDatabase extends SQLiteOpenHelper {
 
     /**
      * Metodo para insertar registro de la configuracion de la Impresora
+     *
+     * @param configurationPrinter ConfigurationPrinter informacion de la configuracion
+     * @return Boolean estado de la transaccion
      */
-    public boolean insertConfigurationPrinter(ConfigurationPrinter configuration) {
+    public boolean insertConfigurationPrinter(ConfigurationPrinter configurationPrinter) {
 
         boolean transaction = false;
 
-        int count = 0;
+        long conteo = 0;
 
         try {
             getWritableDatabase().beginTransaction();
@@ -686,28 +579,30 @@ public final class AppDatabase extends SQLiteOpenHelper {
             ContentValues contentValuesInsert = new ContentValues();
 
             // Almacena los valores a insertar
-            contentValuesInsert.put(DatabaseManager.TableConfigurationPrinter.COLUMN_CONFIGURACION_PRINTER_FONT_SIZE, configuration.getFont_size());
-            contentValuesInsert.put(DatabaseManager.TableConfigurationPrinter.COLUMN_CONFIGURACION_PRINTER_GRAY_LEVEL, configuration.getGray_level());
+            contentValuesInsert.put(DatabaseManager.TableConfigurationPrinter.COLUMN_CONFIGURACION_PRINTER_FONT_SIZE, configurationPrinter.getFont_size());
+            contentValuesInsert.put(DatabaseManager.TableConfigurationPrinter.COLUMN_CONFIGURACION_PRINTER_GRAY_LEVEL, configurationPrinter.getGray_level());
             contentValuesInsert.put(DatabaseManager.TableConfigurationPrinter.COLUMN_CONFIGURACION_PRINTER_ESTADO, 1);
 
-            // Insercion del registro en la base de datos
-            count = (int) getWritableDatabase().insert(
+            getWritableDatabase().insert(
                     DatabaseManager.TableConfigurationPrinter.TABLE_NAME_CONFIGURACION_PRINTER,
                     null,
                     contentValuesInsert
             );
 
+            conteo = obtenerConteoCambios();
 
             getWritableDatabase().setTransactionSuccessful();
 
         } catch (SQLException e) {
+
+            e.printStackTrace();
 
         } finally {
 
             getWritableDatabase().endTransaction();
 
         }
-        if (count == 1) {
+        if (conteo == 1) {
             transaction = true;
         }
 
@@ -716,12 +611,15 @@ public final class AppDatabase extends SQLiteOpenHelper {
 
     /**
      * Metodo para insertar registro de la configuracion de la conexion
+     *
+     * @param configurations Configurations información de la configuración
+     * @return Boolean estado de la transaccion
      */
     public boolean insertConfiguracionConexion(Configurations configurations) {
 
         boolean transaction = false;
 
-        int count = 0;
+        long conteo = 0;
 
         try {
             getWritableDatabase().beginTransaction();
@@ -743,24 +641,26 @@ public final class AppDatabase extends SQLiteOpenHelper {
             contentValuesInsert.put(DatabaseManager.TableConfiguracionConexion.COLUMN_CONFIGURACION_CONEXION_REGISTRO, getDateTime());
             contentValuesInsert.put(DatabaseManager.TableConfiguracionConexion.COLUMN_CONFIGURACION_CONEXION_ESTADO, 1);
 
-            // Insercion del registro en la base de datos
-            count = (int) getWritableDatabase().insert(
+            getWritableDatabase().insert(
                     DatabaseManager.TableConfiguracionConexion.TABLE_NAME_CONFIGURACION_CONEXION,
                     null,
                     contentValuesInsert
             );
 
+            conteo = obtenerConteoCambios();
 
             getWritableDatabase().setTransactionSuccessful();
 
         } catch (SQLException e) {
+
+            e.printStackTrace();
 
         } finally {
 
             getWritableDatabase().endTransaction();
 
         }
-        if (count == 1) {
+        if (conteo == 1) {
             transaction = true;
         }
 
@@ -768,7 +668,9 @@ public final class AppDatabase extends SQLiteOpenHelper {
     }
 
     /**
-     * Metodo para insertar registro de la configuracion de la conexion
+     * Metodo para obtener el registro de la configuracion de la conexion
+     *
+     * @return String URL de la configuracion de la conexion
      */
     public String obtenerURLConfiguracionConexion() {
 
@@ -788,16 +690,25 @@ public final class AppDatabase extends SQLiteOpenHelper {
             urlTransacciones = cursorQuery.getString(0) + ":" + cursorQuery.getString(1);
         }
 
+        cursorQuery.close();
+
         return urlTransacciones;
 
     }
 
     /**
-     * Metodo para insertar registro de la configuracion de la conexion
+     * Metodo para procesar la informacion del establecimiento traida desde el Web Service
+     *
+     * @param establecimiento Establecimiento informacion del establecimiento
+     * @return Boolean estado de la transaccion de procesamiento de informacion de establecimiento
      */
     public boolean processInfoEstablecimiento(Establecimiento establecimiento) {
 
         boolean transaction = false;
+
+        long countInformacionDispositivo;
+
+        long countConfiguracionAcceso;
 
         try {
             getWritableDatabase().beginTransaction();
@@ -819,13 +730,13 @@ public final class AppDatabase extends SQLiteOpenHelper {
             contentValuesInsertInformacionDispositivo.put(DatabaseManager.TableEstablecimiento.COLUMN_ESTABLECIMIENTO_REGISTRO, getDateTime());
             contentValuesInsertInformacionDispositivo.put(DatabaseManager.TableEstablecimiento.COLUMN_ESTABLECIMIENTO_ESTADO, 1);
 
-            // Insercion del registro en la base de datos
-            int countInformacionDispositivo = (int) getWritableDatabase().insert(
+            getWritableDatabase().insert(
                     DatabaseManager.TableEstablecimiento.TABLE_NAME_ESTABLECIMIENTO,
                     null,
                     contentValuesInsertInformacionDispositivo
             );
 
+            countInformacionDispositivo = obtenerConteoCambios();
 
             if (countInformacionDispositivo == 1 &&
                     !conexionEstablecimiento.getClaveTecnivo().isEmpty() &&
@@ -847,12 +758,13 @@ public final class AppDatabase extends SQLiteOpenHelper {
                 contentValuesInformacionAcceso.put(DatabaseManager.TableConfiguracionAcceso.COLUMN_CONFIGURACION_ACCESO_REGISTRO, getDateTime());
                 contentValuesInformacionAcceso.put(DatabaseManager.TableConfiguracionAcceso.COLUMN_CONFIGURACION_ACCESO_ESTADO, 1);
 
-                // Insercion del registro en la base de datos
-                int countConfiguracionAcceso = (int) getWritableDatabase().insert(
+                getWritableDatabase().insert(
                         DatabaseManager.TableConfiguracionAcceso.TABLE_NAME_CONFIGURACION_ACCESO,
                         null,
                         contentValuesInformacionAcceso
                 );
+
+                countConfiguracionAcceso = obtenerConteoCambios();
 
                 if (countConfiguracionAcceso == 1) {
 
@@ -864,7 +776,7 @@ public final class AppDatabase extends SQLiteOpenHelper {
 
         } catch (SQLException e) {
 
-            transaction = false;
+            e.printStackTrace();
 
         } finally {
 
@@ -874,14 +786,16 @@ public final class AppDatabase extends SQLiteOpenHelper {
         return transaction;
     }
 
-    /**
-     * #############################################################################################
-     * AREA MODULE REPORTES
-     * #############################################################################################
+    /*
+      #############################################################################################
+      AREA MODULE REPORTES
+      #############################################################################################
      */
 
     /**
      * Metodo para Obtener ultima  transaccion
+     *
+     * @return Transaccion ultima transaccion realizada
      */
     public Transaccion obtenerUltimaTransaccion() {
 
@@ -889,78 +803,93 @@ public final class AppDatabase extends SQLiteOpenHelper {
 
         Cursor cursorQuery;
 
-        Cursor cursor;
-
-        cursor = getWritableDatabase().rawQuery(
+        cursorQuery = getWritableDatabase().rawQuery(
                 "SELECT * " +
                         " FROM " + DatabaseManager.TableTransacciones.TABLE_NAME_TRANSACCIONES +
                         " ORDER BY " + DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_REGISTRO + " ASC " +
                         " LIMIT 1", null
         );
 
-        if (cursor.moveToFirst()) {
-            modelTransaccion.setId(cursor.getInt(0));
-            modelTransaccion.setTipo_servicio(cursor.getInt(1));
-            modelTransaccion.setNumero_cargo(cursor.getInt(2));
-            modelTransaccion.setNumero_tarjeta(cursor.getString(3));
-            modelTransaccion.setValor(cursor.getInt(4));
-            modelTransaccion.setRegistro(cursor.getString(5));
-            modelTransaccion.setEstado(cursor.getInt(6));
+        if (cursorQuery.moveToFirst()) {
+            modelTransaccion.setId(cursorQuery.getInt(0));
+            modelTransaccion.setTipo_servicio(cursorQuery.getInt(1));
+            modelTransaccion.setNumero_cargo(cursorQuery.getInt(2));
+            modelTransaccion.setNumero_tarjeta(cursorQuery.getString(3));
+            modelTransaccion.setValor(cursorQuery.getInt(4));
+            modelTransaccion.setRegistro(cursorQuery.getString(5));
+            modelTransaccion.setEstado(cursorQuery.getInt(6));
         }
 
+        cursorQuery.close();
 
         return modelTransaccion;
     }
 
     /**
      * Metodo para Obtener una  transaccion segun el numero de cargo
+     *
+     * @param numCargo String numero de cargo para la consulta de la transaccion
+     * @return Transaccion obtiene la transaccion segun el numero de cargo
      */
-    public Transaccion obtenerTransaccion(String numCargo) {
+    public Transaccion obtenerTransaccionByNumeroCargo(String numCargo) {
         Transaccion modelTransaccion = new Transaccion();
 
-        Cursor cursor;
+        Cursor cursorQuery;
 
-        cursor = getWritableDatabase().rawQuery(
-                "SELECT * FROM " + DatabaseManager.TableTransacciones.TABLE_NAME_TRANSACCIONES + " WHERE " + DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_NUMERO_CARGO + " = " + numCargo, null
+        cursorQuery = getWritableDatabase().rawQuery(
+                "SELECT * " +
+                        " FROM " + DatabaseManager.TableTransacciones.TABLE_NAME_TRANSACCIONES +
+                        " WHERE " + DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_NUMERO_CARGO + " = " + numCargo
+                , null
         );
 
-        if (cursor.moveToFirst()) {
-            modelTransaccion.setId(cursor.getInt(0));
-            modelTransaccion.setTipo_servicio(cursor.getInt(1));
-            modelTransaccion.setNumero_cargo(cursor.getInt(2));
-            modelTransaccion.setNumero_tarjeta(cursor.getString(3));
-            modelTransaccion.setValor(cursor.getInt(4));
-            modelTransaccion.setRegistro(cursor.getString(5));
-            modelTransaccion.setEstado(cursor.getInt(6));
+        if (cursorQuery.moveToFirst()) {
+            modelTransaccion.setId(cursorQuery.getInt(0));
+            modelTransaccion.setTipo_servicio(cursorQuery.getInt(1));
+            modelTransaccion.setNumero_cargo(cursorQuery.getInt(2));
+            modelTransaccion.setNumero_tarjeta(cursorQuery.getString(3));
+            modelTransaccion.setValor(cursorQuery.getInt(4));
+            modelTransaccion.setRegistro(cursorQuery.getString(5));
+            modelTransaccion.setEstado(cursorQuery.getInt(6));
         }
+
+        cursorQuery.close();
+
         return modelTransaccion;
     }
 
     /**
      * Metodo para Obtener una  transaccion segun el numero de cargo
+     *
+     * @return Arraylist destalles de la transaccion
      */
     public ArrayList obtenerDetallesTransaccion() {
 
-        ArrayList<Transaccion> lista = new ArrayList<Transaccion>();
-        Cursor cursor;
-        cursor = getWritableDatabase().rawQuery(
+        ArrayList<Transaccion> lista = new ArrayList<>();
+
+        Cursor cursorQuery;
+
+        cursorQuery = getWritableDatabase().rawQuery(
                 "SELECT * FROM " + DatabaseManager.TableTransacciones.TABLE_NAME_TRANSACCIONES, null
         );
 
-        while (cursor.moveToNext()) {
+        while (cursorQuery.moveToNext()) {
             Transaccion modelTransaccion = new Transaccion();
 
-            modelTransaccion.setId(cursor.getInt(0));
-            modelTransaccion.setTipo_servicio(cursor.getInt(1));
-            modelTransaccion.setNumero_cargo(cursor.getInt(2));
-            modelTransaccion.setNumero_tarjeta(cursor.getString(3));
-            modelTransaccion.setValor(cursor.getInt(4));
-            modelTransaccion.setRegistro(cursor.getString(5));
-            modelTransaccion.setEstado(cursor.getInt(6));
+            modelTransaccion.setId(cursorQuery.getInt(0));
+            modelTransaccion.setTipo_servicio(cursorQuery.getInt(1));
+            modelTransaccion.setNumero_cargo(cursorQuery.getInt(2));
+            modelTransaccion.setNumero_tarjeta(cursorQuery.getString(3));
+            modelTransaccion.setValor(cursorQuery.getInt(4));
+            modelTransaccion.setRegistro(cursorQuery.getString(5));
+            modelTransaccion.setEstado(cursorQuery.getInt(6));
 
             lista.add(modelTransaccion);
 
         }
+
+        cursorQuery.close();
+
         return lista;
     }
 
@@ -985,13 +914,15 @@ public final class AppDatabase extends SQLiteOpenHelper {
 
         count = cursorQuery.getInt(0);
 
+        cursorQuery.close();
+
         return count;
     }
 
-    /**
-     * #############################################################################################
-     * Metodos privados auxiliares
-     * #############################################################################################
+    /*
+      #############################################################################################
+      Metodos privados auxiliares
+      #############################################################################################
      */
 
     /**
@@ -1013,7 +944,7 @@ public final class AppDatabase extends SQLiteOpenHelper {
     /**
      * Metodo que obtiene los cambios registrados en la ultima sesion de lla base de datos
      *
-     * @return
+     * @return long conteo de filas afectadas en la ultima transaccion
      */
     private long obtenerConteoCambios() {
         SQLiteStatement statement = getWritableDatabase().compileStatement("SELECT changes()");
