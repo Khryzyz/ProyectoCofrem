@@ -24,4 +24,11 @@ public interface SplashScreenInteractor {
      */
     void validateAccess(Context context);
 
+    /**
+     * Metodo que consulta la informacion del header
+     *
+     * @param context
+     */
+    void setInfoHeader(Context context);
+
 }

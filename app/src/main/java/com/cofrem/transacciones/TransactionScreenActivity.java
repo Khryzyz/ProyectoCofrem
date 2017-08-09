@@ -2,8 +2,10 @@ package com.cofrem.transacciones;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cofrem.transacciones.models.InfoHeaderApp;
 import com.cofrem.transacciones.modules.moduleTransaction.anulacionScreen.ui.AnulacionScreenActivity_;
 import com.cofrem.transacciones.modules.moduleTransaction.creditoScreen.ui.CreditoScreenActivity_;
 import com.cofrem.transacciones.modules.moduleTransaction.saldoScreen.ui.SaldoScreenActivity_;
@@ -11,15 +13,24 @@ import com.cofrem.transacciones.modules.moduleTransaction.saldoScreen.ui.SaldoSc
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.ViewById;
 
 @EActivity(R.layout.activity_transaction_screen)
 public class TransactionScreenActivity extends Activity {
 
     /**
      * #############################################################################################
-     * Instanciamientos de las clases
+     * Definición de variables
      * #############################################################################################
      */
+    @ViewById
+    TextView txvHeaderIdDispositivo;
+    @ViewById
+    TextView txvHeaderIdPunto;
+    @ViewById
+    TextView txvHeaderEstablecimiento;
+    @ViewById
+    TextView txvHeaderPunto;
 
     /**
      * #############################################################################################
@@ -28,6 +39,41 @@ public class TransactionScreenActivity extends Activity {
      */
     @AfterViews
     void TransactionInit() {
+        setInfoHeader();
+    }
+
+    /**
+     * Metodo que llena el header de la App
+     */
+    private void setInfoHeader() {
+
+        txvHeaderIdDispositivo.setText(
+                String.format(
+                        getString(R.string.header_text_id_dispositivo_registrado)
+                        , InfoHeaderApp.getInstance().getIdDispositivo()
+                )
+        );
+
+        txvHeaderIdPunto.setText(
+                String.format(
+                        getString(R.string.header_text_id_punto_registrado)
+                        , InfoHeaderApp.getInstance().getIdPunto()
+                )
+        );
+
+        txvHeaderEstablecimiento.setText(
+                String.format(
+                        getString(R.string.header_text_nombre_establecimiento_registrado)
+                        , InfoHeaderApp.getInstance().getNombreEstablecimiento()
+                )
+        );
+
+        txvHeaderPunto.setText(
+                String.format(
+                        getString(R.string.header_text_nombre_punto_registrado)
+                        , InfoHeaderApp.getInstance().getNombrePunto()
+                )
+        );
 
     }
 
@@ -69,6 +115,7 @@ public class TransactionScreenActivity extends Activity {
         Intent intent = new Intent(this, CreditoScreenActivity_.class);
         startActivity(intent);
     }
+
     /**
      * Metodo para navegar a la ventana Saldo
      */
@@ -77,6 +124,7 @@ public class TransactionScreenActivity extends Activity {
         Intent intent = new Intent(this, SaldoScreenActivity_.class);
         startActivity(intent);
     }
+
     /**
      * Metodo para navegar a la ventana Anulacion
      */

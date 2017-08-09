@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cofrem.transacciones.MainScreenActivity_;
 import com.cofrem.transacciones.modules.moduleConfiguration.registerConfigurationScreen.ui.RegisterConfigurationScreenActivity_;
@@ -329,10 +330,9 @@ public class SplashScreenActivity extends Activity implements SplashScreenView {
      */
     @Override
     public void handleGetInfoHeaderSuccess() {
-        txvSplashScreenInfo.setText(txvSplashScreenInfo.getText() +
-                "\n" +
-                getString(R.string.general_message_printer_device_info)
-        );
+
+        navigateToMainScreen();
+
     }
 
     /**
@@ -340,10 +340,11 @@ public class SplashScreenActivity extends Activity implements SplashScreenView {
      */
     @Override
     public void handleGetInfoHeaderError() {
-        txvSplashScreenInfo.setText(txvSplashScreenInfo.getText() +
-                "\n" +
-                getString(R.string.general_message_printer_device_error)
-        );
+        //Muestra el mensaje de error de la informacion del header no disponible
+        Toast.makeText(this, R.string.header_error_no_disponible, Toast.LENGTH_SHORT).show();
+
+        navigateToMainScreen();
+
     }
 
     /**
@@ -398,7 +399,7 @@ public class SplashScreenActivity extends Activity implements SplashScreenView {
      */
     private void setInfoHeader() {
 
-        splashScreenPresenter.validateInitialConfig(this);
+        splashScreenPresenter.setInfoHeader(this);
 
     }
 

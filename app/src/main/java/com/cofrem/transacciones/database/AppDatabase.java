@@ -11,6 +11,7 @@ import android.database.sqlite.SQLiteStatement;
 import com.cofrem.transacciones.lib.MD5;
 import com.cofrem.transacciones.models.ConfigurationPrinter;
 import com.cofrem.transacciones.models.Configurations;
+import com.cofrem.transacciones.models.InfoHeaderApp;
 import com.cofrem.transacciones.models.modelsWS.modelEstablecimiento.ConexionEstablecimiento;
 import com.cofrem.transacciones.models.modelsWS.modelEstablecimiento.Establecimiento;
 import com.cofrem.transacciones.models.modelsWS.modelEstablecimiento.InformacionEstablecimiento;
@@ -130,6 +131,42 @@ public final class AppDatabase extends SQLiteOpenHelper {
         cursorQuery.close();
 
         return codigoTerminal;
+    }
+
+    /**
+     * Metodo para Obtener ultima  transaccion
+     *
+     * @return boolean informacion del header
+     */
+    public boolean obtenerInfoHeader() {
+
+        boolean transaction = false;
+
+        String codigoTerminal = obtenerCodigoTerminal();
+
+        Cursor cursorQuery;
+
+        cursorQuery = getWritableDatabase().rawQuery(
+                "SELECT " + DatabaseManager.TableEstablecimiento.COLUMN_ESTABLECIMIENTO_CODIGO + " , " +
+                        DatabaseManager.TableEstablecimiento.COLUMN_ESTABLECIMIENTO_RAZON_SOCIAL + " , " +
+                        DatabaseManager.TableEstablecimiento.COLUMN_ESTABLECIMIENTO_NOMBRE +
+                        " FROM " + DatabaseManager.TableEstablecimiento.TABLE_NAME_ESTABLECIMIENTO +
+                        " ORDER BY " + DatabaseManager.TableEstablecimiento.COLUMN_ESTABLECIMIENTO_REGISTRO + " ASC " +
+                        " LIMIT 1", null
+        );
+
+        if (cursorQuery.moveToFirst()) {
+            InfoHeaderApp.getInstance().setIdDispositivo(codigoTerminal);
+            InfoHeaderApp.getInstance().setIdPunto(cursorQuery.getString(0));
+            InfoHeaderApp.getInstance().setNombreEstablecimiento(cursorQuery.getString(1));
+            InfoHeaderApp.getInstance().setNombrePunto(cursorQuery.getString(2));
+
+            transaction = true;
+        }
+
+        cursorQuery.close();
+
+        return transaction;
     }
 
     /*

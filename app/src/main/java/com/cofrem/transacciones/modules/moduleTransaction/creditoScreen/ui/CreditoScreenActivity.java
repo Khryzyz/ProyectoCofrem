@@ -14,6 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cofrem.transacciones.models.InfoHeaderApp;
 import com.cofrem.transacciones.modules.moduleTransaction.creditoScreen.CreditoScreenPresenter;
 import com.cofrem.transacciones.modules.moduleTransaction.creditoScreen.CreditoScreenPresenterImpl;
 import com.cofrem.transacciones.R;
@@ -42,7 +43,17 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
      * Declaracion de los Contoles
      */
 
-    // Contents del modulo
+    // Controles del header
+
+    @ViewById
+    TextView txvHeaderIdDispositivo;
+    @ViewById
+    TextView txvHeaderIdPunto;
+    @ViewById
+    TextView txvHeaderEstablecimiento;
+    @ViewById
+    TextView txvHeaderPunto;
+
     // Contents del modulo
     @ViewById
     RelativeLayout bodyContentTransactionValorCompra;
@@ -142,6 +153,9 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
 
         // Metodo que oculta por defecto los include de la vista
         inicializarOcultamientoVistas();
+
+        // Metodo que llena el header de la App
+        setInfoHeader();
 
         //Inicializa el paso del registro de la transaccion
         pasoCreditoTransaction = PASO_VALOR_COMPRA;
@@ -381,6 +395,41 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
      */
     private void setOrientation() {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+    }
+
+    /**
+     * Metodo que llena el header de la App
+     */
+    private void setInfoHeader() {
+
+        txvHeaderIdDispositivo.setText(
+                String.format(
+                        getString(R.string.header_text_id_dispositivo_registrado)
+                        , InfoHeaderApp.getInstance().getIdDispositivo()
+                )
+        );
+
+        txvHeaderIdPunto.setText(
+                String.format(
+                        getString(R.string.header_text_id_punto_registrado)
+                        , InfoHeaderApp.getInstance().getIdPunto()
+                )
+        );
+
+        txvHeaderEstablecimiento.setText(
+                String.format(
+                        getString(R.string.header_text_nombre_establecimiento_registrado)
+                        , InfoHeaderApp.getInstance().getNombreEstablecimiento()
+                )
+        );
+
+        txvHeaderPunto.setText(
+                String.format(
+                        getString(R.string.header_text_nombre_punto_registrado)
+                        , InfoHeaderApp.getInstance().getNombrePunto()
+                )
+        );
+
     }
 
     /**
