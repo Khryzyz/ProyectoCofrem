@@ -1,7 +1,15 @@
 package com.cofrem.transacciones.modules.moduleTransaction.creditoScreen;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
+import com.cofrem.transacciones.R;
+import com.cofrem.transacciones.global.InfoGlobalSettingsPrint;
+import com.cofrem.transacciones.lib.PrinterHandler;
+import com.cofrem.transacciones.lib.StyleConfig;
+import com.cofrem.transacciones.models.PrintRow;
+import com.cofrem.transacciones.modules.moduleReports.reimpresionScreen.events.ReimpresionScreenEvent;
 import com.cofrem.transacciones.modules.moduleTransaction.creditoScreen.events.CreditoScreenEvent;
 import com.cofrem.transacciones.database.AppDatabase;
 import com.cofrem.transacciones.global.InfoGlobalTransaccionSOAP;
@@ -16,6 +24,7 @@ import com.cofrem.transacciones.models.Transaccion;
 
 import org.ksoap2.serialization.SoapObject;
 
+import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 public class CreditoScreenRepositoryImpl implements CreditoScreenRepository {
@@ -218,8 +227,47 @@ public class CreditoScreenRepositoryImpl implements CreditoScreenRepository {
      */
     private void imprimirRecibo(Context context) {
 
+        Transaccion modelTransaccion = AppDatabase.getInstance(context).obtenerUltimaTransaccion();
 
-        //TODO: Implementar la imprecion del recibo
+        //logo de COFREM que se imprime al inicio del recibo
+        Bitmap logo = BitmapFactory.decodeResource(context.getResources(), R.mipmap.logo);
+
+        // creamos el ArrayList se que encarga de almacenar los rows del recibo
+        ArrayList<PrintRow> printRows = new ArrayList<PrintRow>();
+
+        //Se agrega el logo al primer renglon del recibo y se coloca en el centro
+        printRows.add(new PrintRow(logo, StyleConfig.Align.CENTER));
+
+        //se siguen agregando cado auno de los String a los renglones (Rows) del recibo para imprimir
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_reimpresion), new StyleConfig(StyleConfig.Align.CENTER, StyleConfig.FontStyle.BOLD)));
+        printRows.add(new PrintRow("fecha de la transaccion", new StyleConfig(StyleConfig.Align.CENTER, 20)));
+
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_numero_transaccion), String.valueOf(modelTransaccion.getNumero_cargo()), new StyleConfig(StyleConfig.Align.LEFT, true)));
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_valor), String.valueOf(modelTransaccion.getValor()), new StyleConfig(StyleConfig.Align.LEFT, true)));
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_numero_tarjeta), modelTransaccion.getNumero_tarjeta(), new StyleConfig(StyleConfig.Align.LEFT, 20)));
+
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_ingresa_firma), new StyleConfig(StyleConfig.Align.LEFT, true)));
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_ingresa_cc), new StyleConfig(StyleConfig.Align.LEFT, true)));
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_ingresa_tel), new StyleConfig(StyleConfig.Align.LEFT, 50)));
+        printRows.add(new PrintRow(".", new StyleConfig(StyleConfig.Align.LEFT, true)));
+
+        //retornamos el estado de la impresora tras enviar los rows para imprimir
+
+        int status = new PrinterHandler().imprimerTexto(printRows);
+
+        if (status == InfoGlobalSettingsPrint.PRINTER_OK) {
+            postEvent(CreditoScreenEvent.onImprecionReciboSuccess);
+        } else {
+            postEvent(CreditoScreenEvent.onImprecionReciboError, PrinterHandler.stringErrorPrinter(status, context));
+        }
+
     }
 
     /**

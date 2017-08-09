@@ -1,6 +1,10 @@
 package com.cofrem.transacciones.lib;
 
 
+import android.content.Context;
+
+import com.cofrem.transacciones.R;
+import com.cofrem.transacciones.global.InfoGlobalSettingsPrint;
 import com.cofrem.transacciones.models.PrintRow;
 import java.util.ArrayList;
 
@@ -102,6 +106,33 @@ public class PrinterHandler {
 
         // retornar el String con los dos String recibido mas los espacios entre ellos
         return resul;
+    }
+
+    /**
+     * Metodo auxiliar que se encarga de retornar el String correspondiente al estado de la impresora
+     *
+     * @return String
+     */
+    public static String stringErrorPrinter(int status, Context context) {
+        String result = "";
+        switch (status) {
+            case InfoGlobalSettingsPrint.PRINTER_DISCONNECT:
+                result = context.getResources().getString(R.string.printer_disconnect);
+                break;
+            case InfoGlobalSettingsPrint.PRINTER_OUT_OF_PAPER:
+                result = context.getResources().getString(R.string.printer_out_of_paper);
+                break;
+            case InfoGlobalSettingsPrint.PRINTER_OVER_FLOW:
+                result = context.getResources().getString(R.string.printer_over_flow);
+                break;
+            case InfoGlobalSettingsPrint.PRINTER_OVER_HEAT:
+                result = context.getResources().getString(R.string.printer_over_heat);
+                break;
+            case InfoGlobalSettingsPrint.PRINTER_ERROR:
+                result = context.getResources().getString(R.string.printer_error);
+                break;
+        }
+        return result;
     }
 
 }

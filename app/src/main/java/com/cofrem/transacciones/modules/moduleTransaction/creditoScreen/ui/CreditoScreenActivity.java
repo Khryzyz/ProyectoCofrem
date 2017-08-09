@@ -366,6 +366,21 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
     }
 
     /**
+     * Metodo para manejar la orden de imprimir recibo exitosa
+     */
+    @Override
+    public void handleImprimirReciboSuccess() {
+        regresarDesdeImpimirRecibo(1000);
+    }
+
+    /**
+     * Metodo para manejar la orden de imprimir recibo Error
+     */
+    @Override
+    public void handleImprimirReciboError() {
+
+    }
+    /**
      * #############################################################################################
      * Metodo propios de la clase
      * #############################################################################################
@@ -737,6 +752,16 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
 
         }
 
+    }
+
+    public void regresarDesdeImpimirRecibo(int timer){
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                navigateToTransactionScreen();
+            }
+        }, timer);
     }
 
 }
