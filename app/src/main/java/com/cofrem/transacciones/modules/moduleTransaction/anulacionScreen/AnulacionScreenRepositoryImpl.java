@@ -1,5 +1,7 @@
 package com.cofrem.transacciones.modules.moduleTransaction.anulacionScreen;
 
+import android.content.Context;
+
 import com.cofrem.transacciones.modules.moduleTransaction.anulacionScreen.events.AnulacionScreenEvent;
 import com.cofrem.transacciones.lib.EventBus;
 import com.cofrem.transacciones.lib.GreenRobotEventBus;
@@ -26,13 +28,8 @@ public class AnulacionScreenRepositoryImpl implements AnulacionScreenRepository 
      * #############################################################################################
      */
 
-    /**
-     *
-     */
     @Override
-    public void validateAcces() {
-
-        postEvent(AnulacionScreenEvent.onVerifySuccess);
+    public void validarPasswordAdministrador(Context context, String pass) {
 
     }
 
@@ -70,4 +67,5 @@ public class AnulacionScreenRepositoryImpl implements AnulacionScreenRepository 
         postEvent(type, null);
 
     }
+
 }
