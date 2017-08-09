@@ -2,7 +2,7 @@ package com.cofrem.transacciones.lib;
 
 import android.os.AsyncTask;
 
-import com.cofrem.transacciones.models.ModelsWS.TransactionWS;
+import com.cofrem.transacciones.models.modelsWS.TransactionWS;
 
 import org.ksoap2.serialization.PropertyInfo;
 import org.ksoap2.serialization.SoapObject;

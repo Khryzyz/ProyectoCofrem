@@ -11,11 +11,10 @@ import android.database.sqlite.SQLiteStatement;
 import com.cofrem.transacciones.lib.MD5;
 import com.cofrem.transacciones.models.ConfigurationPrinter;
 import com.cofrem.transacciones.models.Configurations;
-import com.cofrem.transacciones.models.ModelsWS.ModelEstablecimiento.ConexionEstablecimiento;
-import com.cofrem.transacciones.models.ModelsWS.ModelEstablecimiento.Establecimiento;
-import com.cofrem.transacciones.models.ModelsWS.ModelEstablecimiento.InformacionEstablecimiento;
-import com.cofrem.transacciones.models.ModelsWS.ModelTransaccion.InformacionTransaccion;
-import com.cofrem.transacciones.models.ModelsWS.ModelTransaccion.ResultadoTransaccion;
+import com.cofrem.transacciones.models.modelsWS.modelEstablecimiento.ConexionEstablecimiento;
+import com.cofrem.transacciones.models.modelsWS.modelEstablecimiento.Establecimiento;
+import com.cofrem.transacciones.models.modelsWS.modelEstablecimiento.InformacionEstablecimiento;
+import com.cofrem.transacciones.models.modelsWS.modelTransaccion.InformacionTransaccion;
 import com.cofrem.transacciones.models.Transaccion;
 
 import java.text.SimpleDateFormat;

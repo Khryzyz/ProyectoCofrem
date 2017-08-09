@@ -4,9 +4,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.widget.Toast;
 
-import com.cofrem.transacciones.Modules.ModuleTransaction.AnulacionScreen.ui.AnulacionScreenActivity_;
-import com.cofrem.transacciones.Modules.ModuleTransaction.CreditoScreen.ui.CreditoScreenActivity_;
-import com.cofrem.transacciones.Modules.ModuleTransaction.SaldoScreen.ui.SaldoScreenActivity_;
+import com.cofrem.transacciones.modules.moduleTransaction.anulacionScreen.ui.AnulacionScreenActivity_;
+import com.cofrem.transacciones.modules.moduleTransaction.creditoScreen.ui.CreditoScreenActivity_;
+import com.cofrem.transacciones.modules.moduleTransaction.saldoScreen.ui.SaldoScreenActivity_;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
