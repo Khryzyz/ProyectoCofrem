@@ -16,6 +16,13 @@ public interface CreditoScreenPresenter {
     void registrarTransaccion(Context context, Transaccion transaccion);
 
     /**
+     * Metodo que imprime el recibo de la transaccion
+     *
+     * @param context
+     */
+    void imprimirRecibo(Context context);
+
+    /**
      * Metodo para la creacion del presentador
      */
     void onCreate();
@@ -24,7 +31,6 @@ public interface CreditoScreenPresenter {
      * Metodo para la destruccion del presentador
      */
     void onDestroy();
-
 
     /**
      * Metodo para recibir los eventos generados

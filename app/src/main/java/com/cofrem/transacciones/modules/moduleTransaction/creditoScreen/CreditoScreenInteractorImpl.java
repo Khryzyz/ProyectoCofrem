@@ -45,4 +45,10 @@ class CreditoScreenInteractorImpl implements CreditoScreenInteractor {
         //Valida el acceso a la app
         creditoScreenRepository.registrarTransaccion(context, transaccion);
     }
+
+    @Override
+    public void imprimirRecibo(Context context) {
+        //Imprime recibo
+        creditoScreenRepository.imprimirRecibo(context);
+    }
 }

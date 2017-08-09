@@ -29,6 +29,8 @@
 
     <string name="transaction_text_erronea">TRANSACCIÓN ERRONEA</string>
 
+    <string name="transaction_text_printer_error">No se pudo realizar la impresion del recibo.</string>
+
     <string name="transaction_text_erronea_detalle">Detalle del error:</string>
 
     <string name="transaction_text_erronea_detalle_texto">…</string>

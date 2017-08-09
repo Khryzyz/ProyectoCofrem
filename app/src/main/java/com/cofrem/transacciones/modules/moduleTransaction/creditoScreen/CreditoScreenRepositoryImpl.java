@@ -225,7 +225,7 @@ public class CreditoScreenRepositoryImpl implements CreditoScreenRepository {
      *
      * @param context
      */
-    private void imprimirRecibo(Context context) {
+    public void imprimirRecibo(Context context) {
 
         Transaccion modelTransaccion = AppDatabase.getInstance(context).obtenerUltimaTransaccion();
 

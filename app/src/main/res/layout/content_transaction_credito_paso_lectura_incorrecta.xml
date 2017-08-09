@@ -5,45 +5,31 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/txvSaldoTransactionLecturaIncorrectaTitle"
+        android:id="@+id/txvCreditoTransactionLecturaIncorrectaTitle"
         style="@style/StyleTextPrimaryLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/appMarginBottom"
-        android:text="@string/transaction_text_title_saldo" />
+        android:text="@string/transaction_text_title_credito" />
 
     <TextView
-        android:id="@+id/txvSaldoTransactionLecturaIncorrectaClave"
+        android:id="@+id/txvCreditoTransactionLecturaIncorrectaClave"
         style="@style/StyleTextPrimaryMedium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/txvSaldoTransactionLecturaIncorrectaTitle"
+        android:layout_below="@id/txvCreditoTransactionLecturaIncorrectaTitle"
         android:layout_marginBottom="@dimen/appMarginBottom"
-        android:text="@string/general_text_clave_usuario" />
-
-    <EditText
-        android:id="@+id/edtSaldoTransactionLecturaIncorrectaContenidoClave"
-        style="@style/StylePassPrimary"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/txvSaldoTransactionLecturaIncorrectaClave"
-        android:layout_marginBottom="@dimen/appMarginBottom"
-        android:inputType="textPassword" />
+        android:layout_marginTop="@dimen/appMarginTop"
+        android:text="@string/general_message_lectura_incorrecta" />
 
     <Button
-        android:id="@+id/btnSaldoTransactionLecturaIncorrectaBotonCancelar"
-        style="@style/StyleButtonCancel"
-        android:layout_alignParentStart="true"
-        android:layout_below="@id/edtSaldoTransactionLecturaIncorrectaContenidoClave"
-        android:text="@string/general_text_button_cancelar" />
-
-    <Button
-        android:id="@+id/btnSaldoTransactionLecturaIncorrectaBotonAceptar"
-        style="@style/StyleButtonAccept"
+        android:id="@+id/btnCreditoTransactionLecturaIncorrectaBotonAceptar"
+        style="@style/StyleButtonExit"
         android:layout_alignParentEnd="true"
-        android:layout_below="@id/edtSaldoTransactionLecturaIncorrectaContenidoClave"
-        android:text="@string/general_text_button_aceptar" />
+        android:layout_below="@id/txvCreditoTransactionLecturaIncorrectaClave"
+        android:layout_marginTop="@dimen/appMarginTop"
+        android:text="@string/general_text_button_salir" />
 
 
 </RelativeLayout>

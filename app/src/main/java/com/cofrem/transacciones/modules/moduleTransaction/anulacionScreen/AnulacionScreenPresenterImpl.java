@@ -45,7 +45,7 @@ public class AnulacionScreenPresenterImpl implements AnulacionScreenPresenter {
 
     @Override
     public void validarPasswordAdministrador(Context context, String pass) {
-
+        anulacionScreenInteractor.validarPasswordAdministrador(context, pass);
     }
 
     @Override

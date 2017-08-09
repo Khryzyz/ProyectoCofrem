@@ -76,6 +76,18 @@ public class CreditoScreenPresenterImpl implements CreditoScreenPresenter {
     }
 
     /**
+     * Metodo que imprime el recibo de la transaccion
+     *
+     * @param context
+     */
+    @Override
+    public void imprimirRecibo(Context context) {
+        if (creditoScreenView != null) {
+            creditoScreenInteractor.imprimirRecibo(context);
+        }
+    }
+
+    /**
      * Sobrecarga del metodo onEventMainThread de la interface SaldoScreenPresenter para el manejo de eventos
      *
      * @param creditoScreenEvent

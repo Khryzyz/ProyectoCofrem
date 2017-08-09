@@ -342,7 +342,7 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
         hideProgress();
 
         //Muestra el mensaje de error del registro de informacion del dispositivo incorrecto
-        Toast.makeText(this, R.string.transaction_info_status_error_general, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show();
 
         //Regresa a la vista de transacciones
         navigateToTransactionScreen();
@@ -378,6 +378,9 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
      */
     @Override
     public void handleImprimirReciboError() {
+
+        //Muestra el mensaje de error de formato de la contraseña
+        Toast.makeText(this, R.string.transaction_text_printer_error, Toast.LENGTH_SHORT).show();
 
     }
     /**
@@ -484,7 +487,8 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
             R.id.btnCreditoTransactionVerificacionDatosBotonCancelar,
             R.id.btnCreditoTransactionClaveUsuarioBotonCancelar,
             R.id.btnCreditoTransactionExitosaBotonSalir,
-            R.id.btnCreditoTransactionErrorBotonSalir
+            R.id.btnCreditoTransactionErrorBotonSalir,
+            R.id.btnCreditoTransactionLecturaIncorrectaBotonAceptar
     })
     public void navigateToTransactionScreen() {
         new Handler().postDelayed(new Runnable() {
@@ -500,6 +504,18 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
                 startActivity(intent);
             }
         }, 1000);
+
+    }
+
+    /**
+     * Metodo para regresar a la ventana de transaccion
+     */
+    @Click({R.id.btnCreditoTransactionExitosaBotonImprimir
+    })
+    public void imprimirRecibo() {
+
+        //Imprime el recibo
+        creditoScreenPresenter.imprimirRecibo(this);
 
     }
 
@@ -637,8 +653,7 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
 
         String[] magneticHandler = new MagneticHandler().readMagnetic();
 
-        if (magneticHandler[1] != null) {
-
+        if (magneticHandler != null) {
 
             String clave = magneticHandler[1]
                     .replace(";", "")
@@ -754,7 +769,7 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
 
     }
 
-    public void regresarDesdeImpimirRecibo(int timer){
+    public void regresarDesdeImpimirRecibo(int timer) {
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
