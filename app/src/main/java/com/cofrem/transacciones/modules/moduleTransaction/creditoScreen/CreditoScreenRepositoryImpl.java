@@ -8,6 +8,7 @@ import com.cofrem.transacciones.R;
 import com.cofrem.transacciones.global.InfoGlobalSettingsPrint;
 import com.cofrem.transacciones.lib.PrinterHandler;
 import com.cofrem.transacciones.lib.StyleConfig;
+import com.cofrem.transacciones.models.Establishment;
 import com.cofrem.transacciones.models.PrintRow;
 import com.cofrem.transacciones.modules.moduleReports.reimpresionScreen.events.ReimpresionScreenEvent;
 import com.cofrem.transacciones.modules.moduleTransaction.creditoScreen.events.CreditoScreenEvent;
@@ -229,6 +230,8 @@ public class CreditoScreenRepositoryImpl implements CreditoScreenRepository {
 
         Transaccion modelTransaccion = AppDatabase.getInstance(context).obtenerUltimaTransaccion();
 
+        Establishment modelEstablishment = AppDatabase.getInstance(context).getEstablecimiento();
+
         //logo de COFREM que se imprime al inicio del recibo
         Bitmap logo = BitmapFactory.decodeResource(context.getResources(), R.mipmap.logo);
 
@@ -236,27 +239,29 @@ public class CreditoScreenRepositoryImpl implements CreditoScreenRepository {
         ArrayList<PrintRow> printRows = new ArrayList<PrintRow>();
 
         //Se agrega el logo al primer renglon del recibo y se coloca en el centro
-        printRows.add(new PrintRow(logo, StyleConfig.Align.CENTER));
+        printRows.add(new PrintRow(logo, StyleConfig.Align.CENTER,11,3));
 
         //se siguen agregando cado auno de los String a los renglones (Rows) del recibo para imprimir
         printRows.add(new PrintRow(context.getResources().getString(
-                R.string.recibo_reimpresion), new StyleConfig(StyleConfig.Align.CENTER, StyleConfig.FontStyle.BOLD)));
-        printRows.add(new PrintRow("fecha de la transaccion", new StyleConfig(StyleConfig.Align.CENTER, 20)));
+                R.string.recibo_nit, modelEstablishment.getNit()), context.getResources().getString(
+                R.string.recibo_codigo, modelEstablishment.getCodigo()),new StyleConfig(StyleConfig.Align.CENTER, 11 ,StyleConfig.FontSize.F1)));
+        printRows.add(new PrintRow(modelEstablishment.getNombre(), new StyleConfig(StyleConfig.Align.CENTER, 11,StyleConfig.FontSize.F2)));
+        printRows.add(new PrintRow(modelTransaccion.getRegistro(), new StyleConfig(StyleConfig.Align.CENTER, 11,30)));
 
         printRows.add(new PrintRow(context.getResources().getString(
-                R.string.recibo_numero_transaccion), String.valueOf(modelTransaccion.getNumero_cargo()), new StyleConfig(StyleConfig.Align.LEFT, true)));
+                R.string.recibo_numero_transaccion), String.valueOf(modelTransaccion.getNumero_cargo()), new StyleConfig(StyleConfig.Align.LEFT, 11)));
         printRows.add(new PrintRow(context.getResources().getString(
-                R.string.recibo_valor), String.valueOf(modelTransaccion.getValor()), new StyleConfig(StyleConfig.Align.LEFT, true)));
+                R.string.recibo_valor), String.valueOf(modelTransaccion.getValor()), new StyleConfig(StyleConfig.Align.LEFT, 11)));
         printRows.add(new PrintRow(context.getResources().getString(
                 R.string.recibo_numero_tarjeta), modelTransaccion.getNumero_tarjeta(), new StyleConfig(StyleConfig.Align.LEFT, 20)));
 
         printRows.add(new PrintRow(context.getResources().getString(
-                R.string.recibo_ingresa_firma), new StyleConfig(StyleConfig.Align.LEFT, true)));
+                R.string.recibo_ingresa_firma), new StyleConfig(StyleConfig.Align.LEFT, 11)));
         printRows.add(new PrintRow(context.getResources().getString(
-                R.string.recibo_ingresa_cc), new StyleConfig(StyleConfig.Align.LEFT, true)));
+                R.string.recibo_ingresa_cc), new StyleConfig(StyleConfig.Align.LEFT, 11)));
         printRows.add(new PrintRow(context.getResources().getString(
-                R.string.recibo_ingresa_tel), new StyleConfig(StyleConfig.Align.LEFT, 50)));
-        printRows.add(new PrintRow(".", new StyleConfig(StyleConfig.Align.LEFT, true)));
+                R.string.recibo_ingresa_tel), new StyleConfig(StyleConfig.Align.LEFT, 11, 50)));
+        printRows.add(new PrintRow(".", new StyleConfig(StyleConfig.Align.LEFT, 11)));
 
         //retornamos el estado de la impresora tras enviar los rows para imprimir
 

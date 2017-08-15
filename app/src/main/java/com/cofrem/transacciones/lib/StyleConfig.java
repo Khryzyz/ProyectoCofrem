@@ -23,45 +23,34 @@ public class StyleConfig{
         this.newLine = true;
     }
 
-    public StyleConfig(StyleConfig.Align align, boolean newLine) {
+    public StyleConfig(StyleConfig.Align align, int gray,StyleConfig.FontSize fontSize) {
         this.fontFamily = StyleConfig.FontFamily.DEFAULT;
-        this.fontSize = StyleConfig.FontSize.F2;
+        this.fontSize = fontSize;
         this.fontStyle = StyleConfig.FontStyle.NORMAL;
-        this.gray = 11;
-        this.lineSpace = 1;
-        this.align = align;
-        this.newLine = newLine;
-    }
-    public StyleConfig(StyleConfig.Align align, StyleConfig.FontStyle fontStyle) {
-        this.fontFamily = StyleConfig.FontFamily.DEFAULT;
-        this.fontSize = StyleConfig.FontSize.F2;
-        this.fontStyle = fontStyle;
-        this.gray = 11;
+        this.gray = gray;
         this.lineSpace = 1;
         this.align = align;
         this.newLine = true;
     }
-    public StyleConfig(StyleConfig.Align align, int lineSpace) {
+    public StyleConfig(StyleConfig.Align align, int gray) {
         this.fontFamily = StyleConfig.FontFamily.DEFAULT;
         this.fontSize = StyleConfig.FontSize.F2;
         this.fontStyle = StyleConfig.FontStyle.NORMAL;
-        this.gray = 11;
+        this.gray = gray;
+        this.lineSpace = 1;
+        this.align = align;
+        this.newLine = true;
+    }
+
+    public StyleConfig(StyleConfig.Align align, int gray, int lineSpace) {
+        this.fontFamily = StyleConfig.FontFamily.DEFAULT;
+        this.fontSize = StyleConfig.FontSize.F2;
+        this.fontStyle = StyleConfig.FontStyle.NORMAL;
+        this.gray = gray;
         this.lineSpace = lineSpace;
         this.align = align;
         this.newLine = true;
     }
-
-    public StyleConfig(StyleConfig.FontSize fontSize, StyleConfig.FontStyle fontStyle, StyleConfig.Align align, int gray, boolean newLine) {
-        this.fontFamily = StyleConfig.FontFamily.DEFAULT;
-        this.fontSize = fontSize;
-        this.fontStyle = fontStyle;
-        this.gray = 11;
-        this.align = align;
-        this.gray = gray;
-        this.newLine = newLine;
-    }
-
-
 
     public static enum Align {
         LEFT,

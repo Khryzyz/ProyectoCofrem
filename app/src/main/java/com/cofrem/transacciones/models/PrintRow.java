@@ -14,14 +14,18 @@ public class PrintRow {
     private Bitmap logo;
     private StyleConfig styleConfig;
     private StyleConfig.Align align;
+    private int lineSpace;
+    private int gray;
 
 
     public PrintRow() {
     }
 
-    public PrintRow(Bitmap logo, StyleConfig.Align align) {
+    public PrintRow(Bitmap logo, StyleConfig.Align align,int gray,int lineSpace) {
         this.logo = logo;
         this.align = align;
+        this.lineSpace = lineSpace;
+        this.gray = gray;
     }
 
     public PrintRow(String msg1, StyleConfig styleConfig) {
@@ -74,5 +78,21 @@ public class PrintRow {
 
     public void setAlign(StyleConfig.Align align) {
         this.align = align;
+    }
+
+    public int getLineSpace() {
+        return lineSpace;
+    }
+
+    public void setLineSpace(int lineSpace) {
+        this.lineSpace = lineSpace;
+    }
+
+    public int getGray() {
+        return gray;
+    }
+
+    public void setGray(int gray) {
+        this.gray = gray;
     }
 }
