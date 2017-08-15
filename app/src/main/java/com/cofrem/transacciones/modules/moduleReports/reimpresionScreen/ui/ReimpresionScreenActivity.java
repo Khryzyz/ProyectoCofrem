@@ -234,7 +234,7 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
                 break;
             case PASO_NUMERO_CARGO:
                 bodyContentReimpresionReciboImpresion.setVisibility(View.VISIBLE);
-                txvReportReimprimeonReciboImpresionSaldoCantidad.setText(String.valueOf(modelTransaccion.getNumero_cargo()));
+                txvReportReimprimeonReciboImpresionSaldoCantidad.setText(modelTransaccion.getNumero_cargo());
                 break;
             case PASO_DETALLE:
                 bodyContentReporteDetallesImpresion.setVisibility(View.VISIBLE);
