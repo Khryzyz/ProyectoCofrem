@@ -657,11 +657,8 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
     public void deslizarTarjeta() {
 
         String[] magneticHandler = new MagneticHandler().readMagnetic();
-        if (true) {
 
-            String numeroTarjeta = "033502";
-
-            /*if (magneticHandler != null) {
+        if (magneticHandler != null) {
 
             String numeroTarjeta = magneticHandler[1]
                     .replace(";", "")
@@ -688,8 +685,6 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
                     .replace("-", "")
                     .replace("_", "")
                     .replace("%", "");
-
-*/
 
             //Registra el valor del numero de tarjeta en el modelo de la transaccion
             modelTransaccion.setNumero_tarjeta(numeroTarjeta);

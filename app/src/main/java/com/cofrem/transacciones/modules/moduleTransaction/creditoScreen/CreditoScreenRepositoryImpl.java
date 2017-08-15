@@ -214,7 +214,7 @@ public class CreditoScreenRepositoryImpl implements CreditoScreenRepository {
         boolean statusTransaction = false;
 
         //Se registra la transaccion
-        if (AppDatabase.getInstance(context).insertRegistroTransaction(informacionTransaccion)) {
+        if (AppDatabase.getInstance(context).insertRegistroTransaction(informacionTransaccion, Transaccion.CODIGO_TIPO_TRANSACCION_CONSUMO)) {
             statusTransaction = true;
         }
 
@@ -239,14 +239,14 @@ public class CreditoScreenRepositoryImpl implements CreditoScreenRepository {
         ArrayList<PrintRow> printRows = new ArrayList<PrintRow>();
 
         //Se agrega el logo al primer renglon del recibo y se coloca en el centro
-        printRows.add(new PrintRow(logo, StyleConfig.Align.CENTER,11,3));
+        printRows.add(new PrintRow(logo, StyleConfig.Align.CENTER, 11, 3));
 
         //se siguen agregando cado auno de los String a los renglones (Rows) del recibo para imprimir
         printRows.add(new PrintRow(context.getResources().getString(
                 R.string.recibo_nit, modelEstablishment.getNit()), context.getResources().getString(
-                R.string.recibo_codigo, modelEstablishment.getCodigo()),new StyleConfig(StyleConfig.Align.CENTER, 11 ,StyleConfig.FontSize.F1)));
-        printRows.add(new PrintRow(modelEstablishment.getNombre(), new StyleConfig(StyleConfig.Align.CENTER, 11,StyleConfig.FontSize.F2)));
-        printRows.add(new PrintRow(modelTransaccion.getRegistro(), new StyleConfig(StyleConfig.Align.CENTER, 11,30)));
+                R.string.recibo_codigo, modelEstablishment.getCodigo()), new StyleConfig(StyleConfig.Align.CENTER, 11, StyleConfig.FontSize.F1)));
+        printRows.add(new PrintRow(modelEstablishment.getNombre(), new StyleConfig(StyleConfig.Align.CENTER, 11, StyleConfig.FontSize.F2)));
+        printRows.add(new PrintRow(modelTransaccion.getRegistro(), new StyleConfig(StyleConfig.Align.CENTER, 11, 30)));
 
         printRows.add(new PrintRow(context.getResources().getString(
                 R.string.recibo_numero_transaccion), modelTransaccion.getNumero_cargo(), new StyleConfig(StyleConfig.Align.LEFT, 11)));

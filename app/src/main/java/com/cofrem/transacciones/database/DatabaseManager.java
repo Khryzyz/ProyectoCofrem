@@ -26,7 +26,7 @@ class DatabaseManager {
     static class DatabaseApp {
 
         static final String DATABASE_NAME = "app_cofrem_transactions.db";
-        static final int DATABASE_VERSION = 62;
+        static final int DATABASE_VERSION = 63;
 
     }
 
@@ -99,6 +99,7 @@ class DatabaseManager {
         static final String COLUMN_TRANSACCIONES_NUMERO_CARGO = "numero_cargo";
         static final String COLUMN_TRANSACCIONES_NUMERO_TARJETA = "numero_tarjeta";
         static final String COLUMN_TRANSACCIONES_VALOR = "valor";
+        static final String COLUMN_TRANSACCIONES_TIPO_TRANSACCION = "tipo_transaccion";
         static final String COLUMN_TRANSACCIONES_REGISTRO = "registro";
         static final String COLUMN_TRANSACCIONES_ESTADO = "estado";
 
@@ -113,6 +114,7 @@ class DatabaseManager {
                         COLUMN_TRANSACCIONES_NUMERO_CARGO + " " + STRING_TYPE + " " + ATTR_NOT_NULL + "," +
                         COLUMN_TRANSACCIONES_NUMERO_TARJETA + " " + STRING_TYPE + " " + ATTR_NOT_NULL + "," +
                         COLUMN_TRANSACCIONES_VALOR + " " + STRING_TYPE + " " + ATTR_NOT_NULL + "," +
+                        COLUMN_TRANSACCIONES_TIPO_TRANSACCION + " " + INT_TYPE + " " + ATTR_NOT_NULL + "," +
                         COLUMN_TRANSACCIONES_REGISTRO + " " + TIMESTAMP_TYPE + " " + ATTR_NOT_NULL + "," +
                         COLUMN_TRANSACCIONES_ESTADO + " " + INT_TYPE + " " + ATTR_NOT_NULL + ")";
 
