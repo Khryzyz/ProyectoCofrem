@@ -65,9 +65,13 @@ public class AnulacionScreenActivity extends Activity implements AnulacionScreen
     @ViewById
     RelativeLayout bodyContentAnulacionDesliceTarjeta;
     @ViewById
+    RelativeLayout bodyContentAnulacionLecturaIncorrecta;
+    @ViewById
     RelativeLayout bodyContentAnulacionClaveUsuario;
     @ViewById
     RelativeLayout bodyContentAnulacionTransaccionExitosa;
+    @ViewById
+    RelativeLayout bodyContentAnulacionTransaccionErronea;
     @ViewById
     FrameLayout frlPgbHldTransactionAnulacion;
 
@@ -633,13 +637,13 @@ public class AnulacionScreenActivity extends Activity implements AnulacionScreen
 
             //En caso de la lectura correcta se continua el proceso
             lecturaTarjetaCorrecta();
-            
+
 
         } else {
             //En caso de la lectura erronea se muestra la pantalla de error
             lecturaTarjetaErronea();
         }
-        
+
     }
 
     /**
@@ -668,10 +672,9 @@ public class AnulacionScreenActivity extends Activity implements AnulacionScreen
         bodyContentAnulacionDesliceTarjeta.setVisibility(View.GONE);
 
         //Muestra la vista de contraseña de usuario
-       // bodyContentAnulacionLecturaIncorrecta.setVisibility(View.VISIBLE);
+        bodyContentAnulacionLecturaIncorrecta.setVisibility(View.VISIBLE);
 
     }
-
 
 
     /**

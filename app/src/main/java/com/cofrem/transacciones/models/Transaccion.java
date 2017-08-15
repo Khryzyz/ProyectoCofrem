@@ -2,6 +2,13 @@ package com.cofrem.transacciones.models;
 
 public class Transaccion {
 
+
+    /**
+     * Valores posibles que puede tomar el atributo tipo transaccion dentro del sistema
+     */
+    public final static int TIPO_TRANSACCION_CONSUMO = 1;
+    public final static int TIPO_TRANSACCION_ANULACION = 2;
+
     /**
      * ## TABLA ENTREGADA POR COFREM ########
      * ## Version 2017/07/27 ################

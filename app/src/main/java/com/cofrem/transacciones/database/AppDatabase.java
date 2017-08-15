@@ -306,7 +306,7 @@ public final class AppDatabase extends SQLiteOpenHelper {
      * @param informacionTransaccion Informacion de la transaccion realizada
      * @return Boolean estado del registro de la transaccion
      */
-    public boolean insertRegistroTransaction(InformacionTransaccion informacionTransaccion) {
+    public boolean insertRegistroTransaction(InformacionTransaccion informacionTransaccion, int tipoTransaccion) {
 
         boolean transaction = false;
 
@@ -320,17 +320,25 @@ public final class AppDatabase extends SQLiteOpenHelper {
                 DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_PRODUCTO_ID,
                 obtenerProductoIdByNombre(informacionTransaccion.getDetalleTipoServicio())
         );
+
         contentValues.put(
                 DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_NUMERO_CARGO,
                 informacionTransaccion.getNumeroAprobacion()
         );
+
         contentValues.put(
                 DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_NUMERO_TARJETA,
                 informacionTransaccion.getNumeroTarjeta()
         );
+
         contentValues.put(DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_VALOR,
                 informacionTransaccion.getValor()
         );
+
+        contentValues.put(DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_TIPO_TRANSACCION,
+                tipoTransaccion
+        );
+
         contentValues.put(
                 DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_REGISTRO,
                 getDateTime());
@@ -410,7 +418,9 @@ public final class AppDatabase extends SQLiteOpenHelper {
                 "SELECT  " +
                         DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_VALOR +
                         " FROM " + DatabaseManager.TableTransacciones.TABLE_NAME_TRANSACCIONES +
-                        " WHERE " + DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_NUMERO_CARGO + " = '" + numeroCargo + "';"
+                        " WHERE " +
+                        DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_NUMERO_CARGO + " = '" + numeroCargo + "' AND " +
+                        DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_TIPO_TRANSACCION + " = " + Transaccion.TIPO_TRANSACCION_CONSUMO
                 , null
         );
         if (cursorQuery.moveToFirst()) {
