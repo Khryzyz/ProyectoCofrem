@@ -132,10 +132,10 @@ public class Printer {
         }
     }
 
-    public static synchronized void printImage(Bitmap cutBitmap, StyleConfig.Align align) {
+    public static synchronized void printImage(Bitmap cutBitmap, StyleConfig.Align align,int gray,int lineSpace) {
         if(cutBitmap != null && printList != null) {
                 Bitmap newBitmap = adjustBitmap(cutBitmap, align);
-                printList.add(new Printer.PrintItem(newBitmap, new StyleConfig()));
+                printList.add(new Printer.PrintItem(newBitmap, new StyleConfig(align,gray,lineSpace)));
 
         }
     }
@@ -207,6 +207,7 @@ public class Printer {
                     ThermalPrinter.setAlgin(0);
                     ThermalPrinter.setGray(printItem.styleConfig.gray);
                     ThermalPrinter.printLogo(printItem.bitmap);
+                    ThermalPrinter.walkPaper(printItem.styleConfig.lineSpace);
                 } catch (DeviceNotOpenException var19) {
                     var19.printStackTrace();
                     if(commitCallback != null) {
@@ -247,7 +248,7 @@ public class Printer {
                 try {
                     if(printItem.styleConfig.fontSize == StyleConfig.FontSize.F1) {
                         ThermalPrinter.setFontSize(1);
-                        ThermalPrinter.enlargeFontSize(1, 1);
+                        ThermalPrinter.enlargeFontSize(1, 2);
                     } else if(printItem.styleConfig.fontSize == StyleConfig.FontSize.F3) {
                         ThermalPrinter.setFontSize(1);
                         ThermalPrinter.enlargeFontSize(2, 2);

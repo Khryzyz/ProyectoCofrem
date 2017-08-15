@@ -12,6 +12,7 @@ import android.util.Log;
 import com.cofrem.transacciones.lib.MD5;
 import com.cofrem.transacciones.models.ConfigurationPrinter;
 import com.cofrem.transacciones.models.Configurations;
+import com.cofrem.transacciones.models.Establishment;
 import com.cofrem.transacciones.models.InfoHeaderApp;
 import com.cofrem.transacciones.models.modelsWS.modelEstablecimiento.ConexionEstablecimiento;
 import com.cofrem.transacciones.models.modelsWS.modelEstablecimiento.Establecimiento;
@@ -813,7 +814,7 @@ public final class AppDatabase extends SQLiteOpenHelper {
     /**
      * Metodo para procesar la informacion del establecimiento traida desde el Web Service
      *
-     * @param establecimiento Establecimiento informacion del establecimiento
+     * @param establecimiento Establishment informacion del establecimiento
      * @return Boolean estado de la transaccion de procesamiento de informacion de establecimiento
      */
     public boolean processInfoEstablecimiento(Establecimiento establecimiento) {
@@ -906,6 +907,40 @@ public final class AppDatabase extends SQLiteOpenHelper {
       #############################################################################################
      */
 
+
+    /**
+     * Metodo para Obtener la informacion del establecimineto
+     *
+     * @return modelEstablishment
+     */
+    public Establishment getEstablecimiento() {
+
+        Establishment modelEstablishment = new Establishment();
+
+        Cursor cursorQuery;
+
+        cursorQuery = getWritableDatabase().rawQuery(
+                "SELECT * FROM " + DatabaseManager.TableEstablecimiento.TABLE_NAME_ESTABLECIMIENTO +
+                        " WHERE " + DatabaseManager.TableEstablecimiento.COLUMN_ESTABLECIMIENTO_ESTADO + " = '1'", null
+        );
+
+        if (cursorQuery.moveToFirst()) {
+            modelEstablishment.setCodigo(cursorQuery.getString(0));
+            modelEstablishment.setNombre(cursorQuery.getString(1));
+            modelEstablishment.setDireccion(cursorQuery.getString(2));
+            modelEstablishment.setCiudad(cursorQuery.getString(3));
+            modelEstablishment.setNit(cursorQuery.getString(4));
+            modelEstablishment.setRazonsocial(cursorQuery.getString(5));
+            modelEstablishment.setRegistro(cursorQuery.getString(6));
+            modelEstablishment.setEstado(cursorQuery.getInt(7));
+
+        }
+
+        cursorQuery.close();
+
+        return modelEstablishment;
+    }
+
     /**
      * Metodo para Obtener ultima  transaccion
      *
@@ -920,7 +955,7 @@ public final class AppDatabase extends SQLiteOpenHelper {
         cursorQuery = getWritableDatabase().rawQuery(
                 "SELECT * " +
                         " FROM " + DatabaseManager.TableTransacciones.TABLE_NAME_TRANSACCIONES +
-                        " ORDER BY " + DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_REGISTRO + " ASC " +
+                        " ORDER BY " + DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_REGISTRO + " DESC " +
                         " LIMIT 1", null
         );
 

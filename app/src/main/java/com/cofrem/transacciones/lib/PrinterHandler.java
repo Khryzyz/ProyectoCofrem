@@ -6,6 +6,7 @@ import android.content.Context;
 import com.cofrem.transacciones.R;
 import com.cofrem.transacciones.global.InfoGlobalSettingsPrint;
 import com.cofrem.transacciones.models.PrintRow;
+
 import java.util.ArrayList;
 
 
@@ -61,12 +62,12 @@ public class PrinterHandler {
                 //validar si el row tiene 2 String. De ser así
                 // el primer String se imprime a la izquierda y el segundo a la derecha
                 if (row.getMsg1() != null && row.getMsg2() != null) {
-                    Printer.printText(justificarTexto(row.getMsg1(), row.getMsg2()), row.getStyleConfig());
+                    Printer.printText(justificarTexto(row.getMsg1(), row.getMsg2(), row.getStyleConfig()), row.getStyleConfig());
                 } else if (row.getMsg1() != null) {
                     Printer.printText(row.getMsg1(), row.getStyleConfig());
                 } else if (row.getLogo() != null) {
-                    Printer.printImage(row.getLogo(), row.getAlign());
-                    Printer.printText("", new StyleConfig(StyleConfig.Align.LEFT, true));
+                    Printer.printImage(row.getLogo(), row.getAlign(),row.getGray(),row.getLineSpace());
+
                 }
                 //dar la orden a Printer de que imprima el renglon
                 Printer.commitOperation();
@@ -84,7 +85,7 @@ public class PrinterHandler {
      * @param msg2
      * @return String resul
      */
-    private static String justificarTexto(String msg1, String msg2) {
+    private static String justificarTexto(String msg1, String msg2, StyleConfig style) {
 
         //calculado el tamaño de cada unos de los String
         int lengthMsg1 = msg1.length();
@@ -92,7 +93,13 @@ public class PrinterHandler {
 
         //con el tipo de letra actual que es el tamaño 2 cada renglon tiene 31 caracteres
         //espero no los String que se envien a justificar no suoperen los 31 caracteres para no tener problemas
-        int lengthTotal = 31 - (lengthMsg1 + lengthMsg2);
+        int lengthTotal = 0;
+
+        if (style.fontSize == StyleConfig.FontSize.F1) {
+            lengthTotal = 46 - (lengthMsg1 + lengthMsg2);
+        } else if (style.fontSize == StyleConfig.FontSize.F2) {
+            lengthTotal = 31 - (lengthMsg1 + lengthMsg2);
+        }
 
         //colocar el primer Strin en la parte Izquierda del renglon
         String resul = msg1;
