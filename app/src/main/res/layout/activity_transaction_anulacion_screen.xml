@@ -7,7 +7,7 @@
     <FrameLayout
         android:id="@+id/frlPgbHldTransactionAnulacion"
         style="@style/StyleProgressbarHolder"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <ProgressBar
             android:id="@+id/pgbTransactionAnulacion"
@@ -23,7 +23,7 @@
         android:layout_marginBottom="@dimen/appMarginBottom" />
 
     <include
-        android:id="@+id/bodyContentClaveAdministrador"
+        android:id="@+id/bodyContentAnulacionClaveAdministrador"
         layout="@layout/content_transaction_anulacion_paso_clave_administrador"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -31,7 +31,7 @@
         android:visibility="gone" />
 
     <include
-        android:id="@+id/bodyContentNumeroCargo"
+        android:id="@+id/bodyContentAnulacionNumeroCargo"
         layout="@layout/content_transaction_anulacion_paso_numero_cargo"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -39,7 +39,7 @@
         android:visibility="gone" />
 
     <include
-        android:id="@+id/bodyContentVerificacionValor"
+        android:id="@+id/bodyContentAnulacionVerificacionValor"
         layout="@layout/content_transaction_anulacion_paso_verificacion_valor"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -47,28 +47,44 @@
         android:visibility="gone" />
 
     <include
-        android:id="@+id/bodyContentDeslizarTarjeta"
-        layout="@layout/content_transaction_anulacion_paso_deslizar_tarjeta"
+        android:id="@+id/bodyContentAnulacionDesliceTarjeta"
+        layout="@layout/content_transaction_anulacion_paso_deslice_tarjeta"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/headerContent"
         android:visibility="gone" />
 
     <include
-        android:id="@+id/bodyContentClaveUsuario"
+        android:id="@+id/bodyContentAnulacionLecturaIncorrecta"
+        layout="@layout/content_transaction_anulacion_paso_lectura_incorrecta"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/headerContent"
+        android:visibility="gone" />
+
+    <include
+        android:id="@+id/bodyContentAnulacionClaveUsuario"
         layout="@layout/content_transaction_anulacion_paso_clave_usuario"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/headerContent"
         android:visibility="gone" />
 
-
     <include
-        android:id="@+id/bodyContentTransaccionExitosa"
+        android:id="@+id/bodyContentAnulacionTransaccionExitosa"
         layout="@layout/content_transaction_anulacion_paso_transaccion_exitosa"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/headerContent"
-        android:visibility="visible" />
+        android:visibility="gone" />
+
+
+    <include
+        android:id="@+id/bodyContentAnulacionTransaccionErronea"
+        layout="@layout/content_transaction_anulacion_paso_transaccion_error"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/headerContent"
+        android:visibility="gone" />
 
 </RelativeLayout>

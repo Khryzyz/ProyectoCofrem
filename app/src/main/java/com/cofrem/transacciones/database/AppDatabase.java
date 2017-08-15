@@ -404,40 +404,19 @@ public final class AppDatabase extends SQLiteOpenHelper {
 
         int valorTransaccion = AnulacionScreenEvent.VALOR_TRANSACCION_NO_VALIDO;
 
-        Transaccion modelTransaccion = new Transaccion();
-
         Cursor cursorQuery;
 
         cursorQuery = getWritableDatabase().rawQuery(
                 "SELECT  " +
-                        DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_NUMERO_CARGO + " , " +
                         DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_VALOR +
-                        " FROM " + DatabaseManager.TableTransacciones.TABLE_NAME_TRANSACCIONES //+
-                        //" WHERE " + DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_NUMERO_CARGO + " = " + numeroCargo
-                        //" WHERE " + DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_NUMERO_CARGO + " = '" + numeroCargo + "';"
+                        " FROM " + DatabaseManager.TableTransacciones.TABLE_NAME_TRANSACCIONES +
+                        " WHERE " + DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_NUMERO_CARGO + " = '" + numeroCargo + "';"
                 , null
         );
-        /*if (cursorQuery.moveToFirst()) {
-
-            modelTransaccion.setId(cursorQuery.getInt(0));
-            modelTransaccion.setTipo_servicio(cursorQuery.getInt(1));
-            modelTransaccion.setNumero_cargo(cursorQuery.getInt(2));
-            modelTransaccion.setNumero_tarjeta(cursorQuery.getString(3));
-            modelTransaccion.setValor(cursorQuery.getInt(4));
-            modelTransaccion.setRegistro(cursorQuery.getString(5));
-            modelTransaccion.setEstado(cursorQuery.getInt(6));
-        }*/
-
-        int columnas = cursorQuery.getColumnCount();
-        int conteo = cursorQuery.getCount();
-
-        //Nos aseguramos de que existe al menos un registro
         if (cursorQuery.moveToFirst()) {
-            //Recorremos el cursor hasta que no haya más registros
-            do {
-                String numero_cargo = cursorQuery.getString(0);
-                modelTransaccion.setValor(cursorQuery.getInt(1));
-            } while (cursorQuery.moveToNext());
+
+            valorTransaccion = cursorQuery.getInt(0);
+
         }
 
         cursorQuery.close();
