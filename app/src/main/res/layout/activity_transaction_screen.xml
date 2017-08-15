@@ -17,25 +17,31 @@
         style="@style/StyleButtonStandar"
         android:layout_below="@id/headerContent"
         android:drawableStart="@drawable/if_shop_a"
+        android:paddingTop="@dimen/appPaddingTop"
         android:text="@string/transaction_text_button_credito" />
 
-    <Button
-        android:id="@+id/btnTransactionScreenModuleSaldo"
-        style="@style/StyleButtonStandar"
-        android:layout_below="@id/btnTransactionScreenModuleCredito"
-        android:drawableStart="@drawable/if_money"
-        android:text="@string/transaction_text_button_saldo" />
 
     <Button
         android:id="@+id/btnTransactionScreenModuleAnulacion"
         style="@style/StyleButtonStandar"
-        android:layout_below="@id/btnTransactionScreenModuleSaldo"
+        android:layout_below="@id/btnTransactionScreenModuleCredito"
         android:drawableStart="@drawable/if_trash"
+        android:paddingTop="@dimen/appPaddingTop"
         android:text="@string/transaction_text_button_anulacion" />
+
+
+    <Button
+        android:id="@+id/btnTransactionScreenModuleSaldo"
+        style="@style/StyleButtonStandar"
+        android:layout_below="@id/btnTransactionScreenModuleAnulacion"
+        android:drawableStart="@drawable/if_money"
+        android:paddingTop="@dimen/appPaddingTop"
+        android:text="@string/transaction_text_button_saldo" />
 
     <Button
         android:id="@+id/btnTransactionScreenBack"
         style="@style/StyleButtonBack"
-        android:layout_below="@id/btnTransactionScreenModuleAnulacion"
+        android:layout_below="@id/btnTransactionScreenModuleSaldo"
+        android:paddingTop="@dimen/appPaddingTop"
         android:text="@string/general_text_button_regresar" />
 </RelativeLayout>

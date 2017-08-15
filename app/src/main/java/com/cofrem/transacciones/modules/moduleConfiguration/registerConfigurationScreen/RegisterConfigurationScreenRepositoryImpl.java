@@ -45,17 +45,17 @@ public class RegisterConfigurationScreenRepositoryImpl implements RegisterConfig
     @Override
     public void validarPasswordTecnico(Context context, String passAdmin) {
 
-        int validateExistValorAcceso = AppDatabase.getInstance(context).conteoConfiguracionAccesoByClaveTecnica(MD5.crypt(passAdmin));
+        int validateExistValorAcceso = AppDatabase.getInstance(context).validarAccesoByClaveTecnica(MD5.crypt(passAdmin));
 
         switch (validateExistValorAcceso) {
             case 0:
-                postEvent(RegisterConfigurationScreenEvent.onValorAccesoNoValido);
+                postEvent(RegisterConfigurationScreenEvent.onClaveTecnicaNoValida);
                 break;
             case 1:
-                postEvent(RegisterConfigurationScreenEvent.onValorAccesoValido);
+                postEvent(RegisterConfigurationScreenEvent.onClaveTecnicaValida);
                 break;
             default:
-                postEvent(RegisterConfigurationScreenEvent.onValorAccesoError);
+                postEvent(RegisterConfigurationScreenEvent.onClaveTecnicaError);
                 break;
         }
 

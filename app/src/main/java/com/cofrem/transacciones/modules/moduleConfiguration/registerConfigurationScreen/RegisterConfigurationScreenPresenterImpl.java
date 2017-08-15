@@ -95,16 +95,16 @@ public class RegisterConfigurationScreenPresenterImpl implements RegisterConfigu
     public void onEventMainThread(RegisterConfigurationScreenEvent registerConfigurationScreenEvent) {
         switch (registerConfigurationScreenEvent.getEventType()) {
 
-            case RegisterConfigurationScreenEvent.onValorAccesoValido:
-                onPasswordTecnicoValido();
+            case RegisterConfigurationScreenEvent.onClaveTecnicaValida:
+                onClaveTecnicaValida();
                 break;
 
-            case RegisterConfigurationScreenEvent.onValorAccesoNoValido:
-                onPasswordTecnicoNoValido();
+            case RegisterConfigurationScreenEvent.onClaveTecnicaNoValida:
+                onClaveTecnicaNoValida();
                 break;
 
-            case RegisterConfigurationScreenEvent.onValorAccesoError:
-                onPasswordTecnicoError();
+            case RegisterConfigurationScreenEvent.onClaveTecnicaError:
+                onClaveTecnicaError();
                 break;
 
             case RegisterConfigurationScreenEvent.onRegistroConfigConexionSuccess:
@@ -147,27 +147,27 @@ public class RegisterConfigurationScreenPresenterImpl implements RegisterConfigu
     /**
      * Metodo para manejar el password tecnico valido
      */
-    private void onPasswordTecnicoValido() {
+    private void onClaveTecnicaValida() {
         if (registerConfigurationScreenView != null) {
-            registerConfigurationScreenView.handlePasswordTecnicoValido();
+            registerConfigurationScreenView.handleClaveTecnicaValida();
         }
     }
 
     /**
      * Metodo para manejar el password tecnico NO valido
      */
-    private void onPasswordTecnicoNoValido() {
+    private void onClaveTecnicaNoValida() {
         if (registerConfigurationScreenView != null) {
-            registerConfigurationScreenView.handlePasswordTecnicoNoValido();
+            registerConfigurationScreenView.handleClaveTecnicaNoValida();
         }
     }
 
     /**
      * Metodo para manejar el error en el password tecnico
      */
-    private void onPasswordTecnicoError() {
+    private void onClaveTecnicaError() {
         if (registerConfigurationScreenView != null) {
-            registerConfigurationScreenView.handlePasswordTecnicoError();
+            registerConfigurationScreenView.handleClaveTecnicaError();
         }
     }
 

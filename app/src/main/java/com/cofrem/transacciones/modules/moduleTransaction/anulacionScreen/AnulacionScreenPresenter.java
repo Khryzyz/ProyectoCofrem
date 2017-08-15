@@ -8,12 +8,20 @@ import com.cofrem.transacciones.models.Transaccion;
 public interface AnulacionScreenPresenter {
 
     /**
-     * Metodo que valida
+     * @param context
+     * @param passAdmin
      */
-    void validarPasswordAdministrador(Context context, String pass);
+    void validarPasswordAdministrador(Context context, String passAdmin);
 
     /**
-     * metodo presentador
+     * @param context
+     * @param numeroCargo
+     */
+    void obtenerValorTransaccion(Context context, String numeroCargo);
+
+    /**
+     * @param context
+     * @param transaccion
      */
     void registrarTransaccion(Context context, Transaccion transaccion);
 

@@ -5,17 +5,17 @@ public interface RegisterConfigurationScreenView {
     /**
      * Metodo para manejar el valor de acceso valido
      */
-    void handlePasswordTecnicoValido();
+    void handleClaveTecnicaValida();
 
     /**
      * Metodo para manejar el valor de acceso NO valido
      */
-    void handlePasswordTecnicoNoValido();
+    void handleClaveTecnicaNoValida();
 
     /**
      * Metodo para manejar el error en la configuracion de valor de acceso
      */
-    void handlePasswordTecnicoError();
+    void handleClaveTecnicaError();
 
     /**
      * Metodo para manejar el registro de la configuracion correcto

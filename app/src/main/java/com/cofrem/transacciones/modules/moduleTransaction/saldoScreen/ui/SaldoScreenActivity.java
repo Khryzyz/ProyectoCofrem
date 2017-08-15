@@ -258,8 +258,13 @@ public class SaldoScreenActivity extends Activity implements SaldoScreenView {
      * Metodo para ocultar la barra de progreso
      */
     private void hideProgress() {
-        //Oculta la barra de progreso
-        frlPgbHldTransactionSaldo.setVisibility(View.GONE);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                //Oculta la barra de progreso
+                frlPgbHldTransactionSaldo.setVisibility(View.GONE);
+            }
+        }, 1000);
     }
 
     /**

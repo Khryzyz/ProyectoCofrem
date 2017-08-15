@@ -36,9 +36,9 @@
 
     <!-- Textos register configuration -->
     <string name="configuration_error_format_clave_tecnica">La contraseña de administración debe tener exactamente 4 caracteres.</string>
-    <string name="configuration_text_valor_acceso_valido">Contraseña valida.</string>
-    <string name="configuration_text_valor_acceso_no_valido">Contraseña no valida, por favor verificar.</string>
-    <string name="configuration_text_valor_acceso_error">Existe un error en la configuración del valor de la contraseña de su dispositivo.</string>
+    <string name="configuration_text_clave_valido">Contraseña valida.</string>
+    <string name="configuration_text_clave_no_valido">Contraseña no valida, por favor verificar.</string>
+    <string name="configuration_text_clave_error">Existe un error en la configuración del valor de la contraseña de su dispositivo.</string>
 
     <string name="configuration_text_registro_conexion_success">Configuración de conexión registrada correctamente.</string>
     <string name="configuration_text_registro_conexion_error">Error en el registro de la configuración de conexión.</string>

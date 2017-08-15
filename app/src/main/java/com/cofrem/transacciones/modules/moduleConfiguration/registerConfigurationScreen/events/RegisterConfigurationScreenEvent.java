@@ -2,9 +2,9 @@ package com.cofrem.transacciones.modules.moduleConfiguration.registerConfigurati
 
 public class RegisterConfigurationScreenEvent {
 
-    public final static int onValorAccesoValido = 0;
-    public final static int onValorAccesoNoValido = 1;
-    public final static int onValorAccesoError = 2;
+    public final static int onClaveTecnicaValida = 0;
+    public final static int onClaveTecnicaNoValida = 1;
+    public final static int onClaveTecnicaError = 2;
 
     public final static int onRegistroConfigConexionSuccess = 3;
     public final static int onRegistroConfigConexionError = 4;
