@@ -307,7 +307,7 @@ public class RegisterConfigurationScreenActivity extends Activity implements Reg
      * Metodo para manejar el valor de acceso valido
      */
     @Override
-    public void handlePasswordTecnicoValido() {
+    public void handleClaveTecnicaValida() {
 
         //Oculta la barra de progreso
         hideProgress();
@@ -326,7 +326,7 @@ public class RegisterConfigurationScreenActivity extends Activity implements Reg
      * Metodo para manejar el valor de acceso NO valido
      */
     @Override
-    public void handlePasswordTecnicoNoValido() {
+    public void handleClaveTecnicaNoValida() {
 
         //Oculta la barra de progreso
         hideProgress();
@@ -335,7 +335,7 @@ public class RegisterConfigurationScreenActivity extends Activity implements Reg
         edtConfiguracionRegisterPassTecnicoContenidoClave.setText("");
 
         //Muestra el mensaje de error en la contraseña de administracion tecnica
-        Toast.makeText(this, R.string.configuration_text_valor_acceso_no_valido, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, R.string.configuration_text_clave_no_valido, Toast.LENGTH_SHORT).show();
 
     }
 
@@ -343,7 +343,7 @@ public class RegisterConfigurationScreenActivity extends Activity implements Reg
      * Metodo para manejar el error en la configuracion de valor de acceso
      */
     @Override
-    public void handlePasswordTecnicoError() {
+    public void handleClaveTecnicaError() {
 
         //Oculta la barra de progreso
         hideProgress();
@@ -352,7 +352,7 @@ public class RegisterConfigurationScreenActivity extends Activity implements Reg
         edtConfiguracionRegisterPassTecnicoContenidoClave.setText("");
 
         //Muestra el mensaje de error en la configuracion de la contraseña de administracion tecnica
-        Toast.makeText(this, R.string.configuration_text_valor_acceso_error, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, R.string.configuration_text_clave_error, Toast.LENGTH_SHORT).show();
 
     }
 
@@ -534,8 +534,13 @@ public class RegisterConfigurationScreenActivity extends Activity implements Reg
      * Metodo para ocultar la barra de progreso
      */
     private void hideProgress() {
-        //Oculta la barra de progreso
-        frlPgbHldRegisterScreen.setVisibility(View.GONE);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                //Oculta la barra de progreso
+                frlPgbHldRegisterScreen.setVisibility(View.GONE);
+            }
+        }, 1000);
     }
 
     /**

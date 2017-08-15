@@ -88,6 +88,18 @@ public class AnulacionScreenActivity extends Activity implements AnulacionScreen
     @ViewById
     Button btnAnulacionTransactionVerificacionDatosBotonCancelar;
 
+    @ViewById
+    TextView txvAnulacionTransactionVerificacionDatosNumeroCargo;
+
+    @ViewById
+    TextView txvAnulacionTransactionDesliceTarjetaDatosNumeroCargo;
+
+    //Paso transaction_anulacion_paso_deslice_tarjeta
+    @ViewById
+    TextView txvAnulacionTransactionVerificacionDatosValorCantidad;
+    @ViewById
+    TextView txvAnulacionTransactionDesliceTarjetaDatosValorCantidad;
+
     //Paso content_transaction_anulacion_paso_clave_usuario
     @ViewById
     Button btnAnulacionTransactionClaveUsuarioBotonCancelar;
@@ -103,7 +115,7 @@ public class AnulacionScreenActivity extends Activity implements AnulacionScreen
     /**
      * Pasos definidos
      */
-    int pasoCreditoTransaction = 0; // Define el paso actual
+    int pasoAnulacionTransaction = 0; // Define el paso actual
 
     final static int PASO_CLAVE_ADMINISTRADOR = 0;
     final static int PASO_NUMERO_CARGO = 1;
@@ -148,7 +160,7 @@ public class AnulacionScreenActivity extends Activity implements AnulacionScreen
         setInfoHeader();
 
         //Inicializa el paso del registro de la configuracion
-        pasoCreditoTransaction = PASO_CLAVE_ADMINISTRADOR;
+        pasoAnulacionTransaction = PASO_CLAVE_ADMINISTRADOR;
 
         //Primera ventana visible
         bodyContentClaveAdministrador.setVisibility(View.VISIBLE);
@@ -194,7 +206,7 @@ public class AnulacionScreenActivity extends Activity implements AnulacionScreen
                 // Ocula el soft keyboard al presionar la tecla enter
                 hideKeyBoard();
 
-                switch (pasoCreditoTransaction) {
+                switch (pasoAnulacionTransaction) {
 
                     case PASO_CLAVE_ADMINISTRADOR:
                         //Metodo para registrar el valor del consumo
@@ -242,7 +254,7 @@ public class AnulacionScreenActivity extends Activity implements AnulacionScreen
     @Override
     public void onBackPressed() {
 
-        switch (pasoCreditoTransaction) {
+        switch (pasoAnulacionTransaction) {
 
             case PASO_CLAVE_ADMINISTRADOR:
                 //Vacia la caja de la contraseña de administracion
@@ -281,10 +293,97 @@ public class AnulacionScreenActivity extends Activity implements AnulacionScreen
      */
 
     /**
-     * Metodo para manejar la verificacion exitosa
+     * Metodo para manejar la verificacion exitosa de la clave de administracion
      */
-    public void handleVerifySuccess() {
+    public void handleClaveAdministracionValida() {
+
+        //Oculta la barra de progreso
+        hideProgress();
+
+        //Oculta la vista de la contraseña de administracion tecnica
+        bodyContentClaveAdministrador.setVisibility(View.GONE);
+
+        //Muestra la vista del Host de conexion
+        bodyContentNumeroCargo.setVisibility(View.VISIBLE);
+
+        //Actualiza el paso actual
+        pasoAnulacionTransaction++;
     }
+
+    /**
+     * Metodo para manejar la verificacion erronea de la clave de administracion
+     */
+    public void handleClaveAdministracionNoValida() {
+
+        //Oculta la barra de progreso
+        hideProgress();
+
+        //Vacia la caja de contraseña de administracion tecnica
+        edtAnulacionTransactionClaveAdministradorContenidoClave.setText("");
+
+        //Muestra el mensaje de error en la contraseña de administracion tecnica
+        Toast.makeText(this, R.string.configuration_text_clave_no_valido, Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * Metodo para manejar error en la verificacion de la clave de administracion
+     */
+    public void handleClaveAdministracionError() {
+        //Oculta la barra de progreso
+        hideProgress();
+
+        //Vacia la caja de contraseña de administracion tecnica
+        edtAnulacionTransactionClaveAdministradorContenidoClave.setText("");
+
+        //Muestra el mensaje de error en la configuracion de la contraseña de administracion tecnica
+        Toast.makeText(this, R.string.configuration_text_clave_error, Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * Metodo para manejar el valor no valido en la transaccion
+     */
+    @Override
+    public void handleValorTransaccionNoValido() {
+
+    }
+
+    /**
+     * Metodo para manejar el valor valido en la transaccion
+     */
+    @Override
+    public void handleValorTransaccionValido(int valorTransaccion) {
+
+        Log.i("Activity valor", String.valueOf(valorTransaccion));
+
+        modelTransaccion.setValor(valorTransaccion);
+
+        txvAnulacionTransactionVerificacionDatosNumeroCargo.setText(
+                String.valueOf(modelTransaccion.getNumero_cargo())
+        );
+
+        txvAnulacionTransactionDesliceTarjetaDatosNumeroCargo.setText(
+                String.valueOf(modelTransaccion.getNumero_cargo())
+        );
+
+        txvAnulacionTransactionVerificacionDatosValorCantidad.setText(
+                String.valueOf(modelTransaccion.getValor())
+        );
+
+        txvAnulacionTransactionDesliceTarjetaDatosValorCantidad.setText(
+                String.valueOf(modelTransaccion.getValor())
+        );
+
+        //Oculta la vista del numero de cargo
+        bodyContentNumeroCargo.setVisibility(View.GONE);
+
+        //Muestra la vista de verificacion del valor
+        bodyContentVerificacionValor.setVisibility(View.VISIBLE);
+
+        //Actualiza el paso actual
+        pasoAnulacionTransaction++;
+
+    }
+
 
     /**
      * #############################################################################################
@@ -307,8 +406,13 @@ public class AnulacionScreenActivity extends Activity implements AnulacionScreen
      * Metodo para ocultar la barra de progreso
      */
     private void hideProgress() {
-        //Oculta la barra de progreso
-        frlPgbHldTransactionAnulacion.setVisibility(View.GONE);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                //Oculta la barra de progreso
+                frlPgbHldTransactionAnulacion.setVisibility(View.GONE);
+            }
+        }, 1000);
     }
 
     /**
@@ -439,17 +543,21 @@ public class AnulacionScreenActivity extends Activity implements AnulacionScreen
     @Click(R.id.btnAnulacionTransactionNumeroCargoBotonAceptar)
     public void registrarNumeroCargo() {
 
-        //Registra el valor del host en el modelo de la configuracion
-        modelTransaccion.setNumero_cargo(Integer.parseInt(edtAnulacionTransactionNumeroCargoContenidoValor.getText().toString()));
+        String numeroCargo = edtAnulacionTransactionNumeroCargoContenidoValor.getText().toString();
 
-        //Oculta la vista del numero de cargo
-        bodyContentNumeroCargo.setVisibility(View.GONE);
+        if (numeroCargo.length() > 0 && !numeroCargo.equals("0")) {
 
-        //Muestra la vista de verificacion del valor
-        bodyContentVerificacionValor.setVisibility(View.VISIBLE);
+            //Muestra la barra de progreso
+            showProgress();
 
-        //Actualiza el paso actual
-        pasoCreditoTransaction++;
+            //Registra el valor del host en el modelo de la configuracion
+            modelTransaccion.setNumero_cargo(Integer.parseInt(numeroCargo));
+
+            anulacionScreenPresenter.obtenerValorTransaccion(this, numeroCargo);
+
+        } else {
+
+        }
     }
 
     /**
@@ -465,7 +573,7 @@ public class AnulacionScreenActivity extends Activity implements AnulacionScreen
         bodyContentDeslizarTarjeta.setVisibility(View.VISIBLE);
 
         //Actualiza el paso actual
-        pasoCreditoTransaction++;
+        pasoAnulacionTransaction++;
 
     }
 
@@ -486,7 +594,7 @@ public class AnulacionScreenActivity extends Activity implements AnulacionScreen
         bodyContentClaveUsuario.setVisibility(View.VISIBLE);
 
         //Actualiza el paso actual
-        pasoCreditoTransaction++;
+        pasoAnulacionTransaction++;
 
     }
 

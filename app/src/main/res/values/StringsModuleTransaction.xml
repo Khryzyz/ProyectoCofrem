@@ -5,11 +5,11 @@
 
     <!-- Textos de botones -->
 
-    <string name="transaction_text_button_credito">Compra de productos</string>
+    <string name="transaction_text_button_credito">Consumo</string>
 
-    <string name="transaction_text_button_saldo">Consulta de Saldo</string>
+    <string name="transaction_text_button_saldo">Saldo</string>
 
-    <string name="transaction_text_button_anulacion">Anulación de transacción</string>
+    <string name="transaction_text_button_anulacion">Anulación</string>
 
     <!-- Titulos de vistas -->
 

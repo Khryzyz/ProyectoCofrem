@@ -7,6 +7,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteStatement;
+import android.util.Log;
 
 import com.cofrem.transacciones.lib.MD5;
 import com.cofrem.transacciones.models.ConfigurationPrinter;
@@ -18,6 +19,7 @@ import com.cofrem.transacciones.models.modelsWS.modelEstablecimiento.Establecimi
 import com.cofrem.transacciones.models.modelsWS.modelEstablecimiento.InformacionEstablecimiento;
 import com.cofrem.transacciones.models.modelsWS.modelTransaccion.InformacionTransaccion;
 import com.cofrem.transacciones.models.Transaccion;
+import com.cofrem.transacciones.modules.moduleTransaction.anulacionScreen.events.AnulacionScreenEvent;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -389,6 +391,49 @@ public final class AppDatabase extends SQLiteOpenHelper {
         return producto_id;
     }
 
+
+    /**
+     * Metodo para Obtener valor de la transaccion por el numero de cargo
+     *
+     * @param numeroCargo
+     * @return
+     */
+    public int obtenerValorTransaccion(String numeroCargo) {
+
+        Log.i("AppDatabase cargo", numeroCargo);
+
+        int valorTransaccion = AnulacionScreenEvent.VALOR_TRANSACCION_NO_VALIDO;
+
+        Transaccion modelTransaccion = new Transaccion();
+
+        Cursor cursorQuery;
+
+        cursorQuery = getWritableDatabase().rawQuery(
+                //"SELECT " + DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_VALOR +
+                "SELECT * " +
+                        " FROM " + DatabaseManager.TableTransacciones.TABLE_NAME_TRANSACCIONES +
+                        " WHERE " + DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_NUMERO_CARGO + " = " + numeroCargo
+                , null
+        );
+
+        if (cursorQuery.moveToFirst()) {
+
+            modelTransaccion.setId(cursorQuery.getInt(0));
+            modelTransaccion.setTipo_servicio(cursorQuery.getInt(1));
+            modelTransaccion.setNumero_cargo(cursorQuery.getInt(2));
+            modelTransaccion.setNumero_tarjeta(cursorQuery.getString(3));
+            modelTransaccion.setValor(cursorQuery.getInt(4));
+            modelTransaccion.setRegistro(cursorQuery.getString(5));
+            modelTransaccion.setEstado(cursorQuery.getInt(6));
+        }
+
+        cursorQuery.close();
+
+        Log.i("AppDatabase valor", String.valueOf(valorTransaccion));
+
+        return valorTransaccion;
+    }
+
     /**
      * Metodo para insertar registro inicial en la Base de Datos de la configuracion para la impresora
      * Usado en:
@@ -479,9 +524,9 @@ public final class AppDatabase extends SQLiteOpenHelper {
      * - Configuracion
      *
      * @param claveTecnica String clave para realizar
-     * @return int conteo de refgistrs de configuracion de acceso por clave tecnica
+     * @return int conteo de registros de configuracion de acceso por clave tecnica
      */
-    public int conteoConfiguracionAccesoByClaveTecnica(String claveTecnica) {
+    public int validarAccesoByClaveTecnica(String claveTecnica) {
 
         int count;
 
@@ -491,6 +536,38 @@ public final class AppDatabase extends SQLiteOpenHelper {
                 "SELECT COUNT(1) FROM " +
                         DatabaseManager.TableConfiguracionAcceso.TABLE_NAME_CONFIGURACION_ACCESO +
                         " WHERE " + DatabaseManager.TableConfiguracionAcceso.COLUMN_CONFIGURACION_ACCESO_CLAVE_TECNICA + " = '" + claveTecnica + "' " +
+                        " AND " + DatabaseManager.TableConfiguracionAcceso.COLUMN_CONFIGURACION_ACCESO_ESTADO + " = '1'",
+                null
+        );
+
+        cursorQuery.moveToFirst();
+
+        count = cursorQuery.getInt(0);
+
+        cursorQuery.close();
+
+        return count;
+
+    }
+
+    /**
+     * Metodo para validar si existe registro inicial en la Base de Datos de la clave de acceso a dispositivo
+     * Usado en modulos:
+     * - Configuracion
+     *
+     * @param claveAdministracion String clave para realizar
+     * @return int conteo de registros de configuracion de acceso por clave tecnica
+     */
+    public int validarAccesoByClaveAdministracion(String claveAdministracion) {
+
+        int count;
+
+        Cursor cursorQuery;
+
+        cursorQuery = getWritableDatabase().rawQuery(
+                "SELECT COUNT(1) FROM " +
+                        DatabaseManager.TableConfiguracionAcceso.TABLE_NAME_CONFIGURACION_ACCESO +
+                        " WHERE " + DatabaseManager.TableConfiguracionAcceso.COLUMN_CONFIGURACION_ACCESO_CLAVE_ADMIN + " = '" + claveAdministracion + "' " +
                         " AND " + DatabaseManager.TableConfiguracionAcceso.COLUMN_CONFIGURACION_ACCESO_ESTADO + " = '1'",
                 null
         );
@@ -778,7 +855,7 @@ public final class AppDatabase extends SQLiteOpenHelper {
 
             if (countInformacionDispositivo == 1 &&
                     !conexionEstablecimiento.getClaveTecnivo().isEmpty() &&
-                    conteoConfiguracionAccesoByClaveTecnica(conexionEstablecimiento.getClaveTecnivo()) == 0) {
+                    validarAccesoByClaveTecnica(conexionEstablecimiento.getClaveTecnivo()) == 0) {
 
                 // Eliminacion de registros anteriores en la base de datos
                 getWritableDatabase().delete(

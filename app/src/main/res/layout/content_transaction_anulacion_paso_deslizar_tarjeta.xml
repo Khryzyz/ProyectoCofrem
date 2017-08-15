@@ -14,11 +14,58 @@
         android:text="@string/transaction_text_title_anulacion" />
 
     <TextView
-        android:id="@+id/txvAnulacionTransactionDesliceTarjetaSubTitle"
+        android:id="@+id/txvAnulacionTransactionDesliceTarjetaDatosSubTitle"
         style="@style/StyleTextPrimaryMedium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/txvAnulacionTransactionDesliceTarjetaTitle"
+        android:layout_marginBottom="@dimen/appMarginBottom"
+        android:text="@string/transaction_text_subtitle_verificacion_datos" />
+
+    <TextView
+        android:id="@+id/txvAnulacionTransactionDesliceTarjetaDatosValor"
+        style="@style/StyleTextPrimaryMedium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txvAnulacionTransactionDesliceTarjetaDatosSubTitle"
+        android:layout_marginBottom="@dimen/appMarginBottom"
+        android:text="@string/transaction_text_verifacion_valor_transaccion" />
+
+    <TextView
+        android:id="@+id/txvAnulacionTransactionDesliceTarjetaDatosValorCantidad"
+        style="@style/StyleTextPrimaryMedium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/txvAnulacionTransactionDesliceTarjetaDatosValor"
+        android:layout_marginBottom="@dimen/appMarginBottom"
+        android:text="@string/general_text_valor_cero" />
+
+    <TextView
+        android:id="@+id/txvAnulacionTransactionDesliceTarjetaDatosNumero"
+        style="@style/StyleTextPrimaryMedium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txvAnulacionTransactionDesliceTarjetaDatosValorCantidad"
+        android:layout_marginBottom="@dimen/appMarginBottom"
+        android:text="@string/transaction_text_verifacion_numero_Cargo" />
+
+    <TextView
+        android:id="@+id/txvAnulacionTransactionDesliceTarjetaDatosNumeroCargo"
+        style="@style/StyleTextPrimaryMedium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/txvAnulacionTransactionDesliceTarjetaDatosNumero"
+        android:layout_marginBottom="@dimen/appMarginBottom"
+        android:text="@string/general_text_texto_vacio" />
+    
+    <TextView
+        android:id="@+id/txvAnulacionTransactionDesliceTarjetaSubTitle"
+        style="@style/StyleTextPrimaryMedium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txvAnulacionTransactionDesliceTarjetaDatosNumeroCargo"
         android:layout_marginBottom="@dimen/appMarginBottom"
         android:text="@string/general_message_deslice_tarjeta" />
 

@@ -2,6 +2,7 @@ package com.cofrem.transacciones.modules.moduleConfiguration.testCommunicationSc
 
 import android.app.Activity;
 import android.content.pm.ActivityInfo;
+import android.os.Handler;
 import android.view.View;
 import android.widget.TextView;
 
@@ -146,6 +147,11 @@ public class TestCommunicationScreenActivity extends Activity implements TestCom
      * Metodo para ocultar la barra de progreso
      */
     private void hideProgress() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+            }
+        }, 1000);
 
     }
 

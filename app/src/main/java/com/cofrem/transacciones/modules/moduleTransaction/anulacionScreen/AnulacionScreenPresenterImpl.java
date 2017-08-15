@@ -43,14 +43,31 @@ public class AnulacionScreenPresenterImpl implements AnulacionScreenPresenter {
         this.eventBus = GreenRobotEventBus.getInstance();
     }
 
+    /**
+     * @param context
+     * @param passAdmin
+     */
     @Override
-    public void validarPasswordAdministrador(Context context, String pass) {
-        anulacionScreenInteractor.validarPasswordAdministrador(context, pass);
+    public void validarPasswordAdministrador(Context context, String passAdmin) {
+        anulacionScreenInteractor.validarPasswordAdministrador(context, passAdmin);
     }
 
+    /**
+     * @param context
+     * @param numeroCargo
+     */
+    @Override
+    public void obtenerValorTransaccion(Context context, String numeroCargo) {
+        anulacionScreenInteractor.obtenerValorTransaccion(context, numeroCargo);
+    }
+
+    /**
+     * @param context
+     * @param transaccion
+     */
     @Override
     public void registrarTransaccion(Context context, Transaccion transaccion) {
-
+        anulacionScreenInteractor.registrarTransaccion(context, transaccion);
     }
 
     /**
@@ -81,8 +98,24 @@ public class AnulacionScreenPresenterImpl implements AnulacionScreenPresenter {
     public void onEventMainThread(AnulacionScreenEvent anulacionScreenEvent) {
         switch (anulacionScreenEvent.getEventType()) {
 
-            case AnulacionScreenEvent.onVerifySuccess:
-                onVerifySuccess();
+            case AnulacionScreenEvent.onClaveAdministracionValida:
+                onClaveAdministracionValida();
+                break;
+
+            case AnulacionScreenEvent.onClaveAdministracionNoValida:
+                onClaveAdministracionNoValida();
+                break;
+
+            case AnulacionScreenEvent.onClaveAdministracionError:
+                onClaveAdministracionError();
+                break;
+
+            case AnulacionScreenEvent.onValorTransaccionNoValido:
+                onValorTransaccionNoValido();
+                break;
+
+            case AnulacionScreenEvent.onValorTransaccionValido:
+                onValorTransaccionValido(anulacionScreenEvent.getValorInt());
                 break;
 
         }
@@ -96,11 +129,47 @@ public class AnulacionScreenPresenterImpl implements AnulacionScreenPresenter {
      */
 
     /**
-     * Metodo para manejar la verificacion exitosa
+     * Metodo para manejar la verificacion exitosa de la clave de administracion
      */
-    private void onVerifySuccess() {
+    private void onClaveAdministracionValida() {
         if (anulacionScreenView != null) {
-            anulacionScreenView.handleVerifySuccess();
+            anulacionScreenView.handleClaveAdministracionValida();
+        }
+    }
+
+    /**
+     * Metodo para manejar la verificacion erronea de la clave de administracion
+     */
+    private void onClaveAdministracionNoValida() {
+        if (anulacionScreenView != null) {
+            anulacionScreenView.handleClaveAdministracionNoValida();
+        }
+    }
+
+    /**
+     * Metodo para manejar error en la verificacion de la clave de administracion
+     */
+    private void onClaveAdministracionError() {
+        if (anulacionScreenView != null) {
+            anulacionScreenView.handleClaveAdministracionError();
+        }
+    }
+
+    /**
+     * Metodo para manejar la el valor no valido en la transaccion
+     */
+    private void onValorTransaccionNoValido() {
+        if (anulacionScreenView != null) {
+            anulacionScreenView.handleValorTransaccionNoValido();
+        }
+    }
+
+    /**
+     * Metodo para manejar la el valor valido en la transaccion
+     */
+    private void onValorTransaccionValido(int valorTransaccion) {
+        if (anulacionScreenView != null) {
+            anulacionScreenView.handleValorTransaccionValido(valorTransaccion);
         }
     }
 
