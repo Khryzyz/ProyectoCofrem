@@ -126,7 +126,7 @@ class DatabaseManager {
 
     /**
      * #############################################################################################
-     * Tabla Establecimiento:
+     * Tabla Establishment:
      * - Modelado de la tabla establecimiento
      * - Scripts de la tabla establecimiento
      * #############################################################################################

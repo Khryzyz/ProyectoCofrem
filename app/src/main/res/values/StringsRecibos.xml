@@ -15,6 +15,11 @@
 
     <string name="recibo_valor">Valor:</string>
     <string name="recibo_fecha">Fecha:</string>
+
+    <string name="recibo_nit">NIT: %s</string>
+    <string name="recibo_telefono">TEL: %s</string>
+    <string name="recibo_codigo">CODIGO: %s</string>
+
     <string name="recibo_reimpresion_fecha">Valor</string>
     <string name="recibo_reimpresion">Recibo Reimpreso</string>
     <string name="recibo_numero_tarjeta">Tarjeta Numero: </string>

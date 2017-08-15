@@ -38,6 +38,6 @@ class AnulacionScreenInteractorImpl implements AnulacionScreenInteractor {
     @Override
     public void validarPasswordAdministrador(Context context, String pass) {
         //Valida el acceso a la app
-        anulacionScreenRepository.validarPasswordAdministrador(context, pass);
+        //anulacionScreenRepository.validarPasswordAdministrador(context, pass);
     }
 }
