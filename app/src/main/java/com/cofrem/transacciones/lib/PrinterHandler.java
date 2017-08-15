@@ -66,7 +66,7 @@ public class PrinterHandler {
                 } else if (row.getMsg1() != null) {
                     Printer.printText(row.getMsg1(), row.getStyleConfig());
                 } else if (row.getLogo() != null) {
-                    Printer.printImage(row.getLogo(), row.getAlign(),row.getGray(),row.getLineSpace());
+                    Printer.printImage(row.getLogo(), row.getAlign(), row.getGray(), row.getLineSpace());
 
                 }
                 //dar la orden a Printer de que imprima el renglon
@@ -141,5 +141,22 @@ public class PrinterHandler {
         }
         return result;
     }
+
+    /**
+     * Metodo que se encarga de mostrar el numero de las tarjeta
+     *
+     * @return String
+     */
+    public static String getFormatNumTarjeta(String num) {
+
+        int length = num.length();
+        int punto = length - 3;
+
+        if (punto < 0)
+            punto = 0;
+
+        return "* * * "+num.substring(punto,length);
+    }
+
 
 }

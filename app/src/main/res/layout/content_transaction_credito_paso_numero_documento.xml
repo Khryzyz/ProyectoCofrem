@@ -30,7 +30,7 @@
         android:layout_below="@id/txvCreditoTransactionNumeroDocumentoSubtitle"
         android:layout_marginBottom="@dimen/appMarginBottom"
         android:inputType="number"
-        android:text="3275580" />
+        android:text="1006776795" />
 
     <Button
         android:id="@+id/btnCreditoTransactionNumeroDocumentoBotonCancelar"

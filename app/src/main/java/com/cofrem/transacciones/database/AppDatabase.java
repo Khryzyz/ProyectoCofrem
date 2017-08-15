@@ -909,6 +909,30 @@ public final class AppDatabase extends SQLiteOpenHelper {
       #############################################################################################
      */
 
+    /**
+     * Metodo para Obtener la informacion del establecimineto
+     *
+     * @return modelEstablishment
+     */
+    public String getClaveAdmin() {
+
+        Cursor cursorQuery;
+        String clave = "";
+
+        cursorQuery = getWritableDatabase().rawQuery(
+                "SELECT * FROM " + DatabaseManager.TableConfiguracionAcceso.TABLE_NAME_CONFIGURACION_ACCESO +
+                        " WHERE " + DatabaseManager.TableConfiguracionAcceso.COLUMN_CONFIGURACION_ACCESO_ESTADO + " = '1'", null
+        );
+
+        if (cursorQuery.moveToFirst()) {
+            clave = cursorQuery.getString(1);
+
+        }
+
+        cursorQuery.close();
+
+        return clave;
+    }
 
     /**
      * Metodo para Obtener la informacion del establecimineto
@@ -990,7 +1014,7 @@ public final class AppDatabase extends SQLiteOpenHelper {
         cursorQuery = getWritableDatabase().rawQuery(
                 "SELECT * " +
                         " FROM " + DatabaseManager.TableTransacciones.TABLE_NAME_TRANSACCIONES +
-                        " WHERE " + DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_NUMERO_CARGO + " = " + numCargo
+                        " WHERE " + DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_NUMERO_CARGO + " = '" + numCargo +"'"
                 , null
         );
 

@@ -244,16 +244,18 @@ public class CreditoScreenRepositoryImpl implements CreditoScreenRepository {
         //se siguen agregando cado auno de los String a los renglones (Rows) del recibo para imprimir
         printRows.add(new PrintRow(context.getResources().getString(
                 R.string.recibo_nit, modelEstablishment.getNit()), context.getResources().getString(
-                R.string.recibo_codigo, modelEstablishment.getCodigo()), new StyleConfig(StyleConfig.Align.CENTER, 11, StyleConfig.FontSize.F1)));
-        printRows.add(new PrintRow(modelEstablishment.getNombre(), new StyleConfig(StyleConfig.Align.CENTER, 11, StyleConfig.FontSize.F2)));
-        printRows.add(new PrintRow(modelTransaccion.getRegistro(), new StyleConfig(StyleConfig.Align.CENTER, 11, 30)));
+                R.string.recibo_codigo, modelEstablishment.getCodigo()),new StyleConfig(StyleConfig.Align.CENTER, 11 ,StyleConfig.FontSize.F1)));
+        printRows.add(new PrintRow(modelEstablishment.getNombre(), new StyleConfig(StyleConfig.Align.CENTER, 11,StyleConfig.FontSize.F2)));
+        printRows.add(new PrintRow(modelEstablishment.getDireccion(), new StyleConfig(StyleConfig.Align.CENTER, 11,StyleConfig.FontSize.F2)));
+        printRows.add(new PrintRow(modelEstablishment.getCiudad(), new StyleConfig(StyleConfig.Align.CENTER, 11,StyleConfig.FontSize.F2)));
+        printRows.add(new PrintRow(modelTransaccion.getRegistro(), new StyleConfig(StyleConfig.Align.CENTER,11, 20)));
 
         printRows.add(new PrintRow(context.getResources().getString(
                 R.string.recibo_numero_transaccion), modelTransaccion.getNumero_cargo(), new StyleConfig(StyleConfig.Align.LEFT, 11)));
         printRows.add(new PrintRow(context.getResources().getString(
                 R.string.recibo_valor), String.valueOf(modelTransaccion.getValor()), new StyleConfig(StyleConfig.Align.LEFT, 11)));
         printRows.add(new PrintRow(context.getResources().getString(
-                R.string.recibo_numero_tarjeta), modelTransaccion.getNumero_tarjeta(), new StyleConfig(StyleConfig.Align.LEFT, 20)));
+                R.string.recibo_numero_tarjeta), PrinterHandler.getFormatNumTarjeta(modelTransaccion.getNumero_tarjeta()), new StyleConfig(StyleConfig.Align.LEFT,11, 20)));
 
         printRows.add(new PrintRow(context.getResources().getString(
                 R.string.recibo_ingresa_firma), new StyleConfig(StyleConfig.Align.LEFT, 11)));

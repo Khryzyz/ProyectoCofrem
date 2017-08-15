@@ -30,7 +30,7 @@
         android:layout_below="@id/txvCreditoTransactionClaveUsuarioClave"
         android:layout_marginBottom="@dimen/appMarginBottom"
         android:inputType="textPassword"
-        android:text="9227" />
+        android:text="1008" />
 
     <Button
         android:id="@+id/btnCreditoTransactionClaveUsuarioBotonCancelar"
