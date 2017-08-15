@@ -57,11 +57,11 @@ public class SaldoScreenActivity extends Activity implements SaldoScreenView {
 
     // Contents del modulo
     @ViewById
-    RelativeLayout bodyContentDeslizarTarjeta;
+    RelativeLayout bodyContentSaldoDesliceTarjeta;
     @ViewById
-    RelativeLayout bodyContentClaveUsuario;
+    RelativeLayout bodyContentSaldoClaveUsuario;
     @ViewById
-    RelativeLayout bodyContentTransaccionExitosa;
+    RelativeLayout bodyContentSaldoTransaccionExitosa;
     @ViewById
     FrameLayout frlPgbHldTransactionSaldo;
 
@@ -127,7 +127,7 @@ public class SaldoScreenActivity extends Activity implements SaldoScreenView {
         pasoCreditoTransaction = PASO_DESLIZAR_TARJETA;
 
         //Primera ventana visible
-        bodyContentDeslizarTarjeta.setVisibility(View.VISIBLE);
+        bodyContentSaldoDesliceTarjeta.setVisibility(View.VISIBLE);
 
     }
 
@@ -280,9 +280,9 @@ public class SaldoScreenActivity extends Activity implements SaldoScreenView {
      */
     private void inicializarOcultamientoVistas() {
 
-        bodyContentDeslizarTarjeta.setVisibility(View.GONE);
-        bodyContentClaveUsuario.setVisibility(View.GONE);
-        bodyContentTransaccionExitosa.setVisibility(View.GONE);
+        bodyContentSaldoDesliceTarjeta.setVisibility(View.GONE);
+        bodyContentSaldoClaveUsuario.setVisibility(View.GONE);
+        bodyContentSaldoTransaccionExitosa.setVisibility(View.GONE);
 
     }
 
@@ -365,10 +365,10 @@ public class SaldoScreenActivity extends Activity implements SaldoScreenView {
         modelSaldo.setNumero_tarjeta(magneticHandler[1]);
 
         //Oculta la vista de deslizar la tarjeta
-        bodyContentDeslizarTarjeta.setVisibility(View.GONE);
+        bodyContentSaldoDesliceTarjeta.setVisibility(View.GONE);
 
         //Muestra la vista de clave de usuario
-        bodyContentClaveUsuario.setVisibility(View.VISIBLE);
+        bodyContentSaldoClaveUsuario.setVisibility(View.VISIBLE);
 
         //Actualiza el paso actual
         pasoCreditoTransaction++;
