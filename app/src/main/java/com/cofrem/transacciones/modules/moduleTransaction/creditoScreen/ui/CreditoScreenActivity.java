@@ -56,21 +56,21 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
 
     // Contents del modulo
     @ViewById
-    RelativeLayout bodyContentTransactionValorCompra;
+    RelativeLayout bodyContentCreditoValorCompra;
     @ViewById
-    RelativeLayout bodyContentTransactionNumeroDocumento;
+    RelativeLayout bodyContentCreditoNumeroDocumento;
     @ViewById
-    RelativeLayout bodyContentTransactionVerificacionValor;
+    RelativeLayout bodyContentCreditoVerificacionValor;
     @ViewById
-    RelativeLayout bodyContentTransactionDesliceTarjeta;
+    RelativeLayout bodyContentCreditoDesliceTarjeta;
     @ViewById
-    RelativeLayout bodyContentTransactionLecturaIncorrecta;
+    RelativeLayout bodyContentCreditoLecturaIncorrecta;
     @ViewById
-    RelativeLayout bodyContentTransactionPassUsuario;
+    RelativeLayout bodyContentCreditoPassUsuario;
     @ViewById
-    RelativeLayout bodyContentTransactionTransaccionExitosa;
+    RelativeLayout bodyContentCreditoTransaccionExitosa;
     @ViewById
-    RelativeLayout bodyContentTransactionTransaccionErronea;
+    RelativeLayout bodyContentCreditoTransaccionErronea;
     @ViewById
     FrameLayout frlPgbHldTransactionCredito;
 
@@ -164,7 +164,7 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
         modelTransaccion.setTipo_transaccion(Transaccion.CODIGO_TIPO_TRANSACCION_CONSUMO);
 
         //Primera ventana visible
-        bodyContentTransactionValorCompra.setVisibility(View.VISIBLE);
+        bodyContentCreditoValorCompra.setVisibility(View.VISIBLE);
     }
 
     /**
@@ -300,10 +300,10 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
         hideProgress();
 
         //Oculta la vista del Host de conexion
-        bodyContentTransactionPassUsuario.setVisibility(View.GONE);
+        bodyContentCreditoPassUsuario.setVisibility(View.GONE);
 
         //Muestra la vista del Port de conexion
-        bodyContentTransactionTransaccionExitosa.setVisibility(View.VISIBLE);
+        bodyContentCreditoTransaccionExitosa.setVisibility(View.VISIBLE);
 
         //Actualiza el paso actual
         pasoCreditoTransaction++;
@@ -320,10 +320,10 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
         hideProgress();
 
         //Oculta la vista del Host de conexion
-        bodyContentTransactionPassUsuario.setVisibility(View.GONE);
+        bodyContentCreditoPassUsuario.setVisibility(View.GONE);
 
         //Muestra la vista del Port de conexion
-        bodyContentTransactionTransaccionExitosa.setVisibility(View.VISIBLE);
+        bodyContentCreditoTransaccionExitosa.setVisibility(View.VISIBLE);
 
         //Actualiza el paso actual
         pasoCreditoTransaction++;
@@ -358,10 +358,10 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
         hideProgress();
 
         //Oculta la vista del Host de conexion
-        bodyContentTransactionPassUsuario.setVisibility(View.GONE);
+        bodyContentCreditoPassUsuario.setVisibility(View.GONE);
 
         //Muestra la vista del Port de conexion
-        bodyContentTransactionTransaccionErronea.setVisibility(View.VISIBLE);
+        bodyContentCreditoTransaccionErronea.setVisibility(View.VISIBLE);
 
     }
 
@@ -425,12 +425,12 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
      */
     private void inicializarOcultamientoVistas() {
 
-        bodyContentTransactionValorCompra.setVisibility(View.GONE);
-        bodyContentTransactionNumeroDocumento.setVisibility(View.GONE);
-        bodyContentTransactionVerificacionValor.setVisibility(View.GONE);
-        bodyContentTransactionDesliceTarjeta.setVisibility(View.GONE);
-        bodyContentTransactionPassUsuario.setVisibility(View.GONE);
-        bodyContentTransactionTransaccionExitosa.setVisibility(View.GONE);
+        bodyContentCreditoValorCompra.setVisibility(View.GONE);
+        bodyContentCreditoNumeroDocumento.setVisibility(View.GONE);
+        bodyContentCreditoVerificacionValor.setVisibility(View.GONE);
+        bodyContentCreditoDesliceTarjeta.setVisibility(View.GONE);
+        bodyContentCreditoPassUsuario.setVisibility(View.GONE);
+        bodyContentCreditoTransaccionExitosa.setVisibility(View.GONE);
 
     }
 
@@ -539,10 +539,10 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
             modelTransaccion.setValor(Integer.parseInt(valorCompra));
 
             //Oculta la vista del Valor de compra
-            bodyContentTransactionValorCompra.setVisibility(View.GONE);
+            bodyContentCreditoValorCompra.setVisibility(View.GONE);
 
             //Muestra la vista del Numero de documento
-            bodyContentTransactionNumeroDocumento.setVisibility(View.VISIBLE);
+            bodyContentCreditoNumeroDocumento.setVisibility(View.VISIBLE);
 
             //Actualiza el paso actual
             pasoCreditoTransaction++;
@@ -607,10 +607,10 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
             );
 
             //Oculta la vista del numero de documento
-            bodyContentTransactionNumeroDocumento.setVisibility(View.GONE);
+            bodyContentCreditoNumeroDocumento.setVisibility(View.GONE);
 
             //Muestra la vista de verificacion del valor
-            bodyContentTransactionVerificacionValor.setVisibility(View.VISIBLE);
+            bodyContentCreditoVerificacionValor.setVisibility(View.VISIBLE);
 
             //Actualiza el paso actual
             pasoCreditoTransaction++;
@@ -634,10 +634,10 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
     public void verificarValor() {
 
         //Oculta la vista de verificacion de valor
-        bodyContentTransactionVerificacionValor.setVisibility(View.GONE);
+        bodyContentCreditoVerificacionValor.setVisibility(View.GONE);
 
         //Muestra la vista de deslizar tarjeta
-        bodyContentTransactionDesliceTarjeta.setVisibility(View.VISIBLE);
+        bodyContentCreditoDesliceTarjeta.setVisibility(View.VISIBLE);
 
         //Actualiza el paso actual
         pasoCreditoTransaction++;
@@ -709,13 +709,13 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
     /**
      * Metodo para mostrar la lectura correcta de tarjeta
      */
-    public void lecturaTarjetaCorrecta() {
+    private void lecturaTarjetaCorrecta() {
 
         //Oculta la vista de deslizar tarjeta
-        bodyContentTransactionDesliceTarjeta.setVisibility(View.GONE);
+        bodyContentCreditoDesliceTarjeta.setVisibility(View.GONE);
 
         //Muestra la vista de contraseña de usuario
-        bodyContentTransactionPassUsuario.setVisibility(View.VISIBLE);
+        bodyContentCreditoPassUsuario.setVisibility(View.VISIBLE);
 
         //Actualiza el paso actual
         pasoCreditoTransaction++;
@@ -724,14 +724,14 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
     /**
      * Metodo para mostrar la lectura erronea de tarjeta
      */
-    public void lecturaTarjetaErronea() {
+    private void lecturaTarjetaErronea() {
 
 
         //Oculta la vista de deslizar tarjeta
-        bodyContentTransactionDesliceTarjeta.setVisibility(View.GONE);
+        bodyContentCreditoDesliceTarjeta.setVisibility(View.GONE);
 
         //Muestra la vista de contraseña de usuario
-        bodyContentTransactionLecturaIncorrecta.setVisibility(View.VISIBLE);
+        bodyContentCreditoLecturaIncorrecta.setVisibility(View.VISIBLE);
 
     }
 

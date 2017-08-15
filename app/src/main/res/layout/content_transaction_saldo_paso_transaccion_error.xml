@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/txvSaldoTransactionErrorTitle"
+        style="@style/StyleTextPrimaryLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/appMarginBottom"
+        android:text="@string/transaction_text_title_saldo" />
+
+    <TextView
+        android:id="@+id/txvSaldoTransactionErrorSubtitle"
+        style="@style/StyleTextPrimaryMedium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txvSaldoTransactionErrorTitle"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/appMarginBottom"
+        android:layout_marginTop="@dimen/appMarginTop"
+        android:text="@string/transaction_text_erronea" />
+
+    <TextView
+        android:id="@+id/txvSaldoTransactionErrorDetalle"
+        style="@style/StyleTextPrimaryMedium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txvSaldoTransactionErrorSubtitle"
+        android:layout_marginBottom="@dimen/appMarginBottom"
+        android:layout_marginTop="@dimen/appMarginTop"
+        android:text="@string/transaction_text_erronea_detalle" />
+
+    <TextView
+        android:id="@+id/txvSaldoTransactionErrorDetalleTexto"
+        style="@style/StyleTextPrimaryMedium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txvSaldoTransactionErrorDetalle"
+        android:layout_marginBottom="@dimen/appMarginBottom"
+        android:layout_marginTop="@dimen/appMarginTop"
+        android:text="@string/transaction_text_erronea_detalle_texto" />
+
+    <Button
+        android:id="@+id/btnSaldoTransactionErrorBotonSalir"
+        style="@style/StyleButtonExit"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/txvSaldoTransactionErrorDetalleTexto"
+        android:layout_marginTop="@dimen/appMarginTop"
+        android:text="@string/general_text_button_salir" />
+
+
+</RelativeLayout>

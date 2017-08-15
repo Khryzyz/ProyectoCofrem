@@ -57,17 +57,17 @@ public class AnulacionScreenActivity extends Activity implements AnulacionScreen
 
     // Contents del modulo
     @ViewById
-    RelativeLayout bodyContentClaveAdministrador;
+    RelativeLayout bodyContentAnulacionClaveAdministrador;
     @ViewById
-    RelativeLayout bodyContentNumeroCargo;
+    RelativeLayout bodyContentAnulacionNumeroCargo;
     @ViewById
-    RelativeLayout bodyContentVerificacionValor;
+    RelativeLayout bodyContentAnulacionVerificacionValor;
     @ViewById
-    RelativeLayout bodyContentDeslizarTarjeta;
+    RelativeLayout bodyContentAnulacionDesliceTarjeta;
     @ViewById
-    RelativeLayout bodyContentClaveUsuario;
+    RelativeLayout bodyContentAnulacionClaveUsuario;
     @ViewById
-    RelativeLayout bodyContentTransaccionExitosa;
+    RelativeLayout bodyContentAnulacionTransaccionExitosa;
     @ViewById
     FrameLayout frlPgbHldTransactionAnulacion;
 
@@ -163,7 +163,7 @@ public class AnulacionScreenActivity extends Activity implements AnulacionScreen
         pasoAnulacionTransaction = PASO_CLAVE_ADMINISTRADOR;
 
         //Primera ventana visible
-        bodyContentClaveAdministrador.setVisibility(View.VISIBLE);
+        bodyContentAnulacionClaveAdministrador.setVisibility(View.VISIBLE);
 
     }
 
@@ -301,10 +301,10 @@ public class AnulacionScreenActivity extends Activity implements AnulacionScreen
         hideProgress();
 
         //Oculta la vista de la contraseña de administracion tecnica
-        bodyContentClaveAdministrador.setVisibility(View.GONE);
+        bodyContentAnulacionClaveAdministrador.setVisibility(View.GONE);
 
         //Muestra la vista del Host de conexion
-        bodyContentNumeroCargo.setVisibility(View.VISIBLE);
+        bodyContentAnulacionNumeroCargo.setVisibility(View.VISIBLE);
 
         //Actualiza el paso actual
         pasoAnulacionTransaction++;
@@ -353,6 +353,9 @@ public class AnulacionScreenActivity extends Activity implements AnulacionScreen
     @Override
     public void handleValorTransaccionValido(int valorTransaccion) {
 
+        //Se oculta la barra de progreso
+        hideProgress();
+
         Log.i("Activity valor", String.valueOf(valorTransaccion));
 
         modelTransaccion.setValor(valorTransaccion);
@@ -374,10 +377,10 @@ public class AnulacionScreenActivity extends Activity implements AnulacionScreen
         );
 
         //Oculta la vista del numero de cargo
-        bodyContentNumeroCargo.setVisibility(View.GONE);
+        bodyContentAnulacionNumeroCargo.setVisibility(View.GONE);
 
         //Muestra la vista de verificacion del valor
-        bodyContentVerificacionValor.setVisibility(View.VISIBLE);
+        bodyContentAnulacionVerificacionValor.setVisibility(View.VISIBLE);
 
         //Actualiza el paso actual
         pasoAnulacionTransaction++;
@@ -427,12 +430,12 @@ public class AnulacionScreenActivity extends Activity implements AnulacionScreen
      */
     private void inicializarOcultamientoVistas() {
 
-        bodyContentClaveAdministrador.setVisibility(View.GONE);
-        bodyContentNumeroCargo.setVisibility(View.GONE);
-        bodyContentVerificacionValor.setVisibility(View.GONE);
-        bodyContentDeslizarTarjeta.setVisibility(View.GONE);
-        bodyContentClaveUsuario.setVisibility(View.GONE);
-        bodyContentTransaccionExitosa.setVisibility(View.GONE);
+        bodyContentAnulacionClaveAdministrador.setVisibility(View.GONE);
+        bodyContentAnulacionNumeroCargo.setVisibility(View.GONE);
+        bodyContentAnulacionVerificacionValor.setVisibility(View.GONE);
+        bodyContentAnulacionDesliceTarjeta.setVisibility(View.GONE);
+        bodyContentAnulacionClaveUsuario.setVisibility(View.GONE);
+        bodyContentAnulacionTransaccionExitosa.setVisibility(View.GONE);
 
     }
 
@@ -567,13 +570,21 @@ public class AnulacionScreenActivity extends Activity implements AnulacionScreen
     public void verificarValor() {
 
         //Oculta la vista de verificacion de valor
-        bodyContentVerificacionValor.setVisibility(View.GONE);
+        bodyContentAnulacionVerificacionValor.setVisibility(View.GONE);
 
         //Muestra la vista de deslizar la tarjeta
-        bodyContentDeslizarTarjeta.setVisibility(View.VISIBLE);
+        bodyContentAnulacionDesliceTarjeta.setVisibility(View.VISIBLE);
 
         //Actualiza el paso actual
         pasoAnulacionTransaction++;
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                deslizarTarjeta();
+            }
+        }, 1000);
+
 
     }
 
@@ -583,20 +594,85 @@ public class AnulacionScreenActivity extends Activity implements AnulacionScreen
     public void deslizarTarjeta() {
 
         String[] magneticHandler = new MagneticHandler().readMagnetic();
+        if (true) {
 
-        //Registra el valor del host en el modelo de la configuracion
-        modelTransaccion.setNumero_tarjeta(magneticHandler[1]);
+            String numeroTarjeta = "033502";
+
+            /*if (magneticHandler != null) {
+
+            String numeroTarjeta = magneticHandler[1]
+                    .replace(";", "")
+                    .replace("!", "")
+                    .replace("#", "")
+                    .replace("$", "")
+                    .replace("&", "")
+                    .replace("/", "")
+                    .replace("|", "")
+                    .replace("(", "")
+                    .replace(")", "")
+                    .replace("=", "")
+                    .replace("?", "")
+                    .replace("¿", "")
+                    .replace("¿", "")
+                    .replace("¡", "")
+                    .replace("*", "")
+                    .replace("{", "")
+                    .replace("}", "")
+                    .replace("[", "")
+                    .replace("]", "")
+                    .replace(",", "")
+                    .replace(".", "")
+                    .replace("-", "")
+                    .replace("_", "")
+                    .replace("%", "");
+
+*/
+
+            //Registra el valor del numero de tarjeta en el modelo de la transaccion
+            modelTransaccion.setNumero_tarjeta(numeroTarjeta);
+
+            //En caso de la lectura correcta se continua el proceso
+            lecturaTarjetaCorrecta();
+            
+
+        } else {
+            //En caso de la lectura erronea se muestra la pantalla de error
+            lecturaTarjetaErronea();
+        }
+        
+    }
+
+    /**
+     * Metodo para mostrar la lectura correcta de tarjeta
+     */
+    private void lecturaTarjetaCorrecta() {
+
 
         //Oculta la vista de deslizar la tarjeta
-        bodyContentDeslizarTarjeta.setVisibility(View.GONE);
+        bodyContentAnulacionDesliceTarjeta.setVisibility(View.GONE);
 
         //Muestra la vista de clave de usuario
-        bodyContentClaveUsuario.setVisibility(View.VISIBLE);
+        bodyContentAnulacionClaveUsuario.setVisibility(View.VISIBLE);
 
         //Actualiza el paso actual
         pasoAnulacionTransaction++;
+    }
+
+    /**
+     * Metodo para mostrar la lectura erronea de tarjeta
+     */
+    private void lecturaTarjetaErronea() {
+
+
+        //Oculta la vista de deslizar tarjeta
+        bodyContentAnulacionDesliceTarjeta.setVisibility(View.GONE);
+
+        //Muestra la vista de contraseña de usuario
+       // bodyContentAnulacionLecturaIncorrecta.setVisibility(View.VISIBLE);
 
     }
+
+
 
     /**
      * Metodo para registrar la contraseña del usuario

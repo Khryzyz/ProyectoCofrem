@@ -23,28 +23,43 @@
         android:layout_margin="@dimen/appMarginBottom" />
 
     <include
-        android:id="@+id/bodyContentDeslizarTarjeta"
-        layout="@layout/content_transaction_saldo_paso_deslizar_tarjeta"
+        android:id="@+id/bodyContentSaldoDesliceTarjeta"
+        layout="@layout/content_transaction_saldo_paso_deslice_tarjeta"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/headerContent"
         android:visibility="gone" />
 
     <include
-        android:id="@+id/bodyContentClaveUsuario"
+        android:id="@+id/bodyContentSaldoLecturaIncorrecta"
+        layout="@layout/content_transaction_saldo_paso_lectura_incorrecta"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/headerContent"
+        android:visibility="gone" />
+
+    <include
+        android:id="@+id/bodyContentSaldoClaveUsuario"
         layout="@layout/content_transaction_saldo_paso_clave_usuario"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/headerContent"
         android:visibility="gone" />
 
-
     <include
-        android:id="@+id/bodyContentTransaccionExitosa"
+        android:id="@+id/bodyContentSaldoTransaccionExitosa"
         layout="@layout/content_transaction_saldo_paso_transaccion_exitosa"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/headerContent"
         android:visibility="visible" />
-    
+
+    <include
+        android:id="@+id/bodyContentSaldoTransaccionErronea"
+        layout="@layout/content_transaction_saldo_paso_transaccion_error"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/headerContent"
+        android:visibility="gone" />
+
 </RelativeLayout>
