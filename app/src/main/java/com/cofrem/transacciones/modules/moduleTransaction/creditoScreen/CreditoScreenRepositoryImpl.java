@@ -249,7 +249,7 @@ public class CreditoScreenRepositoryImpl implements CreditoScreenRepository {
         printRows.add(new PrintRow(modelTransaccion.getRegistro(), new StyleConfig(StyleConfig.Align.CENTER, 11,30)));
 
         printRows.add(new PrintRow(context.getResources().getString(
-                R.string.recibo_numero_transaccion), String.valueOf(modelTransaccion.getNumero_cargo()), new StyleConfig(StyleConfig.Align.LEFT, 11)));
+                R.string.recibo_numero_transaccion), modelTransaccion.getNumero_cargo(), new StyleConfig(StyleConfig.Align.LEFT, 11)));
         printRows.add(new PrintRow(context.getResources().getString(
                 R.string.recibo_valor), String.valueOf(modelTransaccion.getValor()), new StyleConfig(StyleConfig.Align.LEFT, 11)));
         printRows.add(new PrintRow(context.getResources().getString(

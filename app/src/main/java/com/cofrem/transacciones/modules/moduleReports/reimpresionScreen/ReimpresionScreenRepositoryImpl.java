@@ -124,7 +124,7 @@ public class ReimpresionScreenRepositoryImpl implements ReimpresionScreenReposit
             printRows.add(new PrintRow(context.getResources().getString(
                     R.string.recibo_separador_linea), new StyleConfig(StyleConfig.Align.LEFT, 11, 10)));
             printRows.add(new PrintRow(context.getResources().getString(
-                    R.string.recibo_numero_transaccion), String.valueOf(modelTransaccion.getNumero_cargo()), new StyleConfig(StyleConfig.Align.LEFT, 11)));
+                    R.string.recibo_numero_transaccion), modelTransaccion.getNumero_cargo(), new StyleConfig(StyleConfig.Align.LEFT, 11)));
             printRows.add(new PrintRow(context.getResources().getString(
                     R.string.recibo_valor), String.valueOf(modelTransaccion.getValor()), new StyleConfig(StyleConfig.Align.LEFT, 11)));
 
@@ -316,7 +316,7 @@ public class ReimpresionScreenRepositoryImpl implements ReimpresionScreenReposit
         printRows.add(new PrintRow(getDateTime(), new StyleConfig(StyleConfig.Align.CENTER, 20)));
 
         printRows.add(new PrintRow(context.getResources().getString(
-                R.string.recibo_numero_transaccion), String.valueOf(modelTransaccion.getNumero_cargo()), new StyleConfig(StyleConfig.Align.LEFT, 11)));
+                R.string.recibo_numero_transaccion), modelTransaccion.getNumero_cargo(), new StyleConfig(StyleConfig.Align.LEFT, 11)));
         printRows.add(new PrintRow(context.getResources().getString(
                 R.string.recibo_valor), String.valueOf(modelTransaccion.getValor()), new StyleConfig(StyleConfig.Align.LEFT, 11)));
         printRows.add(new PrintRow(context.getResources().getString(

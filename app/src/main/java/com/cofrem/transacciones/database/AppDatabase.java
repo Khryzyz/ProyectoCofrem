@@ -409,14 +409,15 @@ public final class AppDatabase extends SQLiteOpenHelper {
         Cursor cursorQuery;
 
         cursorQuery = getWritableDatabase().rawQuery(
-                //"SELECT " + DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_VALOR +
-                "SELECT * " +
-                        " FROM " + DatabaseManager.TableTransacciones.TABLE_NAME_TRANSACCIONES +
-                        " WHERE " + DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_NUMERO_CARGO + " = " + numeroCargo
+                "SELECT  " +
+                        DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_NUMERO_CARGO + " , " +
+                        DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_VALOR +
+                        " FROM " + DatabaseManager.TableTransacciones.TABLE_NAME_TRANSACCIONES //+
+                        //" WHERE " + DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_NUMERO_CARGO + " = " + numeroCargo
+                        //" WHERE " + DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_NUMERO_CARGO + " = '" + numeroCargo + "';"
                 , null
         );
-
-        if (cursorQuery.moveToFirst()) {
+        /*if (cursorQuery.moveToFirst()) {
 
             modelTransaccion.setId(cursorQuery.getInt(0));
             modelTransaccion.setTipo_servicio(cursorQuery.getInt(1));
@@ -425,6 +426,18 @@ public final class AppDatabase extends SQLiteOpenHelper {
             modelTransaccion.setValor(cursorQuery.getInt(4));
             modelTransaccion.setRegistro(cursorQuery.getString(5));
             modelTransaccion.setEstado(cursorQuery.getInt(6));
+        }*/
+
+        int columnas = cursorQuery.getColumnCount();
+        int conteo = cursorQuery.getCount();
+
+        //Nos aseguramos de que existe al menos un registro
+        if (cursorQuery.moveToFirst()) {
+            //Recorremos el cursor hasta que no haya más registros
+            do {
+                String numero_cargo = cursorQuery.getString(0);
+                modelTransaccion.setValor(cursorQuery.getInt(1));
+            } while (cursorQuery.moveToNext());
         }
 
         cursorQuery.close();
@@ -962,7 +975,7 @@ public final class AppDatabase extends SQLiteOpenHelper {
         if (cursorQuery.moveToFirst()) {
             modelTransaccion.setId(cursorQuery.getInt(0));
             modelTransaccion.setTipo_servicio(cursorQuery.getInt(1));
-            modelTransaccion.setNumero_cargo(cursorQuery.getInt(2));
+            modelTransaccion.setNumero_cargo(cursorQuery.getString(2));
             modelTransaccion.setNumero_tarjeta(cursorQuery.getString(3));
             modelTransaccion.setValor(cursorQuery.getInt(4));
             modelTransaccion.setRegistro(cursorQuery.getString(5));
@@ -995,7 +1008,7 @@ public final class AppDatabase extends SQLiteOpenHelper {
         if (cursorQuery.moveToFirst()) {
             modelTransaccion.setId(cursorQuery.getInt(0));
             modelTransaccion.setTipo_servicio(cursorQuery.getInt(1));
-            modelTransaccion.setNumero_cargo(cursorQuery.getInt(2));
+            modelTransaccion.setNumero_cargo(cursorQuery.getString(2));
             modelTransaccion.setNumero_tarjeta(cursorQuery.getString(3));
             modelTransaccion.setValor(cursorQuery.getInt(4));
             modelTransaccion.setRegistro(cursorQuery.getString(5));
@@ -1027,7 +1040,7 @@ public final class AppDatabase extends SQLiteOpenHelper {
 
             modelTransaccion.setId(cursorQuery.getInt(0));
             modelTransaccion.setTipo_servicio(cursorQuery.getInt(1));
-            modelTransaccion.setNumero_cargo(cursorQuery.getInt(2));
+            modelTransaccion.setNumero_cargo(cursorQuery.getString(2));
             modelTransaccion.setNumero_tarjeta(cursorQuery.getString(3));
             modelTransaccion.setValor(cursorQuery.getInt(4));
             modelTransaccion.setRegistro(cursorQuery.getString(5));

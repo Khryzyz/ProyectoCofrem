@@ -56,7 +56,7 @@ public class Transaccion {
      * Modelo para el registro del Establecimiento
      */
     private int id;
-    private int numero_cargo;
+    private String numero_cargo;
 
     private String numero_documento;
     private int clave;
@@ -81,7 +81,7 @@ public class Transaccion {
 
     public Transaccion(
             int id,
-            int numero_cargo,
+            String numero_cargo,
             String numero_documento,
             int clave,
             String numero_tarjeta,
@@ -112,11 +112,11 @@ public class Transaccion {
         this.id = id;
     }
 
-    public int getNumero_cargo() {
+    public String getNumero_cargo() {
         return numero_cargo;
     }
 
-    public void setNumero_cargo(int numero_cargo) {
+    public void setNumero_cargo(String numero_cargo) {
         this.numero_cargo = numero_cargo;
     }
 

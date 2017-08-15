@@ -358,11 +358,11 @@ public class AnulacionScreenActivity extends Activity implements AnulacionScreen
         modelTransaccion.setValor(valorTransaccion);
 
         txvAnulacionTransactionVerificacionDatosNumeroCargo.setText(
-                String.valueOf(modelTransaccion.getNumero_cargo())
+                modelTransaccion.getNumero_cargo()
         );
 
         txvAnulacionTransactionDesliceTarjetaDatosNumeroCargo.setText(
-                String.valueOf(modelTransaccion.getNumero_cargo())
+                modelTransaccion.getNumero_cargo()
         );
 
         txvAnulacionTransactionVerificacionDatosValorCantidad.setText(
@@ -551,7 +551,7 @@ public class AnulacionScreenActivity extends Activity implements AnulacionScreen
             showProgress();
 
             //Registra el valor del host en el modelo de la configuracion
-            modelTransaccion.setNumero_cargo(Integer.parseInt(numeroCargo));
+            modelTransaccion.setNumero_cargo(numeroCargo);
 
             anulacionScreenPresenter.obtenerValorTransaccion(this, numeroCargo);
 
