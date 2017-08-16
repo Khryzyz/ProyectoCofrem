@@ -50,7 +50,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/txvConfigurationPrinterValorGrayLevel"
         android:layout_marginBottom="@dimen/appMarginBottom"
-        android:text="@string/configuration_text_insert_font_size" />
+        android:text="@string/configuration_text_insert_font_size"
+        android:visibility="gone"/>
 
 
     <SeekBar
@@ -60,7 +61,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/txvConfigurationPrinterInsertFontSize"
         android:layout_centerHorizontal="true"
-        android:max="3" />
+        android:max="3"
+        android:visibility="gone"/>
     <TextView
         android:id="@+id/txvConfigurationPrinterValorFontSize"
         style="@style/StyleTextPrimarySmall"
@@ -69,7 +71,8 @@
         android:layout_below="@id/seekBarFontSize"
         android:layout_marginBottom="@dimen/appMarginBottom"
         android:layout_centerHorizontal="true"
-        android:text="@string/configuration_text_font_size" />
+        android:text="@string/configuration_text_font_size"
+        android:visibility="gone"/>
 
 
 
