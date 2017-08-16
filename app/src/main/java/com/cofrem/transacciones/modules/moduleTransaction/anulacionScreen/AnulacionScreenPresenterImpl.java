@@ -118,6 +118,29 @@ public class AnulacionScreenPresenterImpl implements AnulacionScreenPresenter {
                 onValorTransaccionValido(anulacionScreenEvent.getValorInt());
                 break;
 
+            case AnulacionScreenEvent.onTransaccionSuccess:
+                onTransaccionSuccess();
+                break;
+
+            case AnulacionScreenEvent.onTransaccionWSConexionError:
+                onTransaccionWSConexionError();
+                break;
+
+            case AnulacionScreenEvent.onTransaccionWSRegisterError:
+                onTransaccionWSRegisterError(anulacionScreenEvent.getErrorMessage());
+                break;
+
+            case AnulacionScreenEvent.onTransaccionDBRegisterError:
+                onTransaccionDBRegisterError();
+                break;
+
+            case AnulacionScreenEvent.onImprecionReciboSuccess:
+
+                break;
+            case AnulacionScreenEvent.onImprecionReciboError:
+
+                break;
+
         }
     }
 
@@ -173,4 +196,41 @@ public class AnulacionScreenPresenterImpl implements AnulacionScreenPresenter {
         }
     }
 
+    /**
+     * Metodo para manejar la transaccion del Web Service Correcta
+     */
+    private void onTransaccionSuccess() {
+        if (anulacionScreenView != null) {
+            anulacionScreenView.handleTransaccionSuccess();
+        }
+    }
+
+    /**
+     * Metodo para manejar la conexion del Web Service Erronea
+     */
+    private void onTransaccionWSConexionError() {
+        if (anulacionScreenView != null) {
+            anulacionScreenView.handleTransaccionWSConexionError();
+        }
+    }
+
+    /**
+     * Metodo para manejar la transaccion erronea desde el Web Service
+     *
+     * @param errorMessage
+     */
+    private void onTransaccionWSRegisterError(String errorMessage) {
+        if (anulacionScreenView != null) {
+            anulacionScreenView.handleTransaccionWSRegisterError(errorMessage);
+        }
+    }
+
+    /**
+     * Metodo para manejar la transaccion erronea desde la base de datos
+     */
+    private void onTransaccionDBRegisterError() {
+        if (anulacionScreenView != null) {
+            anulacionScreenView.handleTransaccionDBRegisterError();
+        }
+    }
 }

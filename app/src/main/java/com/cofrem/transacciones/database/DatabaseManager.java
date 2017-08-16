@@ -100,6 +100,10 @@ class DatabaseManager {
         static final String COLUMN_TRANSACCIONES_NUMERO_TARJETA = "numero_tarjeta";
         static final String COLUMN_TRANSACCIONES_VALOR = "valor";
         static final String COLUMN_TRANSACCIONES_TIPO_TRANSACCION = "tipo_transaccion";
+        static final String COLUMN_TRANSACCIONES_CEDULA_USUARIO = "cedula_usuario";
+        static final String COLUMN_TRANSACCIONES_NOMBRE_USUARIO = "nombre_usuario";
+        static final String COLUMN_TRANSACCIONES_FECHA_SERVER = "fecha_server";
+        static final String COLUMN_TRANSACCIONES_HORA_SERVER = "hora_server";
         static final String COLUMN_TRANSACCIONES_REGISTRO = "registro";
         static final String COLUMN_TRANSACCIONES_ESTADO = "estado";
 
@@ -115,6 +119,10 @@ class DatabaseManager {
                         COLUMN_TRANSACCIONES_NUMERO_TARJETA + " " + STRING_TYPE + " " + ATTR_NOT_NULL + "," +
                         COLUMN_TRANSACCIONES_VALOR + " " + STRING_TYPE + " " + ATTR_NOT_NULL + "," +
                         COLUMN_TRANSACCIONES_TIPO_TRANSACCION + " " + INT_TYPE + " " + ATTR_NOT_NULL + "," +
+                        COLUMN_TRANSACCIONES_CEDULA_USUARIO + " " + STRING_TYPE + " " + ATTR_NOT_NULL + "," +
+                        COLUMN_TRANSACCIONES_NOMBRE_USUARIO + " " + STRING_TYPE + " " + ATTR_NOT_NULL + "," +
+                        COLUMN_TRANSACCIONES_FECHA_SERVER + " " + STRING_TYPE + " " + ATTR_NOT_NULL + "," +
+                        COLUMN_TRANSACCIONES_HORA_SERVER + " " + STRING_TYPE + " " + ATTR_NOT_NULL + "," +
                         COLUMN_TRANSACCIONES_REGISTRO + " " + TIMESTAMP_TYPE + " " + ATTR_NOT_NULL + "," +
                         COLUMN_TRANSACCIONES_ESTADO + " " + INT_TYPE + " " + ATTR_NOT_NULL + ")";
 

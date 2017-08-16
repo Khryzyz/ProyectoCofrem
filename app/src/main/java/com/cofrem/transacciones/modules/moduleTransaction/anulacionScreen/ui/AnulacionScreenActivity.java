@@ -69,7 +69,7 @@ public class AnulacionScreenActivity extends Activity implements AnulacionScreen
     @ViewById
     RelativeLayout bodyContentAnulacionLecturaIncorrecta;
     @ViewById
-    RelativeLayout bodyContentAnulacionClaveUsuario;
+    RelativeLayout bodyContentAnulacionPassUsuario;
     @ViewById
     RelativeLayout bodyContentAnulacionTransaccionExitosa;
     @ViewById
@@ -116,7 +116,7 @@ public class AnulacionScreenActivity extends Activity implements AnulacionScreen
     @ViewById
     TextView txvAnulacionTransactionDesliceTarjetaDatosValorCantidad;
 
-    //Paso content_transaction_anulacion_paso_clave_usuario
+    //Paso content_transaction_anulacion_paso_pass_usuario
     @ViewById
     Button btnAnulacionTransactionClaveUsuarioBotonCancelar;
     @ViewById
@@ -385,8 +385,6 @@ public class AnulacionScreenActivity extends Activity implements AnulacionScreen
         //Se oculta la barra de progreso
         hideProgress();
 
-        Log.i("Activity valor", String.valueOf(valorTransaccion));
-
         modelTransaccion.setValor(valorTransaccion);
 
         //Oculta la vista del numero de cargo
@@ -398,6 +396,76 @@ public class AnulacionScreenActivity extends Activity implements AnulacionScreen
         //Actualiza el paso actual
         pasoAnulacionTransaction++;
 
+    }
+
+    /**
+     * Metodo para manejar la transaccion exitosa
+     */
+    @Override
+    public void handleTransaccionSuccess() {
+        //Oculta la barra de progreso
+        hideProgress();
+
+        //Oculta la vista del Host de conexion
+        bodyContentAnulacionPassUsuario.setVisibility(View.GONE);
+
+        //Muestra la vista del Port de conexion
+        bodyContentAnulacionTransaccionExitosa.setVisibility(View.VISIBLE);
+
+        //Actualiza el paso actual
+        pasoAnulacionTransaction++;
+    }
+
+    /**
+     * Metodo para manejar la conexion del Web Service Erronea
+     */
+    @Override
+    public void handleTransaccionWSConexionError() {
+        //Oculta la barra de progreso
+        hideProgress();
+
+        //Oculta la vista del Host de conexion
+        bodyContentAnulacionPassUsuario.setVisibility(View.GONE);
+
+        //Muestra la vista del Port de conexion
+        bodyContentAnulacionTransaccionErronea.setVisibility(View.VISIBLE);
+
+        //Actualiza el paso actual
+        pasoAnulacionTransaction++;
+    }
+
+    /**
+     * Metodo para manejar la transaccion erronea desde el Web Service
+     *
+     * @param errorMessage
+     */
+    @Override
+    public void handleTransaccionWSRegisterError(String errorMessage) {
+
+        //Oculta la barra de progreso
+        hideProgress();
+
+        //Muestra el mensaje de error del registro de informacion del dispositivo incorrecto
+        Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show();
+
+        //Regresa a la vista de transacciones
+        navigateToTransactionScreen();
+    }
+
+    /**
+     * Metodo para manejar la transaccion erronea desde la base de datos
+     */
+    @Override
+    public void handleTransaccionDBRegisterError() {
+
+        //Oculta la barra de progreso
+        hideProgress();
+
+        //Oculta la vista del Host de conexion
+        bodyContentAnulacionPassUsuario.setVisibility(View.GONE);
+
+        //Muestra la vista del Port de conexion
+        bodyContentAnulacionTransaccionErronea.setVisibility(View.VISIBLE);
     }
 
 
@@ -447,7 +515,7 @@ public class AnulacionScreenActivity extends Activity implements AnulacionScreen
         bodyContentAnulacionNumeroCargo.setVisibility(View.GONE);
         bodyContentAnulacionVerificacionValor.setVisibility(View.GONE);
         bodyContentAnulacionDesliceTarjeta.setVisibility(View.GONE);
-        bodyContentAnulacionClaveUsuario.setVisibility(View.GONE);
+        bodyContentAnulacionPassUsuario.setVisibility(View.GONE);
         bodyContentAnulacionTransaccionExitosa.setVisibility(View.GONE);
 
     }
@@ -667,11 +735,8 @@ public class AnulacionScreenActivity extends Activity implements AnulacionScreen
     public void deslizarTarjeta() {
 
         String[] magneticHandler = new MagneticHandler().readMagnetic();
-        if (true) {
 
-            String numeroTarjeta = "033502";
-
-            /*if (magneticHandler != null) {
+        if (magneticHandler != null) {
 
             String numeroTarjeta = magneticHandler[1]
                     .replace(";", "")
@@ -699,7 +764,6 @@ public class AnulacionScreenActivity extends Activity implements AnulacionScreen
                     .replace("_", "")
                     .replace("%", "");
 
-*/
 
             //Registra el valor del numero de tarjeta en el modelo de la transaccion
             modelTransaccion.setNumero_tarjeta(numeroTarjeta);
@@ -725,7 +789,7 @@ public class AnulacionScreenActivity extends Activity implements AnulacionScreen
         bodyContentAnulacionDesliceTarjeta.setVisibility(View.GONE);
 
         //Muestra la vista de clave de usuario
-        bodyContentAnulacionClaveUsuario.setVisibility(View.VISIBLE);
+        bodyContentAnulacionPassUsuario.setVisibility(View.VISIBLE);
 
         //Actualiza el paso actual
         pasoAnulacionTransaction++;

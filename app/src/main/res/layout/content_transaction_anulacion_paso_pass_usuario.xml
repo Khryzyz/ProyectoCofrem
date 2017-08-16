@@ -29,7 +29,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/txvAnulacionTransactionClaveUsuarioClave"
         android:layout_marginBottom="@dimen/appMarginBottom"
-        android:inputType="textPassword" />
+        android:inputType="textPassword|numberPassword"
+        android:maxLength="4" />
 
     <Button
         android:id="@+id/btnAnulacionTransactionClaveUsuarioBotonCancelar"

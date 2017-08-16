@@ -5,44 +5,45 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/txvSaldoTransactionClaveUsuarioTitle"
+        android:id="@+id/txvCreditoTransactionClaveUsuarioTitle"
         style="@style/StyleTextPrimaryLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/appMarginBottom"
-        android:text="@string/transaction_text_title_saldo" />
+        android:text="@string/transaction_text_title_credito" />
 
     <TextView
-        android:id="@+id/txvSaldoTransactionClaveUsuarioClave"
+        android:id="@+id/txvCreditoTransactionClaveUsuarioClave"
         style="@style/StyleTextPrimaryMedium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/txvSaldoTransactionClaveUsuarioTitle"
+        android:layout_below="@id/txvCreditoTransactionClaveUsuarioTitle"
         android:layout_marginBottom="@dimen/appMarginBottom"
         android:text="@string/general_text_clave_usuario" />
 
     <EditText
-        android:id="@+id/edtSaldoTransactionClaveUsuarioContenidoClave"
+        android:id="@+id/edtCreditoTransactionClaveUsuarioContenidoClave"
         style="@style/StylePassPrimary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/txvSaldoTransactionClaveUsuarioClave"
+        android:layout_below="@id/txvCreditoTransactionClaveUsuarioClave"
         android:layout_marginBottom="@dimen/appMarginBottom"
-        android:inputType="textPassword" />
+        android:inputType="textPassword|numberPassword"
+        android:maxLength="4" />
 
     <Button
-        android:id="@+id/btnSaldoTransactionClaveUsuarioBotonCancelar"
+        android:id="@+id/btnCreditoTransactionClaveUsuarioBotonCancelar"
         style="@style/StyleButtonCancel"
         android:layout_alignParentStart="true"
-        android:layout_below="@id/edtSaldoTransactionClaveUsuarioContenidoClave"
+        android:layout_below="@id/edtCreditoTransactionClaveUsuarioContenidoClave"
         android:text="@string/general_text_button_cancelar" />
 
     <Button
-        android:id="@+id/btnSaldoTransactionClaveUsuarioBotonAceptar"
+        android:id="@+id/btnCreditoTransactionClaveUsuarioBotonAceptar"
         style="@style/StyleButtonAccept"
         android:layout_alignParentEnd="true"
-        android:layout_below="@id/edtSaldoTransactionClaveUsuarioContenidoClave"
+        android:layout_below="@id/edtCreditoTransactionClaveUsuarioContenidoClave"
         android:text="@string/general_text_button_aceptar" />
 
 

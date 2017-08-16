@@ -8,20 +8,21 @@ public class InformacionTransaccion {
     //Modelo usado en la respuesta del WS para la respuesta terminalResult
 
     //Modelado rapido de llaves del terminalResulta
-    public static final String CEDULA_USUARIO = "cedulaUsuario";
-    public static final String CODIGO_TERMINAL = "codigoTerminal";
-    public static final String DETALLE_ESTADO = "detalleEstado";
-    public static final String ESTADO = "estado";
-    public static final String FECHA = "fecha";
-    public static final String HORA = "hora";
-    public static final String NOMBRE_AFILIADO = "nombreAfiliado";
-    public static final String NUMERO_APROBACION = "numeroAprobacion";
-    public static final String NUMERO_TARJETA = "numeroTarjeta";
-    public static final String TIPO_TRANSACCION = "tipoTransaccion";
-    public static final String DETALLE_VALOR = "valorResult";
-    public static final String DETALLE_TIPO_SERVICIO = "detalleTipoServicio";
-    public static final String TIPO_SERVICIO = "tipoServicio";
-    public static final String VALOR = "valor";
+    public static final String PROPERTY_TRANSAC_RESULT = "transacResult";
+    private static final String KEY_CEDULA_USUARIO = "cedulaUsuario";
+    private static final String KEY_CODIGO_TERMINAL = "codigoTerminal";
+    private static final String KEY_DETALLE_ESTADO = "detalleEstado";
+    private static final String KEY_ESTADO = "estado";
+    private static final String KEY_FECHA = "fecha";
+    private static final String KEY_HORA = "hora";
+    private static final String KEY_NOMBRE_AFILIADO = "nombreAfiliado";
+    private static final String KEY_NUMERO_APROBACION = "numeroAprobacion";
+    private static final String KEY_NUMERO_TARJETA = "numeroTarjeta";
+    private static final String KEY_TIPO_TRANSACCION = "tipoTransaccion";
+    private static final String KEY_DETALLE_VALOR = "valorResult";
+    private static final String KEY_DETALLE_TIPO_SERVICIO = "detalleTipoServicio";
+    private static final String KEY_TIPO_SERVICIO = "tipoServicio";
+    private static final String KEY_VALOR = "valor";
 
     //Informacion de conexion registrada en el server y de identificacion
     private String cedulaUsuario;
@@ -39,45 +40,39 @@ public class InformacionTransaccion {
     private String valor;
 
     /**
-     * Constructor vacio de la clase
-     */
-    public InformacionTransaccion() {
-    }
-
-    /**
      * Constructor de la clase que recibe un Objeto tipo SoapObject
      *
      * @param soap
      */
     public InformacionTransaccion(SoapObject soap) {
 
-        this.cedulaUsuario = soap.getPropertyAsString(CEDULA_USUARIO).equals("anyType{}") ? "" : soap.getPropertyAsString(CEDULA_USUARIO);
+        this.cedulaUsuario = soap.getPropertyAsString(KEY_CEDULA_USUARIO).equals("anyType{}") ? "" : soap.getPropertyAsString(KEY_CEDULA_USUARIO);
 
-        this.codigoTerminal = soap.getPropertyAsString(CODIGO_TERMINAL).equals("anyType{}") ? "" : soap.getPropertyAsString(CODIGO_TERMINAL);
+        this.codigoTerminal = soap.getPropertyAsString(KEY_CODIGO_TERMINAL).equals("anyType{}") ? "" : soap.getPropertyAsString(KEY_CODIGO_TERMINAL);
 
-        this.detalleEstado = soap.getPropertyAsString(DETALLE_ESTADO).equals("anyType{}") ? "" : soap.getPropertyAsString(DETALLE_ESTADO);
+        this.detalleEstado = soap.getPropertyAsString(KEY_DETALLE_ESTADO).equals("anyType{}") ? "" : soap.getPropertyAsString(KEY_DETALLE_ESTADO);
 
-        this.estado = soap.getPropertyAsString(ESTADO).equals("anyType{}") ? "" : soap.getPropertyAsString(ESTADO);
+        this.estado = soap.getPropertyAsString(KEY_ESTADO).equals("anyType{}") ? "" : soap.getPropertyAsString(KEY_ESTADO);
 
-        this.fecha = soap.getPropertyAsString(FECHA).equals("anyType{}") ? "" : soap.getPropertyAsString(FECHA);
+        this.fecha = soap.getPropertyAsString(KEY_FECHA).equals("anyType{}") ? "" : soap.getPropertyAsString(KEY_FECHA);
 
-        this.hora = soap.getPropertyAsString(HORA).equals("anyType{}") ? "" : soap.getPropertyAsString(HORA);
+        this.hora = soap.getPropertyAsString(KEY_HORA).equals("anyType{}") ? "" : soap.getPropertyAsString(KEY_HORA);
 
-        this.nombreAfiliado = soap.getPropertyAsString(NOMBRE_AFILIADO).equals("anyType{}") ? "" : soap.getPropertyAsString(NOMBRE_AFILIADO);
+        this.nombreAfiliado = soap.getPropertyAsString(KEY_NOMBRE_AFILIADO).equals("anyType{}") ? "" : soap.getPropertyAsString(KEY_NOMBRE_AFILIADO);
 
-        this.numeroAprobacion = soap.getPropertyAsString(NUMERO_APROBACION).equals("anyType{}") ? "" : soap.getPropertyAsString(NUMERO_APROBACION);
+        this.numeroAprobacion = soap.getPropertyAsString(KEY_NUMERO_APROBACION).equals("anyType{}") ? "" : soap.getPropertyAsString(KEY_NUMERO_APROBACION);
 
-        this.numeroTarjeta = soap.getPropertyAsString(NUMERO_TARJETA).equals("anyType{}") ? "" : soap.getPropertyAsString(NUMERO_TARJETA);
+        this.numeroTarjeta = soap.getPropertyAsString(KEY_NUMERO_TARJETA).equals("anyType{}") ? "" : soap.getPropertyAsString(KEY_NUMERO_TARJETA);
 
-        this.tipoTransaccion = soap.getPropertyAsString(TIPO_TRANSACCION).equals("anyType{}") ? "" : soap.getPropertyAsString(TIPO_TRANSACCION);
+        this.tipoTransaccion = soap.getPropertyAsString(KEY_TIPO_TRANSACCION).equals("anyType{}") ? "" : soap.getPropertyAsString(KEY_TIPO_TRANSACCION);
 
-        SoapObject soapDetalleValor = (SoapObject) soap.getProperty(DETALLE_VALOR);
+        SoapObject soapDetalleValor = (SoapObject) soap.getProperty(KEY_DETALLE_VALOR);
 
-        this.detalleTipoServicio = soapDetalleValor.getPropertyAsString(DETALLE_TIPO_SERVICIO).equals("anyType{}") ? "" : soapDetalleValor.getPropertyAsString(DETALLE_TIPO_SERVICIO);
+        this.detalleTipoServicio = soapDetalleValor.getPropertyAsString(KEY_DETALLE_TIPO_SERVICIO).equals("anyType{}") ? "" : soapDetalleValor.getPropertyAsString(KEY_DETALLE_TIPO_SERVICIO);
 
-        this.tipoServicio = soapDetalleValor.getPropertyAsString(TIPO_SERVICIO).equals("anyType{}") ? "" : soapDetalleValor.getPropertyAsString(TIPO_SERVICIO);
+        this.tipoServicio = soapDetalleValor.getPropertyAsString(KEY_TIPO_SERVICIO).equals("anyType{}") ? "" : soapDetalleValor.getPropertyAsString(KEY_TIPO_SERVICIO);
 
-        this.valor = soapDetalleValor.getPropertyAsString(VALOR).equals("anyType{}") ? "" : soapDetalleValor.getPropertyAsString(VALOR);
+        this.valor = soapDetalleValor.getPropertyAsString(KEY_VALOR).equals("anyType{}") ? "" : soapDetalleValor.getPropertyAsString(KEY_VALOR);
 
     }
 

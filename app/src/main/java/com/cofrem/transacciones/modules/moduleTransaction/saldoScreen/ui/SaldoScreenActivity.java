@@ -59,7 +59,7 @@ public class SaldoScreenActivity extends Activity implements SaldoScreenView {
     @ViewById
     RelativeLayout bodyContentSaldoDesliceTarjeta;
     @ViewById
-    RelativeLayout bodyContentSaldoClaveUsuario;
+    RelativeLayout bodyContentSaldoPassUsuario;
     @ViewById
     RelativeLayout bodyContentSaldoTransaccionExitosa;
     @ViewById
@@ -281,7 +281,7 @@ public class SaldoScreenActivity extends Activity implements SaldoScreenView {
     private void inicializarOcultamientoVistas() {
 
         bodyContentSaldoDesliceTarjeta.setVisibility(View.GONE);
-        bodyContentSaldoClaveUsuario.setVisibility(View.GONE);
+        bodyContentSaldoPassUsuario.setVisibility(View.GONE);
         bodyContentSaldoTransaccionExitosa.setVisibility(View.GONE);
 
     }
@@ -368,7 +368,7 @@ public class SaldoScreenActivity extends Activity implements SaldoScreenView {
         bodyContentSaldoDesliceTarjeta.setVisibility(View.GONE);
 
         //Muestra la vista de clave de usuario
-        bodyContentSaldoClaveUsuario.setVisibility(View.VISIBLE);
+        bodyContentSaldoPassUsuario.setVisibility(View.VISIBLE);
 
         //Actualiza el paso actual
         pasoCreditoTransaction++;

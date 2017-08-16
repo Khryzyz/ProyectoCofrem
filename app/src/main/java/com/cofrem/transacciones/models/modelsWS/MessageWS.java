@@ -7,9 +7,10 @@ public class MessageWS {
 
     //Modelo usado en la respuesta del WS para la respuestas
 
-    //Modelado rapido de llaves del terminalResulta
-    public static final String CODIGO_MESSAGE_KEY = "codigoMensaje";
-    public static final String DETALLE_MESSAGE_KEY = "detalleMensaje";
+    //Modelado de Properties y Keys
+    public static final String PROPERTY_MESSAGE = "mensaje";
+    public static final String KEY_CODIGO_MESSAGE = "codigoMensaje";
+    public static final String KEY_DETALLE_MESSAGE = "detalleMensaje";
 
     /**
      * STATUS METHOD TERMINAL
@@ -69,6 +70,8 @@ public class MessageWS {
     public final static int statusTerminalMACNoValida = 21;
     public final static int statusActualizacionNoRealizada = 22;
     public final static int statusTarjetaNoPermitidaEnTerminal = 30;
+    public final static int statusTransaccionYaAnulada = 30;
+    public final static int statusTransaccionNoFechaActual = 32;
     public final static int statusErrorDatabase = 98;
     public final static int statusTerminalErrorException = 99;
 
@@ -83,9 +86,9 @@ public class MessageWS {
      */
     public MessageWS(SoapObject soap) {
 
-        this.codigoMensaje = soap.getPropertyAsString(CODIGO_MESSAGE_KEY).equals("anyType{}") ? statusTransaccionExitosa : Integer.parseInt(soap.getPropertyAsString(CODIGO_MESSAGE_KEY));
+        this.codigoMensaje = soap.getPropertyAsString(KEY_CODIGO_MESSAGE).equals("anyType{}") ? statusTransaccionExitosa : Integer.parseInt(soap.getPropertyAsString(KEY_CODIGO_MESSAGE));
 
-        this.detalleMensaje = soap.getPropertyAsString(DETALLE_MESSAGE_KEY).equals("anyType{}") ? "" : soap.getPropertyAsString(DETALLE_MESSAGE_KEY);
+        this.detalleMensaje = soap.getPropertyAsString(KEY_DETALLE_MESSAGE).equals("anyType{}") ? "" : soap.getPropertyAsString(KEY_DETALLE_MESSAGE);
 
     }
 
