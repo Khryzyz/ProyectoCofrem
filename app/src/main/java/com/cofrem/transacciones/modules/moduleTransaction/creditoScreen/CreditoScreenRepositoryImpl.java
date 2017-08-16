@@ -1,17 +1,13 @@
 package com.cofrem.transacciones.modules.moduleTransaction.creditoScreen;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 
 import com.cofrem.transacciones.R;
 import com.cofrem.transacciones.global.InfoGlobalSettingsPrint;
 import com.cofrem.transacciones.lib.PrinterHandler;
 import com.cofrem.transacciones.lib.StyleConfig;
 import com.cofrem.transacciones.models.ConfigurationPrinter;
-import com.cofrem.transacciones.models.Establishment;
 import com.cofrem.transacciones.models.PrintRow;
-import com.cofrem.transacciones.modules.moduleReports.reimpresionScreen.events.ReimpresionScreenEvent;
 import com.cofrem.transacciones.modules.moduleTransaction.creditoScreen.events.CreditoScreenEvent;
 import com.cofrem.transacciones.database.AppDatabase;
 import com.cofrem.transacciones.global.InfoGlobalTransaccionSOAP;
@@ -229,7 +225,9 @@ public class CreditoScreenRepositoryImpl implements CreditoScreenRepository {
 
         int gray = configurationPrinter.getGray_level();
 
-        Transaccion modelTransaccion = AppDatabase.getInstance(context).obtenerUltimaTransaccion();
+        ArrayList<Transaccion> modelsTransaccion = AppDatabase.getInstance(context).obtenerUltimaTransaccion();
+
+        Transaccion modelTransaccion = modelsTransaccion.get(0);
 
         // creamos el ArrayList se que encarga de almacenar los rows del recibo
         ArrayList<PrintRow> printRows = new ArrayList<PrintRow>();
@@ -238,7 +236,7 @@ public class CreditoScreenRepositoryImpl implements CreditoScreenRepository {
         printRows.add(PrintRow.printLogo(context, gray));
 
         //se siguen agregando cado auno de los String a los renglones (Rows) del recibo para imprimir
-        PrintRow.printEstablecimiento(context, printRows, gray);
+        PrintRow.printOperador(context, printRows ,gray ,1);
 
         printRows.add(new PrintRow(modelTransaccion.getRegistro(), new StyleConfig(StyleConfig.Align.CENTER, gray, 20)));
 

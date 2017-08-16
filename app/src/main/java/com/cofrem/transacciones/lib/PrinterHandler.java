@@ -98,6 +98,8 @@ public class PrinterHandler {
         if (style.fontSize == StyleConfig.FontSize.F1) {
             lengthTotal = 46 - (lengthMsg1 + lengthMsg2);
         } else if (style.fontSize == StyleConfig.FontSize.F2) {
+            lengthTotal = 46 - (lengthMsg1 + lengthMsg2);
+        }else if (style.fontSize == StyleConfig.FontSize.F3) {
             lengthTotal = 31 - (lengthMsg1 + lengthMsg2);
         }
 

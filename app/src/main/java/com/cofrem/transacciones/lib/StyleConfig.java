@@ -15,7 +15,7 @@ public class StyleConfig{
 
     public StyleConfig() {
         this.fontFamily = StyleConfig.FontFamily.DEFAULT;
-        this.fontSize = StyleConfig.FontSize.F2;
+        this.fontSize = StyleConfig.FontSize.F3;
         this.fontStyle = StyleConfig.FontStyle.NORMAL;
         this.align = Align.LEFT;
         this.gray = 11;
@@ -34,7 +34,7 @@ public class StyleConfig{
     }
     public StyleConfig(StyleConfig.Align align, int gray) {
         this.fontFamily = StyleConfig.FontFamily.DEFAULT;
-        this.fontSize = StyleConfig.FontSize.F2;
+        this.fontSize = StyleConfig.FontSize.F3;
         this.fontStyle = StyleConfig.FontStyle.NORMAL;
         this.gray = gray;
         this.lineSpace = 1;
@@ -44,7 +44,7 @@ public class StyleConfig{
 
     public StyleConfig(StyleConfig.Align align, int gray, int lineSpace) {
         this.fontFamily = StyleConfig.FontFamily.DEFAULT;
-        this.fontSize = StyleConfig.FontSize.F2;
+        this.fontSize = StyleConfig.FontSize.F3;
         this.fontStyle = StyleConfig.FontStyle.NORMAL;
         this.gray = gray;
         this.lineSpace = lineSpace;

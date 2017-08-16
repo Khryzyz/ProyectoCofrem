@@ -34,6 +34,9 @@
     <string name="report_text_valor_ventas">Valor de las ventas</string>
     <string name="report_text_valor_anulaciones">Valor de las anulaciones</string>
 
+    <string name="report_text_numero_transaccion">Transaccion No. </string>
+    <string name="report_text_valor">Valor </string>
+
 
     <!-- Textos adicionales mensajes -->
     <string name="report_text_message_No_existen_recibo_num_cargo">No existen un Recibo con este número de Cargo</string>
