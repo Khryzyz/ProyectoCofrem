@@ -686,6 +686,7 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
                     .replace("_", "")
                     .replace("%", "");
 
+
             //Registra el valor del numero de tarjeta en el modelo de la transaccion
             modelTransaccion.setNumero_tarjeta(numeroTarjeta);
 
