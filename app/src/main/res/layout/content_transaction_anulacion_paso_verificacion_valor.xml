@@ -42,13 +42,32 @@
         android:text="@string/general_text_valor_cero" />
 
     <TextView
-        android:id="@+id/txvAnulacionTransactionVerificacionDatosNumero"
+        android:id="@+id/txvAnulacionTransactionVerificacionDatosDocumento"
         style="@style/StyleTextPrimaryMedium"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/txvAnulacionTransactionVerificacionDatosValorCantidad"
         android:layout_marginBottom="@dimen/appMarginBottom"
-        android:text="@string/transaction_text_verifacion_numero_Cargo" />
+        android:text="@string/transaction_text_verificacion_numero_documento" />
+
+    <TextView
+        android:id="@+id/txvAnulacionTransactionVerificacionDatosNumeroDocumento"
+        style="@style/StyleTextPrimaryMedium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/txvAnulacionTransactionVerificacionDatosDocumento"
+        android:layout_marginBottom="@dimen/appMarginBottom"
+        android:text="@string/general_text_texto_vacio" />
+
+    <TextView
+        android:id="@+id/txvAnulacionTransactionVerificacionDatosNumero"
+        style="@style/StyleTextPrimaryMedium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txvAnulacionTransactionVerificacionDatosNumeroDocumento"
+        android:layout_marginBottom="@dimen/appMarginBottom"
+        android:text="@string/transaction_text_verifacion_numero_cargo" />
 
     <TextView
         android:id="@+id/txvAnulacionTransactionVerificacionDatosNumeroCargo"

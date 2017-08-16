@@ -48,7 +48,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/txvAnulacionTransactionDesliceTarjetaDatosValorCantidad"
         android:layout_marginBottom="@dimen/appMarginBottom"
-        android:text="@string/transaction_text_verifacion_numero_Cargo" />
+        android:text="@string/transaction_text_verifacion_numero_cargo" />
 
     <TextView
         android:id="@+id/txvAnulacionTransactionDesliceTarjetaDatosNumeroCargo"
@@ -59,13 +59,33 @@
         android:layout_below="@id/txvAnulacionTransactionDesliceTarjetaDatosNumero"
         android:layout_marginBottom="@dimen/appMarginBottom"
         android:text="@string/general_text_texto_vacio" />
-    
+
+
+    <TextView
+        android:id="@+id/txvAnulacionTransactionDesliceTarjetaDatosDocumento"
+        style="@style/StyleTextPrimaryMedium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txvAnulacionTransactionDesliceTarjetaDatosNumeroCargo"
+        android:layout_marginBottom="@dimen/appMarginBottom"
+        android:text="@string/transaction_text_verificacion_numero_documento" />
+
+    <TextView
+        android:id="@+id/txvAnulacionTransactionDesliceTarjetaDatosNumeroDocumento"
+        style="@style/StyleTextPrimaryMedium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/txvAnulacionTransactionDesliceTarjetaDatosDocumento"
+        android:layout_marginBottom="@dimen/appMarginBottom"
+        android:text="@string/general_text_texto_vacio" />
+
     <TextView
         android:id="@+id/txvAnulacionTransactionDesliceTarjetaSubTitle"
         style="@style/StyleTextPrimaryMedium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/txvAnulacionTransactionDesliceTarjetaDatosNumeroCargo"
+        android:layout_below="@id/txvAnulacionTransactionDesliceTarjetaDatosNumeroDocumento"
         android:layout_marginBottom="@dimen/appMarginBottom"
         android:text="@string/general_message_deslice_tarjeta" />
 

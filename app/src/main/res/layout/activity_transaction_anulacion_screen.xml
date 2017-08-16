@@ -31,6 +31,14 @@
         android:visibility="gone" />
 
     <include
+        android:id="@+id/bodyContentAnulacionNumeroDocumento"
+        layout="@layout/content_transaction_anulacion_paso_numero_documento"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/headerContent"
+        android:visibility="gone" />
+
+    <include
         android:id="@+id/bodyContentAnulacionNumeroCargo"
         layout="@layout/content_transaction_anulacion_paso_numero_cargo"
         android:layout_width="match_parent"

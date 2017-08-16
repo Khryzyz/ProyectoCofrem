@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/txvSaldoTransactionNumeroDocumentoTitle"
+        style="@style/StyleTextPrimaryLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/appMarginBottom"
+        android:text="@string/transaction_text_title_saldo" />
+
+    <TextView
+        android:id="@+id/txvSaldoTransactionNumeroDocumentoSubtitle"
+        style="@style/StyleTextPrimaryMedium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txvSaldoTransactionNumeroDocumentoTitle"
+        android:layout_marginBottom="@dimen/appMarginBottom"
+        android:text="@string/transaction_text_numero_documento" />
+
+    <EditText
+        android:id="@+id/edtSaldoTransactionNumeroDocumentoValor"
+        style="@style/StyleValuePrimary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txvSaldoTransactionNumeroDocumentoSubtitle"
+        android:layout_marginBottom="@dimen/appMarginBottom"
+        android:inputType="number"
+        android:text="3275580" />
+
+    <Button
+        android:id="@+id/btnSaldoTransactionNumeroDocumentoBotonCancelar"
+        style="@style/StyleButtonCancel"
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/edtSaldoTransactionNumeroDocumentoValor"
+        android:text="@string/general_text_button_cancelar" />
+
+    <Button
+        android:id="@+id/btnSaldoTransactionNumeroDocumentoBotonAceptar"
+        style="@style/StyleButtonAccept"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/edtSaldoTransactionNumeroDocumentoValor"
+        android:text="@string/general_text_button_aceptar" />
+
+
+</RelativeLayout>

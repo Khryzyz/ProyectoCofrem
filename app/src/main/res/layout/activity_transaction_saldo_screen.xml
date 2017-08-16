@@ -23,6 +23,14 @@
         android:layout_margin="@dimen/appMarginBottom" />
 
     <include
+        android:id="@+id/bodyContentSaldoNumeroDocumento"
+        layout="@layout/content_transaction_saldo_paso_numero_documento"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/headerContent"
+        android:visibility="gone" />
+
+    <include
         android:id="@+id/bodyContentSaldoDesliceTarjeta"
         layout="@layout/content_transaction_saldo_paso_deslice_tarjeta"
         android:layout_width="match_parent"

@@ -49,13 +49,13 @@
 
     <string name="transaction_text_numero_cargo">Ingrese el número de cargo:</string>
 
-    <string name="transaction_text_verifacion_numero_Cargo">Verifique el número de cargo:</string>
+    <string name="transaction_text_verifacion_numero_cargo">Número de cargo:</string>
 
     <string name="transaction_text_numero_documento">Ingrese número de documento:</string>
 
     <string name="transaction_error_numero_documento">Debe ingresar un número de documento.</string>
 
-    <string name="transaction_text_verifique_numero_documento">Número de documento:</string>
+    <string name="transaction_text_verificacion_numero_documento">Número de documento:</string>
 
     <string name="transaction_error_format_clave_usuario">La contraseña debe tener exactamente 4 caracteres.</string>
 
