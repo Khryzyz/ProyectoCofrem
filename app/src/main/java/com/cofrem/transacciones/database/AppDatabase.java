@@ -991,8 +991,9 @@ public final class AppDatabase extends SQLiteOpenHelper {
             modelTransaccion.setNumero_cargo(cursorQuery.getString(2));
             modelTransaccion.setNumero_tarjeta(cursorQuery.getString(3));
             modelTransaccion.setValor(cursorQuery.getInt(4));
-            modelTransaccion.setRegistro(cursorQuery.getString(5));
-            modelTransaccion.setEstado(cursorQuery.getInt(6));
+            modelTransaccion.setTipo_transaccion(cursorQuery.getInt(5));
+            modelTransaccion.setRegistro(cursorQuery.getString(6));
+            modelTransaccion.setEstado(cursorQuery.getInt(7));
         }
 
         cursorQuery.close();
@@ -1024,8 +1025,9 @@ public final class AppDatabase extends SQLiteOpenHelper {
             modelTransaccion.setNumero_cargo(cursorQuery.getString(2));
             modelTransaccion.setNumero_tarjeta(cursorQuery.getString(3));
             modelTransaccion.setValor(cursorQuery.getInt(4));
-            modelTransaccion.setRegistro(cursorQuery.getString(5));
-            modelTransaccion.setEstado(cursorQuery.getInt(6));
+            modelTransaccion.setTipo_transaccion(cursorQuery.getInt(5));
+            modelTransaccion.setRegistro(cursorQuery.getString(6));
+            modelTransaccion.setEstado(cursorQuery.getInt(7));
         }
 
         cursorQuery.close();
@@ -1056,8 +1058,9 @@ public final class AppDatabase extends SQLiteOpenHelper {
             modelTransaccion.setNumero_cargo(cursorQuery.getString(2));
             modelTransaccion.setNumero_tarjeta(cursorQuery.getString(3));
             modelTransaccion.setValor(cursorQuery.getInt(4));
-            modelTransaccion.setRegistro(cursorQuery.getString(5));
-            modelTransaccion.setEstado(cursorQuery.getInt(6));
+            modelTransaccion.setTipo_transaccion(cursorQuery.getInt(5));
+            modelTransaccion.setRegistro(cursorQuery.getString(6));
+            modelTransaccion.setEstado(cursorQuery.getInt(7));
 
             lista.add(modelTransaccion);
 
