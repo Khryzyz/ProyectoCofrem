@@ -48,7 +48,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/txvCreditoTransactionVerificacionDatosValorCantidad"
         android:layout_marginBottom="@dimen/appMarginBottom"
-        android:text="@string/transaction_text_verifique_numero_documento" />
+        android:text="@string/transaction_text_verificacion_numero_documento" />
 
     <TextView
         android:id="@+id/txvCreditoTransactionVerificacionDatosNumeroDocumento"

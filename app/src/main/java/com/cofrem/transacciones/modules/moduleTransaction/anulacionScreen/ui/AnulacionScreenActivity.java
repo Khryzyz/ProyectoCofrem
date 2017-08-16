@@ -61,6 +61,8 @@ public class AnulacionScreenActivity extends Activity implements AnulacionScreen
     @ViewById
     RelativeLayout bodyContentAnulacionNumeroCargo;
     @ViewById
+    RelativeLayout bodyContentAnulacionNumeroDocumento;
+    @ViewById
     RelativeLayout bodyContentAnulacionVerificacionValor;
     @ViewById
     RelativeLayout bodyContentAnulacionDesliceTarjeta;
@@ -82,6 +84,12 @@ public class AnulacionScreenActivity extends Activity implements AnulacionScreen
     @ViewById
     EditText edtAnulacionTransactionClaveAdministradorContenidoClave;
 
+    //Paso transaction_anulacion_paso_numero_documento
+    @ViewById
+    Button btnAnulacionTransactionNumeroDocumentoBotonCancelar;
+    @ViewById
+    EditText edtAnulacionTransactionNumeroDocumentoValor;
+
     //Paso transaction_anulacion_paso_numero_cargo
     @ViewById
     Button btnAnulacionTransactionNumeroCargoBotonCancelar;
@@ -94,13 +102,17 @@ public class AnulacionScreenActivity extends Activity implements AnulacionScreen
 
     @ViewById
     TextView txvAnulacionTransactionVerificacionDatosNumeroCargo;
+    @ViewById
+    TextView txvAnulacionTransactionVerificacionDatosNumeroDocumento;
+    @ViewById
+    TextView txvAnulacionTransactionVerificacionDatosValorCantidad;
+
+    //Paso transaction_anulacion_paso_deslice_tarjeta
 
     @ViewById
     TextView txvAnulacionTransactionDesliceTarjetaDatosNumeroCargo;
-
-    //Paso transaction_anulacion_paso_deslice_tarjeta
     @ViewById
-    TextView txvAnulacionTransactionVerificacionDatosValorCantidad;
+    TextView txvAnulacionTransactionDesliceTarjetaDatosNumeroDocumento;
     @ViewById
     TextView txvAnulacionTransactionDesliceTarjetaDatosValorCantidad;
 
@@ -123,10 +135,11 @@ public class AnulacionScreenActivity extends Activity implements AnulacionScreen
 
     final static int PASO_CLAVE_ADMINISTRADOR = 0;
     final static int PASO_NUMERO_CARGO = 1;
-    final static int PASO_VERIFICACION_VALOR = 2;
-    final static int PASO_DESLIZAR_TARJETA = 3;
-    final static int PASO_CLAVE_USUARIO = 4;
-    final static int PASO_TRANSACCION_EXITOSA = 5;
+    final static int PASO_NUMERO_DOCUMENTO = 2;
+    final static int PASO_VERIFICACION_VALOR = 3;
+    final static int PASO_DESLIZAR_TARJETA = 4;
+    final static int PASO_CLAVE_USUARIO = 5;
+    final static int PASO_TRANSACCION_EXITOSA = 6;
 
     /**
      * #############################################################################################
@@ -217,6 +230,11 @@ public class AnulacionScreenActivity extends Activity implements AnulacionScreen
                         validarPasswordAdministracion();
                         break;
 
+                    case PASO_NUMERO_DOCUMENTO:
+                        //Metodo para registrar el numero de documento
+                        registrarNumeroDocumento();
+                        break;
+
                     case PASO_NUMERO_CARGO:
                         //Metodo para registrar el numero de documento
                         registrarNumeroCargo();
@@ -263,6 +281,11 @@ public class AnulacionScreenActivity extends Activity implements AnulacionScreen
             case PASO_CLAVE_ADMINISTRADOR:
                 //Vacia la caja de la contraseña de administracion
                 edtAnulacionTransactionClaveAdministradorContenidoClave.setText("");
+                break;
+
+            case PASO_NUMERO_DOCUMENTO:
+                //Vacia la caja del numero de cargo
+                edtAnulacionTransactionNumeroDocumentoValor.setText("");
                 break;
 
             case PASO_NUMERO_CARGO:
@@ -333,6 +356,7 @@ public class AnulacionScreenActivity extends Activity implements AnulacionScreen
      * Metodo para manejar error en la verificacion de la clave de administracion
      */
     public void handleClaveAdministracionError() {
+
         //Oculta la barra de progreso
         hideProgress();
 
@@ -341,6 +365,7 @@ public class AnulacionScreenActivity extends Activity implements AnulacionScreen
 
         //Muestra el mensaje de error en la configuracion de la contraseña de administracion tecnica
         Toast.makeText(this, R.string.configuration_text_clave_error, Toast.LENGTH_SHORT).show();
+
     }
 
     /**
@@ -364,27 +389,11 @@ public class AnulacionScreenActivity extends Activity implements AnulacionScreen
 
         modelTransaccion.setValor(valorTransaccion);
 
-        txvAnulacionTransactionVerificacionDatosNumeroCargo.setText(
-                modelTransaccion.getNumero_cargo()
-        );
-
-        txvAnulacionTransactionDesliceTarjetaDatosNumeroCargo.setText(
-                modelTransaccion.getNumero_cargo()
-        );
-
-        txvAnulacionTransactionVerificacionDatosValorCantidad.setText(
-                String.valueOf(modelTransaccion.getValor())
-        );
-
-        txvAnulacionTransactionDesliceTarjetaDatosValorCantidad.setText(
-                String.valueOf(modelTransaccion.getValor())
-        );
-
         //Oculta la vista del numero de cargo
         bodyContentAnulacionNumeroCargo.setVisibility(View.GONE);
 
         //Muestra la vista de verificacion del valor
-        bodyContentAnulacionVerificacionValor.setVisibility(View.VISIBLE);
+        bodyContentAnulacionNumeroDocumento.setVisibility(View.VISIBLE);
 
         //Actualiza el paso actual
         pasoAnulacionTransaction++;
@@ -483,6 +492,7 @@ public class AnulacionScreenActivity extends Activity implements AnulacionScreen
      */
     @Click({R.id.edtAnulacionTransactionClaveAdministradorContenidoClave,
             R.id.edtAnulacionTransactionNumeroCargoContenidoValor,
+            R.id.edtAnulacionTransactionNumeroDocumentoValor,
             R.id.edtAnulacionTransactionClaveUsuarioContenidoClave
     })
     public void hideKeyBoard() {
@@ -498,6 +508,7 @@ public class AnulacionScreenActivity extends Activity implements AnulacionScreen
      */
     @Click({R.id.btnAnulacionTransactionClaveAdministradorBotonCancelar,
             R.id.btnAnulacionTransactionNumeroCargoBotonCancelar,
+            R.id.btnAnulacionTransactionNumeroDocumentoBotonCancelar,
             R.id.btnAnulacionTransactionVerificacionDatosBotonCancelar,
             R.id.btnAnulacionTransactionClaveUsuarioBotonCancelar
     })
@@ -568,9 +579,67 @@ public class AnulacionScreenActivity extends Activity implements AnulacionScreen
     }
 
     /**
+     * Metodo para registrar el numero de documento
+     */
+    @Click(R.id.btnAnulacionTransactionNumeroDocumentoBotonAceptar)
+    public void registrarNumeroDocumento() {
+
+
+        // Se obtiene el texto de la contraseña
+        String numeroDocumento = edtAnulacionTransactionNumeroDocumentoValor.getText().toString();
+
+        if (numeroDocumento.length() > 0) {
+
+            //Registra el valor del numero de documento en el modelo de transaccion
+            modelTransaccion.setNumero_documento(numeroDocumento);
+
+            txvAnulacionTransactionVerificacionDatosNumeroCargo.setText(
+                    modelTransaccion.getNumero_cargo()
+            );
+
+            txvAnulacionTransactionVerificacionDatosNumeroDocumento.setText(
+                    String.valueOf(modelTransaccion.getNumero_documento())
+            );
+
+            txvAnulacionTransactionVerificacionDatosValorCantidad.setText(
+                    String.valueOf(modelTransaccion.getValor())
+            );
+
+            txvAnulacionTransactionDesliceTarjetaDatosNumeroCargo.setText(
+                    modelTransaccion.getNumero_cargo()
+            );
+
+            txvAnulacionTransactionDesliceTarjetaDatosNumeroDocumento.setText(
+                    String.valueOf(modelTransaccion.getNumero_documento())
+            );
+
+            txvAnulacionTransactionDesliceTarjetaDatosValorCantidad.setText(
+                    String.valueOf(modelTransaccion.getValor())
+            );
+
+            //Oculta la vista del numero de documento
+            bodyContentAnulacionNumeroDocumento.setVisibility(View.GONE);
+
+            //Muestra la vista de verificacion del valor
+            bodyContentAnulacionVerificacionValor.setVisibility(View.VISIBLE);
+
+            //Actualiza el paso actual
+            pasoAnulacionTransaction++;
+
+        } else {
+
+            edtAnulacionTransactionNumeroDocumentoValor.setText("");
+
+            Toast.makeText(this, R.string.transaction_error_numero_documento, Toast.LENGTH_SHORT).show();
+
+        }
+
+    }
+
+    /**
      * Metodo para mostrar la información registrada
      */
-    @Click(R.id.btnCreditoTransactionVerificacionDatosBotonAceptar)
+    @Click(R.id.btnAnulacionTransactionVerificacionDatosBotonAceptar)
     public void verificarValor() {
 
         //Oculta la vista de verificacion de valor
@@ -680,7 +749,7 @@ public class AnulacionScreenActivity extends Activity implements AnulacionScreen
     /**
      * Metodo para registrar la contraseña del usuario
      */
-    @Click(R.id.btnCreditoTransactionClaveUsuarioBotonAceptar)
+    @Click(R.id.btnAnulacionTransactionClaveUsuarioBotonAceptar)
     public void registrarClaveUsuario() {
 
         // Se obtiene el texto de la contraseña
@@ -691,9 +760,22 @@ public class AnulacionScreenActivity extends Activity implements AnulacionScreen
             //Mostrar la barra de progreso
             showProgress();
 
+            //Se registra la contraseña en el modelo
+            modelTransaccion.setClave(Integer.valueOf(passwordUser));
+
+            //TODO: agregar las diferentes encriptaciones
+            //Se registra el tipo de encriptacion en el modelo
+            modelTransaccion.setTipo_encriptacion(Transaccion.CODIGO_ENCR_NO_ENCRIPTADO);
+
+            //TODO: agregar los diferentes tipos de productos
+            //Se registra el tipo de producto en el modelo
+            modelTransaccion.setTipo_servicio(Transaccion.CODIGO_PRODUCTO_CUPO_ROTATIVO);
+
+            //Actualiza el paso actual
+            pasoAnulacionTransaction++;
+
             //Registra la transaccion
             anulacionScreenPresenter.registrarTransaccion(this, modelTransaccion);
-
 
         } else {
 

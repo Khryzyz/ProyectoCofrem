@@ -95,7 +95,6 @@ public class AnulacionScreenRepositoryImpl implements AnulacionScreenRepository 
     @Override
     public void registrarTransaccion(Context context, Transaccion transaccion) {
 
-
         ResultadoTransaccion resultadoTransaccion = registrarTransaccionConsumoWS(context, transaccion);
 
         //Registra mediante el WS la transaccion
@@ -156,7 +155,7 @@ public class AnulacionScreenRepositoryImpl implements AnulacionScreenRepository 
         //Inicializacion y declaracion de parametros para la peticion web service
         String[][] params = {
                 {InfoGlobalTransaccionSOAP.PARAM_NAME_ANULACION_CODIGO_TERMINAL, AppDatabase.getInstance(context).obtenerCodigoTerminal()},
-                {InfoGlobalTransaccionSOAP.PARAM_NAME_ANULACION_NUMERO_APROBACION, String.valueOf(transaccion.getTipo_transaccion())},
+                {InfoGlobalTransaccionSOAP.PARAM_NAME_ANULACION_NUMERO_APROBACION, transaccion.getNumero_cargo()},
                 {InfoGlobalTransaccionSOAP.PARAM_NAME_ANULACION_CEDULA_USUARIO, transaccion.getNumero_documento()},
                 {InfoGlobalTransaccionSOAP.PARAM_NAME_ANULACION_NUMERO_TARJETA, transaccion.getNumero_tarjeta()},
                 {InfoGlobalTransaccionSOAP.PARAM_NAME_ANULACION_CLAVE_USUARIO, String.valueOf(transaccion.getClave())},
@@ -202,7 +201,7 @@ public class AnulacionScreenRepositoryImpl implements AnulacionScreenRepository 
         if (soapTransaction != null) {
 
             //Inicializacion del modelo MessageWS
-            MessageWS messageWS = new MessageWS((SoapObject) soapTransaction.getProperty(0));
+            MessageWS messageWS = new MessageWS((SoapObject) soapTransaction.getProperty(1));
 
             switch (messageWS.getCodigoMensaje()) {
 
