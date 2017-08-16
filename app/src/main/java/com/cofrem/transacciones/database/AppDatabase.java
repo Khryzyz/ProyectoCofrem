@@ -339,6 +339,22 @@ public final class AppDatabase extends SQLiteOpenHelper {
                 tipoTransaccion
         );
 
+        contentValues.put(DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_CEDULA_USUARIO,
+                informacionTransaccion.getCedulaUsuario()
+        );
+
+        contentValues.put(DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_NOMBRE_USUARIO,
+                informacionTransaccion.getNombreAfiliado()
+        );
+
+        contentValues.put(DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_FECHA_SERVER,
+                informacionTransaccion.getFecha()
+        );
+
+        contentValues.put(DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_HORA_SERVER,
+                informacionTransaccion.getHora()
+        );
+
         contentValues.put(
                 DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_REGISTRO,
                 getDateTime());
@@ -1015,7 +1031,7 @@ public final class AppDatabase extends SQLiteOpenHelper {
         cursorQuery = getWritableDatabase().rawQuery(
                 "SELECT * " +
                         " FROM " + DatabaseManager.TableTransacciones.TABLE_NAME_TRANSACCIONES +
-                        " WHERE " + DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_NUMERO_CARGO + " = '" + numCargo +"'"
+                        " WHERE " + DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_NUMERO_CARGO + " = '" + numCargo + "'"
                 , null
         );
 
