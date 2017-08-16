@@ -323,7 +323,7 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
         bodyContentCreditoPassUsuario.setVisibility(View.GONE);
 
         //Muestra la vista del Port de conexion
-        bodyContentCreditoTransaccionExitosa.setVisibility(View.VISIBLE);
+        bodyContentCreditoTransaccionErronea.setVisibility(View.VISIBLE);
 
         //Actualiza el paso actual
         pasoCreditoTransaction++;
@@ -685,7 +685,6 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
                     .replace("-", "")
                     .replace("_", "")
                     .replace("%", "");
-
 
             //Registra el valor del numero de tarjeta en el modelo de la transaccion
             modelTransaccion.setNumero_tarjeta(numeroTarjeta);

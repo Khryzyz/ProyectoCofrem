@@ -64,7 +64,7 @@
 
     <include
         android:id="@+id/bodyContentCreditoPassUsuario"
-        layout="@layout/content_transaction_credito_paso_clave_usuario"
+        layout="@layout/content_transaction_credito_paso_pass_usuario"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/headerContent"

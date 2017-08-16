@@ -4,15 +4,17 @@ public class AnulacionScreenEvent {
 
     public final static int VALOR_TRANSACCION_NO_VALIDO = -1;
 
-    public final static int onClaveAdministracionNoValida = 0;
-    public final static int onClaveAdministracionValida = 1;
+    public final static int onClaveAdministracionValida = 0;
+    public final static int onClaveAdministracionNoValida = 1;
     public final static int onClaveAdministracionError = 2;
-    public final static int onValorTransaccionNoValido = 3;
-    public final static int onValorTransaccionValido = 4;
+    public final static int onValorTransaccionValido = 3;
+    public final static int onValorTransaccionNoValido = 4;
     public final static int onTransaccionSuccess = 5;
-    public final static int onTransaccionWSRegisterError = 6;
-    public final static int onTransaccionWSConexionError = 7;
+    public final static int onTransaccionWSConexionError = 6;
+    public final static int onTransaccionWSRegisterError = 7;
     public final static int onTransaccionDBRegisterError = 8;
+    public final static int onImprecionReciboSuccess = 9;
+    public final static int onImprecionReciboError = 10;
 
 
     // Variable que maneja los tipos de eventos

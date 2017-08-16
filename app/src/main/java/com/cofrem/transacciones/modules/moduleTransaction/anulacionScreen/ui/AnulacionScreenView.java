@@ -27,4 +27,26 @@ public interface AnulacionScreenView {
      */
     void handleValorTransaccionValido(int valorTransaccion);
 
+    /**
+     * Metodo para manejar la el valor no valido en la transaccion
+     */
+    void handleTransaccionSuccess();
+
+    /**
+     * Metodo para manejar la el valor no valido en la transaccion
+     */
+    void handleTransaccionWSConexionError();
+
+    /**
+     * Metodo para manejar la el valor no valido en la transaccion
+     *
+     * @param errorMessage
+     */
+    void handleTransaccionWSRegisterError(String errorMessage);
+
+    /**
+     * Metodo para manejar la el valor no valido en la transaccion
+     */
+    void handleTransaccionDBRegisterError();
+
 }

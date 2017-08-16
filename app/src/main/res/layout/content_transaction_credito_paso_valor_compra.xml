@@ -31,8 +31,7 @@
         android:layout_below="@id/txvCreditoTransactionValorCompraSubtitle"
         android:layout_marginBottom="@dimen/appMarginBottom"
         android:inputType="number"
-        android:maxLength="9"
-        android:text="1" />
+        android:maxLength="9" />
 
     <Button
         android:id="@+id/btnCreditoTransactionValorCompraBotonCancelar"

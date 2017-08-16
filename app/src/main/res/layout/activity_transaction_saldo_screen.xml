@@ -47,8 +47,8 @@
         android:visibility="gone" />
 
     <include
-        android:id="@+id/bodyContentSaldoClaveUsuario"
-        layout="@layout/content_transaction_saldo_paso_clave_usuario"
+        android:id="@+id/bodyContentSaldoPassUsuario"
+        layout="@layout/content_transaction_saldo_paso_pass_usuario"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/headerContent"

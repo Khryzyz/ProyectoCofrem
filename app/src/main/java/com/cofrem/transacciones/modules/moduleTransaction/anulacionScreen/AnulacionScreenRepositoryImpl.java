@@ -201,30 +201,26 @@ public class AnulacionScreenRepositoryImpl implements AnulacionScreenRepository 
         if (soapTransaction != null) {
 
             //Inicializacion del modelo MessageWS
-            MessageWS messageWS = new MessageWS((SoapObject) soapTransaction.getProperty(1));
+            MessageWS messageWS = new MessageWS(
+                    (SoapObject) soapTransaction.getProperty(MessageWS.PROPERTY_MESSAGE)
+            );
 
             switch (messageWS.getCodigoMensaje()) {
 
                 //Transaccion exitosa
                 case MessageWS.statusTransaccionExitosa:
 
-                    InformacionTransaccion informacionTransaccion = new InformacionTransaccion((SoapObject) soapTransaction.getProperty(1));
+                    InformacionTransaccion informacionTransaccion = new InformacionTransaccion(
+                            (SoapObject) soapTransaction.getProperty(InformacionTransaccion.PROPERTY_TRANSAC_RESULT)
+                    );
+
                     resultadoTransaccion = new ResultadoTransaccion(
                             informacionTransaccion,
                             messageWS
                     );
                     break;
 
-                case MessageWS.statusTarjetaHabienteNoExiste:
-                case MessageWS.statusClaveErrada:
-                case MessageWS.statusTarjetHabienteInactivo:
-                case MessageWS.statusTarjetaHabienteMora:
-                case MessageWS.statusTarjetaHabienteSinCupoDisponible:
-                case MessageWS.statusCedulaTarjetaNoExiste:
-                case MessageWS.statusTerminalNoExiste:
-                case MessageWS.statusTarjetaNoPermitidaEnTerminal:
-                case MessageWS.statusErrorDatabase:
-                case MessageWS.statusTerminalErrorException:
+                default:
                     resultadoTransaccion = new ResultadoTransaccion(
                             messageWS
                     );

@@ -71,8 +71,8 @@
         android:visibility="gone" />
 
     <include
-        android:id="@+id/bodyContentAnulacionClaveUsuario"
-        layout="@layout/content_transaction_anulacion_paso_clave_usuario"
+        android:id="@+id/bodyContentAnulacionPassUsuario"
+        layout="@layout/content_transaction_anulacion_paso_pass_usuario"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/headerContent"

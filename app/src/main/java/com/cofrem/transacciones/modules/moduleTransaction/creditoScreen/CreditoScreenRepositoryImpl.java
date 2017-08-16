@@ -167,30 +167,26 @@ public class CreditoScreenRepositoryImpl implements CreditoScreenRepository {
         if (soapTransaction != null) {
 
             //Inicializacion del modelo MessageWS
-            MessageWS messageWS = new MessageWS((SoapObject) soapTransaction.getProperty(0));
+            MessageWS messageWS = new MessageWS(
+                    (SoapObject) soapTransaction.getProperty(MessageWS.PROPERTY_MESSAGE)
+            );
 
             switch (messageWS.getCodigoMensaje()) {
 
                 //Transaccion exitosa
                 case MessageWS.statusTransaccionExitosa:
 
-                    InformacionTransaccion informacionTransaccion = new InformacionTransaccion((SoapObject) soapTransaction.getProperty(1));
+                    InformacionTransaccion informacionTransaccion = new InformacionTransaccion(
+                            (SoapObject) soapTransaction.getProperty(InformacionTransaccion.PROPERTY_TRANSAC_RESULT)
+                    );
+
                     resultadoTransaccion = new ResultadoTransaccion(
                             informacionTransaccion,
                             messageWS
                     );
                     break;
 
-                case MessageWS.statusTarjetaHabienteNoExiste:
-                case MessageWS.statusClaveErrada:
-                case MessageWS.statusTarjetHabienteInactivo:
-                case MessageWS.statusTarjetaHabienteMora:
-                case MessageWS.statusTarjetaHabienteSinCupoDisponible:
-                case MessageWS.statusCedulaTarjetaNoExiste:
-                case MessageWS.statusTerminalNoExiste:
-                case MessageWS.statusTarjetaNoPermitidaEnTerminal:
-                case MessageWS.statusErrorDatabase:
-                case MessageWS.statusTerminalErrorException:
+                default:
                     resultadoTransaccion = new ResultadoTransaccion(
                             messageWS
                     );
@@ -242,16 +238,16 @@ public class CreditoScreenRepositoryImpl implements CreditoScreenRepository {
         printRows.add(PrintRow.printLogo(context, gray));
 
         //se siguen agregando cado auno de los String a los renglones (Rows) del recibo para imprimir
-        PrintRow.printEstablecimiento(context, printRows ,gray);
+        PrintRow.printEstablecimiento(context, printRows, gray);
 
-        printRows.add(new PrintRow(modelTransaccion.getRegistro(), new StyleConfig(StyleConfig.Align.CENTER,gray, 20)));
+        printRows.add(new PrintRow(modelTransaccion.getRegistro(), new StyleConfig(StyleConfig.Align.CENTER, gray, 20)));
 
         printRows.add(new PrintRow(context.getResources().getString(
                 R.string.recibo_numero_transaccion), modelTransaccion.getNumero_cargo(), new StyleConfig(StyleConfig.Align.LEFT, gray)));
         printRows.add(new PrintRow(context.getResources().getString(
                 R.string.recibo_valor), String.valueOf(modelTransaccion.getValor()), new StyleConfig(StyleConfig.Align.LEFT, gray)));
         printRows.add(new PrintRow(context.getResources().getString(
-                R.string.recibo_numero_tarjeta), PrinterHandler.getFormatNumTarjeta(modelTransaccion.getNumero_tarjeta()), new StyleConfig(StyleConfig.Align.LEFT,gray, 20)));
+                R.string.recibo_numero_tarjeta), PrinterHandler.getFormatNumTarjeta(modelTransaccion.getNumero_tarjeta()), new StyleConfig(StyleConfig.Align.LEFT, gray, 20)));
 
         PrintRow.printFirma(context, printRows, gray);
 
