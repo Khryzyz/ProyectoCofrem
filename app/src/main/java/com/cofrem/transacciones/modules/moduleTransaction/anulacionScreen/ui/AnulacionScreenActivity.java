@@ -77,25 +77,17 @@ public class AnulacionScreenActivity extends Activity implements AnulacionScreen
 
     //Paso transaction_anulacion_paso_clave_administrador
     @ViewById
-    Button btnAnulacionTransactionClaveAdministradorBotonCancelar;
-    @ViewById
     EditText edtAnulacionTransactionClaveAdministradorContenidoClave;
 
     //Paso transaction_anulacion_paso_numero_documento
-    @ViewById
-    Button btnAnulacionTransactionNumeroDocumentoBotonCancelar;
     @ViewById
     EditText edtAnulacionTransactionNumeroDocumentoValor;
 
     //Paso transaction_anulacion_paso_numero_cargo
     @ViewById
-    Button btnAnulacionTransactionNumeroCargoBotonCancelar;
-    @ViewById
     EditText edtAnulacionTransactionNumeroCargoContenidoValor;
 
     //Paso transaction_anulacion_paso_verificacion_valor
-    @ViewById
-    Button btnAnulacionTransactionVerificacionDatosBotonCancelar;
 
     @ViewById
     TextView txvAnulacionTransactionVerificacionDatosNumeroCargo;
@@ -114,9 +106,11 @@ public class AnulacionScreenActivity extends Activity implements AnulacionScreen
 
     //Paso content_transaction_anulacion_paso_pass_usuario
     @ViewById
-    Button btnAnulacionTransactionClaveUsuarioBotonCancelar;
-    @ViewById
     EditText edtAnulacionTransactionClaveUsuarioContenidoClave;
+
+    //Paso content_transaction_anulacion_paso_transaccion_error
+    @ViewById
+    TextView txvAnulacionTransactionErrorDetalleTexto;
 
     /**
      * Model que almacena la transaccion actual
