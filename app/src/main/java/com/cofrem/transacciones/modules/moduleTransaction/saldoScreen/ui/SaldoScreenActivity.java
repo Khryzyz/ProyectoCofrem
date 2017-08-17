@@ -415,8 +415,7 @@ public class SaldoScreenActivity extends Activity implements SaldoScreenView {
     /**
      * Metodo para mostrar la orden de deslizar la tarjeta
      */
-
-    @Click(R.id.btnSaldoTransactionNumeroDocumentoBotonAceptar)
+    
     public void deslizarTarjeta() {
 
         String[] magneticHandler = new MagneticHandler().readMagnetic();

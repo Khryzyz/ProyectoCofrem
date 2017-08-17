@@ -156,6 +156,18 @@ public class ReimpresionScreenPresenterImpl implements ReimpresionScreenPresente
             case ReimpresionScreenEvent.onImprimirReciboPorNumCargoError:
                 onImprimirReciboPorNumCargoError(reimpresionScreenEvent.getErrorMessage());
                 break;
+            case ReimpresionScreenEvent.onImprimirReporteDetalleSuccess:
+                onImprimirReporteDetalleSuccess();
+                break;
+            case ReimpresionScreenEvent.onImprimirReporteDetalleError:
+                onImprimirReporteDetalleError(reimpresionScreenEvent.getErrorMessage());
+                break;
+            case ReimpresionScreenEvent.onImprimirReporteGeneralSuccess:
+                onImprimirImprimirReporteGeneralSuccess();
+                break;
+            case ReimpresionScreenEvent.onImprimirReporteGeneralError:
+                onImprimirImprimirReporteGeneralError(reimpresionScreenEvent.getErrorMessage());
+                break;
 
         }
     }
@@ -223,6 +235,21 @@ public class ReimpresionScreenPresenterImpl implements ReimpresionScreenPresente
 
     private void onImprimirReciboPorNumCargoError(String error) {
         reimpresionScreenView.handleImprimirReciboPorNumCargoError(error);
+    }
+    private void onImprimirReporteDetalleSuccess() {
+        reimpresionScreenView.handleImprimirReporteDetalleSuccess();
+    }
+
+    private void onImprimirReporteDetalleError(String error) {
+        reimpresionScreenView.handleImprimirReporteDetalleError(error);
+    }
+
+    private void onImprimirImprimirReporteGeneralSuccess() {
+        reimpresionScreenView.handleImprimirReporteGeneralSuccess();
+    }
+
+    private void onImprimirImprimirReporteGeneralError(String error) {
+        reimpresionScreenView.handleImprimirReporteGeneralError(error);
     }
 
 }
