@@ -3,12 +3,15 @@ package com.cofrem.transacciones.models;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.icu.text.NumberFormat;
 
 import com.cofrem.transacciones.R;
 import com.cofrem.transacciones.database.AppDatabase;
 import com.cofrem.transacciones.lib.StyleConfig;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 /**
  * Created by luispineda on 12/07/17.
@@ -155,6 +158,15 @@ public class PrintRow {
                 R.string.recibo_ingresa_tel), new StyleConfig(StyleConfig.Align.LEFT, gray,20)));
 
     }
+
+    public static String numberFormat (int number){
+
+        DecimalFormat formateador = new DecimalFormat("###,###.##");
+
+        return formateador.format(number);
+
+    }
+
 
 
 }
