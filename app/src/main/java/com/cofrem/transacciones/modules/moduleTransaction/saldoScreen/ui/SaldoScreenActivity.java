@@ -513,15 +513,10 @@ public class SaldoScreenActivity extends Activity implements SaldoScreenView {
     /**
      * Metodo para mostrar la orden de deslizar la tarjeta
      */
+
     public void deslizarTarjeta() {
 
-        if (true) {
-
-            String numeroTarjeta = "033502";
-
-            /*
-
-            String[] magneticHandler = new MagneticHandler().readMagnetic();
+        String[] magneticHandler = new MagneticHandler().readMagnetic();
 
             if (magneticHandler != null) {
 
