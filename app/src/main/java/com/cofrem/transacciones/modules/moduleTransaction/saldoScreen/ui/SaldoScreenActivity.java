@@ -13,6 +13,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cofrem.transacciones.lib.MagneticHandler;
 import com.cofrem.transacciones.models.InfoHeaderApp;
 import com.cofrem.transacciones.models.modelsWS.modelTransaccion.InformacionSaldo;
 import com.cofrem.transacciones.modules.moduleTransaction.saldoScreen.SaldoScreenPresenter;
@@ -545,7 +546,6 @@ public class SaldoScreenActivity extends Activity implements SaldoScreenView {
                     .replace("-", "")
                     .replace("_", "")
                     .replace("%", "");
-            */
 
             //Registra el valor del numero de tarjeta en el modelo de la transaccion
             modelTransaccion.setNumero_tarjeta(numeroTarjeta);
