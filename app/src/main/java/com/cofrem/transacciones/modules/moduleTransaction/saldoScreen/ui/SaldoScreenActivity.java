@@ -33,10 +33,10 @@ import static android.view.KeyEvent.KEYCODE_ENTER;
 @EActivity(R.layout.activity_transaction_saldo_screen)
 public class SaldoScreenActivity extends Activity implements SaldoScreenView {
 
-    /**
-     * #############################################################################################
-     * Declaracion de componentes y variables
-     * #############################################################################################
+    /*
+      #############################################################################################
+      Declaracion de componentes y variables
+      #############################################################################################
      */
 
     /**
@@ -44,7 +44,6 @@ public class SaldoScreenActivity extends Activity implements SaldoScreenView {
      */
 
     // Controles del header
-
     @ViewById
     TextView txvHeaderIdDispositivo;
     @ViewById
@@ -54,7 +53,7 @@ public class SaldoScreenActivity extends Activity implements SaldoScreenView {
     @ViewById
     TextView txvHeaderPunto;
 
-    // Contents del modulo
+    // Controles del modulo
     @ViewById
     RelativeLayout bodyContentSaldoNumeroDocumento;
     @ViewById
@@ -71,6 +70,8 @@ public class SaldoScreenActivity extends Activity implements SaldoScreenView {
     FrameLayout frlPgbHldTransactionSaldo;
 
     //Paso transaction_saldo_paso_numero_documento
+    @ViewById
+    Button btnSaldoTransactionNumeroDocumentoBotonCancelar;
     @ViewById
     EditText edtSaldoTransactionNumeroDocumentoValor;
 
