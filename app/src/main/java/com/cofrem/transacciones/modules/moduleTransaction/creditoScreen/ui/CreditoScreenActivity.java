@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cofrem.transacciones.MainScreenActivity_;
+import com.cofrem.transacciones.lib.MagneticHandler;
 import com.cofrem.transacciones.models.InfoHeaderApp;
 import com.cofrem.transacciones.modules.moduleTransaction.creditoScreen.CreditoScreenPresenter;
 import com.cofrem.transacciones.modules.moduleTransaction.creditoScreen.CreditoScreenPresenterImpl;
@@ -651,12 +652,6 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
      */
     public void deslizarTarjeta() {
 
-        if (true) {
-
-            String numeroTarjeta = "033502";
-
-            /*
-
             //Obtiene la lectura de la banda magnetica
             String[] magneticHandler = new MagneticHandler().readMagnetic();
 
@@ -689,7 +684,6 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
                     .replace("-", "")
                     .replace("_", "")
                     .replace("%", "");
-            */
 
             //Registra el valor del numero de tarjeta en el modelo de la transaccion
             modelTransaccion.setNumero_tarjeta(numeroTarjeta);
