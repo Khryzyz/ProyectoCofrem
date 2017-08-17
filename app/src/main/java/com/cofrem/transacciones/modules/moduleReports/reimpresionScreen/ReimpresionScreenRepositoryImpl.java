@@ -102,7 +102,7 @@ public class ReimpresionScreenRepositoryImpl implements ReimpresionScreenReposit
     @Override
     public void imprimirReporteDetalle(Context context) {
 
-        int totalConsumo = 0;
+        int totalConsumo = 0, totalAnulacion = 0;
 
         ArrayList<Transaccion> listaAnulaciones = new ArrayList<Transaccion>();
 
@@ -116,38 +116,80 @@ public class ReimpresionScreenRepositoryImpl implements ReimpresionScreenReposit
         //Se agrega el logo al primer renglon del recibo y se coloca en el centro
         printRows.add(PrintRow.printLogo(context, gray));
 
+        PrintRow.printCofrem(context, printRows, gray, 10);
+
         //se siguen agregando cado auno de los String a los renglones (Rows) del recibo para imprimir
         printRows.add(new PrintRow(context.getResources().getString(
-                R.string.report_text_button_detalle), new StyleConfig(StyleConfig.Align.CENTER, gray)));
-        printRows.add(new PrintRow(getDateTime(), new StyleConfig(StyleConfig.Align.CENTER, gray, 20)));
+                R.string.recibo_title_informe_diario), new StyleConfig(StyleConfig.Align.CENTER, gray,20)));
 
-        PrintRow.printOperador(context, printRows, gray, 20);
 
         printRows.add(new PrintRow(context.getResources().getString(
-                R.string.recibo_num_transacciones), String.valueOf(listaDetalle.size()), new StyleConfig(StyleConfig.Align.LEFT, gray)));
-        printRows.add(new PrintRow(context.getResources().getString(
-                R.string.recibo_num_anulaciones), "0", new StyleConfig(StyleConfig.Align.LEFT, gray, 30)));
+                R.string.recibo_separador_operador), new StyleConfig(StyleConfig.Align.LEFT, gray, StyleConfig.FontSize.F1)));
+        PrintRow.printOperador(context, printRows, gray, 10);
 
         printRows.add(new PrintRow(context.getResources().getString(
-                R.string.report_text_numero_transaccion), context.getResources().getString(
-                R.string.report_text_valor), new StyleConfig(StyleConfig.Align.LEFT, gray, 10)));
+                R.string.recibo_fecha), getDateTime(), new StyleConfig(StyleConfig.Align.LEFT, gray, 20)));
+
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_separador_detalle), new StyleConfig(StyleConfig.Align.LEFT, gray, StyleConfig.FontSize.F1)));
+
+
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_title_transaccion_aprobadas), new StyleConfig(StyleConfig.Align.LEFT, gray, 10)));
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_text_transaccion), context.getResources().getString(
+                R.string.recibo_text_valor), new StyleConfig(StyleConfig.Align.LEFT, gray, 10)));
 
         for (Transaccion modelTransaccion : listaDetalle) {
-
             if (modelTransaccion.getTipo_transaccion() == Transaccion.TIPO_TRANSACCION_CONSUMO) {
-                totalConsumo++;
-                printRows.add(new PrintRow(context.getResources().getString(
-                        R.string.recibo_separador_fecha, modelTransaccion.getRegistro()), new StyleConfig(StyleConfig.Align.LEFT, gray, StyleConfig.FontSize.F1)));
-                printRows.add(new PrintRow(modelTransaccion.getNumero_cargo(), String.valueOf(modelTransaccion.getValor()), new StyleConfig(StyleConfig.Align.LEFT, gray)));
+                totalConsumo += modelTransaccion.getValor();
+//                printRows.add(new PrintRow(context.getResources().getString(
+//                        R.string.recibo_separador_fecha, modelTransaccion.getRegistro()), new StyleConfig(StyleConfig.Align.LEFT, gray, StyleConfig.FontSize.F1)));
+                printRows.add(new PrintRow(modelTransaccion.getNumero_cargo(), PrintRow.numberFormat(modelTransaccion.getValor()), new StyleConfig(StyleConfig.Align.LEFT, gray, 4)));
             } else {
                 listaAnulaciones.add(modelTransaccion);
             }
+        }
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_separador_linea), new StyleConfig(StyleConfig.Align.LEFT, gray, StyleConfig.FontSize.F1, 10)));
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_total), PrintRow.numberFormat(totalConsumo), new StyleConfig(StyleConfig.Align.LEFT, gray)));
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_separador_linea), new StyleConfig(StyleConfig.Align.LEFT, gray, StyleConfig.FontSize.F1, 20)));
 
+
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_title_transaccion_anuladas), new StyleConfig(StyleConfig.Align.LEFT, gray, 10)));
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_text_transaccion), context.getResources().getString(
+                R.string.recibo_text_valor), new StyleConfig(StyleConfig.Align.LEFT, gray, 10)));
+
+        for (Transaccion modelTransaccion : listaAnulaciones) {
+            totalAnulacion += modelTransaccion.getValor();
+//                printRows.add(new PrintRow(context.getResources().getString(
+//                        R.string.recibo_separador_fecha, modelTransaccion.getRegistro()), new StyleConfig(StyleConfig.Align.LEFT, gray, StyleConfig.FontSize.F1)));
+            printRows.add(new PrintRow(modelTransaccion.getNumero_cargo(), PrintRow.numberFormat(modelTransaccion.getValor()), new StyleConfig(StyleConfig.Align.LEFT, gray, 4)));
 
         }
 
         printRows.add(new PrintRow(context.getResources().getString(
-                R.string.recibo_separador_linea), new StyleConfig(StyleConfig.Align.LEFT, gray, 50)));
+                R.string.recibo_separador_linea), new StyleConfig(StyleConfig.Align.LEFT, gray, StyleConfig.FontSize.F1, 10)));
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_total), PrintRow.numberFormat(totalAnulacion), new StyleConfig(StyleConfig.Align.LEFT, gray)));
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_separador_linea), new StyleConfig(StyleConfig.Align.LEFT, gray, StyleConfig.FontSize.F1, 20)));
+
+
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_num_transacciones), String.valueOf(listaDetalle.size() - listaAnulaciones.size()), new StyleConfig(StyleConfig.Align.LEFT, gray)));
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_num_anulaciones), "" + listaAnulaciones.size(), new StyleConfig(StyleConfig.Align.LEFT, gray, 30)));
+
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_entidad), new StyleConfig(StyleConfig.Align.CENTER, gray, StyleConfig.FontSize.F3)));
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_vigilado), new StyleConfig(StyleConfig.Align.CENTER, gray, StyleConfig.FontSize.F3, 60)));
+
         printRows.add(new PrintRow(".", new StyleConfig(StyleConfig.Align.LEFT, 1)));
 
         int status = new PrinterHandler().imprimerTexto(printRows);
@@ -162,13 +204,15 @@ public class ReimpresionScreenRepositoryImpl implements ReimpresionScreenReposit
     @Override
     public void imprimirReporteGeneral(Context context) {
 
+        ArrayList<Transaccion> listaDetalle = AppDatabase.getInstance(context).obtenerDetallesTransaccion();
+
+        int totalConsumo = 0, totalAnulacion = 0;
+
+        ArrayList<Transaccion> listaAnulaciones = new ArrayList<Transaccion>();
+
         ConfigurationPrinter configurationPrinter = AppDatabase.getInstance(context).getConfigurationPrinter();
 
         int gray = configurationPrinter.getGray_level();
-
-        ArrayList<Transaccion> listaDetalle = AppDatabase.getInstance(context).obtenerDetallesTransaccion();
-
-        int valor = 0;
 
         // creamos el ArrayList se que encarga de almacenar los rows del recibo
         ArrayList<PrintRow> printRows = new ArrayList<PrintRow>();
@@ -176,27 +220,83 @@ public class ReimpresionScreenRepositoryImpl implements ReimpresionScreenReposit
         //Se agrega el logo al primer renglon del recibo y se coloca en el centro
         printRows.add(PrintRow.printLogo(context, gray));
 
+        PrintRow.printCofrem(context, printRows, gray, 10);
+
         //se siguen agregando cado auno de los String a los renglones (Rows) del recibo para imprimir
         printRows.add(new PrintRow(context.getResources().getString(
-                R.string.report_text_title_reporte_general), new StyleConfig(StyleConfig.Align.CENTER, gray)));
-        printRows.add(new PrintRow(getDateTime(), new StyleConfig(StyleConfig.Align.CENTER, gray, 20)));
+                R.string.recibo_title_informe_general), new StyleConfig(StyleConfig.Align.CENTER, gray,20)));
 
-        PrintRow.printOperador(context, printRows, gray, 1);
 
         printRows.add(new PrintRow(context.getResources().getString(
-                R.string.recibo_num_transacciones), String.valueOf(listaDetalle.size()), new StyleConfig(StyleConfig.Align.LEFT, gray)));
+                R.string.recibo_separador_operador), new StyleConfig(StyleConfig.Align.LEFT, gray, StyleConfig.FontSize.F1)));
+        PrintRow.printOperador(context, printRows, gray, 10);
 
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_fecha), getDateTime(), new StyleConfig(StyleConfig.Align.LEFT, gray, 20)));
+
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_separador_detalle), new StyleConfig(StyleConfig.Align.LEFT, gray, StyleConfig.FontSize.F1)));
+
+
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_title_transaccion_aprobadas), new StyleConfig(StyleConfig.Align.LEFT, gray, 10)));
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_text_transa)+ "  " +context.getResources().getString(
+                R.string.recibo_text_fecha), context.getResources().getString(
+                R.string.recibo_text_valor), new StyleConfig(StyleConfig.Align.LEFT, gray, 10)));
 
         for (Transaccion modelTransaccion : listaDetalle) {
-
-            valor += modelTransaccion.getValor();
+            if (modelTransaccion.getTipo_transaccion() == Transaccion.TIPO_TRANSACCION_CONSUMO) {
+                totalConsumo += modelTransaccion.getValor();
+//                printRows.add(new PrintRow(context.getResources().getString(
+//                        R.string.recibo_separador_fecha, modelTransaccion.getRegistro()), new StyleConfig(StyleConfig.Align.LEFT, gray, StyleConfig.FontSize.F1)));
+                printRows.add(new PrintRow(modelTransaccion.getNumero_cargo() + "  " + modelTransaccion.getFecha_server(), PrintRow.numberFormat(modelTransaccion.getValor()), new StyleConfig(StyleConfig.Align.LEFT, gray, 4)));
+            } else {
+                listaAnulaciones.add(modelTransaccion);
+            }
         }
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_separador_linea), new StyleConfig(StyleConfig.Align.LEFT, gray, StyleConfig.FontSize.F1, 10)));
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_total), PrintRow.numberFormat(totalConsumo), new StyleConfig(StyleConfig.Align.LEFT, gray)));
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_separador_linea), new StyleConfig(StyleConfig.Align.LEFT, gray, StyleConfig.FontSize.F1, 20)));
+
 
         printRows.add(new PrintRow(context.getResources().getString(
-                R.string.recibo_valor_total), String.valueOf(valor), new StyleConfig(StyleConfig.Align.LEFT, gray)));
+                R.string.recibo_title_transaccion_anuladas), new StyleConfig(StyleConfig.Align.LEFT, gray, 10)));
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_text_transa)+ "  " +context.getResources().getString(
+                R.string.recibo_text_fecha), context.getResources().getString(
+                R.string.recibo_text_valor), new StyleConfig(StyleConfig.Align.LEFT, gray, 10)));
+
+        for (Transaccion modelTransaccion : listaAnulaciones) {
+            totalAnulacion += modelTransaccion.getValor();
+//                printRows.add(new PrintRow(context.getResources().getString(
+//                        R.string.recibo_separador_fecha, modelTransaccion.getRegistro()), new StyleConfig(StyleConfig.Align.LEFT, gray, StyleConfig.FontSize.F1)));
+            printRows.add(new PrintRow(modelTransaccion.getNumero_cargo() + "  " + modelTransaccion.getFecha_server(), PrintRow.numberFormat(modelTransaccion.getValor()), new StyleConfig(StyleConfig.Align.LEFT, gray, 4)));
+
+        }
+//        printRows.add(new PrintRow("0000070" + "  " + "2017-08-17", PrintRow.numberFormat(3000000), new StyleConfig(StyleConfig.Align.LEFT, gray, 4)));
 
         printRows.add(new PrintRow(context.getResources().getString(
-                R.string.recibo_separador_linea), new StyleConfig(StyleConfig.Align.LEFT, gray, 50)));
+                R.string.recibo_separador_linea), new StyleConfig(StyleConfig.Align.LEFT, gray, StyleConfig.FontSize.F1, 10)));
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_total), PrintRow.numberFormat(totalAnulacion), new StyleConfig(StyleConfig.Align.LEFT, gray)));
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_separador_linea), new StyleConfig(StyleConfig.Align.LEFT, gray, StyleConfig.FontSize.F1, 20)));
+
+
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_num_transacciones), String.valueOf(listaDetalle.size() - listaAnulaciones.size()), new StyleConfig(StyleConfig.Align.LEFT, gray)));
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_num_anulaciones), "" + listaAnulaciones.size(), new StyleConfig(StyleConfig.Align.LEFT, gray, 30)));
+
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_entidad), new StyleConfig(StyleConfig.Align.CENTER, gray, StyleConfig.FontSize.F3)));
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_vigilado), new StyleConfig(StyleConfig.Align.CENTER, gray, StyleConfig.FontSize.F3, 60)));
+
         printRows.add(new PrintRow(".", new StyleConfig(StyleConfig.Align.LEFT, 1)));
 
         int status = new PrinterHandler().imprimerTexto(printRows);
@@ -329,7 +429,7 @@ public class ReimpresionScreenRepositoryImpl implements ReimpresionScreenReposit
 
         //se siguen agregando cado auno de los String a los renglones (Rows) del recibo para imprimir
         printRows.add(new PrintRow(context.getResources().getString(
-                R.string.recibo_reimpresion), new StyleConfig(StyleConfig.Align.CENTER, gray, 20)));
+                R.string.recibo_title_reimpresion), new StyleConfig(StyleConfig.Align.CENTER, gray, 20)));
 
         printRows.add(new PrintRow(context.getResources().getString(
                 R.string.recibo_separador_operador), new StyleConfig(StyleConfig.Align.LEFT, gray, StyleConfig.FontSize.F1)));
@@ -342,7 +442,7 @@ public class ReimpresionScreenRepositoryImpl implements ReimpresionScreenReposit
         if (modelTransaccionAnulada == null)
             printRows.add(new PrintRow(context.getResources().getString(
                     R.string.recibo_fecha), modelTransaccion.getRegistro(), new StyleConfig(StyleConfig.Align.LEFT, gray, 20)));
-        else{
+        else {
             printRows.add(new PrintRow(context.getResources().getString(
                     R.string.recibo_fecha), modelTransaccion.getRegistro(), new StyleConfig(StyleConfig.Align.LEFT, gray)));
             printRows.add(new PrintRow(context.getResources().getString(
@@ -367,21 +467,21 @@ public class ReimpresionScreenRepositoryImpl implements ReimpresionScreenReposit
                 R.string.recibo_separador_detalle), new StyleConfig(StyleConfig.Align.LEFT, gray, StyleConfig.FontSize.F1)));
 
         printRows.add(new PrintRow(context.getResources().getString(
-                R.string.recibo_valor), String.valueOf(modelTransaccion.getValor()), new StyleConfig(StyleConfig.Align.LEFT, gray)));
+                R.string.recibo_valor), PrintRow.numberFormat(modelTransaccion.getValor()), new StyleConfig(StyleConfig.Align.LEFT, gray)));
 
         printRows.add(new PrintRow(context.getResources().getString(
                 R.string.recibo_separador_linea), new StyleConfig(StyleConfig.Align.LEFT, gray, StyleConfig.FontSize.F1, 10)));
         printRows.add(new PrintRow(context.getResources().getString(
-                R.string.recibo_total), String.valueOf(modelTransaccion.getValor()), new StyleConfig(StyleConfig.Align.LEFT, gray)));
+                R.string.recibo_total), PrintRow.numberFormat(modelTransaccion.getValor()), new StyleConfig(StyleConfig.Align.LEFT, gray)));
 
         if (modelTransaccionAnulada == null)
-        printRows.add(new PrintRow(context.getResources().getString(
-                R.string.recibo_separador_linea), new StyleConfig(StyleConfig.Align.LEFT, gray, StyleConfig.FontSize.F1, 30)));
-        else{
+            printRows.add(new PrintRow(context.getResources().getString(
+                    R.string.recibo_separador_linea), new StyleConfig(StyleConfig.Align.LEFT, gray, StyleConfig.FontSize.F1, 30)));
+        else {
             printRows.add(new PrintRow(context.getResources().getString(
                     R.string.recibo_separador_linea), new StyleConfig(StyleConfig.Align.LEFT, gray, StyleConfig.FontSize.F1, 10)));
             printRows.add(new PrintRow(context.getResources().getString(
-                    R.string.recibo_valor_anulado), String.valueOf(modelTransaccionAnulada.getValor()), new StyleConfig(StyleConfig.Align.LEFT, gray,30)));
+                    R.string.recibo_valor_anulado), PrintRow.numberFormat(modelTransaccionAnulada.getValor()), new StyleConfig(StyleConfig.Align.LEFT, gray, 30)));
 
         }
 

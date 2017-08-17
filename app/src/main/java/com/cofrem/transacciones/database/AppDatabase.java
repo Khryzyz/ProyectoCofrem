@@ -1132,8 +1132,12 @@ public final class AppDatabase extends SQLiteOpenHelper {
             modelTransaccion.setNumero_tarjeta(cursorQuery.getString(3));
             modelTransaccion.setValor(cursorQuery.getInt(4));
             modelTransaccion.setTipo_transaccion(cursorQuery.getInt(5));
-            modelTransaccion.setRegistro(cursorQuery.getString(6));
-            modelTransaccion.setEstado(cursorQuery.getInt(7));
+            modelTransaccion.setNumero_documento(cursorQuery.getString(6));
+            modelTransaccion.setNombre_usuario(cursorQuery.getString(7));
+            modelTransaccion.setFecha_server(cursorQuery.getString(8));
+            modelTransaccion.setHora_server(cursorQuery.getString(9));
+            modelTransaccion.setRegistro(cursorQuery.getString(10));
+            modelTransaccion.setEstado(cursorQuery.getInt(11));
 
             lista.add(modelTransaccion);
 

@@ -25,14 +25,16 @@
     <string name="recibo_terminal">Terminal: %s</string>
 
     <string name="recibo_reimpresion_fecha">Valor</string>
-    <string name="recibo_reimpresion">[R E I M P R E S I O N]</string>
     <string name="recibo_anulado">Recibo Anulado</string>
     <string name="recibo_numero_tarjeta">Tarjeta Numero: </string>
     <string name="recibo_numero_documento">Documento: </string>
     <string name="recibo_numero_transaccion">Transaccion No.: </string>
 
     <string name="recibo_text_numero_transaccion">Transaccion No. </string>
-    <string name="recibo_text_valor">Valor </string>
+    <string name="recibo_text_transaccion">Transaccion </string>
+    <string name="recibo_text_transa">Transa.</string>
+    <string name="recibo_text_valor">Valor</string>
+    <string name="recibo_text_fecha">Fecha</string>
 
     <string name="recibo_ingresa_firma">FIRMA:________________________</string>
     <string name="recibo_ingresa_cc"   >C.C:__________________________</string>
@@ -51,7 +53,12 @@
     <string name="recibo_title_transaccion_consumo">Transacciones Consumo</string>
     <string name="recibo_title_transaccion_anulacion">Transacciones Anuladas </string>
     <string name="recibo_title_transaccion_anulada">Transaccion Anulada</string>
-
+    <string name="recibo_title_transaccion_aprobadas">Aprobadas:</string>
+    <string name="recibo_title_transaccion_anuladas">Anuladas:</string>
+    <string name="recibo_title_reimpresion">[R E I M P R E S I O N]</string>
+    <string name="recibo_title_anulacion">A N U L A C I O N</string>
+    <string name="recibo_title_informe_diario">I N F O R M E   D I A R I O</string>
+    <string name="recibo_title_informe_general">I N F O R M E G E N R A L</string>
 
 
     <string name="recibo_nit_cofrem"> 892000146-3 </string>
@@ -63,7 +70,7 @@
     <string name="recibo_vigilado">VIGILADO SUPERSUBSIDIO</string>
 
     <string name="recibo_copia">Copia: {COMERCIO,CLIENTE}</string>
-    <string name="recibo_mensaje_final">Pagaré incondicionalmente y a la orden del acreedor el valor total de este Pagaré junto con los intereses a las tasas máximas permitidas por la ley.</string>
+    <string name="recibo_mensaje_final">PAGARE INCONDICIONALMENTE Y A LA ORDEN DEL ACREEDOR EL VALOR TOTAL DE ESTE PAGARE JUNTO CON LOS INTERESES A LAS TASAS MAXIMAS PERMITIDAS POR LA LEY.</string>
 
 
 
