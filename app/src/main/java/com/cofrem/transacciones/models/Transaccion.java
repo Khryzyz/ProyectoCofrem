@@ -76,6 +76,11 @@ public class Transaccion {
     private int tipo_encriptacion;
     private int tipo_transaccion;
 
+    private String nombre_usuario;
+    private String fecha_server;
+    private String hora_server;
+
+
     private String registro;
     private int estado;
 
@@ -197,5 +202,33 @@ public class Transaccion {
 
     public void setEstado(int estado) {
         this.estado = estado;
+    }
+
+    public String getNombre_usuario() {
+        return nombre_usuario;
+    }
+
+    public void setNombre_usuario(String nombre_usuario) {
+        this.nombre_usuario = nombre_usuario;
+    }
+
+    public String getFecha_server() {
+        return fecha_server;
+    }
+
+    public void setFecha_server(String fecha_server) {
+        this.fecha_server = fecha_server;
+    }
+
+    public String getHora_server() {
+        return hora_server;
+    }
+
+    public void setHora_server(String hora_server) {
+        this.hora_server = hora_server;
+    }
+
+    public  String getFullFechaServer(){
+        return  fecha_server + "  " + hora_server;
     }
 }

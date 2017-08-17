@@ -248,16 +248,16 @@ public class Printer {
                 try {
                     if(printItem.styleConfig.fontSize == StyleConfig.FontSize.F1) {
                         ThermalPrinter.setFontSize(1);
-                        ThermalPrinter.enlargeFontSize(1, 2);
+                        ThermalPrinter.enlargeFontSize(1, 1);
                     } else if(printItem.styleConfig.fontSize == StyleConfig.FontSize.F3) {
-                        ThermalPrinter.setFontSize(1);
-                        ThermalPrinter.enlargeFontSize(2, 2);
-                    } else if(printItem.styleConfig.fontSize == StyleConfig.FontSize.F4) {
-                        ThermalPrinter.setFontSize(2);
-                        ThermalPrinter.enlargeFontSize(2, 2);
-                    } else {
                         ThermalPrinter.setFontSize(2);
                         ThermalPrinter.enlargeFontSize(1, 1);
+                    } else if(printItem.styleConfig.fontSize == StyleConfig.FontSize.F4) {
+                        ThermalPrinter.setFontSize(1);
+                        ThermalPrinter.enlargeFontSize(2, 2);
+                    } else {
+                        ThermalPrinter.setFontSize(1);
+                        ThermalPrinter.enlargeFontSize(1, 2);
                     }
 
                     if(printItem.styleConfig.align == StyleConfig.Align.CENTER) {

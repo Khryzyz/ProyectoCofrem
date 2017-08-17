@@ -983,14 +983,68 @@ public final class AppDatabase extends SQLiteOpenHelper {
         return modelEstablishment;
     }
 
+
+    public String obtenerFechaTransaccionNumCargo(String cargo){
+        Cursor cursorQuery;
+
+        cursorQuery = getWritableDatabase().rawQuery(
+                "SELECT " + DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_FECHA_SERVER + " , " +
+                        DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_HORA_SERVER +
+                        " FROM " + DatabaseManager.TableTransacciones.TABLE_NAME_TRANSACCIONES +
+                        " WHERE " + DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_TIPO_TRANSACCION + " = " + Transaccion.TIPO_TRANSACCION_ANULACION +
+                        " ORDER BY " + DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_REGISTRO + " DESC " +
+                        " LIMIT 1", null
+        );
+
+        cursorQuery.moveToFirst();
+
+        return cursorQuery.getString(0) + "  " + cursorQuery.getString(1);
+    }
+
+
+
+    public Transaccion obtenerUltimaTransaccionAnulada(){
+        Cursor cursorQuery;
+
+        cursorQuery = getWritableDatabase().rawQuery(
+                "SELECT * " +
+                        " FROM " + DatabaseManager.TableTransacciones.TABLE_NAME_TRANSACCIONES +
+                        " WHERE " + DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_TIPO_TRANSACCION + " = " + Transaccion.TIPO_TRANSACCION_ANULACION +
+                        " ORDER BY " + DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_REGISTRO + " DESC " +
+                        " LIMIT 1", null
+        );
+
+        Transaccion modelTransaccion = new Transaccion();
+
+        cursorQuery.moveToFirst();
+
+        modelTransaccion.setId(cursorQuery.getInt(0));
+        modelTransaccion.setTipo_servicio(cursorQuery.getInt(1));
+        modelTransaccion.setNumero_cargo(cursorQuery.getString(2));
+        modelTransaccion.setNumero_tarjeta(cursorQuery.getString(3));
+        modelTransaccion.setValor(cursorQuery.getInt(4));
+        modelTransaccion.setTipo_transaccion(cursorQuery.getInt(5));
+        modelTransaccion.setNumero_documento(cursorQuery.getString(6));
+        modelTransaccion.setNombre_usuario(cursorQuery.getString(7));
+        modelTransaccion.setFecha_server(cursorQuery.getString(8));
+        modelTransaccion.setHora_server(cursorQuery.getString(9));
+        modelTransaccion.setRegistro(cursorQuery.getString(10));
+        modelTransaccion.setEstado(cursorQuery.getInt(11));
+
+        return  modelTransaccion;
+
+    }
+
+
+
     /**
      * Metodo para Obtener ultima  transaccion
      *
      * @return Transaccion ultima transaccion realizada
      */
-    public Transaccion obtenerUltimaTransaccion() {
+    public ArrayList<Transaccion> obtenerUltimaTransaccion() {
 
-        Transaccion modelTransaccion = new Transaccion();
+        String numero_cargo = "";
 
         Cursor cursorQuery;
 
@@ -1002,19 +1056,12 @@ public final class AppDatabase extends SQLiteOpenHelper {
         );
 
         if (cursorQuery.moveToFirst()) {
-            modelTransaccion.setId(cursorQuery.getInt(0));
-            modelTransaccion.setTipo_servicio(cursorQuery.getInt(1));
-            modelTransaccion.setNumero_cargo(cursorQuery.getString(2));
-            modelTransaccion.setNumero_tarjeta(cursorQuery.getString(3));
-            modelTransaccion.setValor(cursorQuery.getInt(4));
-            modelTransaccion.setTipo_transaccion(cursorQuery.getInt(5));
-            modelTransaccion.setRegistro(cursorQuery.getString(6));
-            modelTransaccion.setEstado(cursorQuery.getInt(7));
+             numero_cargo = cursorQuery.getString(2);
         }
 
         cursorQuery.close();
 
-        return modelTransaccion;
+        return obtenerTransaccionByNumeroCargo(numero_cargo);
     }
 
     /**
@@ -1023,8 +1070,9 @@ public final class AppDatabase extends SQLiteOpenHelper {
      * @param numCargo String numero de cargo para la consulta de la transaccion
      * @return Transaccion obtiene la transaccion segun el numero de cargo
      */
-    public Transaccion obtenerTransaccionByNumeroCargo(String numCargo) {
-        Transaccion modelTransaccion = new Transaccion();
+    public ArrayList<Transaccion> obtenerTransaccionByNumeroCargo(String numCargo) {
+
+        ArrayList<Transaccion> lista = new ArrayList<>();
 
         Cursor cursorQuery;
 
@@ -1035,20 +1083,29 @@ public final class AppDatabase extends SQLiteOpenHelper {
                 , null
         );
 
-        if (cursorQuery.moveToFirst()) {
+        while (cursorQuery.moveToNext()) {
+            Transaccion modelTransaccion = new Transaccion();
+
             modelTransaccion.setId(cursorQuery.getInt(0));
             modelTransaccion.setTipo_servicio(cursorQuery.getInt(1));
             modelTransaccion.setNumero_cargo(cursorQuery.getString(2));
             modelTransaccion.setNumero_tarjeta(cursorQuery.getString(3));
             modelTransaccion.setValor(cursorQuery.getInt(4));
             modelTransaccion.setTipo_transaccion(cursorQuery.getInt(5));
-            modelTransaccion.setRegistro(cursorQuery.getString(6));
-            modelTransaccion.setEstado(cursorQuery.getInt(7));
+            modelTransaccion.setNumero_documento(cursorQuery.getString(6));
+            modelTransaccion.setNombre_usuario(cursorQuery.getString(7));
+            modelTransaccion.setFecha_server(cursorQuery.getString(8));
+            modelTransaccion.setHora_server(cursorQuery.getString(9));
+            modelTransaccion.setRegistro(cursorQuery.getString(10));
+            modelTransaccion.setEstado(cursorQuery.getInt(11));
+
+            lista.add(modelTransaccion);
+
         }
 
         cursorQuery.close();
 
-        return modelTransaccion;
+        return lista;
     }
 
     /**
@@ -1056,7 +1113,7 @@ public final class AppDatabase extends SQLiteOpenHelper {
      *
      * @return Arraylist destalles de la transaccion
      */
-    public ArrayList obtenerDetallesTransaccion() {
+    public ArrayList<Transaccion> obtenerDetallesTransaccion() {
 
         ArrayList<Transaccion> lista = new ArrayList<>();
 
