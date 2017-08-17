@@ -45,6 +45,8 @@
 
     <string name="transaction_error_valor_monto_maximo">El valor máximo del consumo es de $3.000.000</string>
 
+    <string name="transaction_error_valor_transaccion_no_valido">El monto registrado no es valido</string>
+
     <string name="transaction_text_verifacion_valor_transaccion">Valor del consumo:</string>
 
     <string name="transaction_text_numero_cargo">Ingrese el número de cargo:</string>
@@ -60,6 +62,8 @@
     <string name="transaction_error_format_clave_usuario">La contraseña debe tener exactamente 4 caracteres.</string>
 
     <string name="transaction_error_format_clave_administrador">La contraseña de administración debe tener exactamente 4 caracteres.</string>
+
+    <string name="transaction_error_format_numero_cargo">El numero de cargo ingresado no es valido.</string>
 
     <!-- Respuestas de estado de la transaccion -->
 
