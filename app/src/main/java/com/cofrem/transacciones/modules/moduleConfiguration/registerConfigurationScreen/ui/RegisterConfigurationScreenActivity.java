@@ -29,6 +29,8 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.FocusChange;
+import org.androidannotations.annotations.LongClick;
+import org.androidannotations.annotations.Touch;
 import org.androidannotations.annotations.ViewById;
 
 import static android.view.KeyEvent.KEYCODE_ENTER;
@@ -36,10 +38,10 @@ import static android.view.KeyEvent.KEYCODE_ENTER;
 @EActivity(R.layout.activity_configuration_register_screen)
 public class RegisterConfigurationScreenActivity extends Activity implements RegisterConfigurationScreenView {
 
-    /**
-     * #############################################################################################
-     * Declaracion de componentes y variables
-     * #############################################################################################
+    /*
+      #############################################################################################
+      Declaracion de componentes y variables
+      #############################################################################################
      */
 
     //Almacena el valor de la pantalla anterior
@@ -49,8 +51,7 @@ public class RegisterConfigurationScreenActivity extends Activity implements Reg
      * Declaracion de los Contoles
      */
 
-    // Controles del header
-
+    //Elementos del header
     @ViewById
     TextView txvHeaderIdDispositivo;
     @ViewById
@@ -59,7 +60,8 @@ public class RegisterConfigurationScreenActivity extends Activity implements Reg
     TextView txvHeaderEstablecimiento;
     @ViewById
     TextView txvHeaderPunto;
-    // Contents del modulo
+
+    //Controles del modulo
     @ViewById
     RelativeLayout bodyContentConfigurationPassTecnico;
     @ViewById
@@ -72,7 +74,6 @@ public class RegisterConfigurationScreenActivity extends Activity implements Reg
     RelativeLayout bodyContentConfigurationExito;
     @ViewById
     FrameLayout frlPgbHldRegisterScreen;
-
 
     //Paso configuracion_register_paso_pass_tecnico
     @ViewById
@@ -98,16 +99,13 @@ public class RegisterConfigurationScreenActivity extends Activity implements Reg
     @ViewById
     EditText edtConfiguracionRegisterDispositivoContenidoValor;
 
-    /**
-     * Model que almacena la configuracion del dispositivo
-     */
+    //Model que almacena la configuracion del dispositivo
     Configurations modelConfiguration = new Configurations();
+
     String passwordAdmin = "";
 
-    /**
-     * Pasos definidos
-     */
-    int pasoRegisterConfiguration = 0; // Define el paso actual
+    //Pasos definidos
+    int pasoRegisterConfiguration = 0; //Define el paso actual
 
     final static int PASO_PASS_TECNICO = 0;
     final static int PASO_HOST = 1;
@@ -168,11 +166,14 @@ public class RegisterConfigurationScreenActivity extends Activity implements Reg
         //Llamada al metodo onCreate del presentador para el registro del bus de datos
         registerConfigurationScreenPresenter.onCreate();
 
-        // Metodo para colocar la orientacion de la app
+        //Metodo para colocar la orientacion de la app
         setOrientation();
 
         //Metodo que oculta por defecto los include de la vista
         inicializarOcultamientoVistas();
+
+        //Metodo que llena el header de la App
+        setInfoHeader();
 
         //Inicializa el paso del registro de la configuracion
         pasoRegisterConfiguration = PASO_PASS_TECNICO;
@@ -230,7 +231,7 @@ public class RegisterConfigurationScreenActivity extends Activity implements Reg
 
             case KEYCODE_ENTER:
 
-                // Ocula el soft keyboard al presionar la tecla enter
+                //Ocula el soft keyboard al presionar la tecla enter
                 hideKeyBoard();
 
                 switch (pasoRegisterConfiguration) {
@@ -525,7 +526,7 @@ public class RegisterConfigurationScreenActivity extends Activity implements Reg
      */
     private void showProgress() {
         //TODO: VERIFICAR QUE ESTA MOSTRANDO LA BARRA DE PROGRESO
-        // Muestra la barra  de progreso
+        //Muestra la barra  de progreso
         frlPgbHldRegisterScreen.setVisibility(View.VISIBLE);
         frlPgbHldRegisterScreen.bringToFront();
         frlPgbHldRegisterScreen.invalidate();
@@ -606,13 +607,20 @@ public class RegisterConfigurationScreenActivity extends Activity implements Reg
     /**
      * Metodo que oculta el teclado al presionar el EditText
      */
+    @LongClick({R.id.edtConfiguracionRegisterPassTecnicoContenidoClave,
+            R.id.edtConfiguracionRegisterHostContenidoValor,
+            R.id.edtConfiguracionRegisterPortContenidoValor,
+            R.id.edtConfiguracionRegisterDispositivoContenidoValor,
+    })
     @Click({R.id.edtConfiguracionRegisterPassTecnicoContenidoClave,
             R.id.edtConfiguracionRegisterHostContenidoValor,
-            R.id.edtConfiguracionRegisterPortContenidoValor
+            R.id.edtConfiguracionRegisterPortContenidoValor,
+            R.id.edtConfiguracionRegisterDispositivoContenidoValor,
     })
-    @FocusChange({R.id.edtConfiguracionRegisterPassTecnicoContenidoClave,
+    @Touch({R.id.edtConfiguracionRegisterPassTecnicoContenidoClave,
             R.id.edtConfiguracionRegisterHostContenidoValor,
-            R.id.edtConfiguracionRegisterPortContenidoValor
+            R.id.edtConfiguracionRegisterPortContenidoValor,
+            R.id.edtConfiguracionRegisterDispositivoContenidoValor,
     })
     public void hideKeyBoard() {
 
@@ -652,7 +660,7 @@ public class RegisterConfigurationScreenActivity extends Activity implements Reg
     @Click(R.id.btnConfiguracionRegisterPassTecnicoBotonAceptar)
     public void validarPasswordTecnico() {
 
-        // Se obtiene el texto de la contraseña
+        //Se obtiene el texto de la contraseña
         passwordAdmin = edtConfiguracionRegisterPassTecnicoContenidoClave.getText().toString();
 
         if (passwordAdmin.length() == 4) {
@@ -703,17 +711,33 @@ public class RegisterConfigurationScreenActivity extends Activity implements Reg
     @Click(R.id.btnConfiguracionRegisterPortBotonAceptar)
     public void registrarPort() {
 
-        //Registra el valor del port en el modelo de la configuracion
-        modelConfiguration.setPort(Integer.parseInt(edtConfiguracionRegisterPortContenidoValor.getText().toString()));
+        //Se obtiene el texto del puerto
+        String port = edtConfiguracionRegisterPortContenidoValor.getText().toString();
 
-        //Oculta la vista del Port de conexion
-        bodyContentConfigurationPort.setVisibility(View.GONE);
+        //Vacia la caja del valor del puerto
+        edtConfiguracionRegisterPortContenidoValor.setText("");
 
-        //Muestra la vista del codigo de dispositivo
-        bodyContentConfigurationDispositivo.setVisibility(View.VISIBLE);
+        if (port.length() > 0 && port.length() < 6) {
 
-        //Actualiza el paso actual
-        pasoRegisterConfiguration++;
+            //Registra el valor del port en el modelo de la configuracion
+            modelConfiguration.setPort(Integer.parseInt(port));
+
+            //Oculta la vista del Port de conexion
+            bodyContentConfigurationPort.setVisibility(View.GONE);
+
+            //Muestra la vista del codigo de dispositivo
+            bodyContentConfigurationDispositivo.setVisibility(View.VISIBLE);
+
+            //Actualiza el paso actual
+            pasoRegisterConfiguration++;
+
+        } else {
+
+            //Muestra el mensaje de error de formato de la contraseña
+            Toast.makeText(this, R.string.configuration_error_format_puerto, Toast.LENGTH_SHORT).show();
+
+        }
+
     }
 
     /**
@@ -722,17 +746,35 @@ public class RegisterConfigurationScreenActivity extends Activity implements Reg
     @Click(R.id.btnConfiguracionRegisterDispositivoBotonAceptar)
     public void registrarDispositivo() {
 
-        //Registra el valor del codigo de dispositivo en el modelo de la configuracion
-        modelConfiguration.setCodigoDispositivo(edtConfiguracionRegisterDispositivoContenidoValor.getText().toString());
+        //Se obtiene el texto del codigo del dispositivo
+        String codigoDispositivo = edtConfiguracionRegisterDispositivoContenidoValor.getText().toString();
 
-        showProgress();
+        //Vacia la caja del valor del codigo del dispositivo
+        edtConfiguracionRegisterDispositivoContenidoValor.setText("");
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                registerConfigurationScreenPresenter.registrarConfiguracionConexion(RegisterConfigurationScreenActivity.this, modelConfiguration);
-            }
-        }, 1000);
+        if (codigoDispositivo.length() == 2) {
+
+            //Registra el valor del codigo de dispositivo en el modelo de la configuracion
+            modelConfiguration.setCodigoDispositivo(codigoDispositivo);
+
+            showProgress();
+
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    registerConfigurationScreenPresenter.registrarConfiguracionConexion(RegisterConfigurationScreenActivity.this, modelConfiguration);
+                }
+            }, 1000);
+
+            //Actualiza el paso actual
+            pasoRegisterConfiguration++;
+
+        } else {
+
+            //Muestra el mensaje de error de formato de la contraseña
+            Toast.makeText(this, R.string.configuration_error_format_codigo_establecimiento, Toast.LENGTH_SHORT).show();
+
+        }
 
 
     }

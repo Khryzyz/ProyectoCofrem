@@ -29,8 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/txvConfiguracionRegisterPassTecnicoClave"
         android:layout_marginBottom="@dimen/appMarginBottom"
-        android:maxLength="4"
-        android:text="8717" />
+        android:maxLength="4" />
 
     <Button
         android:id="@+id/btnConfiguracionRegisterPassTecnicoBotonCancelar"

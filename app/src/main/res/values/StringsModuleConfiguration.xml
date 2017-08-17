@@ -35,6 +35,8 @@
     <string name="configuration_text_exitosa">Exitosa.</string>
 
     <!-- Textos register configuration -->
+    <string name="configuration_error_format_puerto">El puerto debe tener entre 1 y 5 caracteres</string>
+    <string name="configuration_error_format_codigo_establecimiento">El codigo del establecimiento debe ser de 2 caracteres</string>
     <string name="configuration_error_format_clave_tecnica">La contraseña de administración debe tener exactamente 4 caracteres.</string>
     <string name="configuration_text_clave_valido">Contraseña valida.</string>
     <string name="configuration_text_clave_no_valido">Contraseña no valida, por favor verificar.</string>

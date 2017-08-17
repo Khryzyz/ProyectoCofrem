@@ -175,14 +175,11 @@ public class SplashScreenRepositoryImpl implements SplashScreenRepository {
 
             postEvent(SplashScreenEvent.onGetInfoHeaderSuccess);
 
-
-
         } else {
 
             postEvent(SplashScreenEvent.onGetInfoHeaderError);
 
         }
-
 
     }
 
