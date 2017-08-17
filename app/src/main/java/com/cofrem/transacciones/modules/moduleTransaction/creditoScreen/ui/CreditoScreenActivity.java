@@ -544,7 +544,7 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
         edtCreditoTransactionValorCompraValor.setText("");
 
         //El valor del consumo debe estar entre 1 y 3'000.000
-        if (valorCompra.length() > 0 && Integer.parseInt(valorCompra) >= 1 && Integer.parseInt(valorCompra) <= 3000000) {
+        if (valorCompra.length() > 0 && Integer.parseInt(valorCompra) >= 10000 && Integer.parseInt(valorCompra) <= 3000000) {
 
             //Registra el valor del consumo en el modelo de la transaccion
             modelTransaccion.setValor(Integer.parseInt(valorCompra));
@@ -563,7 +563,7 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
             //Muestra el mensaje de error de formato de la contraseña
             Toast.makeText(this, R.string.transaction_error_valor, Toast.LENGTH_SHORT).show();
 
-        } else if (Integer.parseInt(valorCompra) < 1) {
+        } else if (Integer.parseInt(valorCompra) < 10000) {
 
             //Muestra el mensaje de error de formato de la contraseña
             Toast.makeText(this, R.string.transaction_error_valor_monto_minimo, Toast.LENGTH_SHORT).show();
