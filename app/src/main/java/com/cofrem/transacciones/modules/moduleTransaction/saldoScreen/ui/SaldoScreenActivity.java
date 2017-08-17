@@ -87,9 +87,10 @@ public class SaldoScreenActivity extends Activity implements SaldoScreenView {
      */
     int pasoCreditoTransaction = 0; // Define el paso actual
 
-    final static int PASO_DESLIZAR_TARJETA = 0;
-    final static int PASO_CLAVE_USUARIO = 1;
-    final static int PASO_TRANSACCION_EXITOSA = 2;
+    final static int PASO_NUMERO_DOCUMENTO = 0;
+    final static int PASO_DESLICE_TARJETA = 1;
+    final static int PASO_CLAVE_USUARIO = 2;
+    final static int PASO_TRANSACCION_EXITOSA = 3;
 
     /**
      * #############################################################################################
@@ -124,7 +125,7 @@ public class SaldoScreenActivity extends Activity implements SaldoScreenView {
         setInfoHeader();
 
         //Inicializa el paso del registro de la configuracion
-        pasoCreditoTransaction = PASO_DESLIZAR_TARJETA;
+        pasoCreditoTransaction = PASO_DESLICE_TARJETA;
 
         //Primera ventana visible
         bodyContentSaldoDesliceTarjeta.setVisibility(View.VISIBLE);
@@ -173,7 +174,12 @@ public class SaldoScreenActivity extends Activity implements SaldoScreenView {
 
                 switch (pasoCreditoTransaction) {
 
-                    case PASO_DESLIZAR_TARJETA:
+                    case PASO_NUMERO_DOCUMENTO:
+                        //Metodo para mostrar la orden de deslizar la tarjeta
+                        deslizarTarjeta();
+                        break;
+
+                    case PASO_DESLICE_TARJETA:
                         //Metodo para mostrar la orden de deslizar la tarjeta
                         deslizarTarjeta();
                         break;
@@ -206,8 +212,11 @@ public class SaldoScreenActivity extends Activity implements SaldoScreenView {
 
         switch (pasoCreditoTransaction) {
 
+            case PASO_NUMERO_DOCUMENTO:
 
-            case PASO_DESLIZAR_TARJETA:
+                break;
+
+            case PASO_DESLICE_TARJETA:
 
                 break;
 
