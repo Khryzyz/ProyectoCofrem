@@ -75,19 +75,13 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
 
     //Paso transaction_credito_paso_valor_compra
     @ViewById
-    Button btnCreditoTransactionValorCompraBotonCancelar;
-    @ViewById
     EditText edtCreditoTransactionValorCompraValor;
 
     //Paso transaction_credito_paso_numero_documento
     @ViewById
-    Button btnCreditoTransactionNumeroDocumentoBotonCancelar;
-    @ViewById
     EditText edtCreditoTransactionNumeroDocumentoValor;
 
     //Paso transaction_credito_paso_verificacion_valor
-    @ViewById
-    Button btnCreditoTransactionVerificacionDatosBotonCancelar;
     @ViewById
     TextView txvCreditoTransactionVerificacionDatosValorCantidad;
     @ViewById
@@ -101,9 +95,11 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
 
     //Paso transaction_credito_paso_clave_usuario
     @ViewById
-    Button btnCreditoTransactionClaveUsuarioBotonCancelar;
-    @ViewById
     EditText edtCreditoTransactionClaveUsuarioContenidoClave;
+
+    //Paso content_transaction_credito_paso_transaccion_error
+    @ViewById
+    TextView txvCreditoTransactionErrorDetalleTexto;
 
     //Model que almacena la transaccion actual
     Transaccion modelTransaccion = new Transaccion();

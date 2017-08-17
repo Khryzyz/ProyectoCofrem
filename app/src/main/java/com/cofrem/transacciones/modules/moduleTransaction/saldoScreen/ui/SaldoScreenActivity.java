@@ -71,25 +71,23 @@ public class SaldoScreenActivity extends Activity implements SaldoScreenView {
 
     //Paso transaction_saldo_paso_numero_documento
     @ViewById
-    Button btnSaldoTransactionNumeroDocumentoBotonCancelar;
-    @ViewById
     EditText edtSaldoTransactionNumeroDocumentoValor;
 
     //Paso transaction_saldo_paso_deslice_tarjeta
     @ViewById
     EditText txvSaldoTransactionDesliceTarjetaNumeroDocumento;
 
-    //Paso transaction_saldo_paso_clave_usuario
-    @ViewById
-    Button btnSaldoTransactionClaveUsuarioBotonCancelar;
+    //Paso transaction_saldo_paso_lectura_incorrecta
+
+    //Paso content_transaction_saldo_paso_pass_usuario
     @ViewById
     EditText edtSaldoTransactionClaveUsuarioContenidoClave;
 
-    //Paso transaction_saldo_paso_transaccion_exitosa
+    //Paso content_transaction_saldo_paso_transaccion_exitosa
+
+    //Paso content_transaction_saldo_paso_transaccion_error
     @ViewById
-    Button btnSaldoTransactionExitosaBotonImprimir;
-    @ViewById
-    Button btnSaldoTransactionExitosaBotonSalir;
+    TextView txvSaldoTransactionErrorDetalleTexto;
 
     /**
      * Model que almacena la transaccion actual
