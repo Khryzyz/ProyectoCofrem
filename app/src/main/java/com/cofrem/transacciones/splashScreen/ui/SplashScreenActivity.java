@@ -365,13 +365,7 @@ public class SplashScreenActivity extends Activity implements SplashScreenView {
      * Metodo para ocultar la barra de progreso
      */
     private void hideProgress() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                //Oculta la barra de progreso
-                pgbLoadingSplashScreen.setVisibility(View.GONE);
-            }
-        }, 1000);
+        pgbLoadingSplashScreen.setVisibility(View.GONE);
     }
 
     /**
@@ -395,7 +389,7 @@ public class SplashScreenActivity extends Activity implements SplashScreenView {
          *  - En caso de no existir mostrará la vista de configuración
          *  - En caso de existir validara el acceso
          */
-        splashScreenPresenter.validateInitialConfig(this);
+        splashScreenPresenter.validateInitialConfig(SplashScreenActivity.this);
 
     }
 

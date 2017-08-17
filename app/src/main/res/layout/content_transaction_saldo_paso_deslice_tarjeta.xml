@@ -20,13 +20,41 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/txvSaldoTransactionDesliceTarjetaTitle"
         android:layout_marginBottom="@dimen/appMarginBottom"
+        android:text="@string/transaction_text_subtitle_verificacion_datos" />
+
+    <TextView
+        android:id="@+id/txvSaldoTransactionDesliceTarjetaNumero"
+        style="@style/StyleTextPrimaryMedium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txvSaldoTransactionDesliceTarjetaSubTitle"
+        android:layout_marginBottom="@dimen/appMarginBottom"
+        android:text="@string/transaction_text_verificacion_numero_documento" />
+
+    <TextView
+        android:id="@+id/txvSaldoTransactionDesliceTarjetaNumeroDocumento"
+        style="@style/StyleTextPrimaryMedium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/txvSaldoTransactionDesliceTarjetaNumero"
+        android:layout_marginBottom="@dimen/appMarginBottom"
+        android:text="@string/general_text_texto_vacio" />
+    
+    <TextView
+        android:id="@+id/txvCreditoTransactionDesliceTarjetaMensaje"
+        style="@style/StyleTextPrimaryMedium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txvSaldoTransactionDesliceTarjetaNumeroDocumento"
+        android:layout_marginBottom="@dimen/appMarginBottom"
         android:text="@string/general_message_deslice_tarjeta" />
 
     <ImageView
         android:id="@+id/imvSaldoTransactionDesliceTarjetaStripeCard"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/txvSaldoTransactionDesliceTarjetaSubTitle"
+        android:layout_below="@id/txvCreditoTransactionDesliceTarjetaMensaje"
         android:layout_centerHorizontal="true"
         android:src="@mipmap/stripe_card" />
 
