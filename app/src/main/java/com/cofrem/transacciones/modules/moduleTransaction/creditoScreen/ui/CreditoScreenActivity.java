@@ -377,10 +377,10 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
      * Metodo para manejar la orden de imprimir recibo Error
      */
     @Override
-    public void handleImprimirReciboError() {
+    public void handleImprimirReciboError(String errorMessage) {
 
         //Muestra el mensaje de error de formato de la contraseña
-        Toast.makeText(this, R.string.transaction_text_printer_error, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show();
 
     }
     /**

@@ -109,10 +109,10 @@ public class CreditoScreenPresenterImpl implements CreditoScreenPresenter {
                 onTransaccionDBRegisterError();
                 break;
             case CreditoScreenEvent.onImprecionReciboSuccess:
-
+                onImprimirSuccess();
                 break;
             case CreditoScreenEvent.onImprecionReciboError:
-
+                onImprimirError(creditoScreenEvent.getErrorMessage());
                 break;
 
         }
@@ -163,4 +163,20 @@ public class CreditoScreenPresenterImpl implements CreditoScreenPresenter {
         }
     }
 
+    /**
+     * Metodo para manejar la transaccion del Web Service Correcta
+     */
+    private void onImprimirSuccess() {
+        if (creditoScreenView != null) {
+            creditoScreenView.handleImprimirReciboSuccess();
+        }
+    }
+    /**
+     * Metodo para manejar la transaccion del Web Service Correcta
+     */
+    private void onImprimirError(String errorMessage) {
+        if (creditoScreenView != null) {
+            creditoScreenView.handleImprimirReciboError(errorMessage);
+        }
+    }
 }

@@ -32,5 +32,5 @@ public interface CreditoScreenView {
     /**
      * Metodo para manejar la orden de imprimir recibo con Error
      */
-    void handleImprimirReciboError();
+    void handleImprimirReciboError(String errorMessage);
 }
