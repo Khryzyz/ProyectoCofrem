@@ -102,6 +102,7 @@ public class RegisterConfigurationScreenActivity extends Activity implements Reg
      * Model que almacena la configuracion del dispositivo
      */
     Configurations modelConfiguration = new Configurations();
+    String passwordAdmin = "";
 
     /**
      * Pasos definidos
@@ -534,13 +535,8 @@ public class RegisterConfigurationScreenActivity extends Activity implements Reg
      * Metodo para ocultar la barra de progreso
      */
     private void hideProgress() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                //Oculta la barra de progreso
-                frlPgbHldRegisterScreen.setVisibility(View.GONE);
-            }
-        }, 1000);
+        //Oculta la barra de progreso
+        frlPgbHldRegisterScreen.setVisibility(View.GONE);
     }
 
     /**
@@ -657,14 +653,19 @@ public class RegisterConfigurationScreenActivity extends Activity implements Reg
     public void validarPasswordTecnico() {
 
         // Se obtiene el texto de la contraseña
-        String passwordAdmin = edtConfiguracionRegisterPassTecnicoContenidoClave.getText().toString();
+        passwordAdmin = edtConfiguracionRegisterPassTecnicoContenidoClave.getText().toString();
 
         if (passwordAdmin.length() == 4) {
 
             //Muestra la barra de progreso
             showProgress();
 
-            registerConfigurationScreenPresenter.validarPasswordTecnico(this, passwordAdmin);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    registerConfigurationScreenPresenter.validarPasswordTecnico(RegisterConfigurationScreenActivity.this, passwordAdmin);
+                }
+            }, 1000);
 
         } else {
 
@@ -724,9 +725,15 @@ public class RegisterConfigurationScreenActivity extends Activity implements Reg
         //Registra el valor del codigo de dispositivo en el modelo de la configuracion
         modelConfiguration.setCodigoDispositivo(edtConfiguracionRegisterDispositivoContenidoValor.getText().toString());
 
-        //Muestra la barra de progreso
         showProgress();
 
-        registerConfigurationScreenPresenter.registrarConfiguracionConexion(this, modelConfiguration);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                registerConfigurationScreenPresenter.registrarConfiguracionConexion(RegisterConfigurationScreenActivity.this, modelConfiguration);
+            }
+        }, 1000);
+
+
     }
 }

@@ -14,6 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cofrem.transacciones.lib.MagneticHandler;
 import com.cofrem.transacciones.models.InfoHeaderApp;
 import com.cofrem.transacciones.modules.moduleTransaction.saldoScreen.SaldoScreenPresenter;
 import com.cofrem.transacciones.modules.moduleTransaction.saldoScreen.SaldoScreenPresenterImpl;
@@ -21,7 +22,6 @@ import com.cofrem.transacciones.R;
 import com.cofrem.transacciones.TransactionScreenActivity_;
 import com.cofrem.transacciones.MainScreenActivity_;
 import com.cofrem.transacciones.lib.KeyBoard;
-import com.cofrem.transacciones.lib.MagneticHandler;
 import com.cofrem.transacciones.models.Transaccion;
 
 import org.androidannotations.annotations.AfterViews;
@@ -34,10 +34,10 @@ import static android.view.KeyEvent.KEYCODE_ENTER;
 @EActivity(R.layout.activity_transaction_saldo_screen)
 public class SaldoScreenActivity extends Activity implements SaldoScreenView {
 
-    /**
-     * #############################################################################################
-     * Declaracion de componentes y variables
-     * #############################################################################################
+    /*
+      #############################################################################################
+      Declaracion de componentes y variables
+      #############################################################################################
      */
 
     /**
@@ -45,7 +45,6 @@ public class SaldoScreenActivity extends Activity implements SaldoScreenView {
      */
 
     // Controles del header
-
     @ViewById
     TextView txvHeaderIdDispositivo;
     @ViewById
@@ -55,41 +54,56 @@ public class SaldoScreenActivity extends Activity implements SaldoScreenView {
     @ViewById
     TextView txvHeaderPunto;
 
-    // Contents del modulo
+    // Controles del modulo
+    @ViewById
+    RelativeLayout bodyContentSaldoNumeroDocumento;
     @ViewById
     RelativeLayout bodyContentSaldoDesliceTarjeta;
+    @ViewById
+    RelativeLayout bodyContentSaldoLecturaIncorrecta;
     @ViewById
     RelativeLayout bodyContentSaldoPassUsuario;
     @ViewById
     RelativeLayout bodyContentSaldoTransaccionExitosa;
     @ViewById
+    RelativeLayout bodyContentSaldoTransaccionErronea;
+    @ViewById
     FrameLayout frlPgbHldTransactionSaldo;
 
-    //Paso transaction_saldo_paso_clave_usuario
+    //Paso transaction_saldo_paso_numero_documento
     @ViewById
-    Button btnSaldoTransactionClaveUsuarioBotonCancelar;
+    EditText edtSaldoTransactionNumeroDocumentoValor;
+
+    //Paso transaction_saldo_paso_deslice_tarjeta
+    @ViewById
+    EditText txvSaldoTransactionDesliceTarjetaNumeroDocumento;
+
+    //Paso transaction_saldo_paso_lectura_incorrecta
+
+    //Paso content_transaction_saldo_paso_pass_usuario
     @ViewById
     EditText edtSaldoTransactionClaveUsuarioContenidoClave;
 
-    //Paso transaction_saldo_paso_transaccion_exitosa
+    //Paso content_transaction_saldo_paso_transaccion_exitosa
+
+    //Paso content_transaction_saldo_paso_transaccion_error
     @ViewById
-    Button btnSaldoTransactionExitosaBotonImprimir;
-    @ViewById
-    Button btnSaldoTransactionExitosaBotonSalir;
+    TextView txvSaldoTransactionErrorDetalleTexto;
 
     /**
      * Model que almacena la transaccion actual
      */
-    Transaccion modelSaldo = new Transaccion();
+    Transaccion modelTransaccion = new Transaccion();
 
     /**
      * Pasos definidos
      */
-    int pasoCreditoTransaction = 0; // Define el paso actual
+    int pasoTransaccion = 0; // Define el paso actual
 
-    final static int PASO_DESLIZAR_TARJETA = 0;
-    final static int PASO_CLAVE_USUARIO = 1;
-    final static int PASO_TRANSACCION_EXITOSA = 2;
+    final static int PASO_NUMERO_DOCUMENTO = 0;
+    final static int PASO_DESLICE_TARJETA = 1;
+    final static int PASO_CLAVE_USUARIO = 2;
+    final static int PASO_TRANSACCION_EXITOSA = 3;
 
     /**
      * #############################################################################################
@@ -124,7 +138,7 @@ public class SaldoScreenActivity extends Activity implements SaldoScreenView {
         setInfoHeader();
 
         //Inicializa el paso del registro de la configuracion
-        pasoCreditoTransaction = PASO_DESLIZAR_TARJETA;
+        pasoTransaccion = PASO_DESLICE_TARJETA;
 
         //Primera ventana visible
         bodyContentSaldoDesliceTarjeta.setVisibility(View.VISIBLE);
@@ -171,9 +185,14 @@ public class SaldoScreenActivity extends Activity implements SaldoScreenView {
                 // Ocula el soft keyboard al presionar la tecla enter
                 hideKeyBoard();
 
-                switch (pasoCreditoTransaction) {
+                switch (pasoTransaccion) {
 
-                    case PASO_DESLIZAR_TARJETA:
+                    case PASO_NUMERO_DOCUMENTO:
+                        //Metodo para registrar el numero de documento
+                        registrarNumeroDocumento();
+                        break;
+
+                    case PASO_DESLICE_TARJETA:
                         //Metodo para mostrar la orden de deslizar la tarjeta
                         deslizarTarjeta();
                         break;
@@ -204,10 +223,13 @@ public class SaldoScreenActivity extends Activity implements SaldoScreenView {
     @Override
     public void onBackPressed() {
 
-        switch (pasoCreditoTransaction) {
+        switch (pasoTransaccion) {
 
+            case PASO_NUMERO_DOCUMENTO:
 
-            case PASO_DESLIZAR_TARJETA:
+                break;
+
+            case PASO_DESLICE_TARJETA:
 
                 break;
 
@@ -258,13 +280,8 @@ public class SaldoScreenActivity extends Activity implements SaldoScreenView {
      * Metodo para ocultar la barra de progreso
      */
     private void hideProgress() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                //Oculta la barra de progreso
-                frlPgbHldTransactionSaldo.setVisibility(View.GONE);
-            }
-        }, 1000);
+        //Oculta la barra de progreso
+        frlPgbHldTransactionSaldo.setVisibility(View.GONE);
     }
 
     /**
@@ -337,7 +354,8 @@ public class SaldoScreenActivity extends Activity implements SaldoScreenView {
     /**
      * Metodo para regresar a la ventana de transaccion
      */
-    @Click({R.id.btnSaldoTransactionClaveUsuarioBotonCancelar})
+    @Click({R.id.btnSaldoTransactionNumeroDocumentoBotonCancelar,
+    })
     public void navigateToTransactionScreen() {
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -355,30 +373,129 @@ public class SaldoScreenActivity extends Activity implements SaldoScreenView {
     }
 
     /**
+     * Metodo para registrar el numero de documento
+     */
+    @Click(R.id.btnSaldoTransactionNumeroDocumentoBotonAceptar)
+    public void registrarNumeroDocumento() {
+
+
+        // Se obtiene el texto de la contraseña
+        String numeroDocumento = edtSaldoTransactionNumeroDocumentoValor.getText().toString();
+
+        if (numeroDocumento.length() > 0) {
+
+            //Registra el valor del numero de documento en el modelo de transaccion
+            modelTransaccion.setNumero_documento(numeroDocumento);
+
+            txvSaldoTransactionDesliceTarjetaNumeroDocumento.setText(
+                    String.valueOf(modelTransaccion.getNumero_documento())
+            );
+
+            //Oculta la vista del numero de documento
+            bodyContentSaldoNumeroDocumento.setVisibility(View.GONE);
+
+            //Muestra la vista de verificacion del valor
+            bodyContentSaldoDesliceTarjeta.setVisibility(View.VISIBLE);
+
+            //Actualiza el paso actual
+            pasoTransaccion++;
+
+        } else {
+
+            //Vacia la caja de contraseña
+            txvSaldoTransactionDesliceTarjetaNumeroDocumento.setText("");
+
+            //Muestra el mensaje de error de formato de la contraseña
+            Toast.makeText(this, R.string.transaction_error_numero_documento, Toast.LENGTH_SHORT).show();
+
+        }
+
+    }
+
+    /**
      * Metodo para mostrar la orden de deslizar la tarjeta
      */
+
+    @Click(R.id.btnSaldoTransactionNumeroDocumentoBotonAceptar)
     public void deslizarTarjeta() {
 
         String[] magneticHandler = new MagneticHandler().readMagnetic();
 
-        //Registra el valor del host en el modelo de la configuracion
-        modelSaldo.setNumero_tarjeta(magneticHandler[1]);
+        if (magneticHandler != null) {
 
-        //Oculta la vista de deslizar la tarjeta
+            String numeroTarjeta = magneticHandler[1]
+                    .replace(";", "")
+                    .replace("!", "")
+                    .replace("#", "")
+                    .replace("$", "")
+                    .replace("&", "")
+                    .replace("/", "")
+                    .replace("|", "")
+                    .replace("(", "")
+                    .replace(")", "")
+                    .replace("=", "")
+                    .replace("?", "")
+                    .replace("¿", "")
+                    .replace("¿", "")
+                    .replace("¡", "")
+                    .replace("*", "")
+                    .replace("{", "")
+                    .replace("}", "")
+                    .replace("[", "")
+                    .replace("]", "")
+                    .replace(",", "")
+                    .replace(".", "")
+                    .replace("-", "")
+                    .replace("_", "")
+                    .replace("%", "");
+           
+            //Registra el valor del numero de tarjeta en el modelo de la transaccion
+            modelTransaccion.setNumero_tarjeta(numeroTarjeta);
+
+            //En caso de la lectura correcta se continua el proceso
+            lecturaTarjetaCorrecta();
+
+        } else {
+
+            //En caso de la lectura erronea se muestra la pantalla de error
+            lecturaTarjetaErronea();
+
+        }
+
+    }
+
+    /**
+     * Metodo para mostrar la lectura correcta de tarjeta
+     */
+    private void lecturaTarjetaCorrecta() {
+
+        //Oculta la vista de deslizar tarjeta
         bodyContentSaldoDesliceTarjeta.setVisibility(View.GONE);
 
-        //Muestra la vista de clave de usuario
+        //Muestra la vista de contraseña de usuario
         bodyContentSaldoPassUsuario.setVisibility(View.VISIBLE);
 
         //Actualiza el paso actual
-        pasoCreditoTransaction++;
+        pasoTransaccion++;
+    }
+
+    /**
+     * Metodo para mostrar la lectura erronea de tarjeta
+     */
+    private void lecturaTarjetaErronea() {
+
+        //Oculta la vista de deslizar tarjeta
+        bodyContentSaldoDesliceTarjeta.setVisibility(View.GONE);
+
+        //Muestra la vista de contraseña de usuario
+        bodyContentSaldoLecturaIncorrecta.setVisibility(View.VISIBLE);
 
     }
 
     /**
      * Metodo para registrar la contraseña del usuario
      */
-    @Click(R.id.btnCreditoTransactionClaveUsuarioBotonAceptar)
+    @Click(R.id.btnSaldoTransactionClaveUsuarioBotonAceptar)
     public void registrarClaveUsuario() {
 
         // Se obtiene el texto de la contraseña
@@ -386,11 +503,32 @@ public class SaldoScreenActivity extends Activity implements SaldoScreenView {
 
         if (passwordUser.length() == 4) {
 
+            //Vacia la caja contraseña
+            edtSaldoTransactionClaveUsuarioContenidoClave.setText("");
+
             //Mostrar la barra de progreso
             showProgress();
 
-            //Registra la transaccion
-            saldoScreenPresenter.registrarTransaccion(this, modelSaldo);
+            //Se registra la contraseña en el modelo
+            modelTransaccion.setClave(Integer.valueOf(passwordUser));
+
+            //TODO: agregar las diferentes encriptaciones
+            //Se registra el tipo de encriptacion en el modelo
+            modelTransaccion.setTipo_encriptacion(Transaccion.CODIGO_ENCR_NO_ENCRIPTADO);
+
+            //TODO: agregar los diferentes tipos de productos
+            //Se registra el tipo de producto en el modelo
+            modelTransaccion.setTipo_servicio(Transaccion.CODIGO_PRODUCTO_CUPO_ROTATIVO);
+
+            //Actualiza el paso actual
+            pasoTransaccion++;
+
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    saldoScreenPresenter.registrarTransaccion(SaldoScreenActivity.this, modelTransaccion);
+                }
+            }, 1000);
 
 
         } else {
@@ -402,7 +540,6 @@ public class SaldoScreenActivity extends Activity implements SaldoScreenView {
             Toast.makeText(this, R.string.transaction_error_format_clave_usuario, Toast.LENGTH_SHORT).show();
 
         }
-
     }
 
     /**

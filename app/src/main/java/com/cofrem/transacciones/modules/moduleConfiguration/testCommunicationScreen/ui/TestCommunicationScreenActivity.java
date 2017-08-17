@@ -147,11 +147,6 @@ public class TestCommunicationScreenActivity extends Activity implements TestCom
      * Metodo para ocultar la barra de progreso
      */
     private void hideProgress() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-            }
-        }, 1000);
 
     }
 

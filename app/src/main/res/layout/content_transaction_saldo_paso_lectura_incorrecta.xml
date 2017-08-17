@@ -24,7 +24,7 @@
         android:text="@string/general_message_lectura_incorrecta" />
 
     <Button
-        android:id="@+id/btnSaldoTransactionLecturaIncorrectaBotonAceptar"
+        android:id="@+id/btnSaldoTransactionLecturaIncorrectaBotonSalir"
         style="@style/StyleButtonExit"
         android:layout_alignParentEnd="true"
         android:layout_below="@id/txvSaldoTransactionLecturaIncorrectaClave"
