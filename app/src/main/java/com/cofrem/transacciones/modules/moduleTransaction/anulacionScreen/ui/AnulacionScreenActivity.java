@@ -33,10 +33,10 @@ import static android.view.KeyEvent.KEYCODE_ENTER;
 @EActivity(R.layout.activity_transaction_anulacion_screen)
 public class AnulacionScreenActivity extends Activity implements AnulacionScreenView {
 
-    /**
-     * #############################################################################################
-     * Declaracion de componentes y variables
-     * #############################################################################################
+    /*
+      #############################################################################################
+      Declaracion de componentes y variables
+      #############################################################################################
      */
 
     /**
@@ -305,10 +305,10 @@ public class AnulacionScreenActivity extends Activity implements AnulacionScreen
         }
     }
 
-    /**
-     * #############################################################################################
-     * Metodos sobrecargados de la interface
-     * #############################################################################################
+    /*
+      #############################################################################################
+      Metodos sobrecargados de la interface
+      #############################################################################################
      */
 
     /**
@@ -431,7 +431,7 @@ public class AnulacionScreenActivity extends Activity implements AnulacionScreen
     /**
      * Metodo para manejar la transaccion erronea desde el Web Service
      *
-     * @param errorMessage
+     * @param errorMessage mensaje de error
      */
     @Override
     public void handleTransaccionWSRegisterError(String errorMessage) {
