@@ -284,6 +284,10 @@ public class AnulacionScreenRepositoryImpl implements AnulacionScreenRepository 
         PrintRow.printCofrem(context, printRows, gray, 10);
 
         printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_title_anulacion), new StyleConfig(StyleConfig.Align.CENTER, gray, 20)));
+
+
+        printRows.add(new PrintRow(context.getResources().getString(
                 R.string.recibo_separador_operador), new StyleConfig(StyleConfig.Align.LEFT, gray, StyleConfig.FontSize.F1)));
         PrintRow.printOperador(context, printRows, gray, 10);
 
@@ -307,7 +311,7 @@ public class AnulacionScreenRepositoryImpl implements AnulacionScreenRepository 
         printRows.add(new PrintRow(context.getResources().getString(
                 R.string.recibo_separador_detalle), new StyleConfig(StyleConfig.Align.LEFT, gray, StyleConfig.FontSize.F1)));
         printRows.add(new PrintRow(context.getResources().getString(
-                R.string.recibo_valor_anulado), String.valueOf(modelTransaccionAnulada.getValor()), new StyleConfig(StyleConfig.Align.LEFT, gray)));
+                R.string.recibo_valor_anulado), PrintRow.numberFormat(modelTransaccionAnulada.getValor()), new StyleConfig(StyleConfig.Align.LEFT, gray)));
 
 
 
