@@ -29,7 +29,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/txvConfiguracionRegisterPassTecnicoClave"
         android:layout_marginBottom="@dimen/appMarginBottom"
-        android:inputType="numberPassword"
         android:maxLength="4"
         android:text="8717" />
 

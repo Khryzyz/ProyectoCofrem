@@ -29,7 +29,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/txvCreditoTransactionNumeroDocumentoSubtitle"
         android:layout_marginBottom="@dimen/appMarginBottom"
-        android:inputType="number"
         android:maxLength="10" />
 
     <Button

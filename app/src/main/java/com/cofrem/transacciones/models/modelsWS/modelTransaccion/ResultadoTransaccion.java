@@ -6,6 +6,7 @@ public class ResultadoTransaccion {
 
     //Modelo usado en la respuesta del WS para la respuesta transacResult
     private InformacionTransaccion informacionTransaccion;
+    private InformacionSaldo informacionSaldo;
     private MessageWS messageWS;
 
     public ResultadoTransaccion(MessageWS messageWS) {
@@ -18,12 +19,26 @@ public class ResultadoTransaccion {
         this.messageWS = messageWS;
     }
 
+    public ResultadoTransaccion(InformacionSaldo informacionSaldo,
+                                MessageWS messageWS) {
+        this.informacionSaldo = informacionSaldo;
+        this.messageWS = messageWS;
+    }
+
     public InformacionTransaccion getInformacionTransaccion() {
         return informacionTransaccion;
     }
 
     public void setInformacionTransaccion(InformacionTransaccion informacionTransaccion) {
         this.informacionTransaccion = informacionTransaccion;
+    }
+
+    public InformacionSaldo getInformacionSaldo() {
+        return informacionSaldo;
+    }
+
+    public void setInformacionSaldo(InformacionSaldo informacionSaldo) {
+        this.informacionSaldo = informacionSaldo;
     }
 
     public MessageWS getMessageWS() {

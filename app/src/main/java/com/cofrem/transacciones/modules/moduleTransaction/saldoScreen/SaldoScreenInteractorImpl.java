@@ -1,5 +1,9 @@
 package com.cofrem.transacciones.modules.moduleTransaction.saldoScreen;
 
+import android.content.Context;
+
+import com.cofrem.transacciones.models.Transaccion;
+
 class SaldoScreenInteractorImpl implements SaldoScreenInteractor {
     /**
      * #############################################################################################
@@ -34,8 +38,8 @@ class SaldoScreenInteractorImpl implements SaldoScreenInteractor {
      *
      */
     @Override
-    public void validateAccess() {
+    public void registrarTransaccion(Context context, Transaccion transaccion) {
         //Valida el acceso a la app
-        saldoScreenRepository.validateAcces();
+        saldoScreenRepository.registrarTransaccion(context, transaccion);
     }
 }

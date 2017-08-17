@@ -28,8 +28,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/txvReportReimpresionReciboClaveAdministradorClave"
-        android:layout_marginBottom="@dimen/appMarginBottom"
-        android:inputType="textPassword"
+        android:layout_marginBottom="@dimen/appMarginBottom" />
         android:maxLength="4"/>
 
     <Button
