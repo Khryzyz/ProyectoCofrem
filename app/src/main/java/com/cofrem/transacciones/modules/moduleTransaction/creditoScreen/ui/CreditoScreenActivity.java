@@ -7,7 +7,6 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
@@ -27,6 +26,8 @@ import com.cofrem.transacciones.models.Transaccion;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.LongClick;
+import org.androidannotations.annotations.Touch;
 import org.androidannotations.annotations.ViewById;
 
 import static android.view.KeyEvent.KEYCODE_ENTER;
@@ -416,9 +417,10 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
         bodyContentCreditoNumeroDocumento.setVisibility(View.GONE);
         bodyContentCreditoVerificacionValor.setVisibility(View.GONE);
         bodyContentCreditoDesliceTarjeta.setVisibility(View.GONE);
+        bodyContentCreditoLecturaIncorrecta.setVisibility(View.GONE);
         bodyContentCreditoPassUsuario.setVisibility(View.GONE);
         bodyContentCreditoTransaccionExitosa.setVisibility(View.GONE);
-
+        bodyContentCreditoTransaccionErronea.setVisibility(View.GONE);
     }
 
     /**
@@ -459,7 +461,15 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
     /**
      * Metodo que oculta el teclado al presionar el EditText
      */
+    @LongClick({R.id.edtCreditoTransactionValorCompraValor,
+            R.id.edtCreditoTransactionNumeroDocumentoValor,
+            R.id.edtCreditoTransactionClaveUsuarioContenidoClave
+    })
     @Click({R.id.edtCreditoTransactionValorCompraValor,
+            R.id.edtCreditoTransactionNumeroDocumentoValor,
+            R.id.edtCreditoTransactionClaveUsuarioContenidoClave
+    })
+    @Touch({R.id.edtCreditoTransactionValorCompraValor,
             R.id.edtCreditoTransactionNumeroDocumentoValor,
             R.id.edtCreditoTransactionClaveUsuarioContenidoClave
     })
@@ -652,11 +662,11 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
      */
     public void deslizarTarjeta() {
 
-            //Obtiene la lectura de la banda magnetica
-            String[] magneticHandler = new MagneticHandler().readMagnetic();
+        //Obtiene la lectura de la banda magnetica
+        String[] magneticHandler = new MagneticHandler().readMagnetic();
 
-            //Determina si la lectura fue correcta
-            if (magneticHandler != null) {
+        //Determina si la lectura fue correcta
+        if (magneticHandler != null) {
 
             //Limpia el formato de la lectura
             String numeroTarjeta = magneticHandler[1]

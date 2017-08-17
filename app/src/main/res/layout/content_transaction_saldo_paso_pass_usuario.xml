@@ -29,8 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/txvSaldoTransactionClaveUsuarioClave"
         android:layout_marginBottom="@dimen/appMarginBottom"
-        android:inputType="textPassword|numberPassword"
-        android:maxLength="4" />
+        android:maxLength="4"/>
 
     <Button
         android:id="@+id/btnSaldoTransactionClaveUsuarioBotonCancelar"
@@ -45,6 +44,5 @@
         android:layout_alignParentEnd="true"
         android:layout_below="@id/edtSaldoTransactionClaveUsuarioContenidoClave"
         android:text="@string/general_text_button_aceptar" />
-
 
 </RelativeLayout>

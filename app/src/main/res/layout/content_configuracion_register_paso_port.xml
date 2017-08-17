@@ -24,12 +24,12 @@
 
     <EditText
         android:id="@+id/edtConfiguracionRegisterPortContenidoValor"
-        style="@style/StylePassPrimary"
+        style="@style/StyleValuePrimary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/txvConfiguracionRegisterPortValor"
         android:layout_marginBottom="@dimen/appMarginBottom"
-        android:inputType="number" />
+        android:maxLength="5"/>
 
     <Button
         android:id="@+id/btnConfiguracionRegisterPortBotonCancelar"
@@ -44,6 +44,5 @@
         android:layout_alignParentEnd="true"
         android:layout_below="@id/edtConfiguracionRegisterPortContenidoValor"
         android:text="@string/general_text_button_aceptar" />
-
 
 </RelativeLayout>

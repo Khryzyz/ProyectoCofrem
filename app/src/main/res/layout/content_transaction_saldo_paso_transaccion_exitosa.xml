@@ -14,26 +14,56 @@
         android:text="@string/transaction_text_title_saldo" />
 
     <TextView
-        android:id="@+id/txvSaldoTransactionExitosaSubtitle"
-        style="@style/StyleTextPrimaryMedium"
+        android:id="@+id/txvSaldoTransactionExitosaTarjeta"
+        style="@style/StyleTextPrimarySmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/txvSaldoTransactionExitosaTitle"
         android:layout_marginBottom="@dimen/appMarginBottom"
-        android:text="@string/transaction_text_exitosa" />
+        android:text="@string/transaction_text_tarjeta" />
+
+    <TextView
+        android:id="@+id/txvSaldoTransactionExitosaTarjetaValor"
+        style="@style/StyleTextPrimarySmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/txvSaldoTransactionExitosaTarjeta"
+        android:layout_marginBottom="@dimen/appMarginBottom"
+        android:text="@string/general_text_texto_vacio" />
+
+    <TextView
+        android:id="@+id/txvSaldoTransactionExitosaCedula"
+        style="@style/StyleTextPrimarySmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txvSaldoTransactionExitosaTarjetaValor"
+        android:layout_marginBottom="@dimen/appMarginBottom"
+        android:text="@string/transaction_text_cedula" />
+
+    <TextView
+        android:id="@+id/txvSaldoTransactionExitosaCedulaValor"
+        style="@style/StyleTextPrimarySmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/txvSaldoTransactionExitosaCedula"
+        android:layout_marginBottom="@dimen/appMarginBottom"
+        android:text="@string/general_text_texto_vacio" />
+
 
     <TextView
         android:id="@+id/txvSaldoTransactionExitosaSaldo"
-        style="@style/StyleTextPrimaryMedium"
+        style="@style/StyleTextPrimarySmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/txvSaldoTransactionExitosaSubtitle"
+        android:layout_below="@id/txvSaldoTransactionExitosaCedulaValor"
         android:layout_marginBottom="@dimen/appMarginBottom"
         android:text="@string/transaction_text_saldo" />
 
     <TextView
         android:id="@+id/txvSaldoTransactionExitosaSaldoCantidad"
-        style="@style/StyleTextPrimaryMedium"
+        style="@style/StyleTextPrimarySmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"

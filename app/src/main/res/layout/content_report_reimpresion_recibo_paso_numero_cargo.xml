@@ -24,12 +24,11 @@
 
     <EditText
         android:id="@+id/edtReportReimprimeonReciboNummeroCargoContenidoClave"
-        style="@style/StyleValuePrimary"
+        style="@style/StylePassPrimary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/txvReportReimprimeonReciboNummeroCargoNumCargo"
-        android:layout_marginBottom="@dimen/appMarginBottom"
-        android:inputType="number" />
+        android:layout_marginBottom="@dimen/appMarginBottom" />
 
     <Button
         android:id="@+id/btnReportReimprimeonReciboNummeroCargoBotonCancelar"

@@ -56,8 +56,9 @@
 
     <!--Estilos de los campos de contraseña usados en la aplicacion-->
 
-    <style name="StylePassPrimary">
+    <style name="StyleInputPrimary">
         <item name="android:longClickable">false</item>
+        <item name="android:textIsSelectable">false</item>
         <item name="android:textColor">@color/appColorWhite</item>
         <item name="android:textSize">@dimen/appTxtSizeLg</item>
         <item name="android:cursorVisible">false</item>
@@ -65,15 +66,14 @@
         <item name="android:background">@color/appColorBlack</item>
     </style>
 
-    <!--Estilos de los campos de ingreso numerioco usados en la aplicacion-->
+    <style name="StylePassPrimary" parent="StyleInputPrimary">
+        <item name="android:inputType">numberPassword</item>
+    </style>
 
-    <style name="StyleValuePrimary">
-        <item name="android:longClickable">false</item>
-        <item name="android:textColor">@color/appColorWhite</item>
-        <item name="android:textSize">@dimen/appTxtSizeLg</item>
-        <item name="android:cursorVisible">false</item>
-        <item name="android:typeface">sans</item>
-        <item name="android:background">@color/appColorBlack</item>
+    <!--Estilos de los campos de ingreso numerico usados en la aplicacion-->
+
+    <style name="StyleValuePrimary" parent="StyleInputPrimary">
+        <item name="android:inputType">number</item>
     </style>
 
     <!--Estilos de Texto para el Splash -->

@@ -2,6 +2,7 @@ package com.cofrem.transacciones.modules.moduleTransaction.saldoScreen;
 
 import android.content.Context;
 
+import com.cofrem.transacciones.models.modelsWS.modelTransaccion.InformacionSaldo;
 import com.cofrem.transacciones.modules.moduleTransaction.saldoScreen.events.SaldoScreenEvent;
 import com.cofrem.transacciones.modules.moduleTransaction.saldoScreen.ui.SaldoScreenView;
 import com.cofrem.transacciones.lib.EventBus;
@@ -68,7 +69,7 @@ public class SaldoScreenPresenterImpl implements SaldoScreenPresenter {
     @Override
     public void registrarTransaccion(Context context, Transaccion transaccion) {
         if (saldoScreenView != null) {
-            saldoScreenInteractor.validateAccess();
+            saldoScreenInteractor.registrarTransaccion(context, transaccion);
         }
     }
 
@@ -81,8 +82,16 @@ public class SaldoScreenPresenterImpl implements SaldoScreenPresenter {
     public void onEventMainThread(SaldoScreenEvent saldoScreenEvent) {
         switch (saldoScreenEvent.getEventType()) {
 
-            case SaldoScreenEvent.onVerifySuccess:
-                onVerifySuccess();
+            case SaldoScreenEvent.onTransaccionSuccess:
+                onTransaccionSuccess(saldoScreenEvent.getInformacionSaldo());
+                break;
+
+            case SaldoScreenEvent.onTransaccionWSRegisterError:
+                onTransaccionWSRegisterError(saldoScreenEvent.getErrorMessage());
+                break;
+
+            case SaldoScreenEvent.onTransaccionWSConexionError:
+                onTransaccionWSConexionError();
                 break;
 
         }
@@ -98,9 +107,21 @@ public class SaldoScreenPresenterImpl implements SaldoScreenPresenter {
     /**
      * Metodo para manejar la verificacion exitosa
      */
-    private void onVerifySuccess() {
+    private void onTransaccionSuccess(InformacionSaldo informacionSaldo) {
         if (saldoScreenView != null) {
-            saldoScreenView.handleVerifySuccess();
+            saldoScreenView.handleTransaccionSuccess(informacionSaldo);
+        }
+    }
+
+    private void onTransaccionWSRegisterError(String errorMessage) {
+        if (saldoScreenView != null) {
+            saldoScreenView.handleTransaccionWSRegisterError(errorMessage);
+        }
+    }
+
+    private void onTransaccionWSConexionError() {
+        if (saldoScreenView != null) {
+            saldoScreenView.handleTransaccionWSConexionError();
         }
     }
 

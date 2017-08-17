@@ -32,17 +32,6 @@ public class InfoGlobalTransaccionSOAP {
     public final static String METHOD_NAME_TEST = "Test";
 
     /**
-     * Datos para el Web Service Saldo
-     */
-    public final static String METHOD_NAME_SALDO = "Saldo";
-
-    public final static String PARAM_NAME_SALDO_CODIGO_TERMINAL = "codigoTerminal";
-    public final static String PARAM_NAME_SALDO_CEDULA_USUARIO = "cedulaUsuario";
-    public final static String PARAM_NAME_SALDO_NUMERO_TARJETA = "numeroTarjeta";
-    public final static String PARAM_NAME_SALDO_CLAVE_USUARIO = "clave";
-    public final static String PARAM_NAME_SALDO_TIPO_TRANSACCION = "tipoTransaccion";
-
-    /**
      * Datos para el Web Service Transaccion
      */
     public final static String METHOD_NAME_TRANSACCION = "Transaccion";
@@ -68,4 +57,14 @@ public class InfoGlobalTransaccionSOAP {
     public final static String PARAM_NAME_ANULACION_CLAVE_USUARIO = "clave";
     public final static String PARAM_NAME_ANULACION_TIPO_ENCRIPTACION = "tipoEncrip";
     public final static String PARAM_NAME_ANULACION_VALOR_APROBADO = "valorAprobado";
+    /**
+     * Datos para el Web Service Anulacion
+     */
+    public final static String METHOD_NAME_SALDO = "Saldo";
+
+    public final static String PARAM_NAME_SALDO_CODIGO_TERMINAL = "codigoTerminal";
+    public final static String PARAM_NAME_SALDO_CEDULA_USUARIO = "cedulaUsuario";
+    public final static String PARAM_NAME_SALDO_NUMERO_TARJETA = "numeroTarjeta";
+    public final static String PARAM_NAME_SALDO_CLAVE_USUARIO = "clave";
+    public final static String PARAM_NAME_SALDO_TIPO_ENCRIPTACION = "tipoEncrip";
 }

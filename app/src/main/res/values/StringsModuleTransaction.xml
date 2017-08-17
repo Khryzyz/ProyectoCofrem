@@ -37,6 +37,10 @@
 
     <string name="transaction_text_saldo">Saldo disponible</string>
 
+    <string name="transaction_text_tarjeta">Número Tarjeta</string>
+
+    <string name="transaction_text_cedula">Cedula</string>
+
     <string name="transaction_text_valor_transaccion">Ingrese el valor del consumo:</string>
 
     <string name="transaction_error_valor">Debes ingresar un valor de consumo.</string>
