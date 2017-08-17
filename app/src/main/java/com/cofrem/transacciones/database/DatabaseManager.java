@@ -26,7 +26,7 @@ class DatabaseManager {
     static class DatabaseApp {
 
         static final String DATABASE_NAME = "app_cofrem_transactions.db";
-        static final int DATABASE_VERSION = 63;
+        static final int DATABASE_VERSION = 64;
 
     }
 

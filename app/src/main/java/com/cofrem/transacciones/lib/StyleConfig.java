@@ -32,6 +32,15 @@ public class StyleConfig{
         this.align = align;
         this.newLine = true;
     }
+    public StyleConfig(StyleConfig.Align align, int gray,StyleConfig.FontSize fontSize,int lineSpace) {
+        this.fontFamily = StyleConfig.FontFamily.DEFAULT;
+        this.fontSize = fontSize;
+        this.fontStyle = StyleConfig.FontStyle.NORMAL;
+        this.gray = gray;
+        this.lineSpace = lineSpace;
+        this.align = align;
+        this.newLine = true;
+    }
     public StyleConfig(StyleConfig.Align align, int gray) {
         this.fontFamily = StyleConfig.FontFamily.DEFAULT;
         this.fontSize = StyleConfig.FontSize.F3;

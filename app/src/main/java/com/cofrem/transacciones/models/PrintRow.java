@@ -111,29 +111,36 @@ public class PrintRow {
         return new PrintRow(logo, StyleConfig.Align.CENTER,gray,3);
     }
 
+    public static void printCofrem(Context context, ArrayList<PrintRow> printRows, int gray, int lineSpace){
+
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_nit,context.getResources().getString(
+                        R.string.recibo_nit_cofrem)),new StyleConfig(StyleConfig.Align.CENTER, gray ,StyleConfig.FontSize.F3)));
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_direccion_cofrem), new StyleConfig(StyleConfig.Align.CENTER, gray,StyleConfig.FontSize.F3)));
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_ciudad_cofrem), new StyleConfig(StyleConfig.Align.CENTER, gray,20)));
+
+    }
+
+
     public static void printOperador(Context context, ArrayList<PrintRow> printRows, int gray, int lineSpace){
 
         Establishment modelEstablishment = AppDatabase.getInstance(context).getEstablecimiento();
 
+        String terminal = AppDatabase.getInstance(context).obtenerCodigoTerminal();
+
         printRows.add(new PrintRow(context.getResources().getString(
-                R.string.recibo_nit, modelEstablishment.getNit()), context.getResources().getString(
-                R.string.recibo_codigo, modelEstablishment.getCodigo()),new StyleConfig(StyleConfig.Align.CENTER, gray ,StyleConfig.FontSize.F2)));
-        printRows.add(new PrintRow(modelEstablishment.getNombre(), new StyleConfig(StyleConfig.Align.CENTER, gray,StyleConfig.FontSize.F3)));
+                R.string.recibo_nit, modelEstablishment.getNit()), new StyleConfig(StyleConfig.Align.CENTER, gray ,StyleConfig.FontSize.F3)));
+        printRows.add(new PrintRow(modelEstablishment.getCodigo() + " - " + modelEstablishment.getNombre(), new StyleConfig(StyleConfig.Align.CENTER, gray,StyleConfig.FontSize.F3)));
         printRows.add(new PrintRow(modelEstablishment.getDireccion(), new StyleConfig(StyleConfig.Align.CENTER, gray,StyleConfig.FontSize.F3)));
         printRows.add(new PrintRow(modelEstablishment.getCiudad(), new StyleConfig(StyleConfig.Align.CENTER, gray,lineSpace)));
 
-    }
-
-    public static void printCofrem(Context context, ArrayList<PrintRow> printRows, int gray, int lineSpace){
-
-        Establishment modelEstablishment = AppDatabase.getInstance(context).getEstablecimiento();
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_separador_transaccion), new StyleConfig(StyleConfig.Align.LEFT, gray, StyleConfig.FontSize.F1)));
 
         printRows.add(new PrintRow(context.getResources().getString(
-                R.string.recibo_nit, modelEstablishment.getNit()), context.getResources().getString(
-                R.string.recibo_codigo, modelEstablishment.getCodigo()),new StyleConfig(StyleConfig.Align.CENTER, gray ,StyleConfig.FontSize.F2)));
-        printRows.add(new PrintRow(modelEstablishment.getNombre(), new StyleConfig(StyleConfig.Align.CENTER, gray,StyleConfig.FontSize.F3)));
-        printRows.add(new PrintRow(modelEstablishment.getDireccion(), new StyleConfig(StyleConfig.Align.CENTER, gray,StyleConfig.FontSize.F3)));
-        printRows.add(new PrintRow(modelEstablishment.getCiudad(), new StyleConfig(StyleConfig.Align.CENTER, gray,lineSpace)));
+                R.string.recibo_terminal, terminal), new StyleConfig(StyleConfig.Align.LEFT, gray ,StyleConfig.FontSize.F3)));
 
     }
 
@@ -145,7 +152,7 @@ public class PrintRow {
         printRows.add(new PrintRow(context.getResources().getString(
                 R.string.recibo_ingresa_cc), new StyleConfig(StyleConfig.Align.LEFT, gray)));
         printRows.add(new PrintRow(context.getResources().getString(
-                R.string.recibo_ingresa_tel), new StyleConfig(StyleConfig.Align.LEFT, gray,50)));
+                R.string.recibo_ingresa_tel), new StyleConfig(StyleConfig.Align.LEFT, gray,20)));
 
     }
 

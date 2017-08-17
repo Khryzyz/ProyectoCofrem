@@ -71,7 +71,7 @@ public class ReimpresionScreenRepositoryImpl implements ReimpresionScreenReposit
          */
         if (!modelsTransaccion.isEmpty()) {
             // Registra el evento de existencia de una transaccion para imprimir
-            postEvent(ReimpresionScreenEvent.onVerifyExistenceUltimoReciboSuccess, modelsTransaccion);
+            postEvent(ReimpresionScreenEvent.onVerifyExistenceUltimoReciboSuccess, modelsTransaccion.get(0));
         } else {
             // Registra el evento de la NO existencia de una transaccion para imprimir
             postEvent(ReimpresionScreenEvent.onVerifyExistenceUltimoReciboError);
@@ -104,7 +104,7 @@ public class ReimpresionScreenRepositoryImpl implements ReimpresionScreenReposit
 
         int totalConsumo = 0;
 
-        ArrayList<Transaccion> listaAnulaciones = new ArrayList<Transaccion>() ;
+        ArrayList<Transaccion> listaAnulaciones = new ArrayList<Transaccion>();
 
         ConfigurationPrinter configurationPrinter = AppDatabase.getInstance(context).getConfigurationPrinter();
 
@@ -134,12 +134,12 @@ public class ReimpresionScreenRepositoryImpl implements ReimpresionScreenReposit
 
         for (Transaccion modelTransaccion : listaDetalle) {
 
-            if(modelTransaccion.getTipo_transaccion()==Transaccion.TIPO_TRANSACCION_CONSUMO){
+            if (modelTransaccion.getTipo_transaccion() == Transaccion.TIPO_TRANSACCION_CONSUMO) {
                 totalConsumo++;
                 printRows.add(new PrintRow(context.getResources().getString(
                         R.string.recibo_separador_fecha, modelTransaccion.getRegistro()), new StyleConfig(StyleConfig.Align.LEFT, gray, StyleConfig.FontSize.F1)));
                 printRows.add(new PrintRow(modelTransaccion.getNumero_cargo(), String.valueOf(modelTransaccion.getValor()), new StyleConfig(StyleConfig.Align.LEFT, gray)));
-            }else{
+            } else {
                 listaAnulaciones.add(modelTransaccion);
             }
 
@@ -245,7 +245,7 @@ public class ReimpresionScreenRepositoryImpl implements ReimpresionScreenReposit
 
         if (!modelsTransaccion.isEmpty()) {
             // Registra el evento de existencia de la transaccion para imprimir
-            postEvent(ReimpresionScreenEvent.onVerifyExistenceReciboPorNumCargoSuccess, modelsTransaccion);
+            postEvent(ReimpresionScreenEvent.onVerifyExistenceReciboPorNumCargoSuccess, modelsTransaccion.get(0));
         } else {
             // Registra el evento de la NO existencia de la transaccion para imprimir
             postEvent(ReimpresionScreenEvent.onVerifyExistenceReciboPorNumCargoError);
@@ -321,43 +321,83 @@ public class ReimpresionScreenRepositoryImpl implements ReimpresionScreenReposit
 
         Transaccion modelTransaccion = modelsTransaccion.get(0);
 
-        Transaccion modelTransaccionAnulada;
-        if(modelsTransaccion.size()>1)
-        modelTransaccionAnulada = modelsTransaccion.get(1);
+        Transaccion modelTransaccionAnulada = null;
+        if (modelsTransaccion.size() > 1)
+            modelTransaccionAnulada = modelsTransaccion.get(1);
 
-        for (int i = 0; i < modelsTransaccion.size(); i++)
-
-
+        PrintRow.printCofrem(context, printRows, gray, 10);
 
         //se siguen agregando cado auno de los String a los renglones (Rows) del recibo para imprimir
-        if (modelTransaccion.getTipo_transaccion() == Transaccion.TIPO_TRANSACCION_CONSUMO)
-            printRows.add(new PrintRow(context.getResources().getString(
-                    R.string.recibo_reimpresion), new StyleConfig(StyleConfig.Align.CENTER, gray)));
-        else if (modelTransaccion.getTipo_transaccion() == Transaccion.TIPO_TRANSACCION_ANULACION)
-            printRows.add(new PrintRow(context.getResources().getString(
-                    R.string.recibo_anulado), new StyleConfig(StyleConfig.Align.CENTER, gray)));
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_reimpresion), new StyleConfig(StyleConfig.Align.CENTER, gray, 20)));
 
-        printRows.add(new PrintRow(getDateTime(), new StyleConfig(StyleConfig.Align.CENTER, gray, 20)));
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_separador_operador), new StyleConfig(StyleConfig.Align.LEFT, gray, StyleConfig.FontSize.F1)));
+        PrintRow.printOperador(context, printRows, gray, 10);
 
-
-
-        PrintRow.printOperador(context, printRows, gray, 1);
-
-
-        printRows.add(new PrintRow(modelTransaccion.getRegistro(), new StyleConfig(StyleConfig.Align.CENTER, gray, 20)));
 
         printRows.add(new PrintRow(context.getResources().getString(
                 R.string.recibo_numero_transaccion), modelTransaccion.getNumero_cargo(), new StyleConfig(StyleConfig.Align.LEFT, gray)));
+
+        if (modelTransaccionAnulada == null)
+            printRows.add(new PrintRow(context.getResources().getString(
+                    R.string.recibo_fecha), modelTransaccion.getRegistro(), new StyleConfig(StyleConfig.Align.LEFT, gray, 20)));
+        else{
+            printRows.add(new PrintRow(context.getResources().getString(
+                    R.string.recibo_fecha), modelTransaccion.getRegistro(), new StyleConfig(StyleConfig.Align.LEFT, gray)));
+            printRows.add(new PrintRow(context.getResources().getString(
+                    R.string.recibo_fecha_anulacion), modelTransaccionAnulada.getFullFechaServer(), new StyleConfig(StyleConfig.Align.LEFT, gray, 10)));
+            printRows.add(new PrintRow(context.getResources().getString(
+                    R.string.recibo_title_transaccion_anulada), new StyleConfig(StyleConfig.Align.CENTER, gray, 20)));
+
+        }
+
+
         printRows.add(new PrintRow(context.getResources().getString(
-                R.string.recibo_valor), String.valueOf(modelTransaccion.getValor()), new StyleConfig(StyleConfig.Align.LEFT, gray)));
+                R.string.recibo_separador_afiliado), new StyleConfig(StyleConfig.Align.LEFT, gray, StyleConfig.FontSize.F1)));
+
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_numero_documento), modelTransaccion.getNumero_documento(), new StyleConfig(StyleConfig.Align.LEFT, gray)));
+        printRows.add(new PrintRow(modelTransaccion.getNombre_usuario(), new StyleConfig(StyleConfig.Align.LEFT, gray)));
         printRows.add(new PrintRow(context.getResources().getString(
                 R.string.recibo_numero_tarjeta), PrinterHandler.getFormatNumTarjeta(modelTransaccion.getNumero_tarjeta()), new StyleConfig(StyleConfig.Align.LEFT, gray, 20)));
 
 
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_separador_detalle), new StyleConfig(StyleConfig.Align.LEFT, gray, StyleConfig.FontSize.F1)));
 
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_valor), String.valueOf(modelTransaccion.getValor()), new StyleConfig(StyleConfig.Align.LEFT, gray)));
+
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_separador_linea), new StyleConfig(StyleConfig.Align.LEFT, gray, StyleConfig.FontSize.F1, 10)));
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_total), String.valueOf(modelTransaccion.getValor()), new StyleConfig(StyleConfig.Align.LEFT, gray)));
+
+        if (modelTransaccionAnulada == null)
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_separador_linea), new StyleConfig(StyleConfig.Align.LEFT, gray, StyleConfig.FontSize.F1, 30)));
+        else{
+            printRows.add(new PrintRow(context.getResources().getString(
+                    R.string.recibo_separador_linea), new StyleConfig(StyleConfig.Align.LEFT, gray, StyleConfig.FontSize.F1, 10)));
+            printRows.add(new PrintRow(context.getResources().getString(
+                    R.string.recibo_valor_anulado), String.valueOf(modelTransaccionAnulada.getValor()), new StyleConfig(StyleConfig.Align.LEFT, gray,30)));
+
+        }
+
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_mensaje_final), new StyleConfig(StyleConfig.Align.CENTER, gray, StyleConfig.FontSize.F3, 30)));
 
 
         PrintRow.printFirma(context, printRows, gray);
+
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_entidad), new StyleConfig(StyleConfig.Align.CENTER, gray, StyleConfig.FontSize.F3)));
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_vigilado), new StyleConfig(StyleConfig.Align.CENTER, gray, StyleConfig.FontSize.F3, 20)));
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_copia), new StyleConfig(StyleConfig.Align.CENTER, gray, StyleConfig.FontSize.F3, 60)));
+
 
         printRows.add(new PrintRow(".", new StyleConfig(StyleConfig.Align.LEFT, 1)));
 

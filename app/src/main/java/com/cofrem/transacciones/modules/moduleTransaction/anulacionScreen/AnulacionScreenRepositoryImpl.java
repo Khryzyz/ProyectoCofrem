@@ -3,10 +3,16 @@ package com.cofrem.transacciones.modules.moduleTransaction.anulacionScreen;
 import android.content.Context;
 import android.util.Log;
 
+import com.cofrem.transacciones.R;
 import com.cofrem.transacciones.database.AppDatabase;
+import com.cofrem.transacciones.global.InfoGlobalSettingsPrint;
 import com.cofrem.transacciones.global.InfoGlobalTransaccionSOAP;
 import com.cofrem.transacciones.lib.KsoapAsync;
 import com.cofrem.transacciones.lib.MD5;
+import com.cofrem.transacciones.lib.PrinterHandler;
+import com.cofrem.transacciones.lib.StyleConfig;
+import com.cofrem.transacciones.models.ConfigurationPrinter;
+import com.cofrem.transacciones.models.PrintRow;
 import com.cofrem.transacciones.models.Transaccion;
 import com.cofrem.transacciones.models.modelsWS.MessageWS;
 import com.cofrem.transacciones.models.modelsWS.TransactionWS;
@@ -18,6 +24,7 @@ import com.cofrem.transacciones.lib.GreenRobotEventBus;
 
 import org.ksoap2.serialization.SoapObject;
 
+import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 public class AnulacionScreenRepositoryImpl implements AnulacionScreenRepository {
@@ -110,7 +117,7 @@ public class AnulacionScreenRepositoryImpl implements AnulacionScreenRepository 
                     postEvent(AnulacionScreenEvent.onTransaccionSuccess);
 
                     //Imprime el recibo
-                    imprimirRecibo(context);
+                    imprimirRecibo(context,transaccion);
 
                 } else {
 
@@ -258,7 +265,69 @@ public class AnulacionScreenRepositoryImpl implements AnulacionScreenRepository 
      *
      * @param context
      */
-    public void imprimirRecibo(Context context) {
+    public void imprimirRecibo(Context context, Transaccion modelTransaccion) {
+
+        ConfigurationPrinter configurationPrinter = AppDatabase.getInstance(context).getConfigurationPrinter();
+
+        int gray = configurationPrinter.getGray_level();
+
+        Transaccion modelTransaccionAnulada = AppDatabase.getInstance(context).obtenerUltimaTransaccionAnulada();
+
+        String fecha_transaccion = AppDatabase.getInstance(context).obtenerFechaTransaccionNumCargo(modelTransaccion.getNumero_cargo());
+
+        // creamos el ArrayList se que encarga de almacenar los rows del recibo
+        ArrayList<PrintRow> printRows = new ArrayList<PrintRow>();
+
+        //Se agrega el logo al primer renglon del recibo y se coloca en el centro
+        printRows.add(PrintRow.printLogo(context, gray));
+
+        PrintRow.printCofrem(context, printRows, gray, 10);
+
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_separador_operador), new StyleConfig(StyleConfig.Align.LEFT, gray, StyleConfig.FontSize.F1)));
+        PrintRow.printOperador(context, printRows, gray, 10);
+
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_numero_transaccion), modelTransaccion.getNumero_cargo(), new StyleConfig(StyleConfig.Align.LEFT, gray)));
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_fecha),fecha_transaccion, new StyleConfig(StyleConfig.Align.LEFT, gray)));
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_fecha_anulacion),modelTransaccionAnulada.getFullFechaServer(), new StyleConfig(StyleConfig.Align.LEFT, gray, 20)));
+
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_separador_afiliado), new StyleConfig(StyleConfig.Align.LEFT, gray, StyleConfig.FontSize.F1)));
+
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_numero_documento), modelTransaccion.getNumero_documento(), new StyleConfig(StyleConfig.Align.LEFT, gray)));
+        printRows.add(new PrintRow(modelTransaccion.getNombre_usuario(), new StyleConfig(StyleConfig.Align.LEFT, gray)));
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_numero_tarjeta), PrinterHandler.getFormatNumTarjeta(modelTransaccion.getNumero_tarjeta()), new StyleConfig(StyleConfig.Align.LEFT, gray,20)));
+
+
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_separador_detalle), new StyleConfig(StyleConfig.Align.LEFT, gray, StyleConfig.FontSize.F1)));
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_valor_anulado), String.valueOf(modelTransaccionAnulada.getValor()), new StyleConfig(StyleConfig.Align.LEFT, gray)));
+
+
+
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_entidad), new StyleConfig(StyleConfig.Align.CENTER, gray, StyleConfig.FontSize.F3)));
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_vigilado), new StyleConfig(StyleConfig.Align.CENTER, gray, StyleConfig.FontSize.F3,20)));
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_copia), new StyleConfig(StyleConfig.Align.CENTER, gray, StyleConfig.FontSize.F3,60)));
+
+
+        printRows.add(new PrintRow(".", new StyleConfig(StyleConfig.Align.LEFT, 1)));
+
+        int status = new PrinterHandler().imprimerTexto(printRows);
+
+        if (status == InfoGlobalSettingsPrint.PRINTER_OK){
+            int i = 0;
+        }else{
+            int i = 1 ;
+        }
 
 
     }

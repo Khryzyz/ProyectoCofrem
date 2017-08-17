@@ -15,16 +15,20 @@
 
     <string name="recibo_valor">Valor:</string>
     <string name="recibo_valor_total">Valor Total:</string>
+    <string name="recibo_valor_anulado">Valor Anulado:</string>
+    <string name="recibo_total">T O T A L </string>
     <string name="recibo_fecha">Fecha:</string>
+    <string name="recibo_fecha_anulacion">Anulado:</string>
 
     <string name="recibo_nit">NIT: %s</string>
     <string name="recibo_telefono">TEL: %s</string>
-    <string name="recibo_codigo">CODIGO: %s</string>
+    <string name="recibo_terminal">Terminal: %s</string>
 
     <string name="recibo_reimpresion_fecha">Valor</string>
     <string name="recibo_reimpresion">[R E I M P R E S I O N]</string>
     <string name="recibo_anulado">Recibo Anulado</string>
     <string name="recibo_numero_tarjeta">Tarjeta Numero: </string>
+    <string name="recibo_numero_documento">Documento: </string>
     <string name="recibo_numero_transaccion">Transaccion No.: </string>
 
     <string name="recibo_text_numero_transaccion">Transaccion No. </string>
@@ -35,17 +39,34 @@
     <string name="recibo_ingresa_tel"  >Tel:__________________________</string>
 
     <string name="recibo_separador_vacio"> </string>
-    <string name="recibo_separador_linea">  --------------------------- </string>
-    <string name="recibo_separador_fecha">  --------------  %s  ------------- </string>
-    <string name="recibo_separador_operador"   >  ----------------  Operador  -------------- </string>
-    <string name="recibo_separador_transaccion">  --------------  Transaccion  ------------- </string>
-    <string name="recibo_separador_afiliado"   >  ---------------   Afiliado  -------------- </string>
-    <string name="recibo_separador_detalle"    >  ----------------  Detalle ---------------- </string>
+    <string name="recibo_separador_linea"      >  ________________________________________________ </string>
+    <string name="recibo_separador_fecha"      >  --------------  %s  ------------- </string>
+    <string name="recibo_separador_operador"   >  -------------------  Operador  ----------------- </string>
+    <string name="recibo_separador_transaccion">  -----------------  Transaccion  ---------------- </string>
+    <string name="recibo_separador_afiliado"   >  ------------------   Afiliado  ----------------- </string>
+    <string name="recibo_separador_detalle"    >  -------------------  Detalle ------------------- </string>
     <string name="recibo_num_transacciones">Cantidad transacciones: </string>
     <string name="recibo_num_anulaciones">Cantidad Anulaciones: </string>
 
     <string name="recibo_title_transaccion_consumo">Transacciones Consumo</string>
     <string name="recibo_title_transaccion_anulacion">Transacciones Anuladas </string>
+    <string name="recibo_title_transaccion_anulada">Transaccion Anulada</string>
+
+
+
+    <string name="recibo_nit_cofrem"> 892000146-3 </string>
+    <string name="recibo_direccion_cofrem">AV 40 35A 19 MAIZARO</string>
+    <string name="recibo_ciudad_cofrem">VILLAVICENCIO</string>
+
+
+    <string name="recibo_entidad">ENTIDAD SIN ANIMO DE LUCRO</string>
+    <string name="recibo_vigilado">VIGILADO SUPERSUBSIDIO</string>
+
+    <string name="recibo_copia">Copia: {COMERCIO,CLIENTE}</string>
+    <string name="recibo_mensaje_final">Pagaré incondicionalmente y a la orden del acreedor el valor total de este Pagaré junto con los intereses a las tasas máximas permitidas por la ley.</string>
+
+
+
 
 </resources>
 

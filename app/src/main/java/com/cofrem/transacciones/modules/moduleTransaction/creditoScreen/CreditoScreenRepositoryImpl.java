@@ -235,19 +235,56 @@ public class CreditoScreenRepositoryImpl implements CreditoScreenRepository {
         //Se agrega el logo al primer renglon del recibo y se coloca en el centro
         printRows.add(PrintRow.printLogo(context, gray));
 
-        //se siguen agregando cado auno de los String a los renglones (Rows) del recibo para imprimir
-        PrintRow.printOperador(context, printRows ,gray ,1);
+        PrintRow.printCofrem(context, printRows, gray, 10);
 
-        printRows.add(new PrintRow(modelTransaccion.getRegistro(), new StyleConfig(StyleConfig.Align.CENTER, gray, 20)));
+        //se siguen agregando cado auno de los String a los renglones (Rows) del recibo para imprimir
+
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_separador_operador), new StyleConfig(StyleConfig.Align.LEFT, gray, StyleConfig.FontSize.F1)));
+        PrintRow.printOperador(context, printRows, gray, 10);
+
 
         printRows.add(new PrintRow(context.getResources().getString(
                 R.string.recibo_numero_transaccion), modelTransaccion.getNumero_cargo(), new StyleConfig(StyleConfig.Align.LEFT, gray)));
         printRows.add(new PrintRow(context.getResources().getString(
-                R.string.recibo_valor), String.valueOf(modelTransaccion.getValor()), new StyleConfig(StyleConfig.Align.LEFT, gray)));
+                R.string.recibo_fecha),modelTransaccion.getRegistro(), new StyleConfig(StyleConfig.Align.LEFT, gray, 20)));
+
         printRows.add(new PrintRow(context.getResources().getString(
-                R.string.recibo_numero_tarjeta), PrinterHandler.getFormatNumTarjeta(modelTransaccion.getNumero_tarjeta()), new StyleConfig(StyleConfig.Align.LEFT, gray, 20)));
+                R.string.recibo_separador_afiliado), new StyleConfig(StyleConfig.Align.LEFT, gray, StyleConfig.FontSize.F1)));
+
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_numero_documento), modelTransaccion.getNumero_documento(), new StyleConfig(StyleConfig.Align.LEFT, gray)));
+        printRows.add(new PrintRow(modelTransaccion.getNombre_usuario(), new StyleConfig(StyleConfig.Align.LEFT, gray)));
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_numero_tarjeta), PrinterHandler.getFormatNumTarjeta(modelTransaccion.getNumero_tarjeta()), new StyleConfig(StyleConfig.Align.LEFT, gray,20)));
+
+
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_separador_detalle), new StyleConfig(StyleConfig.Align.LEFT, gray, StyleConfig.FontSize.F1)));
+
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_valor), String.valueOf(modelTransaccion.getValor()), new StyleConfig(StyleConfig.Align.LEFT, gray)));
+
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_separador_linea), new StyleConfig(StyleConfig.Align.LEFT, gray, StyleConfig.FontSize.F1,10)));
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_total), String.valueOf(modelTransaccion.getValor()), new StyleConfig(StyleConfig.Align.LEFT, gray)));
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_separador_linea), new StyleConfig(StyleConfig.Align.LEFT, gray, StyleConfig.FontSize.F1,30)));
+
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_mensaje_final), new StyleConfig(StyleConfig.Align.CENTER, gray, StyleConfig.FontSize.F3,30)));
+
 
         PrintRow.printFirma(context, printRows, gray);
+
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_entidad), new StyleConfig(StyleConfig.Align.CENTER, gray, StyleConfig.FontSize.F3)));
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_vigilado), new StyleConfig(StyleConfig.Align.CENTER, gray, StyleConfig.FontSize.F3,20)));
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_copia), new StyleConfig(StyleConfig.Align.CENTER, gray, StyleConfig.FontSize.F3,60)));
+
 
         printRows.add(new PrintRow(".", new StyleConfig(StyleConfig.Align.LEFT, 1)));
 

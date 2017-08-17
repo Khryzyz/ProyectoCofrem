@@ -983,6 +983,60 @@ public final class AppDatabase extends SQLiteOpenHelper {
         return modelEstablishment;
     }
 
+
+    public String obtenerFechaTransaccionNumCargo(String cargo){
+        Cursor cursorQuery;
+
+        cursorQuery = getWritableDatabase().rawQuery(
+                "SELECT " + DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_FECHA_SERVER + " , " +
+                        DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_HORA_SERVER +
+                        " FROM " + DatabaseManager.TableTransacciones.TABLE_NAME_TRANSACCIONES +
+                        " WHERE " + DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_TIPO_TRANSACCION + " = " + Transaccion.TIPO_TRANSACCION_ANULACION +
+                        " ORDER BY " + DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_REGISTRO + " DESC " +
+                        " LIMIT 1", null
+        );
+
+        cursorQuery.moveToFirst();
+
+        return cursorQuery.getString(0) + "  " + cursorQuery.getString(1);
+    }
+
+
+
+    public Transaccion obtenerUltimaTransaccionAnulada(){
+        Cursor cursorQuery;
+
+        cursorQuery = getWritableDatabase().rawQuery(
+                "SELECT * " +
+                        " FROM " + DatabaseManager.TableTransacciones.TABLE_NAME_TRANSACCIONES +
+                        " WHERE " + DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_TIPO_TRANSACCION + " = " + Transaccion.TIPO_TRANSACCION_ANULACION +
+                        " ORDER BY " + DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_REGISTRO + " DESC " +
+                        " LIMIT 1", null
+        );
+
+        Transaccion modelTransaccion = new Transaccion();
+
+        cursorQuery.moveToFirst();
+
+        modelTransaccion.setId(cursorQuery.getInt(0));
+        modelTransaccion.setTipo_servicio(cursorQuery.getInt(1));
+        modelTransaccion.setNumero_cargo(cursorQuery.getString(2));
+        modelTransaccion.setNumero_tarjeta(cursorQuery.getString(3));
+        modelTransaccion.setValor(cursorQuery.getInt(4));
+        modelTransaccion.setTipo_transaccion(cursorQuery.getInt(5));
+        modelTransaccion.setNumero_documento(cursorQuery.getString(6));
+        modelTransaccion.setNombre_usuario(cursorQuery.getString(7));
+        modelTransaccion.setFecha_server(cursorQuery.getString(8));
+        modelTransaccion.setHora_server(cursorQuery.getString(9));
+        modelTransaccion.setRegistro(cursorQuery.getString(10));
+        modelTransaccion.setEstado(cursorQuery.getInt(11));
+
+        return  modelTransaccion;
+
+    }
+
+
+
     /**
      * Metodo para Obtener ultima  transaccion
      *
@@ -1038,8 +1092,12 @@ public final class AppDatabase extends SQLiteOpenHelper {
             modelTransaccion.setNumero_tarjeta(cursorQuery.getString(3));
             modelTransaccion.setValor(cursorQuery.getInt(4));
             modelTransaccion.setTipo_transaccion(cursorQuery.getInt(5));
-            modelTransaccion.setRegistro(cursorQuery.getString(6));
-            modelTransaccion.setEstado(cursorQuery.getInt(7));
+            modelTransaccion.setNumero_documento(cursorQuery.getString(6));
+            modelTransaccion.setNombre_usuario(cursorQuery.getString(7));
+            modelTransaccion.setFecha_server(cursorQuery.getString(8));
+            modelTransaccion.setHora_server(cursorQuery.getString(9));
+            modelTransaccion.setRegistro(cursorQuery.getString(10));
+            modelTransaccion.setEstado(cursorQuery.getInt(11));
 
             lista.add(modelTransaccion);
 
