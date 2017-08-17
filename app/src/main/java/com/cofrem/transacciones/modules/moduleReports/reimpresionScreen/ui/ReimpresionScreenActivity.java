@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -87,6 +88,8 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
     @ViewById
     Button btnReportReimpresionReciboImprimirRecibo;
 
+    @ViewById
+    FrameLayout frlPgbHldReimpresionRecibo;
 
     Transaccion modelTransaccion;
 
@@ -222,6 +225,7 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
      */
     @Override
     public void handleVerifyExistenceReciboPorNumCargoError() {
+        edtReportReimpresionReciboClaveAdministradorContenidoClave.setText("");
         Toast.makeText(this, this.getString(R.string.report_text_message_No_existen_recibo_num_cargo), Toast.LENGTH_LONG).show();
     }
 
@@ -245,10 +249,10 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
         }
         edtReportReimpresionReciboClaveAdministradorContenidoClave.setText("");
     }
-
-    // texto quemado hay que pitarlo
+    
     @Override
     public void handleVerifyClaveAdministradorError() {
+        edtReportReimpresionReciboClaveAdministradorContenidoClave.setText("");
         Toast.makeText(this, this.getString(R.string.report_text_message_clave_admin_incorrecta), Toast.LENGTH_SHORT).show();
     }
 
@@ -266,7 +270,15 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
 
     @Override
     public void handleImprimirUltimoReciboSuccess() {
-        regresarDesdeReimpimirRecibo(2000);
+
+        showProgress();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                regresarDesdeReimpimirRecibo();
+            }
+        }, 5000);
+
     }
 
     @Override
@@ -276,7 +288,13 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
 
     @Override
     public void handleImprimirReciboPorNumCargoSuccess() {
-        regresarDesdeReimpimirRecibo(2000);
+        showProgress();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                regresarDesdeReimpimirRecibo();
+            }
+        }, 5000);
     }
 
     @Override
@@ -286,22 +304,34 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
 
     @Override
     public void handleImprimirReporteDetalleSuccess() {
-
+        showProgress();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                regresarDesdeReimpimirRecibo();
+            }
+        }, 5000);
     }
 
     @Override
     public void handleImprimirReporteDetalleError(String error) {
-
+        Toast.makeText(this, error, Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void handleImprimirReporteGeneralSuccess() {
-
+        showProgress();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                regresarDesdeReimpimirRecibo();
+            }
+        }, 5000);
     }
 
     @Override
     public void handleImprimirReporteGeneralError(String error) {
-
+        Toast.makeText(this, error, Toast.LENGTH_LONG).show();
     }
 
     /**
@@ -310,6 +340,24 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
      * #############################################################################################
      */
 
+    /**
+     * Metodo para mostrar la barra de progreso
+     */
+    private void showProgress() {
+        //TODO: VERIFICAR QUE ESTA MOSTRANDO LA BARRA DE PROGRESO
+        //Muestra la barra  de progreso
+        frlPgbHldReimpresionRecibo.setVisibility(View.VISIBLE);
+        frlPgbHldReimpresionRecibo.bringToFront();
+        frlPgbHldReimpresionRecibo.invalidate();
+    }
+
+    /**
+     * Metodo para ocultar la barra de progreso
+     */
+    private void hideProgress() {
+        //Oculta la barra de progreso
+        frlPgbHldReimpresionRecibo.setVisibility(View.GONE);
+    }
     /**
      * Metodo que coloca la orientacion de la App de forma predeterminada
      */
@@ -458,7 +506,8 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
             , R.id.btnReportReporteGeneralImpresionBotonSalir
             , R.id.btnReportCierreLoteClaveDispositivoBotonCancelar
             , R.id.btnReportCierreLoteImpresionBotonSalir
-            , R.id.btnReportReimprimeonReciboNummeroCargoBotonCancelar})
+            , R.id.btnReportReimprimeonReciboNummeroCargoBotonCancelar
+            , R.id.btnReportReimpresionReciboClaveAdministradorBotonCancelar})
     public void regresarDesdeReimpimirRecibo() {
         Intent intent = new Intent(this, ReportScreenActivity_.class);
         startActivity(intent);
