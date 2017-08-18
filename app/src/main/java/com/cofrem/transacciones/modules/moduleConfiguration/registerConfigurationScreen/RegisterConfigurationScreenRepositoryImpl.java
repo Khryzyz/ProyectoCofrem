@@ -74,7 +74,7 @@ public class RegisterConfigurationScreenRepositoryImpl implements RegisterConfig
         Establecimiento establecimiento;
 
         //Valida por medio del WS si la informacion del establecimiento es correcta
-        establecimiento = validarInfoDispositivo(context, configurations.getCodigoDispositivo());
+        establecimiento = validarInfoDispositivo(context, configurations);
 
         //Si la informacion del estableceimiento no es nula, la recoleccion de la informacion es correcta
         if (establecimiento != null) {
@@ -89,6 +89,8 @@ public class RegisterConfigurationScreenRepositoryImpl implements RegisterConfig
 
                     //Se registra la configuracion de la conexion en el establecimiento
                     if (AppDatabase.getInstance(context).processInfoEstablecimiento(establecimiento)) {
+
+                        AppDatabase.getInstance(context).obtenerInfoHeader();
 
                         //Evento Correcto de registro de informacion del establecimiento desde el WS
                         // y actualizacion de accesos
@@ -137,20 +139,20 @@ public class RegisterConfigurationScreenRepositoryImpl implements RegisterConfig
      * - Extrae la informacion del establecimiento
      *
      * @param context
-     * @param codigoDispositivo
-     * @return Establecimiento
+     * @param configurations
+     * @return
      */
-    private Establecimiento validarInfoDispositivo(Context context, String codigoDispositivo) {
+    private Establecimiento validarInfoDispositivo(Context context, Configurations configurations) {
 
         //Se crea una nueva instancia del model establecimiento para ser retornada
         Establecimiento establecimiento = null;
 
         //Inicializacion y declaracion de parametros para la peticion web service
-        String[] params = new String[]{InfoGlobalTransaccionSOAP.PARAM_NAME_TERMINAL_CODIGO_TERMINAL, codigoDispositivo};
+        String[] params = new String[]{InfoGlobalTransaccionSOAP.PARAM_NAME_TERMINAL_CODIGO_TERMINAL, configurations.getCodigoDispositivo()};
 
         //Creacion del modelo TransactionWS para ser usado dentro del webservice
         TransactionWS transactionWS = new TransactionWS(
-                InfoGlobalTransaccionSOAP.HTTP + AppDatabase.getInstance(context).obtenerURLConfiguracionConexion() + InfoGlobalTransaccionSOAP.WEB_SERVICE_URI,
+                InfoGlobalTransaccionSOAP.HTTP + configurations.getHost() + ":" + configurations.getPort() + InfoGlobalTransaccionSOAP.WEB_SERVICE_URI,
                 InfoGlobalTransaccionSOAP.HTTP + InfoGlobalTransaccionSOAP.NAME_SPACE,
                 InfoGlobalTransaccionSOAP.METHOD_NAME_TERMINAL,
                 new String[][]{params});
