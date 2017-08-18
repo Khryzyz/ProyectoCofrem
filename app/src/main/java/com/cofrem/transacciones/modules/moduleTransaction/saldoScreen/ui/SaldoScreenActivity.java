@@ -425,7 +425,8 @@ public class SaldoScreenActivity extends Activity implements SaldoScreenView {
      */
     @Click({R.id.btnSaldoTransactionNumeroDocumentoBotonCancelar,
             R.id.btnSaldoTransactionLecturaIncorrectaBotonSalir,
-            R.id.btnSaldoTransactionClaveUsuarioBotonCancelar
+            R.id.btnSaldoTransactionClaveUsuarioBotonCancelar,
+            R.id.btnSaldoTransactionErrorBotonSalir
     })
     public void navigateToTransactionScreen() {
         new Handler().postDelayed(new Runnable() {
