@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.cofrem.transacciones.MainScreenActivity_;
 import com.cofrem.transacciones.lib.MagneticHandler;
 import com.cofrem.transacciones.models.InfoHeaderApp;
+import com.cofrem.transacciones.models.PrintRow;
 import com.cofrem.transacciones.modules.moduleTransaction.creditoScreen.CreditoScreenPresenter;
 import com.cofrem.transacciones.modules.moduleTransaction.creditoScreen.CreditoScreenPresenterImpl;
 import com.cofrem.transacciones.R;
@@ -597,7 +598,7 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
 
             //Registra el valor del consumo en la vista de verificacion
             txvCreditoTransactionVerificacionDatosValorCantidad.setText(
-                    String.valueOf(modelTransaccion.getValor())
+                    PrintRow.numberFormat(modelTransaccion.getValor())
             );
 
             //Registra el numero de documento en la vista de verificacion

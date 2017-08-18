@@ -204,7 +204,7 @@ public class ReimpresionScreenRepositoryImpl implements ReimpresionScreenReposit
     @Override
     public void imprimirReporteGeneral(Context context) {
 
-        ArrayList<Transaccion> listaDetalle = AppDatabase.getInstance(context).obtenerDetallesTransaccion();
+        ArrayList<Transaccion> listaDetalle = AppDatabase.getInstance(context).obtenerGeneralTransaccion();
 
         int totalConsumo = 0, totalAnulacion = 0;
 

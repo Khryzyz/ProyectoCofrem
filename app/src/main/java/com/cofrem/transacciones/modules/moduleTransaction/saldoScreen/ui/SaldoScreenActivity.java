@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.cofrem.transacciones.lib.MagneticHandler;
 import com.cofrem.transacciones.models.InfoHeaderApp;
+import com.cofrem.transacciones.models.PrintRow;
 import com.cofrem.transacciones.models.modelsWS.modelTransaccion.InformacionSaldo;
 import com.cofrem.transacciones.modules.moduleTransaction.saldoScreen.SaldoScreenPresenter;
 import com.cofrem.transacciones.modules.moduleTransaction.saldoScreen.SaldoScreenPresenterImpl;
@@ -279,7 +280,9 @@ public class SaldoScreenActivity extends Activity implements SaldoScreenView {
 
         txvSaldoTransactionExitosaCedulaValor.setText(informacionSaldo.getCedulaUsuario());
 
-        txvSaldoTransactionExitosaSaldoCantidad.setText(informacionSaldo.getValorTotalSaldo());
+        int saldo = Integer.parseInt(informacionSaldo.getValorTotalSaldo().split(".0")[0]);
+
+        txvSaldoTransactionExitosaSaldoCantidad.setText(PrintRow.numberFormat(saldo));
 
     }
 

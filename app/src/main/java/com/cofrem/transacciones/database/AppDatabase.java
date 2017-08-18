@@ -1019,22 +1019,11 @@ public final class AppDatabase extends SQLiteOpenHelper {
                         " LIMIT 1", null
         );
 
-        Transaccion modelTransaccion = new Transaccion();
-
         cursorQuery.moveToFirst();
 
-        modelTransaccion.setId(cursorQuery.getInt(0));
-        modelTransaccion.setTipo_servicio(cursorQuery.getInt(1));
-        modelTransaccion.setNumero_cargo(cursorQuery.getString(2));
-        modelTransaccion.setNumero_tarjeta(cursorQuery.getString(3));
-        modelTransaccion.setValor(cursorQuery.getInt(4));
-        modelTransaccion.setTipo_transaccion(cursorQuery.getInt(5));
-        modelTransaccion.setNumero_documento(cursorQuery.getString(6));
-        modelTransaccion.setNombre_usuario(cursorQuery.getString(7));
-        modelTransaccion.setFecha_server(cursorQuery.getString(8));
-        modelTransaccion.setHora_server(cursorQuery.getString(9));
-        modelTransaccion.setRegistro(cursorQuery.getString(10));
-        modelTransaccion.setEstado(cursorQuery.getInt(11));
+        Transaccion modelTransaccion = getTransaccionDeCursor(cursorQuery);
+
+        cursorQuery.close();
 
         return modelTransaccion;
 
@@ -1088,22 +1077,8 @@ public final class AppDatabase extends SQLiteOpenHelper {
         );
 
         while (cursorQuery.moveToNext()) {
-            Transaccion modelTransaccion = new Transaccion();
 
-            modelTransaccion.setId(cursorQuery.getInt(0));
-            modelTransaccion.setTipo_servicio(cursorQuery.getInt(1));
-            modelTransaccion.setNumero_cargo(cursorQuery.getString(2));
-            modelTransaccion.setNumero_tarjeta(cursorQuery.getString(3));
-            modelTransaccion.setValor(cursorQuery.getInt(4));
-            modelTransaccion.setTipo_transaccion(cursorQuery.getInt(5));
-            modelTransaccion.setNumero_documento(cursorQuery.getString(6));
-            modelTransaccion.setNombre_usuario(cursorQuery.getString(7));
-            modelTransaccion.setFecha_server(cursorQuery.getString(8));
-            modelTransaccion.setHora_server(cursorQuery.getString(9));
-            modelTransaccion.setRegistro(cursorQuery.getString(10));
-            modelTransaccion.setEstado(cursorQuery.getInt(11));
-
-            lista.add(modelTransaccion);
+            lista.add(getTransaccionDeCursor(cursorQuery));
 
         }
 
@@ -1124,26 +1099,14 @@ public final class AppDatabase extends SQLiteOpenHelper {
         Cursor cursorQuery;
 
         cursorQuery = getWritableDatabase().rawQuery(
-                "SELECT * FROM " + DatabaseManager.TableTransacciones.TABLE_NAME_TRANSACCIONES, null
+                "SELECT * FROM " + DatabaseManager.TableTransacciones.TABLE_NAME_TRANSACCIONES +
+                " WHERE " + DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_FECHA_SERVER + " = '"+ getDateTime().split(" ")[0] + "'"
+                , null
         );
 
         while (cursorQuery.moveToNext()) {
-            Transaccion modelTransaccion = new Transaccion();
 
-            modelTransaccion.setId(cursorQuery.getInt(0));
-            modelTransaccion.setTipo_servicio(cursorQuery.getInt(1));
-            modelTransaccion.setNumero_cargo(cursorQuery.getString(2));
-            modelTransaccion.setNumero_tarjeta(cursorQuery.getString(3));
-            modelTransaccion.setValor(cursorQuery.getInt(4));
-            modelTransaccion.setTipo_transaccion(cursorQuery.getInt(5));
-            modelTransaccion.setNumero_documento(cursorQuery.getString(6));
-            modelTransaccion.setNombre_usuario(cursorQuery.getString(7));
-            modelTransaccion.setFecha_server(cursorQuery.getString(8));
-            modelTransaccion.setHora_server(cursorQuery.getString(9));
-            modelTransaccion.setRegistro(cursorQuery.getString(10));
-            modelTransaccion.setEstado(cursorQuery.getInt(11));
-
-            lista.add(modelTransaccion);
+            lista.add(getTransaccionDeCursor(cursorQuery));
 
         }
 
@@ -1151,6 +1114,35 @@ public final class AppDatabase extends SQLiteOpenHelper {
 
         return lista;
     }
+
+    /**
+     * Metodo para Obtener una  transaccion segun el numero de cargo
+     *
+     * @return Arraylist destalles de la transaccion
+     */
+    public ArrayList<Transaccion> obtenerGeneralTransaccion() {
+
+        ArrayList<Transaccion> lista = new ArrayList<>();
+
+        Cursor cursorQuery;
+
+        cursorQuery = getWritableDatabase().rawQuery(
+                "SELECT * FROM " + DatabaseManager.TableTransacciones.TABLE_NAME_TRANSACCIONES
+                , null
+        );
+
+        while (cursorQuery.moveToNext()) {
+
+            lista.add(getTransaccionDeCursor(cursorQuery));
+
+        }
+
+        cursorQuery.close();
+
+        return lista;
+    }
+
+
 
     /**
      * Metodo para Obtener el conteo de los registros de la tabla base_financiera
@@ -1209,5 +1201,29 @@ public final class AppDatabase extends SQLiteOpenHelper {
         SQLiteStatement statement = getWritableDatabase().compileStatement("SELECT changes()");
         return statement.simpleQueryForLong();
     }
+
+
+    private Transaccion getTransaccionDeCursor(Cursor cursorQuery){
+
+        Transaccion modelTransaccion = new Transaccion();
+
+        modelTransaccion.setId(cursorQuery.getInt(0));
+        modelTransaccion.setTipo_servicio(cursorQuery.getInt(1));
+        modelTransaccion.setNumero_cargo(cursorQuery.getString(2));
+        modelTransaccion.setNumero_tarjeta(cursorQuery.getString(3));
+        modelTransaccion.setValor(cursorQuery.getInt(4));
+        modelTransaccion.setTipo_transaccion(cursorQuery.getInt(5));
+        modelTransaccion.setNumero_documento(cursorQuery.getString(6));
+        modelTransaccion.setNombre_usuario(cursorQuery.getString(7));
+        modelTransaccion.setFecha_server(cursorQuery.getString(8));
+        modelTransaccion.setHora_server(cursorQuery.getString(9));
+        modelTransaccion.setRegistro(cursorQuery.getString(10));
+        modelTransaccion.setEstado(cursorQuery.getInt(11));
+
+        return modelTransaccion;
+
+    }
+
+
 
 }

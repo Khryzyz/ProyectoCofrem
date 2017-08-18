@@ -71,4 +71,6 @@
     <string name="configuration_text_registro_printer_error">Error en el registro de la configuración de la impresora.</string>
 
 
+    <string name="configuration_text_esperando_respuesta">Esperando respuesta del servidor.</string>
+
 </resources>
