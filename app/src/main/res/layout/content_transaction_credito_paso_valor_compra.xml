@@ -25,7 +25,7 @@
 
     <EditText
         android:id="@+id/edtCreditoTransactionValorCompraValor"
-        style="@style/StyleValuePrimary"
+        style="@style/StyleValueNumberPrimary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/txvCreditoTransactionValorCompraSubtitle"

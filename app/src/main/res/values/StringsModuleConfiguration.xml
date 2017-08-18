@@ -36,10 +36,19 @@
 
     <!-- Textos register configuration -->
     <string name="configuration_error_format_puerto">El puerto debe tener entre 1 y 5 caracteres</string>
+
+    <string name="configuration_error_valor_puerto">El puerto debe estar entre 0 y 65535</string>
+
+    <string name="configuration_error_format_host">El hostno tiene formato correcto</string>
+
     <string name="configuration_error_format_codigo_establecimiento">El codigo del establecimiento debe ser de 2 caracteres</string>
-    <string name="configuration_error_format_clave_tecnica">La contraseña de administración debe tener exactamente 4 caracteres.</string>
+
+    <string name="configuration_error_format_clave_tecnica">La contraseña de administración debe tener 4 caracteres.</string>
+
     <string name="configuration_text_clave_valido">Contraseña valida.</string>
+
     <string name="configuration_text_clave_no_valido">Contraseña no valida, por favor verificar.</string>
+
     <string name="configuration_text_clave_error">Existe un error en la configuración del valor de la contraseña de su dispositivo.</string>
 
     <string name="configuration_text_registro_conexion_success">Configuración de conexión registrada correctamente.</string>

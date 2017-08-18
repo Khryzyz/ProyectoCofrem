@@ -780,7 +780,7 @@ public final class AppDatabase extends SQLiteOpenHelper {
                     contentValuesInsert
             );
 
-            conteo = obtenerConteoCambios();
+            transaction = true;
 
             getWritableDatabase().setTransactionSuccessful();
 
@@ -793,11 +793,20 @@ public final class AppDatabase extends SQLiteOpenHelper {
             getWritableDatabase().endTransaction();
 
         }
-        if (conteo == 1) {
-            transaction = true;
-        }
-
         return transaction;
+    }
+
+    /**
+     * Metodo para borrar la configuracion de conexion en cas de error
+     */
+    public void deleteConfiguracionConexion() {
+
+        // Eliminacion de registros anteriores en la base de datos
+        getWritableDatabase().delete(
+                DatabaseManager.TableConfiguracionConexion.TABLE_NAME_CONFIGURACION_CONEXION,
+                "",
+                null
+        );
     }
 
     /**
@@ -839,16 +848,21 @@ public final class AppDatabase extends SQLiteOpenHelper {
 
         boolean transaction = false;
 
-        long countInformacionDispositivo;
-
-        long countConfiguracionAcceso;
-
         try {
+
             getWritableDatabase().beginTransaction();
 
             InformacionEstablecimiento informacionEstablecimiento = establecimiento.getInformacionEstablecimiento();
 
             ConexionEstablecimiento conexionEstablecimiento = establecimiento.getConexionEstablecimiento();
+
+
+            // Eliminacion de registros anteriores en la base de datos
+            getWritableDatabase().delete(
+                    DatabaseManager.TableEstablecimiento.TABLE_NAME_ESTABLECIMIENTO,
+                    "",
+                    null
+            );
 
             // Inicializacion de la variable de contenidos del registro
             ContentValues contentValuesInsertInformacionDispositivo = new ContentValues();
@@ -869,11 +883,7 @@ public final class AppDatabase extends SQLiteOpenHelper {
                     contentValuesInsertInformacionDispositivo
             );
 
-            countInformacionDispositivo = obtenerConteoCambios();
-
-            if (countInformacionDispositivo == 1 &&
-                    !conexionEstablecimiento.getClaveTecnivo().isEmpty() &&
-                    validarAccesoByClaveTecnica(conexionEstablecimiento.getClaveTecnivo()) == 0) {
+            if (!conexionEstablecimiento.getClaveTecnivo().isEmpty()) {
 
                 // Eliminacion de registros anteriores en la base de datos
                 getWritableDatabase().delete(
@@ -897,14 +907,10 @@ public final class AppDatabase extends SQLiteOpenHelper {
                         contentValuesInformacionAcceso
                 );
 
-                countConfiguracionAcceso = obtenerConteoCambios();
+                getWritableDatabase().setTransactionSuccessful();
 
-                if (countConfiguracionAcceso == 1) {
+                transaction = true;
 
-                    getWritableDatabase().setTransactionSuccessful();
-                    transaction = true;
-
-                }
             }
 
         } catch (SQLException e) {
@@ -984,7 +990,7 @@ public final class AppDatabase extends SQLiteOpenHelper {
     }
 
 
-    public String obtenerFechaTransaccionNumCargo(String cargo){
+    public String obtenerFechaTransaccionNumCargo(String cargo) {
         Cursor cursorQuery;
 
         cursorQuery = getWritableDatabase().rawQuery(
@@ -1002,8 +1008,7 @@ public final class AppDatabase extends SQLiteOpenHelper {
     }
 
 
-
-    public Transaccion obtenerUltimaTransaccionAnulada(){
+    public Transaccion obtenerUltimaTransaccionAnulada() {
         Cursor cursorQuery;
 
         cursorQuery = getWritableDatabase().rawQuery(
@@ -1020,10 +1025,9 @@ public final class AppDatabase extends SQLiteOpenHelper {
 
         cursorQuery.close();
 
-        return  modelTransaccion;
+        return modelTransaccion;
 
     }
-
 
 
     /**
@@ -1045,7 +1049,7 @@ public final class AppDatabase extends SQLiteOpenHelper {
         );
 
         if (cursorQuery.moveToFirst()) {
-             numero_cargo = cursorQuery.getString(2);
+            numero_cargo = cursorQuery.getString(2);
         }
 
         cursorQuery.close();

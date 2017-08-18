@@ -72,8 +72,12 @@
 
     <!--Estilos de los campos de ingreso numerico usados en la aplicacion-->
 
-    <style name="StyleValuePrimary" parent="StyleInputPrimary">
+    <style name="StyleValueNumberPrimary" parent="StyleInputPrimary">
         <item name="android:inputType">number</item>
+    </style>
+
+    <style name="StyleValueTextPrimary" parent="StyleInputPrimary">
+        <item name="android:inputType">text</item>
     </style>
 
     <!--Estilos de Texto para el Splash -->

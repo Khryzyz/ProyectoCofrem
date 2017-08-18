@@ -610,17 +610,14 @@ public class RegisterConfigurationScreenActivity extends Activity implements Reg
     @LongClick({R.id.edtConfiguracionRegisterPassTecnicoContenidoClave,
             R.id.edtConfiguracionRegisterHostContenidoValor,
             R.id.edtConfiguracionRegisterPortContenidoValor,
-            R.id.edtConfiguracionRegisterDispositivoContenidoValor,
     })
     @Click({R.id.edtConfiguracionRegisterPassTecnicoContenidoClave,
             R.id.edtConfiguracionRegisterHostContenidoValor,
             R.id.edtConfiguracionRegisterPortContenidoValor,
-            R.id.edtConfiguracionRegisterDispositivoContenidoValor,
     })
     @Touch({R.id.edtConfiguracionRegisterPassTecnicoContenidoClave,
             R.id.edtConfiguracionRegisterHostContenidoValor,
             R.id.edtConfiguracionRegisterPortContenidoValor,
-            R.id.edtConfiguracionRegisterDispositivoContenidoValor,
     })
     public void hideKeyBoard() {
 
@@ -692,17 +689,32 @@ public class RegisterConfigurationScreenActivity extends Activity implements Reg
     @Click(R.id.btnConfiguracionRegisterHostBotonAceptar)
     public void registrarHost() {
 
-        //Registra el valor del host en el modelo de la configuracion
-        modelConfiguration.setHost(edtConfiguracionRegisterHostContenidoValor.getText().toString());
+        //Se obtiene el texto de la contraseña
+        String host = edtConfiguracionRegisterHostContenidoValor.getText().toString();
 
-        //Oculta la vista del Host de conexion
-        bodyContentConfigurationHost.setVisibility(View.GONE);
+        //Vacia la caja de el contenido del host
+        edtConfiguracionRegisterHostContenidoValor.setText("");
 
-        //Muestra la vista del Port de conexion
-        bodyContentConfigurationPort.setVisibility(View.VISIBLE);
+        if (host.length() > 6 && host.length() < 16) {
+            //Registra el valor del host en el modelo de la configuracion
+            modelConfiguration.setHost(host);
 
-        //Actualiza el paso actual
-        pasoRegisterConfiguration++;
+            //Oculta la vista del Host de conexion
+            bodyContentConfigurationHost.setVisibility(View.GONE);
+
+            //Muestra la vista del Port de conexion
+            bodyContentConfigurationPort.setVisibility(View.VISIBLE);
+
+            //Actualiza el paso actual
+            pasoRegisterConfiguration++;
+
+        } else {
+
+            //Muestra el mensaje de error de formato de la contraseña
+            Toast.makeText(this, R.string.configuration_error_format_host, Toast.LENGTH_SHORT).show();
+
+        }
+
     }
 
     /**
@@ -717,23 +729,30 @@ public class RegisterConfigurationScreenActivity extends Activity implements Reg
         //Vacia la caja del valor del puerto
         edtConfiguracionRegisterPortContenidoValor.setText("");
 
-        if (port.length() > 0 && port.length() < 6) {
+        if ((port.length() > 0) && (port.length() < 6)) {
+            if ((Integer.parseInt(port) > 0) && (Integer.parseInt(port) < 65535)) {
 
-            //Registra el valor del port en el modelo de la configuracion
-            modelConfiguration.setPort(Integer.parseInt(port));
+                //Registra el valor del port en el modelo de la configuracion
+                modelConfiguration.setPort(Integer.parseInt(port));
 
-            //Oculta la vista del Port de conexion
-            bodyContentConfigurationPort.setVisibility(View.GONE);
+                //Oculta la vista del Port de conexion
+                bodyContentConfigurationPort.setVisibility(View.GONE);
 
-            //Muestra la vista del codigo de dispositivo
-            bodyContentConfigurationDispositivo.setVisibility(View.VISIBLE);
+                //Muestra la vista del codigo de dispositivo
+                bodyContentConfigurationDispositivo.setVisibility(View.VISIBLE);
 
-            //Actualiza el paso actual
-            pasoRegisterConfiguration++;
+                //Actualiza el paso actual
+                pasoRegisterConfiguration++;
 
+            } else {
+
+                //Muestra el mensaje de error de formato del host
+                Toast.makeText(this, R.string.configuration_error_valor_puerto, Toast.LENGTH_SHORT).show();
+
+            }
         } else {
 
-            //Muestra el mensaje de error de formato de la contraseña
+            //Muestra el mensaje de error de formato del host
             Toast.makeText(this, R.string.configuration_error_format_puerto, Toast.LENGTH_SHORT).show();
 
         }

@@ -73,25 +73,19 @@ public class RegisterConfigurationScreenRepositoryImpl implements RegisterConfig
         //Se crea una nueva instancia del model establecimiento
         Establecimiento establecimiento;
 
-        //Se registra la configuracion de la conexion en el dispositivo
-        if (AppDatabase.getInstance(context).insertConfiguracionConexion(configurations)) {
+        //Valida por medio del WS si la informacion del establecimiento es correcta
+        establecimiento = validarInfoDispositivo(context, configurations.getCodigoDispositivo());
 
-            //Evento Correcto de registro de configuracion de la conexion en el establecimiento
-            postEvent(RegisterConfigurationScreenEvent.onRegistroConfigConexionSuccess);
+        //Si la informacion del estableceimiento no es nula, la recoleccion de la informacion es correcta
+        if (establecimiento != null) {
 
-            //Valida por medio del WS si la informacion del establecimiento es correcta
-            establecimiento = validarInfoDispositivo(context, configurations.getCodigoDispositivo());
+            MessageWS messageWS = establecimiento.getMessageWS();
 
-            //Si la informacion del estableceimiento no es nula, la recoleccion de la informacion es correcta
-            if (establecimiento != null) {
+            if (messageWS.getCodigoMensaje() == MessageWS.statusConsultaExitosa ||
+                    messageWS.getCodigoMensaje() == MessageWS.statusTerminalExiste) {
 
-                MessageWS messageWS = establecimiento.getMessageWS();
-
-                if (messageWS.getCodigoMensaje() == MessageWS.statusConsultaExitosa ||
-                        messageWS.getCodigoMensaje() == MessageWS.statusTerminalExiste) {
-
-                    //Evento Correcto de recepcion de informacion del establecimiento desde el WS
-                    postEvent(RegisterConfigurationScreenEvent.onInformacionDispositivoSuccess);
+                //Se registra la configuracion de la conexion en el dispositivo
+                if (AppDatabase.getInstance(context).insertConfiguracionConexion(configurations)) {
 
                     //Se registra la configuracion de la conexion en el establecimiento
                     if (AppDatabase.getInstance(context).processInfoEstablecimiento(establecimiento)) {
@@ -106,25 +100,26 @@ public class RegisterConfigurationScreenRepositoryImpl implements RegisterConfig
                         postEvent(RegisterConfigurationScreenEvent.onProccessInformacionEstablecimientoError);
 
                     }
-
                 } else {
 
-                    //Evento Erroneo de registro de informacion del establecimiento desde el WS y actualizacion de accesos
-                    postEvent(RegisterConfigurationScreenEvent.onInformacionDispositivoErrorInformacion);
-
+                    //Evento Erroneo de registro de configuracion de la conexion en el establecimiento
+                    postEvent(RegisterConfigurationScreenEvent.onRegistroConfigConexionError);
                 }
 
             } else {
 
-                //Evento Erroneo de recepcion de informacion del establecimiento desde el WS
-                postEvent(RegisterConfigurationScreenEvent.onInformacionDispositivoErrorConexion);
+                //Evento Erroneo de registro de informacion del establecimiento desde el WS y actualizacion de accesos
+                postEvent(RegisterConfigurationScreenEvent.onInformacionDispositivoErrorInformacion);
 
             }
 
         } else {
 
-            //Evento Erroneo de registro de configuracion de la conexion en el establecimiento
-            postEvent(RegisterConfigurationScreenEvent.onRegistroConfigConexionError);
+            AppDatabase.getInstance(context).deleteConfiguracionConexion();
+
+            //Evento Erroneo de recepcion de informacion del establecimiento desde el WS
+            postEvent(RegisterConfigurationScreenEvent.onInformacionDispositivoErrorConexion);
+
         }
 
     }
