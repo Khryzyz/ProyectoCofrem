@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cofrem.transacciones.ReportScreenActivity_;
+import com.cofrem.transacciones.lib.KeyBoard;
 import com.cofrem.transacciones.models.InfoHeaderApp;
 import com.cofrem.transacciones.models.Reports;
 import com.cofrem.transacciones.modules.moduleReports.reimpresionScreen.ReimpresionScreenPresenter;
@@ -24,6 +25,8 @@ import com.cofrem.transacciones.models.Transaccion;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.LongClick;
+import org.androidannotations.annotations.Touch;
 import org.androidannotations.annotations.ViewById;
 
 @EActivity(R.layout.activity_report_reimpresion_screen)
@@ -339,6 +342,27 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
      * Metodo propios de la clase
      * #############################################################################################
      */
+
+
+    /**
+     * Metodo que oculta el teclado al presionar el EditText
+     */
+    @LongClick({R.id.edtReportReimprimeonReciboNummeroCargoContenidoClave,
+            R.id.edtReportReimpresionReciboClaveAdministradorContenidoClave
+    })
+    @Click({R.id.edtReportReimprimeonReciboNummeroCargoContenidoClave,
+            R.id.edtReportReimpresionReciboClaveAdministradorContenidoClave
+    })
+    @Touch({R.id.edtReportReimprimeonReciboNummeroCargoContenidoClave,
+            R.id.edtReportReimpresionReciboClaveAdministradorContenidoClave
+    })
+    public void hideKeyBoard() {
+
+        //TODO:VERIFICAR QUE EL TECLADO SE ESTA OCULTANDO
+        //Oculta el teclado
+        KeyBoard.hide(this);
+
+    }
 
     /**
      * Metodo para mostrar la barra de progreso

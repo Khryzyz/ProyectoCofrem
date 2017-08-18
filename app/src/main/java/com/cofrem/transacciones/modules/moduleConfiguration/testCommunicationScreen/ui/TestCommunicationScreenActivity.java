@@ -15,7 +15,7 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
-@EActivity(R.layout.activity_main_screen)
+@EActivity(R.layout.activity_configuration_test_screen)
 public class TestCommunicationScreenActivity extends Activity implements TestCommunicationScreenView {
 
     /**
