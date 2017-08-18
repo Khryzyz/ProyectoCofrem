@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.cofrem.transacciones.MainScreenActivity_;
 import com.cofrem.transacciones.lib.MagneticHandler;
 import com.cofrem.transacciones.models.InfoHeaderApp;
+import com.cofrem.transacciones.models.PrintRow;
 import com.cofrem.transacciones.modules.moduleTransaction.anulacionScreen.AnulacionScreenPresenter;
 import com.cofrem.transacciones.modules.moduleTransaction.anulacionScreen.AnulacionScreenPresenterImpl;
 import com.cofrem.transacciones.R;
@@ -717,7 +718,7 @@ public class AnulacionScreenActivity extends Activity implements AnulacionScreen
 
             //Registra el valor del consumo en la vista de verificacion
             txvAnulacionTransactionVerificacionDatosValorCantidad.setText(
-                    String.valueOf(modelTransaccion.getValor())
+                    PrintRow.numberFormat(modelTransaccion.getValor())
             );
 
             //Registra el numero de cargo en la vista de verificacion
