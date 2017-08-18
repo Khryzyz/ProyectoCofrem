@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/txvAnulacionTransactionClaveDispositivoTitle"
         android:layout_marginBottom="@dimen/appMarginBottom"
-        android:text="@string/general_text_clave_dispositivo" />
+        android:text="@string/general_text_clave_administrador" />
 
     <EditText
         android:id="@+id/edtAnulacionTransactionClaveAdministradorContenidoClave"

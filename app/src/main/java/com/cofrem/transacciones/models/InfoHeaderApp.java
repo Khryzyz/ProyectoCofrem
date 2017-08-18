@@ -5,10 +5,10 @@ public class InfoHeaderApp {
     /**
      * Modelo para el registro del InfoHeaderApp
      */
-    private String idDispositivo;
-    private String idPunto;
-    private String nombreEstablecimiento;
-    private String nombrePunto;
+    private String idDispositivo = "NO REGISTRA";
+    private String idPunto = "NO REGISTRA";
+    private String nombreEstablecimiento = "NO REGISTRA";
+    private String nombrePunto = "NO REGISTRA";
 
     private static InfoHeaderApp instance = null;
 

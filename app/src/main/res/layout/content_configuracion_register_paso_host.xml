@@ -24,7 +24,7 @@
 
     <EditText
         android:id="@+id/edtConfiguracionRegisterHostContenidoValor"
-        style="@style/StyleValuePrimary"
+        style="@style/StyleValueTextPrimary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/txvConfiguracionRegisterHostValor"

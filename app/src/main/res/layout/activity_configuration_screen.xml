@@ -25,18 +25,18 @@
         android:layout_below="@id/btnConfigurationScreenModuleRegisterConfiguration"
         android:drawableStart="@drawable/if_print"
         android:text="@string/configuration_text_button_configuracion_printer" />
-
-    <Button
-        android:id="@+id/btnConfigurationScreenModuleTestCommunication"
-        style="@style/StyleButtonStandar"
-        android:layout_below="@id/btnConfigurationScreenModuleRegisterConfigurationPrinter"
-        android:drawableStart="@drawable/if_conn_plug"
-        android:text="@string/configuration_text_button_prueba" />
-
+    <!--
+        <Button
+            android:id="@+id/btnConfigurationScreenModuleTestCommunication"
+            style="@style/StyleButtonStandar"
+            android:layout_below="@id/btnConfigurationScreenModuleRegisterConfigurationPrinter"
+            android:drawableStart="@drawable/if_conn_plug"
+            android:text="@string/configuration_text_button_prueba" />
+    -->
     <Button
         android:id="@+id/btnConfigurationScreenBack"
         style="@style/StyleButtonBack"
-        android:layout_below="@id/btnConfigurationScreenModuleTestCommunication"
+        android:layout_below="@id/btnConfigurationScreenModuleRegisterConfigurationPrinter"
         android:text="@string/general_text_button_regresar" />
 
 </RelativeLayout>
