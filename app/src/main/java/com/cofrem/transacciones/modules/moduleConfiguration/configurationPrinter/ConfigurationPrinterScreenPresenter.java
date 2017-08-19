@@ -22,6 +22,11 @@ public interface ConfigurationPrinterScreenPresenter {
     void saveConfigurationPrinter(Context context, ConfigurationPrinter configuration);
 
     /**
+     * metodo que se encarga de realizar una impresion de prueba
+     */
+    void imprimirPrueba(Context context, int gray);
+
+    /**
      * Metodo para la creacion del presentador
      */
     void onCreate();

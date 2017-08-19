@@ -2,9 +2,14 @@ package com.cofrem.transacciones.modules.moduleTransaction.saldoScreen;
 
 import android.content.Context;
 
+import com.cofrem.transacciones.R;
 import com.cofrem.transacciones.database.AppDatabase;
 import com.cofrem.transacciones.global.InfoGlobalTransaccionSOAP;
 import com.cofrem.transacciones.lib.KsoapAsync;
+import com.cofrem.transacciones.lib.PrinterHandler;
+import com.cofrem.transacciones.lib.StyleConfig;
+import com.cofrem.transacciones.models.ConfigurationPrinter;
+import com.cofrem.transacciones.models.PrintRow;
 import com.cofrem.transacciones.models.Transaccion;
 import com.cofrem.transacciones.models.modelsWS.MessageWS;
 import com.cofrem.transacciones.models.modelsWS.TransactionWS;
@@ -17,6 +22,7 @@ import com.cofrem.transacciones.lib.GreenRobotEventBus;
 
 import org.ksoap2.serialization.SoapObject;
 
+import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 public class SaldoScreenRepositoryImpl implements SaldoScreenRepository {
@@ -59,7 +65,7 @@ public class SaldoScreenRepositoryImpl implements SaldoScreenRepository {
                 postEvent(SaldoScreenEvent.onTransaccionSuccess, resultadoTransaccion.getInformacionSaldo());
 
                 //Imprime el recibo
-                imprimirRecibo(context);
+                imprimirRecibo(context,resultadoTransaccion );
 
             } else {
                 //Error en el registro de la transaccion del web service
@@ -176,7 +182,49 @@ public class SaldoScreenRepositoryImpl implements SaldoScreenRepository {
      *
      * @param context
      */
-    public void imprimirRecibo(Context context) {
+    public void imprimirRecibo(Context context, ResultadoTransaccion resultadoTransaccion) {
+
+        ConfigurationPrinter configurationPrinter = AppDatabase.getInstance(context).getConfigurationPrinter();
+
+        int gray = configurationPrinter.getGray_level();
+
+        // creamos el ArrayList se que encarga de almacenar los rows del recibo
+        ArrayList<PrintRow> printRows = new ArrayList<PrintRow>();
+
+        //Se agrega el logo al primer renglon del recibo y se coloca en el centro
+        printRows.add(PrintRow.printLogo(context, gray));
+
+        PrintRow.printCofrem(context, printRows, gray, 10);
+
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_title_consulta_saldo), new StyleConfig(StyleConfig.Align.CENTER, gray,20)));
+
+
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_separador_operador), new StyleConfig(StyleConfig.Align.LEFT, gray, StyleConfig.FontSize.F1)));
+        PrintRow.printOperador(context, printRows, gray, 10);
+
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_numero_documento), resultadoTransaccion.getInformacionSaldo().getCedulaUsuario(), new StyleConfig(StyleConfig.Align.LEFT, gray)));
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_numero_tarjeta), PrinterHandler.getFormatNumTarjeta(resultadoTransaccion.getInformacionSaldo().getNumeroTarjeta()), new StyleConfig(StyleConfig.Align.LEFT, gray, 20)));
+
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_separador_linea), new StyleConfig(StyleConfig.Align.LEFT, gray, StyleConfig.FontSize.F1, 10)));
+
+        int saldo = Integer.parseInt(resultadoTransaccion.getInformacionSaldo().getValor().split(".0")[0]);
+
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_total), PrintRow.numberFormat(saldo), new StyleConfig(StyleConfig.Align.LEFT, gray)));
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_separador_linea), new StyleConfig(StyleConfig.Align.LEFT, gray, StyleConfig.FontSize.F1, 50)));
+
+        printRows.add(new PrintRow(".", new StyleConfig(StyleConfig.Align.LEFT, 1)));
+
+
+        int status = new PrinterHandler().imprimerTexto(printRows);
+
+
 
     }
 

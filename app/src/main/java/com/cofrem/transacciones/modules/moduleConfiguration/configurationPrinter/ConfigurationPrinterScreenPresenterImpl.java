@@ -83,6 +83,13 @@ public class ConfigurationPrinterScreenPresenterImpl implements ConfigurationPri
         }
     }
 
+    @Override
+    public void imprimirPrueba(Context context, int gray) {
+        if (configurationPrinterScreenView != null) {
+            configurationPrinterScreenInteractor.imprimirPrueba(context, gray);
+        }
+    }
+
     /**
      * Sobrecarga del metodo onEventMainThread de la interface SaldoScreenPresenter para el manejo de eventos
      *
@@ -102,6 +109,12 @@ public class ConfigurationPrinterScreenPresenterImpl implements ConfigurationPri
                 break;
             case ConfigurationPrinterScreenEvent.onSaveConfigurationPrinterError:
                 onSaveConfigurationPrinterError();
+                break;
+            case ConfigurationPrinterScreenEvent.onPrintTestSuccess:
+                onPrintTestSuccess();
+                break;
+            case ConfigurationPrinterScreenEvent.onPrintTestError:
+                onPrintTestError(configurationPrinterScreenEvent.getErrorMessage());
                 break;
 
         }
@@ -147,4 +160,24 @@ public class ConfigurationPrinterScreenPresenterImpl implements ConfigurationPri
             configurationPrinterScreenView.handleSaveConfigurationPrinterError();
         }
     }
+
+    /**
+     * Metodo para manejar la impression de prueba exitosa
+     */
+    private void onPrintTestSuccess(){
+        if (configurationPrinterScreenView != null) {
+            configurationPrinterScreenView.handlePrintTestSuccess();
+        }
+    }
+
+    /**
+     * Metodo para manejar la impression de prueba con error
+     */
+    private void onPrintTestError(String messageError){
+        if (configurationPrinterScreenView != null) {
+            configurationPrinterScreenView.handlePrintTestError(messageError);
+        }
+    }
+
+
 }

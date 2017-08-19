@@ -10,6 +10,8 @@
     <string name="configuration_text_button_configuracion_printer">Configuración de la Impresora</string>
     <string name="configuration_text_button_prueba">Prueba Comunicación</string>
 
+    <string name="configuration_text_button_probar_printer">Pruebar la Impresora</string>
+
     <!-- Titulos de vistas -->
     <string name="configuration_text_title_configuracion">Configuración</string>
     <string name="configuration_text_title_configuracion_printer">Configurar Impresora</string>
