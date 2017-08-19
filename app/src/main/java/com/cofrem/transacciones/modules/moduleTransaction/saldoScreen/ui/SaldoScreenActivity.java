@@ -321,7 +321,24 @@ public class SaldoScreenActivity extends Activity implements SaldoScreenView {
         pasoTransaccion++;
     }
 
+    /**
+     * Metodo para manejar la orden de imprimir recibo exitosa
+     */
+    @Override
+    public void handleImprimirReciboSuccess() {
 
+    }
+
+    /**
+     * Metodo para manejar la orden de imprimir recibo Error
+     */
+    @Override
+    public void handleImprimirReciboError(String errorMessage) {
+
+        //Muestra el mensaje de error que paso en la impresora
+        Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show();
+
+    }
 
     /*
       #############################################################################################
@@ -650,7 +667,7 @@ public class SaldoScreenActivity extends Activity implements SaldoScreenView {
     @Click(R.id.btnSaldoTransactionExitosaBotonImprimir)
     public void imprimiRecibo() {
 
-        //TODO: imprimir recibo
+        saldoScreenPresenter.imprimirRecibo(this);
 
     }
 

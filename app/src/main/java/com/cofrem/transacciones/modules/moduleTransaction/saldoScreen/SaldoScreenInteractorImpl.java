@@ -42,4 +42,9 @@ class SaldoScreenInteractorImpl implements SaldoScreenInteractor {
         //Valida el acceso a la app
         saldoScreenRepository.registrarTransaccion(context, transaccion);
     }
+
+    @Override
+    public void imprimirRecibo(Context context) {
+        saldoScreenRepository.imprimirRecibo(context);
+    }
 }
