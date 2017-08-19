@@ -608,7 +608,7 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
 
             //Registra el valor del consumo en la vista de deslizar tarjeta
             txvCreditoTransactionDesliceTarjetaValorCantidad.setText(
-                    String.valueOf(modelTransaccion.getValor())
+                    PrintRow.numberFormat(modelTransaccion.getValor())
             );
 
             //Registra el numero de documento en la vista de deslizar tarjeta

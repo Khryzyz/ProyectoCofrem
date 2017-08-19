@@ -40,6 +40,12 @@ class ConfigurationPrinterScreenInteractorImpl implements ConfigurationPrinterSc
         configurationPrinterScreenRepository.saveConfigurationPrinter(context,configuration);
     }
 
+
+    @Override
+    public void imprimirPrueba(Context context, int gray) {
+        configurationPrinterScreenRepository.imprimirPrueba(context,gray);
+    }
+
     /**
      *
      */

@@ -57,8 +57,10 @@
     <string name="recibo_title_transaccion_anuladas">Anuladas:</string>
     <string name="recibo_title_reimpresion">[R E I M P R E S I O N]</string>
     <string name="recibo_title_anulacion">A N U L A C I O N</string>
-    <string name="recibo_title_informe_diario">I N F O R M E   D I A R I O</string>
-    <string name="recibo_title_informe_general">I N F O R M E G E N R A L</string>
+    <string name="recibo_title_informe_diario">I N F O R M E  _  D I A R I O</string>
+    <string name="recibo_title_informe_general">I N F O R M E  _  G E N R A L</string>
+    <string name="recibo_title_consulta_saldo">C O N S U L T A   _  S A L D O</string>
+    <string name="recibo_title_prueba_impresora">P R U E B A  _  I M P R E S O R A</string>
 
 
     <string name="recibo_nit_cofrem"> 892000146-3 </string>

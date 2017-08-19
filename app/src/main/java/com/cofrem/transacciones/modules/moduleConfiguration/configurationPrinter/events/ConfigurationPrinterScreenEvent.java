@@ -8,6 +8,8 @@ public class ConfigurationPrinterScreenEvent {
     public final static int onVerifyConfigurationInitialError = 1;
     public final static int onSaveConfigurationPrinterSuccess = 2;
     public final static int onSaveConfigurationPrinterError = 3;
+    public final static int onPrintTestSuccess = 4;
+    public final static int onPrintTestError = 5;
 
     // Variable que maneja los tipos de eventos
     private int eventType;

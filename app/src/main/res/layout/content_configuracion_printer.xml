@@ -41,7 +41,13 @@
         android:layout_centerHorizontal="true"
         android:text="@string/configuration_text_gray_level" />
 
-
+    <Button
+        android:id="@+id/btnConfigurationPrinterProbarImpresora"
+        style="@style/StyleButtonStandar"
+        android:layout_below="@id/txvConfigurationPrinterValorGrayLevel"
+        android:drawableStart="@drawable/if_print"
+        android:layout_marginBottom="20dp"
+        android:text="@string/configuration_text_button_probar_printer" />
 
     <TextView
         android:id="@+id/txvConfigurationPrinterInsertFontSize"
@@ -80,14 +86,14 @@
         android:id="@+id/btnConfigurationPrinterBotonCancelar"
         style="@style/StyleButtonCancel"
         android:layout_alignParentStart="true"
-        android:layout_below="@id/txvConfigurationPrinterValorFontSize"
+        android:layout_below="@id/btnConfigurationPrinterProbarImpresora"
         android:text="@string/general_text_button_cancelar" />
 
     <Button
         android:id="@+id/btnConfigurationPrinterBotonAceptar"
         style="@style/StyleButtonAccept"
         android:layout_alignParentEnd="true"
-        android:layout_below="@id/txvConfigurationPrinterValorFontSize"
+        android:layout_below="@id/btnConfigurationPrinterProbarImpresora"
         android:text="@string/general_text_button_aceptar" />
 
 

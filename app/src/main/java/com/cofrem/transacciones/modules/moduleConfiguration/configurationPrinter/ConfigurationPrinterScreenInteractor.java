@@ -12,4 +12,11 @@ interface ConfigurationPrinterScreenInteractor {
      * metodo que se encarga guardar la configuracion de la impresora
      */
     void saveConfigurationPrinter(Context context, ConfigurationPrinter configuration);
+
+    /**
+     * metodo que se encarga de realizar una impresion de prueba
+     */
+    void imprimirPrueba(Context context, int gray);
+
+
 }

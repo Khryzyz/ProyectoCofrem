@@ -163,6 +163,16 @@ public class ConfigurationPrinterScreenActivity extends Activity implements Conf
         cancelConfigurationPrinter();
     }
 
+    @Override
+    public void handlePrintTestSuccess() {
+
+    }
+
+    @Override
+    public void handlePrintTestError(String messageError) {
+        Toast.makeText(this, messageError, Toast.LENGTH_LONG).show();
+    }
+
     @Click(R.id.btnConfigurationPrinterBotonAceptar)
     void saveConfigurationPrinter() {
         ConfigurationPrinter configuration = new ConfigurationPrinter();
@@ -194,6 +204,15 @@ public class ConfigurationPrinterScreenActivity extends Activity implements Conf
      * Metodo propios de la clase
      * #############################################################################################
      */
+
+
+
+    @Click(R.id.btnConfigurationPrinterProbarImpresora)
+    public void imprimirPrueba(){
+        configurationPrinterScreenPresenter.imprimirPrueba(this,seekBarGrayLevel.getProgress() + 1);
+    }
+
+
 
     /**
      * Metodo que coloca la orientacion de la App de forma predeterminada

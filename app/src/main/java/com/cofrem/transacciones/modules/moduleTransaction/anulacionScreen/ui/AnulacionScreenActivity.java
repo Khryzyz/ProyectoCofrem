@@ -733,7 +733,7 @@ public class AnulacionScreenActivity extends Activity implements AnulacionScreen
 
             //Registra el valor del consumo en la vista de verificacion
             txvAnulacionTransactionDesliceTarjetaDatosValorCantidad.setText(
-                    String.valueOf(modelTransaccion.getValor())
+                    PrintRow.numberFormat(modelTransaccion.getValor())
             );
 
             //Oculta la vista del numero de documento

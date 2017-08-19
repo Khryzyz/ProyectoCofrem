@@ -23,4 +23,17 @@ public interface ConfigurationPrinterScreenView {
      * Metodo para manejar el insert con error de la configuración de la impresora
      */
     void handleSaveConfigurationPrinterError();
+
+
+    /**
+     * Metodo para manejar la impresion de prueba exitosa
+     */
+    void handlePrintTestSuccess();
+
+    /**
+     * Metodo para manejar la impresion de prueba con error
+     */
+    void handlePrintTestError(String messageError);
+
+
 }
