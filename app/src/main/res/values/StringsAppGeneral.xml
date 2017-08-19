@@ -11,8 +11,8 @@
       Los tipos de texto son:
         title: usado en titulos
         text: usados en labels
-        message: usados en mensajes emergentes, ventanas de confirmacion o cuadros de logs
-      - Accion o Control: usado para describir donde se encuentra el texto o la accion que se ejecuto en caso de los message
+        message: usados en mensajes emergentes, ventanas de confirmación o cuadros de logs
+      - Accion o Control: usado para describir donde se encuentra el texto o la acción que se ejecutó en caso de los message
       Las acciones pueden ser:
         press: cuando el control es presionado
       Los controles pueden ser:
@@ -20,7 +20,7 @@
       - Nombre: nombre con el que se diferencia el texto dentro de una misma vista
     -->
 
-    <!-- Configuración textos de la interfaz de la aplicacion -->
+    <!-- Configuración textos de la interfaz de la aplicación -->
 
     <string name="app_name">Cofrem Transacciones</string>
 
@@ -50,7 +50,7 @@
     <string name="header_text_nombre_punto_no_registrado">Terminal: NO REGISTRADO</string>
     <string name="header_text_nombre_punto_registrado">Terminal: %s</string>
 
-    <string name="header_error_no_disponible">La información del dispositivo no esta disponible.</string>
+    <string name="header_error_no_disponible">La información del dispositivo no está disponible</string>
 
     <!-- Textos usados recurrentemente en toda la App -->
 
@@ -80,28 +80,28 @@
 
     <string name="general_message_press_back">Sí deseas volver a la vista anterior, debes presionar el boton</string>
 
-    <string name="general_message_verify_configuration_initial_existe">Configuración de conexión inicial existente.</string>
-    <string name="general_message_verify_configuration_initial_no_existe">Configuración de conexión inicial NO existente.</string>
-    <string name="general_message_verify_configuration_initial_no_valida">Configuración de conexión inicial NO valida.</string>
+    <string name="general_message_verify_configuration_initial_existe">Configuración de conexión inicial existente</string>
+    <string name="general_message_verify_configuration_initial_no_existe">Configuración de conexión inicial NO existente</string>
+    <string name="general_message_verify_configuration_initial_no_valida">Configuración de conexión inicial NO valida</string>
 
-    <string name="general_message_configuracion_acceso_existe">Configuración de acceso inicial existente.</string>
-    <string name="general_message_configuracion_acceso_no_existe">Configuración de acceso inicial NO existente.</string>
-    <string name="general_message_insert_configuracion_acceso_success">Registro correcto de la configuración de acceso inicial.</string>
-    <string name="general_message_insert_configuracion_acceso_error">No se pudo registrar la configuración de acceso inicial, verifique el dispositivo e intentelo nuevamente.</string>
+    <string name="general_message_configuracion_acceso_existe">Configuración de acceso inicial existente</string>
+    <string name="general_message_configuracion_acceso_no_existe">Configuración de acceso inicial NO existente</string>
+    <string name="general_message_insert_configuracion_acceso_success">Registro correcto de la configuración de acceso inicial</string>
+    <string name="general_message_insert_configuracion_acceso_error">No se pudo registrar la configuración de acceso inicial, verifique el dispositivo e intentelo nuevamente</string>
 
     <string name="general_message_verify_success">Verificación exitosa</string>
     <string name="general_message_verify_error">Verificación fallida</string>
 
     <string name="general_message_internet_info">Conexión a internet establecida…</string>
-    <string name="general_message_internet_error">Conexión a internet NO establecida, por  favor verifique y reinice la App.</string>
+    <string name="general_message_internet_error">Conexión a internet NO establecida, por favor verifique y reinicie la App</string>
 
     <string name="general_message_nfc_device_info">Conexión al dispositivo NFC establecida…</string>
-    <string name="general_message_nfc_device_error">Conexión al dispositivo NFC NO establecida, por  favor verifique y reinice la App.</string>
+    <string name="general_message_nfc_device_error">Conexión al dispositivo NFC NO establecida, por favor verifique y reinicie la App</string>
 
-    <string name="general_message_magnetic_device_info">Conexión al dispositivo lector de banda magnetica establecida…</string>
-    <string name="general_message_magnetic_device_error">Conexión al dispositivo lector de banda magnetica NO establecida, por  favor verifique y reinice la App.</string>
+    <string name="general_message_magnetic_device_info">Conexión al dispositivo lector de banda magnética establecida…</string>
+    <string name="general_message_magnetic_device_error">Conexión al dispositivo lector de banda magnética NO establecida, por favor verifique y reinicie la App</string>
 
     <string name="general_message_printer_device_info">Conexión al dispositivo de impresión establecida…</string>
-    <string name="general_message_printer_device_error">Conexión al dispositivo de impresion NO establecida, por  favor verifique y reinice la App.</string>
+    <string name="general_message_printer_device_error">Conexión al dispositivo de impresión NO establecida, por favor verifique y reinicie la App</string>
 
 </resources>

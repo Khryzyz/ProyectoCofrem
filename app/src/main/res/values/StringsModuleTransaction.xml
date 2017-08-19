@@ -29,7 +29,7 @@
 
     <string name="transaction_text_erronea">TRANSACCIÓN ERRONEA</string>
 
-    <string name="transaction_text_printer_error">No se pudo realizar la impresion del recibo.</string>
+    <string name="transaction_text_printer_error">No se pudo realizar la impresión del recibo</string>
 
     <string name="transaction_text_erronea_detalle">Detalle del error:</string>
 
@@ -43,13 +43,13 @@
 
     <string name="transaction_text_valor_transaccion">Ingrese el valor del consumo:</string>
 
-    <string name="transaction_error_valor">Debes ingresar un valor de consumo.</string>
+    <string name="transaction_error_valor">Debes ingresar un valor de consumo</string>
 
-    <string name="transaction_error_valor_monto_minimo">El valor minimo del consumo es de $10.000</string>
+    <string name="transaction_error_valor_monto_minimo">El valor mínimo del consumo es de $10.000</string>
 
     <string name="transaction_error_valor_monto_maximo">El valor máximo del consumo es de $3.000.000</string>
 
-    <string name="transaction_error_valor_transaccion_no_valido">El monto registrado no es valido</string>
+    <string name="transaction_error_valor_transaccion_no_valido">El monto registrado no es válido</string>
 
     <string name="transaction_text_verifacion_valor_transaccion">Valor del consumo:</string>
 
@@ -59,18 +59,18 @@
 
     <string name="transaction_text_numero_documento">Ingrese número de documento:</string>
 
-    <string name="transaction_error_numero_documento">Debe ingresar un número de documento.</string>
+    <string name="transaction_error_numero_documento">Debe ingresar un número de documento</string>
 
     <string name="transaction_text_verificacion_numero_documento">Número de documento:</string>
 
-    <string name="transaction_error_format_clave_usuario">La contraseña debe tener exactamente 4 caracteres.</string>
+    <string name="transaction_error_format_clave_usuario">La contraseña debe tener exactamente 4 caracteres</string>
 
-    <string name="transaction_error_format_clave_administrador">La contraseña de administración debe tener exactamente 4 caracteres.</string>
+    <string name="transaction_error_format_clave_administrador">La contraseña de administración debe tener exactamente 4 caracteres</string>
 
-    <string name="transaction_error_format_numero_cargo">El numero de cargo ingresado no es valido.</string>
+    <string name="transaction_error_format_numero_cargo">El número de cargo ingresado no es válido</string>
 
     <!-- Respuestas de estado de la transaccion -->
 
-    <string name="transaction_info_status_error_general">Error general de Conexión.</string>
+    <string name="transaction_info_status_error_general">Error general de Conexión</string>
 
 </resources>
