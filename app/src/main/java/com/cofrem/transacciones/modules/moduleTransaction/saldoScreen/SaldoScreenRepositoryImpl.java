@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.cofrem.transacciones.R;
 import com.cofrem.transacciones.database.AppDatabase;
+import com.cofrem.transacciones.global.InfoGlobalSettingsPrint;
 import com.cofrem.transacciones.global.InfoGlobalTransaccionSOAP;
 import com.cofrem.transacciones.lib.KsoapAsync;
 import com.cofrem.transacciones.lib.PrinterHandler;
@@ -26,6 +27,10 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 public class SaldoScreenRepositoryImpl implements SaldoScreenRepository {
+
+    ResultadoTransaccion resultadoTransaccionRecibo;
+
+
     /**
      * #############################################################################################
      * Declaracion de componentes y variables
@@ -64,8 +69,10 @@ public class SaldoScreenRepositoryImpl implements SaldoScreenRepository {
 
                 postEvent(SaldoScreenEvent.onTransaccionSuccess, resultadoTransaccion.getInformacionSaldo());
 
+                resultadoTransaccionRecibo = resultadoTransaccion;
+
                 //Imprime el recibo
-                imprimirRecibo(context,resultadoTransaccion );
+                imprimirRecibo(context);
 
             } else {
                 //Error en el registro de la transaccion del web service
@@ -182,7 +189,7 @@ public class SaldoScreenRepositoryImpl implements SaldoScreenRepository {
      *
      * @param context
      */
-    public void imprimirRecibo(Context context, ResultadoTransaccion resultadoTransaccion) {
+    public void imprimirRecibo(Context context) {
 
         ConfigurationPrinter configurationPrinter = AppDatabase.getInstance(context).getConfigurationPrinter();
 
@@ -205,14 +212,14 @@ public class SaldoScreenRepositoryImpl implements SaldoScreenRepository {
         PrintRow.printOperador(context, printRows, gray, 10);
 
         printRows.add(new PrintRow(context.getResources().getString(
-                R.string.recibo_numero_documento), resultadoTransaccion.getInformacionSaldo().getCedulaUsuario(), new StyleConfig(StyleConfig.Align.LEFT, gray)));
+                R.string.recibo_numero_documento), resultadoTransaccionRecibo.getInformacionSaldo().getCedulaUsuario(), new StyleConfig(StyleConfig.Align.LEFT, gray)));
         printRows.add(new PrintRow(context.getResources().getString(
-                R.string.recibo_numero_tarjeta), PrinterHandler.getFormatNumTarjeta(resultadoTransaccion.getInformacionSaldo().getNumeroTarjeta()), new StyleConfig(StyleConfig.Align.LEFT, gray, 20)));
+                R.string.recibo_numero_tarjeta), PrinterHandler.getFormatNumTarjeta(resultadoTransaccionRecibo.getInformacionSaldo().getNumeroTarjeta()), new StyleConfig(StyleConfig.Align.LEFT, gray, 20)));
 
         printRows.add(new PrintRow(context.getResources().getString(
                 R.string.recibo_separador_linea), new StyleConfig(StyleConfig.Align.LEFT, gray, StyleConfig.FontSize.F1, 10)));
 
-        int saldo = Integer.parseInt(resultadoTransaccion.getInformacionSaldo().getValor().split(".0")[0]);
+        int saldo = Integer.parseInt(resultadoTransaccionRecibo.getInformacionSaldo().getValor().split(".0")[0]);
 
         printRows.add(new PrintRow(context.getResources().getString(
                 R.string.recibo_total), PrintRow.numberFormat(saldo), new StyleConfig(StyleConfig.Align.LEFT, gray)));
@@ -224,7 +231,11 @@ public class SaldoScreenRepositoryImpl implements SaldoScreenRepository {
 
         int status = new PrinterHandler().imprimerTexto(printRows);
 
-
+        if (status == InfoGlobalSettingsPrint.PRINTER_OK) {
+            postEvent(SaldoScreenEvent.onImprecionReciboSuccess);
+        } else {
+            postEvent(SaldoScreenEvent.onImprecionReciboError, PrinterHandler.stringErrorPrinter(status, context));
+        }
 
     }
 

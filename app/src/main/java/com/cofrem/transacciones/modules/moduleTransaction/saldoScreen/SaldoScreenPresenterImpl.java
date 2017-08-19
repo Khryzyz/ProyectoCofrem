@@ -73,6 +73,11 @@ public class SaldoScreenPresenterImpl implements SaldoScreenPresenter {
         }
     }
 
+    @Override
+    public void imprimirRecibo(Context context) {
+        saldoScreenInteractor.imprimirRecibo(context);
+    }
+
     /**
      * Sobrecarga del metodo onEventMainThread de la interface AnulacionScreenPresenter para el manejo de eventos
      *
@@ -92,6 +97,14 @@ public class SaldoScreenPresenterImpl implements SaldoScreenPresenter {
 
             case SaldoScreenEvent.onTransaccionWSConexionError:
                 onTransaccionWSConexionError();
+                break;
+
+            case SaldoScreenEvent.onImprecionReciboSuccess:
+                onImprimirSuccess();
+                break;
+
+            case SaldoScreenEvent.onImprecionReciboError:
+                onImprimirError(saldoScreenEvent.getErrorMessage());
                 break;
 
         }
@@ -124,5 +137,20 @@ public class SaldoScreenPresenterImpl implements SaldoScreenPresenter {
             saldoScreenView.handleTransaccionWSConexionError();
         }
     }
-
+    /**
+     * Metodo para manejar la transaccion del Web Service Correcta
+     */
+    private void onImprimirSuccess() {
+        if (saldoScreenView != null) {
+            saldoScreenView.handleImprimirReciboSuccess();
+        }
+    }
+    /**
+     * Metodo para manejar la transaccion del Web Service Correcta
+     */
+    private void onImprimirError(String errorMessage) {
+        if (saldoScreenView != null) {
+            saldoScreenView.handleImprimirReciboError(errorMessage);
+        }
+    }
 }

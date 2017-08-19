@@ -7,4 +7,10 @@ interface SaldoScreenInteractor {
 
     void registrarTransaccion(Context context, Transaccion transaccion);
 
+    /**
+     * Metodo que imprime el recibo de la consulta de saldo
+     *
+     * @param context
+     */
+    void imprimirRecibo(Context context);
 }

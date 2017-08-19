@@ -19,4 +19,15 @@ public interface SaldoScreenView {
      */
     void handleTransaccionWSConexionError();
 
+
+    /**
+     * Metodo para manejar la orden de imprimir recibo exitosa
+     */
+    void handleImprimirReciboSuccess();
+
+    /**
+     * Metodo para manejar la orden de imprimir recibo con Error
+     */
+    void handleImprimirReciboError(String errorMessage);
+
 }
