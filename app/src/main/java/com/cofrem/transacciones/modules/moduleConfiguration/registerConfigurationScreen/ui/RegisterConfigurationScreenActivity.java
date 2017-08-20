@@ -466,7 +466,7 @@ public class RegisterConfigurationScreenActivity extends Activity implements Reg
 
                         startActivity(intent);
                     }
-                }, 1000);
+                }, 100);
 
                 break;
 
@@ -485,7 +485,7 @@ public class RegisterConfigurationScreenActivity extends Activity implements Reg
 
                         startActivity(intent);
                     }
-                }, 1000);
+                }, 100);
 
                 break;
 
@@ -648,7 +648,7 @@ public class RegisterConfigurationScreenActivity extends Activity implements Reg
 
                 startActivity(intent);
             }
-        }, 1000);
+        }, 100);
     }
 
     /**
@@ -670,7 +670,7 @@ public class RegisterConfigurationScreenActivity extends Activity implements Reg
                 public void run() {
                     registerConfigurationScreenPresenter.validarPasswordTecnico(RegisterConfigurationScreenActivity.this, passwordAdmin);
                 }
-            }, 1000);
+            }, 100);
 
         } else {
 
@@ -783,7 +783,7 @@ public class RegisterConfigurationScreenActivity extends Activity implements Reg
                 public void run() {
                     registerConfigurationScreenPresenter.registrarConfiguracionConexion(RegisterConfigurationScreenActivity.this, modelConfiguration);
                 }
-            }, 1000);
+            }, 100);
 
             //Actualiza el paso actual
             pasoRegisterConfiguration++;

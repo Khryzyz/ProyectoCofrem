@@ -53,13 +53,6 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
     @ViewById
     TextView txvHeaderPunto;
 
-    private static final int PASO_ULTIMO_RECIBO = 1;
-    private static final int PASO_NUMERO_CARGO = 2;
-    private static final int PASO_DETALLE = 3;
-    private static final int PASO_GENERAL = 4;
-
-    private int paso;
-
     @ViewById
     RelativeLayout bodyContentReimpresionRecibo;
     @ViewById
@@ -95,6 +88,20 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
     FrameLayout frlPgbHldReimpresionRecibo;
 
     Transaccion modelTransaccion;
+
+    String passwordAdmin = "";
+
+    String numeroCargo = "";
+
+    /**
+     * Pasos definidos
+     */
+    private int pasoReporte;
+
+    private static final int PASO_ULTIMO_RECIBO = 1;
+    private static final int PASO_NUMERO_CARGO = 2;
+    private static final int PASO_DETALLE = 3;
+    private static final int PASO_GENERAL = 4;
 
     /**
      * #############################################################################################
@@ -144,11 +151,11 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
                 bodyContentReimpresionRecibo.setVisibility(View.VISIBLE);
                 break;
             case Reports.reportReporteDetalle:
-                paso = PASO_DETALLE;
+                pasoReporte = PASO_DETALLE;
                 reimpresionScreenPresenter.validarExistenciaDetalleRecibos(this);
                 break;
             case Reports.reportReporteGeneral:
-                paso = PASO_GENERAL;
+                pasoReporte = PASO_GENERAL;
                 bodyContentReimpresionReciboClaveAdministrador.setVisibility(View.VISIBLE);
                 break;
             case Reports.reportCierreLote:
@@ -216,6 +223,7 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
      */
     @Override
     public void handleVerifyExistenceReciboPorNumCargoSuccess(Transaccion modelTransaccion) {
+        hideProgress();
         this.modelTransaccion = modelTransaccion;
         bodyContentReimpresionReciboNumeroCargo.setVisibility(View.GONE);
         bodyContentReimpresionReciboClaveAdministrador.setVisibility(View.VISIBLE);
@@ -234,8 +242,11 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
 
     @Override
     public void handleVerifyClaveAdministradorSuccess() {
+
+        hideProgress();
+
         bodyContentReimpresionReciboClaveAdministrador.setVisibility(View.GONE);
-        switch (paso) {
+        switch (pasoReporte) {
             case PASO_ULTIMO_RECIBO:
                 bodyContentReimpresionReciboUltimo.setVisibility(View.VISIBLE);
                 break;
@@ -252,7 +263,7 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
         }
         edtReportReimpresionReciboClaveAdministradorContenidoClave.setText("");
     }
-    
+
     @Override
     public void handleVerifyClaveAdministradorError() {
         edtReportReimpresionReciboClaveAdministradorContenidoClave.setText("");
@@ -382,6 +393,7 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
         //Oculta la barra de progreso
         frlPgbHldReimpresionRecibo.setVisibility(View.GONE);
     }
+
     /**
      * Metodo que coloca la orientacion de la App de forma predeterminada
      */
@@ -447,7 +459,7 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
      */
     @Click(R.id.btnReportReimpresionReciboUltimoRecibo)
     public void validarExistenciaUltimoRecibo() {
-        paso = PASO_ULTIMO_RECIBO;
+        pasoReporte = PASO_ULTIMO_RECIBO;
         reimpresionScreenPresenter.validarExistenciaUltimoRecibo(this);
     }
 
@@ -456,8 +468,34 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
      */
     @Click(R.id.btnReportReimpresionReciboClaveAdministradorBotonAceptar)
     public void validarClaveAdministrador() {
-        reimpresionScreenPresenter.validarClaveAdministrador(this,
-                edtReportReimpresionReciboClaveAdministradorContenidoClave.getText().toString());
+
+        //Se obtiene el texto de la contraseña
+        passwordAdmin = edtReportReimpresionReciboClaveAdministradorContenidoClave.getText().toString();
+
+        //Vacia la caja de contraseña
+        edtReportReimpresionReciboClaveAdministradorContenidoClave.setText("");
+
+        //La contraseña debe ser de exactamente 4 caracteres
+        if (passwordAdmin.length() == 4) {
+
+            //Muestra la barra de progreso
+            showProgress();
+
+            //Valida la contraseña
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    reimpresionScreenPresenter.validarClaveAdministrador(ReimpresionScreenActivity.this, passwordAdmin);
+                }
+            }, 100);
+
+        } else {
+
+            //Muestra el mensaje de error de formato de la contraseña
+            Toast.makeText(this, R.string.transaction_error_format_clave_administrador, Toast.LENGTH_SHORT).show();
+
+        }
+
     }
 
     /**
@@ -467,7 +505,6 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
     public void imprimirUltimoRecibo() {
         btnReportReimpresionReciboImprimirRecibo.setEnabled(false);
         reimpresionScreenPresenter.imprimirUltimoRecibo(this);
-
     }
 
     /**
@@ -493,8 +530,35 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
      */
     @Click(R.id.btnReportReimprimeonReciboNummeroCargoBotonAceptar)
     public void acceptReimprimirNumCargo() {
-        paso = PASO_NUMERO_CARGO;
-        reimpresionScreenPresenter.validarExistenciaReciboConNumCargo(this, edtReportReimprimeonReciboNummeroCargoContenidoClave.getText().toString());
+
+        //Se obtiene el texto de la contraseña
+        numeroCargo = edtReportReimprimeonReciboNummeroCargoContenidoClave.getText().toString();
+
+        //Vacia la caja de contraseña
+        edtReportReimprimeonReciboNummeroCargoContenidoClave.setText("");
+
+        //La contraseña debe ser de exactamente 4 caracteres
+        if (numeroCargo.length() == 7) {
+
+            //Muestra la barra de progreso
+            showProgress();
+
+            pasoReporte = PASO_NUMERO_CARGO;
+
+            //Valida la contraseña
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    reimpresionScreenPresenter.validarExistenciaReciboConNumCargo(ReimpresionScreenActivity.this, numeroCargo);
+                }
+            }, 100);
+
+        } else {
+
+            //Muestra el mensaje de error de formato del numero de cargo
+            Toast.makeText(this, R.string.transaction_error_format_numero_cargo, Toast.LENGTH_SHORT).show();
+
+        }
     }
 
 

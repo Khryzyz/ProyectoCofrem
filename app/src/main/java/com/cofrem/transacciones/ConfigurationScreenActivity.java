@@ -125,7 +125,7 @@ public class ConfigurationScreenActivity extends Activity {
 
                 startActivity(intent);
             }
-        }, 1000);
+        }, 100);
 
     }
 
@@ -147,7 +147,7 @@ public class ConfigurationScreenActivity extends Activity {
 
                 startActivity(intent);
             }
-        }, 1000);
+        }, 100);
 
     }
 
@@ -168,7 +168,7 @@ public class ConfigurationScreenActivity extends Activity {
 
                 startActivity(intent);
             }
-        }, 1000);
+        }, 100);
 
     }
 
@@ -189,7 +189,7 @@ public class ConfigurationScreenActivity extends Activity {
 
                 startActivity(intent);
             }
-        }, 1000);
+        }, 100);
 
     }
 

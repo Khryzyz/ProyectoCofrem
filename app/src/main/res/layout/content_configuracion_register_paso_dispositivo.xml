@@ -29,7 +29,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/txvConfiguracionRegisterDispositivoValor"
         android:layout_marginBottom="@dimen/appMarginBottom"
-        android:inputType="text"
         android:maxLength="2" />
 
     <Button

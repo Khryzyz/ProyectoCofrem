@@ -28,7 +28,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/txvReportCierreLoteClaveDispositivoClave"
-        android:layout_marginBottom="@dimen/appMarginBottom" />
+        android:layout_marginBottom="@dimen/appMarginBottom"
+        android:maxLength="4" />
 
     <Button
         android:id="@+id/btnReportCierreLoteClaveDispositivoBotonCancelar"

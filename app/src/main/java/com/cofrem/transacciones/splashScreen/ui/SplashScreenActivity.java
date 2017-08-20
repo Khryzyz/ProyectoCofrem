@@ -421,7 +421,7 @@ public class SplashScreenActivity extends Activity implements SplashScreenView {
 
                 startActivity(intent);
             }
-        }, 1000);
+        }, 100);
     }
 
     /**
@@ -451,7 +451,7 @@ public class SplashScreenActivity extends Activity implements SplashScreenView {
 
                 startActivity(intent);
             }
-        }, 1000);
+        }, 100);
     }
 
 }

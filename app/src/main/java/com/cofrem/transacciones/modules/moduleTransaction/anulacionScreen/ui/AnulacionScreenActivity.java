@@ -594,7 +594,7 @@ public class AnulacionScreenActivity extends Activity implements AnulacionScreen
 
                 startActivity(intent);
             }
-        }, 1000);
+        }, 100);
     }
 
     /**
@@ -616,7 +616,7 @@ public class AnulacionScreenActivity extends Activity implements AnulacionScreen
 
                 startActivity(intent);
             }
-        }, 1000);
+        }, 100);
 
     }
 
@@ -644,7 +644,7 @@ public class AnulacionScreenActivity extends Activity implements AnulacionScreen
                 public void run() {
                     anulacionScreenPresenter.validarPasswordAdministrador(AnulacionScreenActivity.this, passwordAdmin);
                 }
-            }, 1000);
+            }, 100);
 
         } else {
 
@@ -678,7 +678,7 @@ public class AnulacionScreenActivity extends Activity implements AnulacionScreen
                 public void run() {
                     anulacionScreenPresenter.obtenerValorTransaccion(AnulacionScreenActivity.this, modelTransaccion.getNumero_cargo());
                 }
-            }, 1000);
+            }, 100);
 
 
         } else {
@@ -773,7 +773,7 @@ public class AnulacionScreenActivity extends Activity implements AnulacionScreen
             public void run() {
                 deslizarTarjeta();
             }
-        }, 1000);
+        }, 100);
 
 
     }
@@ -897,7 +897,7 @@ public class AnulacionScreenActivity extends Activity implements AnulacionScreen
                 public void run() {
                     anulacionScreenPresenter.registrarTransaccion(AnulacionScreenActivity.this, modelTransaccion);
                 }
-            }, 1000);
+            }, 100);
 
         } else {
 
