@@ -63,9 +63,9 @@
 
     <string name="transaction_text_verificacion_numero_documento">Número de documento:</string>
 
-    <string name="transaction_error_format_clave_usuario">La contraseña debe tener exactamente 4 caracteres</string>
+    <string name="transaction_error_format_clave_usuario">La contraseña debe tener 4 caracteres</string>
 
-    <string name="transaction_error_format_clave_administrador">La contraseña de administración debe tener exactamente 4 caracteres</string>
+    <string name="transaction_error_format_clave_administrador">La contraseña de administración debe tener 4 caracteres</string>
 
     <string name="transaction_error_format_numero_cargo">El número de cargo ingresado no es válido</string>
 

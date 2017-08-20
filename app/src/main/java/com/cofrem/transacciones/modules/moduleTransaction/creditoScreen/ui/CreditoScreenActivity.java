@@ -505,7 +505,7 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
 
                 startActivity(intent);
             }
-        }, 1000);
+        }, 100);
 
     }
 
@@ -528,7 +528,7 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
 
                 startActivity(intent);
             }
-        }, 1000);
+        }, 100);
 
     }
 
@@ -654,7 +654,7 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
             public void run() {
                 deslizarTarjeta();
             }
-        }, 1000);
+        }, 100);
 
     }
 
@@ -775,7 +775,7 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
                 public void run() {
                     creditoScreenPresenter.registrarTransaccion(CreditoScreenActivity.this, modelTransaccion);
                 }
-            }, 1000);
+            }, 100);
 
         } else {
 

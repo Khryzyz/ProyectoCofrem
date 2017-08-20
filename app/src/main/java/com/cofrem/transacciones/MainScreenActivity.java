@@ -93,7 +93,7 @@ public class MainScreenActivity extends Activity {
 
                 startActivity(intent);
             }
-        }, 1000);
+        }, 100);
     }
 
     /**
@@ -114,7 +114,7 @@ public class MainScreenActivity extends Activity {
 
                 startActivity(intent);
             }
-        }, 1000);
+        }, 100);
 
     }
 
@@ -136,7 +136,7 @@ public class MainScreenActivity extends Activity {
 
                 startActivity(intent);
             }
-        }, 1000);
+        }, 100);
 
     }
 }

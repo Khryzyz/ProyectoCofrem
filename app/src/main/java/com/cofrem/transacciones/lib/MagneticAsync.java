@@ -45,7 +45,7 @@ public class MagneticAsync extends AsyncTask<Void, Integer, String[]> {
 
         long strat = System.currentTimeMillis();
 
-        while (System.currentTimeMillis() - strat < 60000) {
+        while (System.currentTimeMillis() - strat < 15000) {
 
             try {
 

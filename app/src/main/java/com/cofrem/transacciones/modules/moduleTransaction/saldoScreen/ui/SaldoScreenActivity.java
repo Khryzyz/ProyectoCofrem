@@ -458,7 +458,7 @@ public class SaldoScreenActivity extends Activity implements SaldoScreenView {
 
                 startActivity(intent);
             }
-        }, 1000);
+        }, 100);
     }
 
 
@@ -481,7 +481,7 @@ public class SaldoScreenActivity extends Activity implements SaldoScreenView {
 
                 startActivity(intent);
             }
-        }, 1000);
+        }, 100);
     }
 
 
@@ -520,7 +520,7 @@ public class SaldoScreenActivity extends Activity implements SaldoScreenView {
                 public void run() {
                     deslizarTarjeta();
                 }
-            }, 1000);
+            }, 100);
 
 
         } else {
@@ -647,7 +647,7 @@ public class SaldoScreenActivity extends Activity implements SaldoScreenView {
                 public void run() {
                     saldoScreenPresenter.registrarTransaccion(SaldoScreenActivity.this, modelTransaccion);
                 }
-            }, 1000);
+            }, 100);
 
 
         } else {
