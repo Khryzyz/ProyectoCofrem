@@ -72,7 +72,7 @@ public class SaldoScreenRepositoryImpl implements SaldoScreenRepository {
                 resultadoTransaccionRecibo = resultadoTransaccion;
 
                 //Imprime el recibo
-                imprimirRecibo(context);
+                //imprimirRecibo(context);
 
             } else {
                 //Error en el registro de la transaccion del web service

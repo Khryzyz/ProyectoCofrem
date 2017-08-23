@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
+import com.cofrem.transacciones.lib.PrinterHandler;
 import com.cofrem.transacciones.models.InfoHeaderApp;
 import com.cofrem.transacciones.splashScreen.events.SplashScreenEvent;
 import com.cofrem.transacciones.database.AppDatabase;
@@ -319,7 +320,7 @@ public class SplashScreenRepositoryImpl implements SplashScreenRepository {
     private boolean verifyDevicePrinter() {
 
         // TODO: Realizar proceso de comprobacion de dispositivo de impresion / FASE
-        return true;
+        return new PrinterHandler().testPrinterDevice();
     }
 
 
