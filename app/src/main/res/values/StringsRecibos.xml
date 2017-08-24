@@ -55,7 +55,7 @@
     <string name="recibo_title_transaccion_anulada">Transaccion Anulada</string>
     <string name="recibo_title_transaccion_aprobadas">Aprobadas:</string>
     <string name="recibo_title_transaccion_anuladas">Anuladas:</string>
-    <string name="recibo_title_reimpresion">[R E I M P R E S I O N]</string>
+    <string name="recibo_title_reimpresion">R E I M P R E S I O N</string>
     <string name="recibo_title_anulacion">A N U L A C I O N</string>
     <string name="recibo_title_informe_diario">I N F O R M E  _  D I A R I O</string>
     <string name="recibo_title_informe_general">I N F O R M E  _  G E N R A L</string>
@@ -72,7 +72,7 @@
     <string name="recibo_vigilado">VIGILADO SUPERSUBSIDIO</string>
 
     <string name="recibo_copia">Copia: {COMERCIO,CLIENTE}</string>
-    <string name="recibo_mensaje_final">PAGARE INCONDICIONALMENTE Y A LA ORDEN DEL ACREEDOR EL VALOR TOTAL DE ESTE PAGARE JUNTO CON LOS INTERESES A LAS TASAS MAXIMAS PERMITIDAS POR LA LEY.</string>
+    <string name="recibo_mensaje_final">Pagare incondicionalmente y a la orden del acreedor el valor to-tal de este pagare junto con los intereses a las tasas maximas permitidas por la ley.</string>
 
 
 
