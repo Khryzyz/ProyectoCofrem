@@ -64,6 +64,8 @@
 
     <string name="general_text_button_imprimir">Imprimir</string>
 
+    <string name="general_text_button_imprimir_copia">Imprimir copia Cliente</string>
+
     <string name="general_text_button_regresar">Regresar</string>
 
     <string name="general_text_button_salir">Salir</string>

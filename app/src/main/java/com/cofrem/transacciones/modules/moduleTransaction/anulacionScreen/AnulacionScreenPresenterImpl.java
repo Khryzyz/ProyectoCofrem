@@ -70,6 +70,11 @@ public class AnulacionScreenPresenterImpl implements AnulacionScreenPresenter {
         anulacionScreenInteractor.registrarTransaccion(context, transaccion);
     }
 
+    @Override
+    public void imprimirRecibo(Context context, String stringCopia) {
+        anulacionScreenInteractor.imprimirRecibo(context,stringCopia);
+    }
+
     /**
      * Sobrecarga del metodo onCreate de la interface AnulacionScreenPresenter "crear" el registro al bus de eventos
      */

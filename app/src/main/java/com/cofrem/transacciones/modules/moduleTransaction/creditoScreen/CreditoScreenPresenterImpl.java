@@ -81,9 +81,9 @@ public class CreditoScreenPresenterImpl implements CreditoScreenPresenter {
      * @param context
      */
     @Override
-    public void imprimirRecibo(Context context) {
+    public void imprimirRecibo(Context context, String stringCopia) {
         if (creditoScreenView != null) {
-            creditoScreenInteractor.imprimirRecibo(context);
+            creditoScreenInteractor.imprimirRecibo(context,stringCopia);
         }
     }
 

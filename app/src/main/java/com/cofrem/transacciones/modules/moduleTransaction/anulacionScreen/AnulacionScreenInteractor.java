@@ -24,5 +24,9 @@ interface AnulacionScreenInteractor {
      */
     void registrarTransaccion(Context context, Transaccion transaccion);
 
+    /**
+     * Metodo para imprimir la copia para el cliente
+     */
+    void imprimirRecibo(Context context, String stringCopia);
 
 }

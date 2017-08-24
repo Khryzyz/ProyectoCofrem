@@ -27,7 +27,7 @@
         style="@style/StyleButtonPrint"
         android:layout_alignParentStart="true"
         android:layout_below="@id/txvAnulacionTransactionExitosaSubtitle"
-        android:text="@string/general_text_button_imprimir" />
+        android:text="@string/general_text_button_imprimir_copia" />
 
     <Button
         android:id="@+id/btnAnulacionTransactionExitosaBotonSalir"

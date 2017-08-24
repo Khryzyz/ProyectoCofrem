@@ -71,8 +71,10 @@
     <string name="recibo_entidad">ENTIDAD SIN ANIMO DE LUCRO</string>
     <string name="recibo_vigilado">VIGILADO SUPERSUBSIDIO</string>
 
-    <string name="recibo_copia">Copia: {COMERCIO,CLIENTE}</string>
-    <string name="recibo_mensaje_final">Pagare incondicionalmente y a la orden del acreedor el valor to-tal de este pagare junto con los intereses a las tasas maximas permitidas por la ley.</string>
+    <string name="recibo_copia">Copia: {COMERCIO o CLIENTE}</string>
+    <string name="recibo_copia_comercio">Copia: {COMERCIO}</string>
+    <string name="recibo_copia_cliente">Copia: {CLIENTE}</string>
+    <string name="recibo_mensaje_final">Pagare incondicionalmente y a la orden del acreedor el valor to-tal de este pagare junto con los intereses a las tasas maximas  \npermitidas por la ley.</string>
 
 
 

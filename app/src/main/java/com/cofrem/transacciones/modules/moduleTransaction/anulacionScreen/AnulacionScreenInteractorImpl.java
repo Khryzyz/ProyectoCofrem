@@ -63,4 +63,9 @@ class AnulacionScreenInteractorImpl implements AnulacionScreenInteractor {
         //Registra la transaccion de anulacion
         anulacionScreenRepository.registrarTransaccion(context, transaccion);
     }
+
+    @Override
+    public void imprimirRecibo(Context context, String stringCopia) {
+        anulacionScreenRepository.imprimirRecibo(context,stringCopia);
+    }
 }
