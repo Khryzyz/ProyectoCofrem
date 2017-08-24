@@ -1,10 +1,16 @@
 package com.cofrem.transacciones.modules.moduleConfiguration.testCommunicationScreen;
 
+import android.content.Context;
+
 import com.cofrem.transacciones.modules.moduleConfiguration.testCommunicationScreen.events.TestCommunicationScreenEvent;
 
 public interface TestCommunicationScreenPresenter {
 
     //Todo: crear metodos presentador
+
+    void testComunication(Context context);
+
+
 
     /**
      * metodo presentador

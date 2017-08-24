@@ -3,6 +3,9 @@ package com.cofrem.transacciones.modules.moduleConfiguration.testCommunicationSc
 public class TestCommunicationScreenEvent {
 
     public final static int onVerifySuccess = 0;
+    public final static int onTestComunicationSuccess = 1;
+    public final static int onTestComunicationError = 2;
+    public final static int onTransaccionWSConexionError = 3;
 
     // Variable que maneja los tipos de eventos
     private int eventType;

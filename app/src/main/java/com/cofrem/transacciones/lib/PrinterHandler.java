@@ -163,7 +163,9 @@ public class PrinterHandler {
 
     public boolean testPrinterDevice(){
 
-        return Printer.connect() == InfoGlobalSettingsPrint.PRINTER_OK;
+        boolean res = Printer.connect() == InfoGlobalSettingsPrint.PRINTER_OK;
+        Printer.disconnect();
+        return res;
 
     }
 

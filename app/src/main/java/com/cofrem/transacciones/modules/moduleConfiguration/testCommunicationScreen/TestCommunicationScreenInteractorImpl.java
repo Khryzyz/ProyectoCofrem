@@ -1,5 +1,7 @@
 package com.cofrem.transacciones.modules.moduleConfiguration.testCommunicationScreen;
 
+import android.content.Context;
+
 class TestCommunicationScreenInteractorImpl implements TestCommunicationScreenInteractor {
     /**
      * #############################################################################################
@@ -29,6 +31,12 @@ class TestCommunicationScreenInteractorImpl implements TestCommunicationScreenIn
      * Metodos sobrecargados de la interface
      * #############################################################################################
      */
+
+
+    @Override
+    public void testComunication(Context context) {
+        testCommunicationScreenRepository.testComunication(context);
+    }
 
     /**
      *

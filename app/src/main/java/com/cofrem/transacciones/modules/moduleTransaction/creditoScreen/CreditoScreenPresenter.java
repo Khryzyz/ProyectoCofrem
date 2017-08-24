@@ -20,7 +20,7 @@ public interface CreditoScreenPresenter {
      *
      * @param context
      */
-    void imprimirRecibo(Context context);
+    void imprimirRecibo(Context context, String stringCopia);
 
     /**
      * Metodo para la creacion del presentador

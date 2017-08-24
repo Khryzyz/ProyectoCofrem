@@ -4,6 +4,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
+    <FrameLayout
+        android:id="@+id/frlPgbHldTestComunication"
+        style="@style/StyleProgressbarHolder"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:id="@+id/pgbTestComunication"
+            style="@style/StyleProgressbar" />
+    </FrameLayout>
+
+
     <!--Header de los modulos-->
     <include
         android:id="@+id/headerContent"

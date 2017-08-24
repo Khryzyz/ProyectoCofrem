@@ -1,5 +1,7 @@
 package com.cofrem.transacciones.modules.moduleConfiguration.testCommunicationScreen;
 
+import android.content.Context;
+
 import com.cofrem.transacciones.modules.moduleConfiguration.testCommunicationScreen.events.TestCommunicationScreenEvent;
 import com.cofrem.transacciones.modules.moduleConfiguration.testCommunicationScreen.ui.TestCommunicationScreenView;
 import com.cofrem.transacciones.lib.EventBus;
@@ -81,10 +83,23 @@ public class TestCommunicationScreenPresenterImpl implements TestCommunicationSc
             case TestCommunicationScreenEvent.onVerifySuccess:
                 onVerifySuccess();
                 break;
+            case TestCommunicationScreenEvent.onTestComunicationSuccess:
+                onTestComunicationSuccess();
+                break;
+            case TestCommunicationScreenEvent.onTestComunicationError:
+                onTestComunicationError(testCommunicationScreenEvent.getErrorMessage());
+                break;
+            case TestCommunicationScreenEvent.onTransaccionWSConexionError:
+                onTransaccionWSConexionError();
+                break;
 
         }
     }
 
+    @Override
+    public void testComunication(Context context) {
+        testCommunicationScreenInteractor.testComunication(context);
+    }
 
     /**
      * #############################################################################################
@@ -98,6 +113,33 @@ public class TestCommunicationScreenPresenterImpl implements TestCommunicationSc
     private void onVerifySuccess() {
         if (testCommunicationScreenView != null) {
             testCommunicationScreenView.handleVerifySuccess();
+        }
+    }
+
+    /**
+     * Metodo para manejar la verificacion exitosa
+     */
+    private void onTestComunicationSuccess() {
+        if (testCommunicationScreenView != null) {
+            testCommunicationScreenView.handleTestComunicationSuccess();
+        }
+    }
+
+    /**
+     * Metodo para manejar la verificacion exitosa
+     */
+    private void onTestComunicationError(String error) {
+        if (testCommunicationScreenView != null) {
+            testCommunicationScreenView.handleTestComunicationError(error);
+        }
+    }
+
+    /**
+     * Metodo para manejar la verificacion exitosa
+     */
+    private void onTransaccionWSConexionError() {
+        if (testCommunicationScreenView != null) {
+            testCommunicationScreenView.handleTransaccionWSConexionError();
         }
     }
 

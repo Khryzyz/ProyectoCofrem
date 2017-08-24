@@ -19,5 +19,5 @@ interface CreditoScreenInteractor {
      *
      * @param context
      */
-    void imprimirRecibo(Context context);
+    void imprimirRecibo(Context context, String stringCopia);
 }

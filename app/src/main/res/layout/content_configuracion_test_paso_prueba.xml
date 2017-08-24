@@ -13,26 +13,15 @@
         android:layout_marginBottom="@dimen/appMarginBottom"
         android:text="@string/configuration_text_title_conexion" />
 
-    <TextView
-        android:id="@+id/txvConfiguracionConexionPruebaEsperandoRespuesta"
-        style="@style/StyleTextPrimaryMedium"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/txvConfiguracionConexionPruebaTitle"
-        android:layout_marginBottom="20dp"
-        android:layout_marginTop="20dp"
-        android:text="@string/configuration_text_esperando_respuesta" />
-
 
     <TextView
         android:id="@+id/txvConfiguracionConexionPruebaNumCargo"
         style="@style/StyleTextPrimaryMedium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/txvConfiguracionConexionPruebaEsperandoRespuesta"
+        android:layout_below="@id/txvConfiguracionConexionPruebaTitle"
         android:layout_marginBottom="@dimen/appMarginBottom"
-        android:text="@string/configuration_text_estado_conexion"
-        android:visibility="gone"/>
+        android:text="@string/configuration_text_estado_conexion"/>
 
     <TextView
         android:id="@+id/txvConfiguracionConexionPruebaResultado"
@@ -42,8 +31,7 @@
         android:layout_alignParentEnd="true"
         android:layout_below="@id/txvConfiguracionConexionPruebaNumCargo"
         android:layout_marginBottom="@dimen/appMarginBottom"
-        android:text="@string/configuration_text_exitosa"
-        android:visibility="gone"/>
+        android:text="@string/configuration_text_esperando_respuesta"/>
 
     <Button
         android:id="@+id/btnConfiguracionConexionPruebaBotonSalir"

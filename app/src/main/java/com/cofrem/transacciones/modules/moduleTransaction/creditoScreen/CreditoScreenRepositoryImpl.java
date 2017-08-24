@@ -72,7 +72,8 @@ public class CreditoScreenRepositoryImpl implements CreditoScreenRepository {
                     postEvent(CreditoScreenEvent.onTransaccionSuccess);
 
                     //Imprime el recibo
-                    imprimirRecibo(context);
+                    imprimirRecibo(context,context.getResources().getString(
+                            R.string.recibo_copia_comercio));
 
                 } else {
 
@@ -218,7 +219,7 @@ public class CreditoScreenRepositoryImpl implements CreditoScreenRepository {
      *
      * @param context
      */
-    public void imprimirRecibo(Context context) {
+    public void imprimirRecibo(Context context, String stringCopia) {
 
         ConfigurationPrinter configurationPrinter = AppDatabase.getInstance(context).getConfigurationPrinter();
 
@@ -281,8 +282,7 @@ public class CreditoScreenRepositoryImpl implements CreditoScreenRepository {
                 R.string.recibo_entidad), new StyleConfig(StyleConfig.Align.CENTER, gray, StyleConfig.FontSize.F3)));
         printRows.add(new PrintRow(context.getResources().getString(
                 R.string.recibo_vigilado), new StyleConfig(StyleConfig.Align.CENTER, gray, StyleConfig.FontSize.F3, 20)));
-        printRows.add(new PrintRow(context.getResources().getString(
-                R.string.recibo_copia), new StyleConfig(StyleConfig.Align.CENTER, gray, StyleConfig.FontSize.F3, 60)));
+        printRows.add(new PrintRow(stringCopia, new StyleConfig(StyleConfig.Align.CENTER, gray, StyleConfig.FontSize.F3, 60)));
 
 
         printRows.add(new PrintRow(".", new StyleConfig(StyleConfig.Align.LEFT, 1)));
