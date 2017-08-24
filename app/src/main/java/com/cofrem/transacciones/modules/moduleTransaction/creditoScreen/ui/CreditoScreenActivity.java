@@ -812,14 +812,14 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
     }
 
     /**
-     * Metodo para regresar a la ventana de transaccion
+     * Metodo que imprime la copia para el cliente
      */
-    @Click({R.id.btnCreditoTransactionExitosaBotonImprimir
-    })
+    @Click(R.id.btnCreditoTransactionExitosaBotonImprimir)
     public void imprimirRecibo() {
 
         //Imprime el recibo
-        creditoScreenPresenter.imprimirRecibo(this);
+        creditoScreenPresenter.imprimirRecibo(this,this.getResources().getString(
+                R.string.recibo_copia_cliente));
 
     }
 

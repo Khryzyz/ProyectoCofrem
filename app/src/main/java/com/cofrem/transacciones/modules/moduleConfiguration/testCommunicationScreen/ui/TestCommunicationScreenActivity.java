@@ -7,15 +7,18 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.view.KeyEvent;
 import android.view.WindowManager;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.cofrem.transacciones.global.InfoGlobalSettingsBlockButtons;
 import com.cofrem.transacciones.models.InfoHeaderApp;
+import com.cofrem.transacciones.modules.moduleConfiguration.configurationPrinter.ui.ConfigurationPrinterScreenActivity;
 import com.cofrem.transacciones.modules.moduleConfiguration.testCommunicationScreen.TestCommunicationScreenPresenter;
 import com.cofrem.transacciones.modules.moduleConfiguration.testCommunicationScreen.TestCommunicationScreenPresenterImpl;
 import com.cofrem.transacciones.R;
 
 import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
@@ -42,7 +45,12 @@ public class TestCommunicationScreenActivity extends Activity implements TestCom
     TextView txvHeaderEstablecimiento;
     @ViewById
     TextView txvHeaderPunto;
-
+    @ViewById
+    TextView txvConfiguracionConexionPruebaNumCargo;
+    @ViewById
+    TextView txvConfiguracionConexionPruebaResultado;
+    @ViewById
+    FrameLayout frlPgbHldTestComunication;
 
     /**
      * #############################################################################################
@@ -80,6 +88,9 @@ public class TestCommunicationScreenActivity extends Activity implements TestCom
         //Coloca la informacion del encabezado
         setInfoHeader();
 
+        testCommunicationScreenPresenter.testComunication(this);
+
+        showProgress();
     }
 
     /**
@@ -138,6 +149,41 @@ public class TestCommunicationScreenActivity extends Activity implements TestCom
 
     }
 
+    @Override
+    public void handleTestComunicationSuccess() {
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                txvConfiguracionConexionPruebaResultado.setText(R.string.configuration_text_exitosa);
+                hideProgress();
+            }
+        }, 2000);
+
+    }
+
+    @Override
+    public void handleTestComunicationError(final String error) {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                txvConfiguracionConexionPruebaResultado.setText(error);
+                hideProgress();
+            }
+        }, 2000);
+    }
+
+    @Override
+    public void handleTransaccionWSConexionError() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                txvConfiguracionConexionPruebaResultado.setText(R.string.configuration_text_informacion_dispositivo_error_conexion);
+                hideProgress();
+            }
+        }, 2000);
+    }
+
     /**
      * Metodo para navegar a la ventana de transacciones
      */
@@ -162,6 +208,24 @@ public class TestCommunicationScreenActivity extends Activity implements TestCom
 
     }
 
+    @Click(R.id.btnConfiguracionConexionPruebaBotonSalir)
+    void cancelConfigurationPrinter() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+                Intent intent = new Intent(TestCommunicationScreenActivity.this, ConfigurationScreenActivity_.class);
+                //Agregadas banderas para no retorno
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
+                        | Intent.FLAG_ACTIVITY_NEW_TASK
+                        | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+                startActivity(intent);
+            }
+        }, 500);
+    }
+
+
     /**
      * #############################################################################################
      * Metodo propios de la clase
@@ -172,14 +236,16 @@ public class TestCommunicationScreenActivity extends Activity implements TestCom
      * Metodo para mostrar la barra de progreso
      */
     private void showProgress() {
-
+        frlPgbHldTestComunication.setVisibility(View.VISIBLE);
+        frlPgbHldTestComunication.bringToFront();
+        frlPgbHldTestComunication.invalidate();
     }
 
     /**
      * Metodo para ocultar la barra de progreso
      */
     private void hideProgress() {
-
+        frlPgbHldTestComunication.setVisibility(View.GONE);
     }
 
     /**

@@ -26,6 +26,11 @@ public interface AnulacionScreenPresenter {
     void registrarTransaccion(Context context, Transaccion transaccion);
 
     /**
+     * Metodo para imprimir la copia para el cliente
+     */
+    void imprimirRecibo(Context context, String stringCopia);
+
+    /**
      * Metodo para la creacion del presentador
      */
     void onCreate();

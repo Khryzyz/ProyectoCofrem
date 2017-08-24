@@ -47,8 +47,8 @@ class CreditoScreenInteractorImpl implements CreditoScreenInteractor {
     }
 
     @Override
-    public void imprimirRecibo(Context context) {
+    public void imprimirRecibo(Context context, String stringCopia) {
         //Imprime recibo
-        creditoScreenRepository.imprimirRecibo(context);
+        creditoScreenRepository.imprimirRecibo(context,stringCopia);
     }
 }

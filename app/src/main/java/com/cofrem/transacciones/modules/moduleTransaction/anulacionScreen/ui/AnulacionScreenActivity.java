@@ -802,6 +802,20 @@ public class AnulacionScreenActivity extends Activity implements AnulacionScreen
 
     }
 
+
+    /**
+     * Metodo que imprime la copia para el cliente
+     */
+    @Click(R.id.btnAnulacionTransactionExitosaBotonImprimir)
+    public void imprimirRecibo() {
+
+        //Imprime el recibo
+        anulacionScreenPresenter.imprimirRecibo(this,this.getResources().getString(
+                R.string.recibo_copia_cliente));
+
+    }
+
+
     /**
      * Metodo para mostrar la orden de deslizar la tarjeta
      */

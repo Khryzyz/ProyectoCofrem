@@ -33,7 +33,7 @@ public class AnulacionScreenRepositoryImpl implements AnulacionScreenRepository 
      * Declaracion de componentes y variables
      * #############################################################################################
      */
-
+    Transaccion modelTransaccion;
 
     /**
      * #############################################################################################
@@ -116,8 +116,11 @@ public class AnulacionScreenRepositoryImpl implements AnulacionScreenRepository 
 
                     postEvent(AnulacionScreenEvent.onTransaccionSuccess);
 
+                    modelTransaccion = transaccion;
+
                     //Imprime el recibo
-                    imprimirRecibo(context,transaccion);
+                    imprimirRecibo(context,context.getResources().getString(
+                            R.string.recibo_copia_comercio));
 
                 } else {
 
@@ -264,8 +267,10 @@ public class AnulacionScreenRepositoryImpl implements AnulacionScreenRepository 
      * Metodo que imprime el recibo de la transaccion
      *
      * @param context
+     * @param stringCopia
      */
-    public void imprimirRecibo(Context context, Transaccion modelTransaccion) {
+    @Override
+    public void imprimirRecibo(Context context, String stringCopia) {
 
         ConfigurationPrinter configurationPrinter = AppDatabase.getInstance(context).getConfigurationPrinter();
 
@@ -319,8 +324,7 @@ public class AnulacionScreenRepositoryImpl implements AnulacionScreenRepository 
                 R.string.recibo_entidad), new StyleConfig(StyleConfig.Align.CENTER, gray, StyleConfig.FontSize.F3)));
         printRows.add(new PrintRow(context.getResources().getString(
                 R.string.recibo_vigilado), new StyleConfig(StyleConfig.Align.CENTER, gray, StyleConfig.FontSize.F3,20)));
-        printRows.add(new PrintRow(context.getResources().getString(
-                R.string.recibo_copia), new StyleConfig(StyleConfig.Align.CENTER, gray, StyleConfig.FontSize.F3,60)));
+        printRows.add(new PrintRow(stringCopia, new StyleConfig(StyleConfig.Align.CENTER, gray, StyleConfig.FontSize.F3,60)));
 
 
         printRows.add(new PrintRow(".", new StyleConfig(StyleConfig.Align.LEFT, 1)));
