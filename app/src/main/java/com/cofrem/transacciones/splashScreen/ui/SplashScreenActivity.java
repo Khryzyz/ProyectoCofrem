@@ -70,9 +70,6 @@ public class SplashScreenActivity extends Activity implements SplashScreenView {
         //Previene la apertura del Status Bar
         getWindow().addFlags(WindowManager.LayoutParams.TYPE_SYSTEM_OVERLAY);
 
-        //Coloca por Default la Appa como Launcher
-        resetPreferredLauncherAndOpenChooser(this);
-
         //Metodo para validar la configuracion inicial
         splashScreenPresenter.validateAccess(this);
 
@@ -447,19 +444,6 @@ public class SplashScreenActivity extends Activity implements SplashScreenView {
 
         splashScreenPresenter.setInfoHeader(this);
 
-    }
-
-    public static void resetPreferredLauncherAndOpenChooser(Context context) {
-        PackageManager packageManager = context.getPackageManager();
-        ComponentName componentName = new ComponentName(context, MainScreenActivity_.class);
-        packageManager.setComponentEnabledSetting(componentName, PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
-
-        Intent selector = new Intent(Intent.ACTION_MAIN);
-        selector.addCategory(Intent.CATEGORY_HOME);
-        selector.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(selector);
-
-        packageManager.setComponentEnabledSetting(componentName, PackageManager.COMPONENT_ENABLED_STATE_DEFAULT, PackageManager.DONT_KILL_APP);
     }
 
     /**
