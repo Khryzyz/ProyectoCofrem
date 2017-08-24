@@ -104,4 +104,7 @@
     <string name="general_message_printer_device_info">Conexión al dispositivo de impresión establecida…</string>
     <string name="general_message_printer_device_error">Conexión al dispositivo de impresión NO establecida, por favor verifique y reinicie la App</string>
 
+    <string name="general_message_device_info">Dispositivo compatible…</string>
+    <string name="general_message_device_error">Dispositivo NO compatible, imposible ingresar a la APP.</string>
+
 </resources>

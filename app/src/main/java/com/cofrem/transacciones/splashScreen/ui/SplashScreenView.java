@@ -93,6 +93,16 @@ public interface SplashScreenView {
     void handlePrinterDeviceError();
 
     /**
+     * Metodo para manejar la conexion al dispositivo de impresion exitosa
+     */
+    void handleDeviceSuccess();
+
+    /**
+     * Metodo para manejar la conexion al dispositivo de impresion erronea
+     */
+    void handleDeviceError();
+
+    /**
      * Metodo para manejar la obtencion de la informacion del header exitosa
      */
     void handleGetInfoHeaderSuccess();

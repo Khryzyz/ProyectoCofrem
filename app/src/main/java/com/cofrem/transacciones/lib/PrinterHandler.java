@@ -99,7 +99,7 @@ public class PrinterHandler {
             lengthTotal = 46 - (lengthMsg1 + lengthMsg2);
         } else if (style.fontSize == StyleConfig.FontSize.F2) {
             lengthTotal = 46 - (lengthMsg1 + lengthMsg2);
-        }else if (style.fontSize == StyleConfig.FontSize.F3) {
+        } else if (style.fontSize == StyleConfig.FontSize.F3) {
             lengthTotal = 31 - (lengthMsg1 + lengthMsg2);
         }
 
@@ -157,13 +157,19 @@ public class PrinterHandler {
         if (punto < 0)
             punto = 0;
 
-        return "* * * "+num.substring(punto,length);
+        return "* * * " + num.substring(punto, length);
     }
 
 
-    public boolean testPrinterDevice(){
+    public boolean testPrinterDevice() {
 
-        return Printer.connect() == InfoGlobalSettingsPrint.PRINTER_OK;
+        boolean testPrinterDevice = false;
+
+        if (Printer.testPrinterDevice()) {
+            testPrinterDevice = true;
+        }
+
+        return testPrinterDevice;
 
     }
 

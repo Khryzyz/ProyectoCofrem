@@ -1,11 +1,15 @@
 package com.cofrem.transacciones.modules.moduleConfiguration.testCommunicationScreen.ui;
 
 import android.app.Activity;
+import android.app.ActivityManager;
+import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.os.Handler;
-import android.view.View;
+import android.view.KeyEvent;
+import android.view.WindowManager;
 import android.widget.TextView;
 
+import com.cofrem.transacciones.global.InfoGlobalSettingsBlockButtons;
 import com.cofrem.transacciones.models.InfoHeaderApp;
 import com.cofrem.transacciones.modules.moduleConfiguration.testCommunicationScreen.TestCommunicationScreenPresenter;
 import com.cofrem.transacciones.modules.moduleConfiguration.testCommunicationScreen.TestCommunicationScreenPresenterImpl;
@@ -67,14 +71,13 @@ public class TestCommunicationScreenActivity extends Activity implements TestCom
          */
         testCommunicationScreenPresenter.onCreate();
 
-
-        // Metodo para colocar la orientacion de la app
-        setOrientation();
-
         // Metodo que oculta por defecto los include de la vista
         inicializarOcultamientoVistas();
 
-        // Metodo que llena el header de la App
+        // Metodo para colocar la orientacion de la app
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+        //Coloca la informacion del encabezado
         setInfoHeader();
 
     }
@@ -93,6 +96,35 @@ public class TestCommunicationScreenActivity extends Activity implements TestCom
         testCommunicationScreenPresenter.onDestroy();
         super.onDestroy();
     }
+
+    /**
+     * Metodo que interfiere en la presion del boton Task
+     */
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        ActivityManager activityManager = (ActivityManager) getApplicationContext()
+                .getSystemService(Context.ACTIVITY_SERVICE);
+
+        activityManager.moveTaskToFront(getTaskId(), 0);
+    }
+
+    /**
+     * Metodo sobrecargado de la vista para la presion de las teclas de volumen
+     *
+     * @param event evento de la presion de una tecla
+     * @return regresa el rechazo de la presion
+     */
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        if (InfoGlobalSettingsBlockButtons.blockedKeys.contains(event.getKeyCode())) {
+            return true;
+        } else {
+            return super.dispatchKeyEvent(event);
+        }
+    }
+
     /**
      * #############################################################################################
      * Metodos sobrecargados de la interface
@@ -148,13 +180,6 @@ public class TestCommunicationScreenActivity extends Activity implements TestCom
      */
     private void hideProgress() {
 
-    }
-
-    /**
-     * Metodo que coloca la orientacion de la App de forma predeterminada
-     */
-    private void setOrientation() {
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
 
     /**

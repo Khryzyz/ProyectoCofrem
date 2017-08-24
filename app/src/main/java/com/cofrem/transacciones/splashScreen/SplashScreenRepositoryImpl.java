@@ -3,7 +3,9 @@ package com.cofrem.transacciones.splashScreen;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
 
+import com.cofrem.transacciones.global.InfoGlobalSettings;
 import com.cofrem.transacciones.lib.PrinterHandler;
 import com.cofrem.transacciones.models.InfoHeaderApp;
 import com.cofrem.transacciones.splashScreen.events.SplashScreenEvent;
@@ -11,6 +13,8 @@ import com.cofrem.transacciones.database.AppDatabase;
 import com.cofrem.transacciones.lib.EventBus;
 import com.cofrem.transacciones.lib.GreenRobotEventBus;
 import com.cofrem.transacciones.lib.MagneticHandler;
+
+import java.util.Arrays;
 
 public class SplashScreenRepositoryImpl implements SplashScreenRepository {
 
@@ -130,8 +134,9 @@ public class SplashScreenRepositoryImpl implements SplashScreenRepository {
         boolean internetConnection = verifyInternetConnection(context);
         boolean devicePrinter = verifyDevicePrinter();
         boolean deviceNFC = verifyDeviceNFC();
+        boolean device = verifyDevice();
 
-        if ((deviceMagneticReader || deviceNFC) && devicePrinter && internetConnection) {
+        if ((deviceMagneticReader || deviceNFC) && device && devicePrinter && internetConnection) {
 
             if (verifyInitialRegister(context))
                 postEvent(SplashScreenEvent.onVerifySuccess);
@@ -157,6 +162,11 @@ public class SplashScreenRepositoryImpl implements SplashScreenRepository {
             if (!internetConnection) {
 
                 postEvent(SplashScreenEvent.onInternetConnectionError);
+
+            }
+            if (!device) {
+
+                postEvent(SplashScreenEvent.onDeviceError);
 
             }
         }
@@ -200,9 +210,6 @@ public class SplashScreenRepositoryImpl implements SplashScreenRepository {
 
         boolean resultVerifyInitialRegisterProducto = false;
         boolean resultVerifyInitialRegisterConfigPrinter = false;
-
-        AppDatabase.getInstance(context).handlerRegistroInicialProductos();
-
 
         // Validacion en caso de que no existan productos registrados en el sistema
         if (AppDatabase.getInstance(context).obtenerConteoRegistroProductos() == 0) {
@@ -321,6 +328,22 @@ public class SplashScreenRepositoryImpl implements SplashScreenRepository {
 
         // TODO: Realizar proceso de comprobacion de dispositivo de impresion / FASE
         return new PrinterHandler().testPrinterDevice();
+    }
+
+    /**
+     * Metodo que verifica la existencia de una impresora en el dispositivo
+     *
+     * @return
+     */
+    private boolean verifyDevice() {
+
+        boolean verifyDevice = false;
+
+        if (Arrays.asList(InfoGlobalSettings.supportedDevices).contains(Build.MODEL)) {
+            verifyDevice = true;
+        }
+
+        return verifyDevice;
     }
 
 
