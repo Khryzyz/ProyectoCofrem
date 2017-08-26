@@ -299,6 +299,7 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
 
     @Override
     public void handleVerifyClaveAdministradorError() {
+        hideProgress();
         edtReportReimpresionReciboClaveAdministradorContenidoClave.setText("");
         Toast.makeText(this, this.getString(R.string.report_text_message_clave_admin_incorrecta), Toast.LENGTH_SHORT).show();
     }
