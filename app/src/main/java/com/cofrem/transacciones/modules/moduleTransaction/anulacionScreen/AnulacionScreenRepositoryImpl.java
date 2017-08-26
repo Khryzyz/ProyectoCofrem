@@ -278,7 +278,7 @@ public class AnulacionScreenRepositoryImpl implements AnulacionScreenRepository 
 
         Transaccion modelTransaccionAnulada = AppDatabase.getInstance(context).obtenerUltimaTransaccionAnulada();
 
-        String fecha_transaccion = AppDatabase.getInstance(context).obtenerFechaTransaccionNumCargo(modelTransaccion.getNumero_cargo());
+//        String fecha_transaccion = AppDatabase.getInstance(context).obtenerFechaTransaccionNumCargo(modelTransaccion.getNumero_cargo());
 
         // creamos el ArrayList se que encarga de almacenar los rows del recibo
         ArrayList<PrintRow> printRows = new ArrayList<PrintRow>();
@@ -298,8 +298,8 @@ public class AnulacionScreenRepositoryImpl implements AnulacionScreenRepository 
 
         printRows.add(new PrintRow(context.getResources().getString(
                 R.string.recibo_numero_transaccion), modelTransaccion.getNumero_cargo(), new StyleConfig(StyleConfig.Align.LEFT, gray)));
-        printRows.add(new PrintRow(context.getResources().getString(
-                R.string.recibo_fecha),fecha_transaccion, new StyleConfig(StyleConfig.Align.LEFT, gray)));
+//        printRows.add(new PrintRow(context.getResources().getString(
+//                R.string.recibo_fecha),fecha_transaccion, new StyleConfig(StyleConfig.Align.LEFT, gray)));
         printRows.add(new PrintRow(context.getResources().getString(
                 R.string.recibo_fecha_anulacion),modelTransaccionAnulada.getFullFechaServer(), new StyleConfig(StyleConfig.Align.LEFT, gray, 20)));
 

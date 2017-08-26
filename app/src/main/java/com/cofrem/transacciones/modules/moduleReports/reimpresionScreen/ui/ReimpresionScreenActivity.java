@@ -246,6 +246,7 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
     @Override
     public void handleVerifyExistenceUltimoReciboError() {
 // texto quemado hay que pitarlo
+        hideProgress();
         Toast.makeText(this, "no existen registros", Toast.LENGTH_LONG).show();
 
     }
@@ -269,6 +270,7 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
      */
     @Override
     public void handleVerifyExistenceReciboPorNumCargoError() {
+        hideProgress();
         edtReportReimpresionReciboClaveAdministradorContenidoClave.setText("");
         Toast.makeText(this, this.getString(R.string.report_text_message_No_existen_recibo_num_cargo), Toast.LENGTH_LONG).show();
     }
@@ -306,12 +308,14 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
 
     @Override
     public void handleVerifyExistenceReporteDetalleSuccess() {
+        hideProgress();
         bodyContentReimpresionReciboClaveAdministrador.setVisibility(View.VISIBLE);
     }
 
 
     @Override
     public void handleVerifyExistenceReporteDetalleError() {
+        hideProgress();
         Toast.makeText(this, this.getString(R.string.report_text_message_No_existen_recibos), Toast.LENGTH_LONG).show();
         regresarDesdeReimpimirRecibo();
     }

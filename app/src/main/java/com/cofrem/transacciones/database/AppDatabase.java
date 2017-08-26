@@ -997,8 +997,9 @@ public final class AppDatabase extends SQLiteOpenHelper {
                 "SELECT " + DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_FECHA_SERVER + " , " +
                         DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_HORA_SERVER +
                         " FROM " + DatabaseManager.TableTransacciones.TABLE_NAME_TRANSACCIONES +
-                        " WHERE " + DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_TIPO_TRANSACCION + " = " + Transaccion.TIPO_TRANSACCION_CONSUMO +
-                        " ORDER BY " + DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_REGISTRO + " DESC " +
+                        " WHERE " + DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_NUMERO_CARGO + " = '" + cargo +"'"+
+                        " AND " + DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_TIPO_TRANSACCION + " = " + Transaccion.TIPO_TRANSACCION_CONSUMO +
+                        " ORDER BY " + DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_REGISTRO + " ASC " +
                         " LIMIT 1", null
         );
 
