@@ -45,11 +45,11 @@
 
     <string name="transaction_error_valor">Debes ingresar un valor de consumo</string>
 
-    <string name="transaction_error_valor_monto_minimo">El valor mínimo del consumo es de $10.000</string>
+    <string name="transaction_error_valor_monto_minimo">El valor mínimo del consumo es de $1</string>
 
     <string name="transaction_error_valor_monto_maximo">El valor máximo del consumo es de $3.000.000</string>
 
-    <string name="transaction_error_valor_transaccion_no_valido">El monto registrado no es válido</string>
+    <string name="transaction_error_numero_Cargo_no_relacionado">El número de cargo no esta relacionado en el dispositivo.</string>
 
     <string name="transaction_text_verifacion_valor_transaccion">Valor del consumo:</string>
 

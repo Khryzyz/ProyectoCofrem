@@ -7,8 +7,8 @@ public class AnulacionScreenEvent {
     public final static int onClaveAdministracionValida = 0;
     public final static int onClaveAdministracionNoValida = 1;
     public final static int onClaveAdministracionError = 2;
-    public final static int onValorTransaccionValido = 3;
-    public final static int onValorTransaccionNoValido = 4;
+    public final static int onNumeroCargoRelacionado = 3;
+    public final static int onNumeroCargoNoRelacionado = 4;
     public final static int onTransaccionSuccess = 5;
     public final static int onTransaccionWSConexionError = 6;
     public final static int onTransaccionWSRegisterError = 7;

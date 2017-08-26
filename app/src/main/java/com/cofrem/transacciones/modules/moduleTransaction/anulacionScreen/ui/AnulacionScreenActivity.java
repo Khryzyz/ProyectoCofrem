@@ -9,7 +9,6 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
@@ -385,20 +384,20 @@ public class AnulacionScreenActivity extends Activity implements AnulacionScreen
      * Metodo para manejar el valor no valido en la transaccion
      */
     @Override
-    public void handleValorTransaccionNoValido() {
+    public void handleNumeroCargoNoRelacionado() {
 
         //Oculta la barra de progreso
         hideProgress();
 
         //Muestra el mensaje de error en el  monto de transaccion registrado
-        Toast.makeText(this, R.string.transaction_error_valor_transaccion_no_valido, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, R.string.transaction_error_numero_Cargo_no_relacionado, Toast.LENGTH_SHORT).show();
     }
 
     /**
      * Metodo para manejar el valor valido en la transaccion
      */
     @Override
-    public void handleValorTransaccionValido(int valorTransaccion) {
+    public void handleNumeroCargoRelacionado(int valorTransaccion) {
 
         //Se oculta la barra de progreso
         hideProgress();

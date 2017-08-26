@@ -5,11 +5,14 @@ import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.os.Handler;
 import android.view.KeyEvent;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.cofrem.transacciones.ConfigurationScreenActivity_;
 import com.cofrem.transacciones.global.InfoGlobalSettingsBlockButtons;
 import com.cofrem.transacciones.models.InfoHeaderApp;
 import com.cofrem.transacciones.modules.moduleConfiguration.configurationPrinter.ui.ConfigurationPrinterScreenActivity;
@@ -170,7 +173,7 @@ public class TestCommunicationScreenActivity extends Activity implements TestCom
                 txvConfiguracionConexionPruebaResultado.setText(error);
                 hideProgress();
             }
-        }, 2000);
+        }, 500);
     }
 
     @Override
@@ -181,7 +184,7 @@ public class TestCommunicationScreenActivity extends Activity implements TestCom
                 txvConfiguracionConexionPruebaResultado.setText(R.string.configuration_text_informacion_dispositivo_error_conexion);
                 hideProgress();
             }
-        }, 2000);
+        }, 500);
     }
 
     /**
