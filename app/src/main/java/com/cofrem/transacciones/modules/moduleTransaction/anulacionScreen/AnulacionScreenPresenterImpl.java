@@ -115,12 +115,12 @@ public class AnulacionScreenPresenterImpl implements AnulacionScreenPresenter {
                 onClaveAdministracionError();
                 break;
 
-            case AnulacionScreenEvent.onValorTransaccionNoValido:
-                onValorTransaccionNoValido();
+            case AnulacionScreenEvent.onNumeroCargoNoRelacionado:
+                onNumeroCargoNoRelacionado();
                 break;
 
-            case AnulacionScreenEvent.onValorTransaccionValido:
-                onValorTransaccionValido(anulacionScreenEvent.getValorInt());
+            case AnulacionScreenEvent.onNumeroCargoRelacionado:
+                onNumeroCargoRelacionado(anulacionScreenEvent.getValorInt());
                 break;
 
             case AnulacionScreenEvent.onTransaccionSuccess:
@@ -186,18 +186,18 @@ public class AnulacionScreenPresenterImpl implements AnulacionScreenPresenter {
     /**
      * Metodo para manejar la el valor no valido en la transaccion
      */
-    private void onValorTransaccionNoValido() {
+    private void onNumeroCargoNoRelacionado() {
         if (anulacionScreenView != null) {
-            anulacionScreenView.handleValorTransaccionNoValido();
+            anulacionScreenView.handleNumeroCargoNoRelacionado();
         }
     }
 
     /**
      * Metodo para manejar la el valor valido en la transaccion
      */
-    private void onValorTransaccionValido(int valorTransaccion) {
+    private void onNumeroCargoRelacionado(int valorTransaccion) {
         if (anulacionScreenView != null) {
-            anulacionScreenView.handleValorTransaccionValido(valorTransaccion);
+            anulacionScreenView.handleNumeroCargoRelacionado(valorTransaccion);
         }
     }
 

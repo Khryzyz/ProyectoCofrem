@@ -428,14 +428,45 @@ public class Printer {
 
             ThermalPrinter.start();
         } catch (DeviceAlreadyOpenException var2) {
-            ;
+            var2.printStackTrace();
+            ret = -1;
         } catch (TelpoException var3) {
             var3.printStackTrace();
+            ret = -1;
+        }catch (Error e){
             ret = -1;
         }
 
         return ret;
     }
+
+
+    public static synchronized boolean testPrinterDevice() {
+
+        boolean resultTestPrinterDevice = false;
+
+        try {
+
+            ThermalPrinter.start();
+
+            ThermalPrinter.stop();
+
+            resultTestPrinterDevice = true;
+
+        } catch (TelpoException e) {
+
+            e.printStackTrace();
+
+        } catch (Error e) {
+
+            e.printStackTrace();
+
+        }
+
+        return resultTestPrinterDevice;
+
+    }
+
 
     public static synchronized void disconnect() {
         ThermalPrinter.stop();

@@ -111,6 +111,10 @@ public class MagneticAsync extends AsyncTask<Void, Integer, String[]> {
 
             e.printStackTrace();
 
+        } catch (Error e) {
+
+            e.printStackTrace();
+
         }
 
         return resultTestMagneticDevice;

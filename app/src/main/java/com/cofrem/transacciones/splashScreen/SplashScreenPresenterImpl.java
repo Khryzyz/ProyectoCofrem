@@ -186,6 +186,14 @@ public class SplashScreenPresenterImpl implements SplashScreenPresenter {
                 onPrinterDeviceError();
                 break;
 
+            case SplashScreenEvent.onDeviceSuccess:
+                onDeviceSuccess();
+                break;
+
+            case SplashScreenEvent.onDeviceError:
+                onDeviceError();
+                break;
+
             case SplashScreenEvent.onGetInfoHeaderSuccess:
                 onGetInfoHeaderSuccess();
                 break;
@@ -352,6 +360,24 @@ public class SplashScreenPresenterImpl implements SplashScreenPresenter {
     private void onPrinterDeviceError() {
         if (splashScreenView != null) {
             splashScreenView.handlePrinterDeviceError();
+        }
+    }
+
+    /**
+     * Metodo para manejar la conexion al dispositivo de impresion exitosa
+     */
+    private void onDeviceSuccess() {
+        if (splashScreenView != null) {
+            splashScreenView.handleDeviceSuccess();
+        }
+    }
+
+    /**
+     * Metodo para manejar la conexion al dispositivo de impresion erronea
+     */
+    private void onDeviceError() {
+        if (splashScreenView != null) {
+            splashScreenView.handleDeviceError();
         }
     }
 

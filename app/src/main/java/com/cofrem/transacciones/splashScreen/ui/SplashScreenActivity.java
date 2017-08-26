@@ -1,16 +1,23 @@
 package com.cofrem.transacciones.splashScreen.ui;
 
 import android.app.Activity;
+import android.app.ActivityManager;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cofrem.transacciones.MainScreenActivity_;
+import com.cofrem.transacciones.global.InfoGlobalSettingsBlockButtons;
 import com.cofrem.transacciones.modules.moduleConfiguration.registerConfigurationScreen.ui.RegisterConfigurationScreenActivity_;
 import com.cofrem.transacciones.R;
 import com.cofrem.transacciones.splashScreen.SplashScreenPresenter;
@@ -54,21 +61,24 @@ public class SplashScreenActivity extends Activity implements SplashScreenView {
         //Instanciamiento e inicializacion del presentador
         splashScreenPresenter = new SplashScreenPresenterImpl(this);
 
-        // Llamada al metodo onCreate del presentador para el registro del bus de datos
+        //Llamada al metodo onCreate del presentador para el registro del bus de datos
         splashScreenPresenter.onCreate();
 
         // Metodo para colocar la orientacion de la app
-        setOrientation();
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        // Metodo para validar la configuracion inicial
-        validateConfig();
+        //Previene la apertura del Status Bar
+        getWindow().addFlags(WindowManager.LayoutParams.TYPE_SYSTEM_OVERLAY);
+
+        //Metodo para validar la configuracion inicial
+        splashScreenPresenter.validateAccess(this);
 
     }
 
-    /**
-     * #############################################################################################
-     * Metodos sobrecargados del sistema
-     * #############################################################################################
+    /*
+      #############################################################################################
+      Metodos sobrecargados del sistema
+      #############################################################################################
      */
 
     /**
@@ -81,9 +91,37 @@ public class SplashScreenActivity extends Activity implements SplashScreenView {
     }
 
     /**
-     * #############################################################################################
-     * Metodos sobrecargados de la interface
-     * #############################################################################################
+     * Metodo que interfiere en la presion del boton Task
+     */
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        ActivityManager activityManager = (ActivityManager) getApplicationContext()
+                .getSystemService(Context.ACTIVITY_SERVICE);
+
+        activityManager.moveTaskToFront(getTaskId(), 0);
+    }
+
+    /**
+     * Metodo sobrecargado de la vista para la presion de las teclas de volumen
+     *
+     * @param event evento de la presion de una tecla
+     * @return regresa el rechazo de la presion
+     */
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        if (InfoGlobalSettingsBlockButtons.blockedKeys.contains(event.getKeyCode())) {
+            return true;
+        } else {
+            return super.dispatchKeyEvent(event);
+        }
+    }
+
+    /*
+      #############################################################################################
+      Metodos sobrecargados de la interface
+      #############################################################################################
      */
 
     /**
@@ -98,13 +136,8 @@ public class SplashScreenActivity extends Activity implements SplashScreenView {
                 getString(R.string.general_message_verify_configuration_initial_existe)
         );
 
-        /**
-         * Llamada al metodo validateAccesAdmin del presentador que valida:
-         *  - Conexion a internet
-         *  - Existencia datos en DB interna
-         *  - Coherencia de datos con el servidor
-         */
-        splashScreenPresenter.validateAccess(this);
+        setInfoHeader();
+
     }
 
     /**
@@ -150,9 +183,6 @@ public class SplashScreenActivity extends Activity implements SplashScreenView {
                 getString(R.string.general_message_configuracion_acceso_existe)
         );
 
-        //Navegando a la ventana de configuración
-        navigateToRegisterConfiguracionScreen();
-
     }
 
     /**
@@ -166,6 +196,7 @@ public class SplashScreenActivity extends Activity implements SplashScreenView {
                 "\n" +
                 getString(R.string.general_message_configuracion_acceso_no_existe)
         );
+
     }
 
     /**
@@ -211,9 +242,7 @@ public class SplashScreenActivity extends Activity implements SplashScreenView {
                 getString(R.string.general_message_verify_success)
         );
 
-        setInfoHeader();
-
-        navigateToMainScreen();
+        validateConfig();
 
     }
 
@@ -326,6 +355,28 @@ public class SplashScreenActivity extends Activity implements SplashScreenView {
     }
 
     /**
+     * Metodo para manejar la conexion al dispositivo de impresion exitosa
+     */
+    @Override
+    public void handleDeviceSuccess() {
+        txvSplashScreenInfo.setText(txvSplashScreenInfo.getText() +
+                "\n" +
+                getString(R.string.general_message_device_info)
+        );
+    }
+
+    /**
+     * Metodo para manejar la conexion al dispositivo de impresion erronea
+     */
+    @Override
+    public void handleDeviceError() {
+        txvSplashScreenInfo.setText(txvSplashScreenInfo.getText() +
+                "\n" +
+                getString(R.string.general_message_device_error)
+        );
+    }
+
+    /**
      * Metodo para manejar la obtencion de la informacion del header exitosa
      */
     @Override
@@ -347,17 +398,17 @@ public class SplashScreenActivity extends Activity implements SplashScreenView {
 
     }
 
-    /**
-     * #############################################################################################
-     * Metodo propios de la clase
-     * #############################################################################################
+    /*
+      #############################################################################################
+      Metodo propios de la clase
+      #############################################################################################
      */
 
     /**
      * Metodo para mostrar la barra de progreso
      */
     private void showProgress() {
-        // Muesra la barra  de progreso
+        //Muesra la barra  de progreso
         pgbLoadingSplashScreen.setVisibility(View.VISIBLE);
     }
 
@@ -369,25 +420,18 @@ public class SplashScreenActivity extends Activity implements SplashScreenView {
     }
 
     /**
-     * Metodo que coloca la orientacion de la App de forma predeterminada
-     */
-    private void setOrientation() {
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-    }
-
-    /**
      * Metodo para validar la configuración inicial
      */
     private void validateConfig() {
 
-        // Muestra la barra de progreso
+        //Muestra la barra de progreso
         showProgress();
 
-        /**
-         * Llamada al metodo validateInitialConfig del presentador que valida:
-         *  - La existencia de la configuración inicial
-         *  - En caso de no existir mostrará la vista de configuración
-         *  - En caso de existir validara el acceso
+        /*
+          Llamada al metodo validateInitialConfig del presentador que valida:
+           - La existencia de la configuración inicial
+           - En caso de no existir mostrará la vista de configuración
+           - En caso de existir validara el acceso
          */
         splashScreenPresenter.validateInitialConfig(SplashScreenActivity.this);
 

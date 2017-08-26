@@ -1,11 +1,15 @@
 package com.cofrem.transacciones.modules.moduleReports.reimpresionScreen.ui;
 
 import android.app.Activity;
+import android.app.ActivityManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -14,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cofrem.transacciones.ReportScreenActivity_;
+import com.cofrem.transacciones.global.InfoGlobalSettingsBlockButtons;
 import com.cofrem.transacciones.lib.KeyBoard;
 import com.cofrem.transacciones.models.InfoHeaderApp;
 import com.cofrem.transacciones.models.Reports;
@@ -135,13 +140,13 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
         //TODO: crear metodos
         reimpresionScreenPresenter.VerifySuccess();
 
-        // Metodo para colocar la orientacion de la app
-        setOrientation();
-
         // Metodo que oculta por defecto los include de la vista
         inicializarOcultamientoVistas();
 
-        // Metodo que llena el header de la App
+        // Metodo para colocar la orientacion de la app
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+        //Coloca la informacion del encabezado
         setInfoHeader();
 
         Bundle args = getIntent().getExtras();
@@ -188,6 +193,34 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
     public void onBackPressed() {
         String mensajeRegresar = getString(R.string.general_message_press_back) + getString(R.string.general_text_button_regresar);
         Toast.makeText(this, mensajeRegresar, Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * Metodo que interfiere en la presion del boton Task
+     */
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        ActivityManager activityManager = (ActivityManager) getApplicationContext()
+                .getSystemService(Context.ACTIVITY_SERVICE);
+
+        activityManager.moveTaskToFront(getTaskId(), 0);
+    }
+
+    /**
+     * Metodo sobrecargado de la vista para la presion de las teclas de volumen
+     *
+     * @param event evento de la presion de una tecla
+     * @return regresa el rechazo de la presion
+     */
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        if (InfoGlobalSettingsBlockButtons.blockedKeys.contains(event.getKeyCode())) {
+            return true;
+        } else {
+            return super.dispatchKeyEvent(event);
+        }
     }
 
     /**
@@ -392,13 +425,6 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
     private void hideProgress() {
         //Oculta la barra de progreso
         frlPgbHldReimpresionRecibo.setVisibility(View.GONE);
-    }
-
-    /**
-     * Metodo que coloca la orientacion de la App de forma predeterminada
-     */
-    private void setOrientation() {
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
 
     /**

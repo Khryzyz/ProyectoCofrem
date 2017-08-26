@@ -20,12 +20,12 @@ public interface AnulacionScreenView {
     /**
      * Metodo para manejar la el valor no valido en la transaccion
      */
-    void handleValorTransaccionNoValido();
+    void handleNumeroCargoNoRelacionado();
 
     /**
      * Metodo para manejar la el valor valido en la transaccion
      */
-    void handleValorTransaccionValido(int valorTransaccion);
+    void handleNumeroCargoRelacionado(int valorTransaccion);
 
     /**
      * Metodo para manejar la el valor no valido en la transaccion

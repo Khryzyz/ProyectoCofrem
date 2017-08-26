@@ -4,9 +4,11 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.KeyEvent;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cofrem.transacciones.global.InfoGlobalSettingsBlockButtons;
 import com.cofrem.transacciones.models.InfoHeaderApp;
 import com.cofrem.transacciones.modules.moduleConfiguration.configurationPrinter.ui.ConfigurationPrinterScreenActivity_;
 import com.cofrem.transacciones.modules.moduleConfiguration.registerConfigurationScreen.ui.RegisterConfigurationScreenActivity_;
@@ -58,6 +60,36 @@ public class ConfigurationScreenActivity extends Activity {
     public void onBackPressed() {
         String mensajeRegresar = getString(R.string.general_message_press_back) + getString(R.string.general_text_button_regresar);
         Toast.makeText(this, mensajeRegresar, Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * Metodo sobrecargado de la vista cuando pierde el foco
+     *
+     * @param hasFocus regresa el parametro del foco del sistema
+     */
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if (!hasFocus) {
+            //Close every kind of system dialog
+            Intent closeDialog = new Intent(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
+            sendBroadcast(closeDialog);
+        }
+    }
+
+    /**
+     * Metodo sobrecargado de la vista para la presion de las teclas de volumen
+     *
+     * @param event evento de la presion de una tecla
+     * @return regresa el rechazo de la presion
+     */
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        if (InfoGlobalSettingsBlockButtons.blockedKeys.contains(event.getKeyCode())) {
+            return true;
+        } else {
+            return super.dispatchKeyEvent(event);
+        }
     }
 
     /**

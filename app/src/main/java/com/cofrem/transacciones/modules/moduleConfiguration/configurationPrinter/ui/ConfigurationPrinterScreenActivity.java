@@ -1,15 +1,20 @@
 package com.cofrem.transacciones.modules.moduleConfiguration.configurationPrinter.ui;
 
 import android.app.Activity;
+import android.app.ActivityManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Handler;
+import android.view.KeyEvent;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cofrem.transacciones.ConfigurationScreenActivity_;
+import com.cofrem.transacciones.global.InfoGlobalSettingsBlockButtons;
 import com.cofrem.transacciones.models.InfoHeaderApp;
 import com.cofrem.transacciones.modules.moduleConfiguration.configurationPrinter.ConfigurationPrinterScreenPresenter;
 import com.cofrem.transacciones.modules.moduleConfiguration.configurationPrinter.ConfigurationPrinterScreenPresenterImpl;
@@ -93,9 +98,9 @@ public class ConfigurationPrinterScreenActivity extends Activity implements Conf
         configurationPrinterScreenPresenter.VerifyConfigurationInitialPrinter(this);
 
         // Metodo para colocar la orientacion de la app
-        setOrientation();
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        // Metodo que llena el header de la App
+        //Coloca la informacion del encabezado
         setInfoHeader();
 
 
@@ -114,6 +119,34 @@ public class ConfigurationPrinterScreenActivity extends Activity implements Conf
     public void onDestroy() {
         configurationPrinterScreenPresenter.onDestroy();
         super.onDestroy();
+    }
+
+    /**
+     * Metodo que interfiere en la presion del boton Task
+     */
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        ActivityManager activityManager = (ActivityManager) getApplicationContext()
+                .getSystemService(Context.ACTIVITY_SERVICE);
+
+        activityManager.moveTaskToFront(getTaskId(), 0);
+    }
+
+    /**
+     * Metodo sobrecargado de la vista para la presion de las teclas de volumen
+     *
+     * @param event evento de la presion de una tecla
+     * @return regresa el rechazo de la presion
+     */
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        if (InfoGlobalSettingsBlockButtons.blockedKeys.contains(event.getKeyCode())) {
+            return true;
+        } else {
+            return super.dispatchKeyEvent(event);
+        }
     }
 
     /**
@@ -206,19 +239,9 @@ public class ConfigurationPrinterScreenActivity extends Activity implements Conf
      */
 
 
-
     @Click(R.id.btnConfigurationPrinterProbarImpresora)
-    public void imprimirPrueba(){
-        configurationPrinterScreenPresenter.imprimirPrueba(this,seekBarGrayLevel.getProgress() + 1);
-    }
-
-
-
-    /**
-     * Metodo que coloca la orientacion de la App de forma predeterminada
-     */
-    private void setOrientation() {
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+    public void imprimirPrueba() {
+        configurationPrinterScreenPresenter.imprimirPrueba(this, seekBarGrayLevel.getProgress() + 1);
     }
 
     /**

@@ -1,6 +1,8 @@
 package com.cofrem.transacciones.modules.moduleTransaction.anulacionScreen.ui;
 
 import android.app.Activity;
+import android.app.ActivityManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Handler;
@@ -14,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cofrem.transacciones.MainScreenActivity_;
+import com.cofrem.transacciones.global.InfoGlobalSettingsBlockButtons;
 import com.cofrem.transacciones.lib.MagneticHandler;
 import com.cofrem.transacciones.models.InfoHeaderApp;
 import com.cofrem.transacciones.models.PrintRow;
@@ -157,13 +160,13 @@ public class AnulacionScreenActivity extends Activity implements AnulacionScreen
         //Llamada al metodo onCreate del presentador para el registro del bus de datos
         anulacionScreenPresenter.onCreate();
 
-        //Metodo para colocar la orientacion de la app
-        setOrientation();
-
         //Metodo que oculta por defecto los include de la vista
         inicializarOcultamientoVistas();
 
-        //Metodo que llena el header de la App
+        // Metodo para colocar la orientacion de la app
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+        //Coloca la informacion del encabezado
         setInfoHeader();
 
         //Inicializa el paso de la contraseña de administrador
@@ -301,6 +304,33 @@ public class AnulacionScreenActivity extends Activity implements AnulacionScreen
         }
     }
 
+    /**
+     * Metodo que interfiere en la presion del boton Task
+     */
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        ActivityManager activityManager = (ActivityManager) getApplicationContext()
+                .getSystemService(Context.ACTIVITY_SERVICE);
+
+        activityManager.moveTaskToFront(getTaskId(), 0);
+    }
+
+    /**
+     * Metodo sobrecargado de la vista para la presion de las teclas de volumen
+     *
+     * @param event evento de la presion de una tecla
+     * @return regresa el rechazo de la presion
+     */
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        if (InfoGlobalSettingsBlockButtons.blockedKeys.contains(event.getKeyCode())) {
+            return true;
+        } else {
+            return super.dispatchKeyEvent(event);
+        }
+    }
     /*
       #############################################################################################
       Metodos sobrecargados de la interface
@@ -354,20 +384,20 @@ public class AnulacionScreenActivity extends Activity implements AnulacionScreen
      * Metodo para manejar el valor no valido en la transaccion
      */
     @Override
-    public void handleValorTransaccionNoValido() {
+    public void handleNumeroCargoNoRelacionado() {
 
         //Oculta la barra de progreso
         hideProgress();
 
         //Muestra el mensaje de error en el  monto de transaccion registrado
-        Toast.makeText(this, R.string.transaction_error_valor_transaccion_no_valido, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, R.string.transaction_error_numero_Cargo_no_relacionado, Toast.LENGTH_SHORT).show();
     }
 
     /**
      * Metodo para manejar el valor valido en la transaccion
      */
     @Override
-    public void handleValorTransaccionValido(int valorTransaccion) {
+    public void handleNumeroCargoRelacionado(int valorTransaccion) {
 
         //Se oculta la barra de progreso
         hideProgress();
@@ -482,13 +512,6 @@ public class AnulacionScreenActivity extends Activity implements AnulacionScreen
     private void hideProgress() {
         //Oculta la barra de progreso
         frlPgbHldTransactionAnulacion.setVisibility(View.GONE);
-    }
-
-    /**
-     * Metodo que coloca la orientacion de la App de forma predeterminada
-     */
-    private void setOrientation() {
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
 
     /**

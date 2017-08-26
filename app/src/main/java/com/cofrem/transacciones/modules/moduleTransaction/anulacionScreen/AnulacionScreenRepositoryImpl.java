@@ -87,10 +87,10 @@ public class AnulacionScreenRepositoryImpl implements AnulacionScreenRepository 
 
         switch (valorTransaccion) {
             case AnulacionScreenEvent.VALOR_TRANSACCION_NO_VALIDO:
-                postEvent(AnulacionScreenEvent.onValorTransaccionNoValido);
+                postEvent(AnulacionScreenEvent.onNumeroCargoNoRelacionado);
                 break;
             default:
-                postEvent(AnulacionScreenEvent.onValorTransaccionValido, valorTransaccion);
+                postEvent(AnulacionScreenEvent.onNumeroCargoRelacionado, valorTransaccion);
                 break;
         }
     }

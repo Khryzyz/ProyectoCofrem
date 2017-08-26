@@ -14,11 +14,16 @@
         android:name="android.hardware.nfc"
         android:required="true" />
 
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.NFC" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.REORDER_TASKS" />
+    <uses-permission android:name="android.permission.REAL_GET_TASKS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:allowBackup="true"
@@ -33,59 +38,61 @@
             android:windowSoftInputMode="stateHidden|stateAlwaysHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <!--Main Screen-->
         <activity
             android:name=".MainScreenActivity_"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
-            android:windowSoftInputMode="stateHidden|stateAlwaysHidden"/>
+            android:windowSoftInputMode="stateHidden|stateAlwaysHidden" />
         <!-- Transaction Screen -->
         <activity
             android:name=".TransactionScreenActivity_"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
-            android:windowSoftInputMode="stateHidden|stateAlwaysHidden"/>
+            android:windowSoftInputMode="stateHidden|stateAlwaysHidden" />
         <!-- Transaction Screen / Module Credito -->
         <activity
             android:name=".modules.moduleTransaction.creditoScreen.ui.CreditoScreenActivity_"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
-            android:windowSoftInputMode="stateHidden|stateAlwaysHidden"/>
+            android:windowSoftInputMode="stateHidden|stateAlwaysHidden" />
         <!-- Transaction Screen / Module Saldo -->
         <activity
             android:name=".modules.moduleTransaction.saldoScreen.ui.SaldoScreenActivity_"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
-            android:windowSoftInputMode="stateHidden|stateAlwaysHidden"/>
+            android:windowSoftInputMode="stateHidden|stateAlwaysHidden" />
         <!-- Transaction Screen / Module Anulacion -->
         <activity
             android:name=".modules.moduleTransaction.anulacionScreen.ui.AnulacionScreenActivity_"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
-            android:windowSoftInputMode="stateHidden|stateAlwaysHidden"/>
+            android:windowSoftInputMode="stateHidden|stateAlwaysHidden" />
         <!-- Report Screen -->
         <activity
             android:name=".ReportScreenActivity_"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
-            android:windowSoftInputMode="stateHidden|stateAlwaysHidden"/>
+            android:windowSoftInputMode="stateHidden|stateAlwaysHidden" />
         <!-- Report Screen Reimpresion activity -->
         <activity
             android:name=".modules.moduleReports.reimpresionScreen.ui.ReimpresionScreenActivity_"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
-            android:windowSoftInputMode="stateHidden|stateAlwaysHidden"/>
+            android:windowSoftInputMode="stateHidden|stateAlwaysHidden" />
         <!-- Configuration Screen -->
         <activity
             android:name=".ConfigurationScreenActivity_"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
-            android:windowSoftInputMode="stateHidden|stateAlwaysHidden"/>
+            android:windowSoftInputMode="stateHidden|stateAlwaysHidden" />
         <!-- Configuration Screen / Module RegisterConfiguration-->
         <activity
             android:name=".modules.moduleConfiguration.registerConfigurationScreen.ui.RegisterConfigurationScreenActivity_"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
-            android:windowSoftInputMode="stateHidden|stateAlwaysHidden"/>
+            android:windowSoftInputMode="stateHidden|stateAlwaysHidden" />
         <!-- Configuration Screen / Module TestCommunication-->
         <activity
             android:name=".modules.moduleConfiguration.configurationPrinter.ui.ConfigurationPrinterScreenActivity_"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
-            android:windowSoftInputMode="stateHidden|stateAlwaysHidden"/>
+            android:windowSoftInputMode="stateHidden|stateAlwaysHidden" />
         <!-- Configuration Screen / Module TestCommunication-->
         <activity
             android:name=".modules.moduleConfiguration.testCommunicationScreen.ui.TestCommunicationScreenActivity_"

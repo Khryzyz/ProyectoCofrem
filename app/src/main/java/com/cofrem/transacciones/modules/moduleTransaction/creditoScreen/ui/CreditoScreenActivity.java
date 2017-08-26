@@ -1,12 +1,15 @@
 package com.cofrem.transacciones.modules.moduleTransaction.creditoScreen.ui;
 
 import android.app.Activity;
+import android.app.ActivityManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Handler;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
@@ -14,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cofrem.transacciones.MainScreenActivity_;
+import com.cofrem.transacciones.global.InfoGlobalSettingsBlockButtons;
 import com.cofrem.transacciones.lib.MagneticHandler;
 import com.cofrem.transacciones.models.InfoHeaderApp;
 import com.cofrem.transacciones.models.PrintRow;
@@ -139,13 +143,13 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
         //Llamada al metodo onCreate del presentador para el registro del bus de datos
         creditoScreenPresenter.onCreate();
 
-        //Metodo para colocar la orientacion de la app
-        setOrientation();
-
         //Metodo que oculta por defecto los include de la vista
         inicializarOcultamientoVistas();
 
-        //Metodo que llena el header de la App
+        // Metodo para colocar la orientacion de la app
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+        //Coloca la informacion del encabezado
         setInfoHeader();
 
         //Inicializa el paso del valor del consumo
@@ -275,6 +279,34 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
         }
     }
 
+    /**
+     * Metodo que interfiere en la presion del boton Task
+     */
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        ActivityManager activityManager = (ActivityManager) getApplicationContext()
+                .getSystemService(Context.ACTIVITY_SERVICE);
+
+        activityManager.moveTaskToFront(getTaskId(), 0);
+    }
+
+    /**
+     * Metodo sobrecargado de la vista para la presion de las teclas de volumen
+     *
+     * @param event evento de la presion de una tecla
+     * @return regresa el rechazo de la presion
+     */
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        if (InfoGlobalSettingsBlockButtons.blockedKeys.contains(event.getKeyCode())) {
+            return true;
+        } else {
+            return super.dispatchKeyEvent(event);
+        }
+    }
+
     /*
       #############################################################################################
       Metodos sobrecargados de la interface
@@ -400,13 +432,6 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
     private void hideProgress() {
         //Oculta la barra de progreso
         frlPgbHldTransactionCredito.setVisibility(View.GONE);
-    }
-
-    /**
-     * Metodo que coloca la orientacion de la App de forma predeterminada
-     */
-    private void setOrientation() {
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
 
     /**
@@ -545,7 +570,7 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
         edtCreditoTransactionValorCompraValor.setText("");
 
         //El valor del consumo debe estar entre 1 y 3'000.000
-        if (valorCompra.length() > 0 && Integer.parseInt(valorCompra) >= 10000 && Integer.parseInt(valorCompra) <= 3000000) {
+        if (valorCompra.length() > 0 && Integer.parseInt(valorCompra) >= 1 && Integer.parseInt(valorCompra) <= 3000000) {
 
             //Registra el valor del consumo en el modelo de la transaccion
             modelTransaccion.setValor(Integer.parseInt(valorCompra));
@@ -564,7 +589,7 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
             //Muestra el mensaje de error de formato de la contraseña
             Toast.makeText(this, R.string.transaction_error_valor, Toast.LENGTH_SHORT).show();
 
-        } else if (Integer.parseInt(valorCompra) < 10000) {
+        } else if (Integer.parseInt(valorCompra) < 1) {
 
             //Muestra el mensaje de error de formato de la contraseña
             Toast.makeText(this, R.string.transaction_error_valor_monto_minimo, Toast.LENGTH_SHORT).show();
