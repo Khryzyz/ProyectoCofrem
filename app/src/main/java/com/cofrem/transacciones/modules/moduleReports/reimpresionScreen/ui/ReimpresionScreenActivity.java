@@ -330,6 +330,7 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
 
     @Override
     public void handleImprimirUltimoReciboError(String error) {
+        hideProgress();
         Toast.makeText(this, error, Toast.LENGTH_LONG).show();
     }
 
@@ -346,6 +347,7 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
 
     @Override
     public void handleImprimirReciboPorNumCargoError(String error) {
+        hideProgress();
         Toast.makeText(this, error, Toast.LENGTH_LONG).show();
     }
 
@@ -362,6 +364,7 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
 
     @Override
     public void handleImprimirReporteDetalleError(String error) {
+        hideProgress();
         Toast.makeText(this, error, Toast.LENGTH_LONG).show();
     }
 
@@ -378,6 +381,7 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
 
     @Override
     public void handleImprimirReporteGeneralError(String error) {
+        hideProgress();
         Toast.makeText(this, error, Toast.LENGTH_LONG).show();
     }
 
