@@ -89,4 +89,22 @@ public interface ReimpresionScreenView {
      */
     void handleImprimirReporteGeneralError(String error);
 
+
+    /**
+     * Metodo para manejar la impresion exitosa del recibo por numero de cargo
+     */
+    void handleCierreDeLoteSuccess();
+
+    /**
+     * Metodo para manejar la impresion Error del recibo por numero de cargo
+     */
+    void handleCierreDeLoteError(String error);
+
+
+    /**
+     * Metodo para manejar la impresion Error del recibo por numero de cargo
+     */
+    void handleTransaccionWSConexionError(String error);
+
+
 }

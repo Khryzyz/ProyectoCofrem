@@ -390,6 +390,23 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
         Toast.makeText(this, error, Toast.LENGTH_LONG).show();
     }
 
+    @Override
+    public void handleCierreDeLoteSuccess() {
+
+    }
+
+    @Override
+    public void handleCierreDeLoteError(String error) {
+        hideProgress();
+        Toast.makeText(this, error, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void handleTransaccionWSConexionError(String error) {
+        hideProgress();
+        Toast.makeText(this, error, Toast.LENGTH_LONG).show();
+    }
+
     /**
      * #############################################################################################
      * Metodo propios de la clase

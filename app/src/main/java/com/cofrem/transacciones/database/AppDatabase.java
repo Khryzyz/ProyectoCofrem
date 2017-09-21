@@ -1155,6 +1155,16 @@ public final class AppDatabase extends SQLiteOpenHelper {
         return lista;
     }
 
+
+
+    public void dropTransactions() {
+        getWritableDatabase().delete(
+                DatabaseManager.TableTransacciones.TABLE_NAME_TRANSACCIONES,
+                "",
+                null
+        );
+    }
+
     /**
      * Metodo para Obtener una  transaccion segun el numero de cargo
      *

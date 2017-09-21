@@ -8,6 +8,7 @@ import com.cofrem.transacciones.lib.MD5;
 import com.cofrem.transacciones.models.ConfigurationPrinter;
 import com.cofrem.transacciones.models.modelsWS.MessageWS;
 import com.cofrem.transacciones.models.modelsWS.TransactionWS;
+import com.cofrem.transacciones.models.modelsWS.modelTransaccion.InformacionTransaccion;
 import com.cofrem.transacciones.models.modelsWS.modelTransaccion.ResultadoTransaccion;
 import com.cofrem.transacciones.models.modelsWS.modelTransaccion.TransacList;
 import com.cofrem.transacciones.modules.moduleConfiguration.testCommunicationScreen.events.TestCommunicationScreenEvent;
@@ -84,7 +85,10 @@ public class ReimpresionScreenRepositoryImpl implements ReimpresionScreenReposit
 
             if (messageWS.getCodigoMensaje() == MessageWS.statusConsultaExitosa) {
 
+                AppDatabase.getInstance(context).dropTransactions();
+
                 postEvent(ReimpresionScreenEvent.onCierreLoteSuccess);
+
 
                 //Imprime el recibo
                 //imprimirRecibo(context);
@@ -468,71 +472,80 @@ public class ReimpresionScreenRepositoryImpl implements ReimpresionScreenReposit
         //Se crea una variable de estado de la transaccion
         ResultadoTransaccion resultadoTransaccion = null;
 
-        //TODO: nose como enviar ese array que esta llegando al metodo ya que params es un array de String 
+        for(TransacList modelTransation : transacLists){
+            //Inicializacion y declaracion de parametros para la peticion web service
+            String[][] params = {
+                    {InfoGlobalTransaccionSOAP.PARAM_NAME_CIERRE_CODIGO_TERMINAL, modelTransation.getCodigoTerminal()},
+                    {InfoGlobalTransaccionSOAP.PARAM_NAME_CIERRE_CEDULA_USUARIO, modelTransation.getCedulaUsuario()},
+                    {InfoGlobalTransaccionSOAP.PARAM_NAME_CIERRE_NUMERO_APROBACION, modelTransation.getNumeroAprobacion()},
+                    {InfoGlobalTransaccionSOAP.PARAM_NAME_CIERRE_VALOR_APROBADO, modelTransation.getValorAprobado()},
+                    {InfoGlobalTransaccionSOAP.PARAM_NAME_CIERRE_ESTADO, modelTransation.getEstado()},
+            };
 
-        //dejo este error aqui para que ud sepa en donde voy
+            //Creacion del modelo TransactionWS para ser usado dentro del webservice
+            TransactionWS transactionWS = new TransactionWS(
+                    InfoGlobalTransaccionSOAP.HTTP + AppDatabase.getInstance(context).obtenerURLConfiguracionConexion() + InfoGlobalTransaccionSOAP.WEB_SERVICE_URI,
+                    InfoGlobalTransaccionSOAP.HTTP + InfoGlobalTransaccionSOAP.NAME_SPACE,
+                    InfoGlobalTransaccionSOAP.METHOD_NAME_CIERRE_LOTE,
+                    params);
 
+            //Inicializacion del objeto que sera devuelto por la transaccion del webservice
+            SoapObject soapTransaction = null;
 
-        aqui
+            try {
 
-        //Inicializacion y declaracion de parametros para la peticion web service
-        String[][] params = {
-                {}
-        };
+                //Transaccion solicitada al web service
+                soapTransaction = new KsoapAsync(new KsoapAsync.ResponseKsoapAsync() {
 
-        //Creacion del modelo TransactionWS para ser usado dentro del webservice
-        TransactionWS transactionWS = new TransactionWS(
-                InfoGlobalTransaccionSOAP.HTTP + AppDatabase.getInstance(context).obtenerURLConfiguracionConexion() + InfoGlobalTransaccionSOAP.WEB_SERVICE_URI,
-                InfoGlobalTransaccionSOAP.HTTP + InfoGlobalTransaccionSOAP.NAME_SPACE,
-                InfoGlobalTransaccionSOAP.METHOD_NAME_CIERRE_LOTE,
-                params);
+                    /**
+                     * Metodo sobrecargado que maneja el callback de los datos
+                     *
+                     * @param soapResponse
+                     * @return
+                     */
+                    @Override
+                    public SoapObject processFinish(SoapObject soapResponse) {
+                        return soapResponse;
+                    }
 
-        //Inicializacion del objeto que sera devuelto por la transaccion del webservice
-        SoapObject soapTransaction = null;
+                }).execute(transactionWS).get();
 
-        try {
+            } catch (InterruptedException | ExecutionException e) {
 
-            //Transaccion solicitada al web service
-            soapTransaction = new KsoapAsync(new KsoapAsync.ResponseKsoapAsync() {
+                e.printStackTrace();
 
-                /**
-                 * Metodo sobrecargado que maneja el callback de los datos
-                 *
-                 * @param soapResponse
-                 * @return
-                 */
-                @Override
-                public SoapObject processFinish(SoapObject soapResponse) {
-                    return soapResponse;
+            }
+
+            //Si la transaccion no genero resultado regresa un establecimiento vacio
+            if (soapTransaction != null) {
+
+                //Inicializacion del modelo MessageWS
+                MessageWS messageWS = new MessageWS(
+                        (SoapObject) soapTransaction.getProperty(MessageWS.PROPERTY_MESSAGE)
+                );
+
+                switch (messageWS.getCodigoMensaje()) {
+
+                    //Transaccion exitosa
+                    case MessageWS.statusTransaccionExitosa:
+
+                        InformacionTransaccion informacionTransaccion = new InformacionTransaccion(
+                                (SoapObject) soapTransaction.getProperty(InformacionTransaccion.PROPERTY_TRANSAC_RESULT)
+                        );
+
+                        resultadoTransaccion = new ResultadoTransaccion(
+                                informacionTransaccion,
+                                messageWS
+                        );
+                        break;
+
+                    default:
+                        resultadoTransaccion = new ResultadoTransaccion(
+                                messageWS
+                        );
+                        break;
                 }
 
-            }).execute(transactionWS).get();
-
-        } catch (InterruptedException | ExecutionException e) {
-
-            e.printStackTrace();
-
-        }
-
-        //Si la transaccion no genero resultado regresa un establecimiento vacio
-        if (soapTransaction != null) {
-
-            //Inicializacion del modelo MessageWS
-            MessageWS messageWS = new MessageWS(
-                    (SoapObject) soapTransaction.getProperty(MessageWS.PROPERTY_MESSAGE)
-            );
-
-            switch (messageWS.getCodigoMensaje()) {
-
-                //Transaccion exitosa
-                case MessageWS.statusTransaccionExitosa:
-
-
-                    break;
-
-                default:
-
-                    break;
             }
 
         }
