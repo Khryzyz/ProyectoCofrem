@@ -69,5 +69,7 @@ public interface ReimpresionScreenRepository {
     void imprimirReporteGeneral(Context context);
 
 
+    void cierreDeLote(Context context);
+
 
 }

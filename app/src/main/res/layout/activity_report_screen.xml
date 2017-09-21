@@ -38,12 +38,11 @@
         style="@style/StyleButtonStandar"
         android:layout_below="@id/btnReportScreenModuleGeneral"
         android:drawableStart="@drawable/if_calendar_check_o"
-        android:text="@string/report_text_button_cierre"
-        android:visibility="gone" />
+        android:text="@string/report_text_button_cierre"/>
 
     <Button
         android:id="@+id/btnReportScreenBack"
         style="@style/StyleButtonBack"
-        android:layout_below="@id/btnReportScreenModuleGeneral"
+        android:layout_below="@id/btnReportScreenModuleCierreLote"
         android:text="@string/general_text_button_regresar" />
 </RelativeLayout>

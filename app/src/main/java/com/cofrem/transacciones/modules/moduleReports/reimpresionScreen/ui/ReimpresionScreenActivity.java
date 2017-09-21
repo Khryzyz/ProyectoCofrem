@@ -623,6 +623,11 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
         reimpresionScreenPresenter.imprimirReporteGeneral(this);
     }
 
+    @Click(R.id.btnReportCierreLoteClaveDispositivoBotonAceptar)
+    public  void  cierreDeLote(){
+        reimpresionScreenPresenter.cierreDeLote(this);
+    }
+
 
     @Click({R.id.btnTransactionScreenBack
             , R.id.btnReportReporteDetallesImpresionBotonSalir

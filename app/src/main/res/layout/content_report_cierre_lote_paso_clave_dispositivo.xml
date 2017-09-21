@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/txvReportCierreLoteClaveDispositivoTitle"
         android:layout_marginBottom="@dimen/appMarginBottom"
-        android:text="@string/report_text_ingeresar_clave_dispositivo" />
+        android:text="@string/report_text_ingeresar_clave_administrador" />
 
     <EditText
         android:id="@+id/edtReportCierreLoteClaveDispositivoContenidoClave"

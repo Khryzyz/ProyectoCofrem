@@ -100,6 +100,13 @@ public class ReimpresionScreenPresenterImpl implements ReimpresionScreenPresente
     public void imprimirReporteGeneral(Context context) {
         reimpresionScreenInteractor.imprimirReporteGeneral(context);
     }
+
+
+    @Override
+    public void cierreDeLote(Context context) {
+        reimpresionScreenInteractor.cierreDeLote(context);
+    }
+
     /**
      * Metodo para la verificacion de los datos
      */
