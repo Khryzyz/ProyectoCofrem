@@ -32,6 +32,10 @@ public class InfoGlobalTransaccionSOAP {
     public final static String METHOD_NAME_TEST = "Test";
 
     /**
+     * Datos para el Web Service Test
+     */
+    public final static String METHOD_NAME_CIERRE_LOTE = "Cierre";
+    /**
      * Datos para el Web Service Transaccion
      */
     public final static String METHOD_NAME_TRANSACCION = "Transaccion";

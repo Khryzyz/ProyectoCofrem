@@ -2,8 +2,15 @@ package com.cofrem.transacciones.modules.moduleReports.reimpresionScreen;
 
 import android.content.Context;
 
+import com.cofrem.transacciones.global.InfoGlobalTransaccionSOAP;
+import com.cofrem.transacciones.lib.KsoapAsync;
 import com.cofrem.transacciones.lib.MD5;
 import com.cofrem.transacciones.models.ConfigurationPrinter;
+import com.cofrem.transacciones.models.modelsWS.MessageWS;
+import com.cofrem.transacciones.models.modelsWS.TransactionWS;
+import com.cofrem.transacciones.models.modelsWS.modelTransaccion.ResultadoTransaccion;
+import com.cofrem.transacciones.models.modelsWS.modelTransaccion.TransacList;
+import com.cofrem.transacciones.modules.moduleConfiguration.testCommunicationScreen.events.TestCommunicationScreenEvent;
 import com.cofrem.transacciones.modules.moduleReports.reimpresionScreen.events.ReimpresionScreenEvent;
 import com.cofrem.transacciones.R;
 import com.cofrem.transacciones.database.AppDatabase;
@@ -15,10 +22,13 @@ import com.cofrem.transacciones.lib.StyleConfig;
 import com.cofrem.transacciones.models.PrintRow;
 import com.cofrem.transacciones.models.Transaccion;
 
+import org.ksoap2.serialization.SoapObject;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
+import java.util.concurrent.ExecutionException;
 
 public class ReimpresionScreenRepositoryImpl implements ReimpresionScreenRepository {
     /**
@@ -44,6 +54,50 @@ public class ReimpresionScreenRepositoryImpl implements ReimpresionScreenReposit
      * Metodos sobrecargados de la interface
      * #############################################################################################
      */
+
+
+    @Override
+    public void cierreDeLote(Context context) {
+
+        String codigoTermial =  AppDatabase.getInstance(context).obtenerCodigoTerminal();
+
+        ArrayList<Transaccion> listaTransacciones = AppDatabase.getInstance(context).obtenerTransaccionesCierreLote();
+
+
+        ArrayList<TransacList> transacLists = new ArrayList<>();
+
+        for (Transaccion modelTransaccion : listaTransacciones) {
+            if (modelTransaccion.getTipo_transaccion() == Transaccion.TIPO_TRANSACCION_CONSUMO) {
+                transacLists.add(new TransacList(codigoTermial,modelTransaccion.getNumero_cargo(),modelTransaccion.getNumero_documento(),Integer.toString(modelTransaccion.getValor()),TransacList.ESTADO_ACTIVO_SIN_CIERRE));
+            } else {
+                transacLists.add(new TransacList(codigoTermial,modelTransaccion.getNumero_cargo(),modelTransaccion.getNumero_documento(),Integer.toString(modelTransaccion.getValor()),TransacList.ESTADO_DEVOLUCION_SIN_CIERRE));
+            }
+        }
+
+
+        ResultadoTransaccion resultadoTransaccion = registrarTransaccionConsumoWS(context ,transacLists);
+
+        //Registra mediante el WS la transaccion
+        if (resultadoTransaccion != null) {
+
+            MessageWS messageWS = resultadoTransaccion.getMessageWS();
+
+            if (messageWS.getCodigoMensaje() == MessageWS.statusConsultaExitosa) {
+
+                postEvent(ReimpresionScreenEvent.onCierreLoteSuccess);
+
+                //Imprime el recibo
+                //imprimirRecibo(context);
+
+            } else {
+                //Error en el registro de la transaccion del web service
+                postEvent(ReimpresionScreenEvent.onCierreLoteError, messageWS.getDetalleMensaje(),null,null);
+            }
+        } else {
+            //Error en la conexion con el Web Service
+            postEvent(ReimpresionScreenEvent.onTransaccionWSConexionError);
+        }
+    }
 
     /**
      *
@@ -399,6 +453,95 @@ public class ReimpresionScreenRepositoryImpl implements ReimpresionScreenReposit
      * Metodo propios de la clase
      * #############################################################################################
      */
+
+
+    /**
+     * Metodo que:
+     * - registra mediante el WS la transaccion
+     * - Extrae el estado de la transaccion
+     *
+     * @param context     contexto desde la cual se realiza la transaccion
+     * @return regreso del resultado de la transaccion
+     */
+    private ResultadoTransaccion registrarTransaccionConsumoWS(Context context,ArrayList<TransacList> transacLists) {
+
+        //Se crea una variable de estado de la transaccion
+        ResultadoTransaccion resultadoTransaccion = null;
+
+        //TODO: nose como enviar ese array que esta llegando al metodo ya que params es un array de String 
+
+        //dejo este error aqui para que ud sepa en donde voy
+
+
+        aqui
+
+        //Inicializacion y declaracion de parametros para la peticion web service
+        String[][] params = {
+                {}
+        };
+
+        //Creacion del modelo TransactionWS para ser usado dentro del webservice
+        TransactionWS transactionWS = new TransactionWS(
+                InfoGlobalTransaccionSOAP.HTTP + AppDatabase.getInstance(context).obtenerURLConfiguracionConexion() + InfoGlobalTransaccionSOAP.WEB_SERVICE_URI,
+                InfoGlobalTransaccionSOAP.HTTP + InfoGlobalTransaccionSOAP.NAME_SPACE,
+                InfoGlobalTransaccionSOAP.METHOD_NAME_CIERRE_LOTE,
+                params);
+
+        //Inicializacion del objeto que sera devuelto por la transaccion del webservice
+        SoapObject soapTransaction = null;
+
+        try {
+
+            //Transaccion solicitada al web service
+            soapTransaction = new KsoapAsync(new KsoapAsync.ResponseKsoapAsync() {
+
+                /**
+                 * Metodo sobrecargado que maneja el callback de los datos
+                 *
+                 * @param soapResponse
+                 * @return
+                 */
+                @Override
+                public SoapObject processFinish(SoapObject soapResponse) {
+                    return soapResponse;
+                }
+
+            }).execute(transactionWS).get();
+
+        } catch (InterruptedException | ExecutionException e) {
+
+            e.printStackTrace();
+
+        }
+
+        //Si la transaccion no genero resultado regresa un establecimiento vacio
+        if (soapTransaction != null) {
+
+            //Inicializacion del modelo MessageWS
+            MessageWS messageWS = new MessageWS(
+                    (SoapObject) soapTransaction.getProperty(MessageWS.PROPERTY_MESSAGE)
+            );
+
+            switch (messageWS.getCodigoMensaje()) {
+
+                //Transaccion exitosa
+                case MessageWS.statusTransaccionExitosa:
+
+
+                    break;
+
+                default:
+
+                    break;
+            }
+
+        }
+
+        //Retorno de estado de transaccion
+        return resultadoTransaccion;
+    }
+
+
 
     /**
      * Metodo que se encartga de imprimir :

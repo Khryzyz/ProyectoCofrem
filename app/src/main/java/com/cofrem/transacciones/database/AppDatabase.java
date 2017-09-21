@@ -1121,6 +1121,45 @@ public final class AppDatabase extends SQLiteOpenHelper {
      *
      * @return Arraylist destalles de la transaccion
      */
+    public ArrayList<Transaccion> obtenerTransaccionesCierreLote() {
+
+        ArrayList<Transaccion> lista = new ArrayList<>();
+
+        Cursor cursorQuery;
+
+        cursorQuery = getWritableDatabase().rawQuery(
+                "SELECT " + DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_NUMERO_CARGO + " , " +
+                        DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_CEDULA_USUARIO + " , " +
+                        DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_VALOR + " , " +
+                        DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_TIPO_TRANSACCION
+                        +" FROM " + DatabaseManager.TableTransacciones.TABLE_NAME_TRANSACCIONES
+
+                , null
+        );
+
+        while (cursorQuery.moveToNext()) {
+
+            Transaccion modelTransaccion = new Transaccion();
+
+            modelTransaccion.setNumero_cargo(cursorQuery.getString(0));
+            modelTransaccion.setNumero_documento(cursorQuery.getString(1));
+            modelTransaccion.setValor(cursorQuery.getInt(2));
+            modelTransaccion.setTipo_transaccion(cursorQuery.getInt(3));
+
+            lista.add(modelTransaccion);
+
+        }
+
+        cursorQuery.close();
+
+        return lista;
+    }
+
+    /**
+     * Metodo para Obtener una  transaccion segun el numero de cargo
+     *
+     * @return Arraylist destalles de la transaccion
+     */
     public ArrayList<Transaccion> obtenerGeneralTransaccion() {
 
         ArrayList<Transaccion> lista = new ArrayList<>();

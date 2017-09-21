@@ -59,4 +59,7 @@ interface ReimpresionScreenInteractor {
      */
     void imprimirReporteGeneral(Context context);
 
+
+    void cierreDeLote(Context context);
+
 }

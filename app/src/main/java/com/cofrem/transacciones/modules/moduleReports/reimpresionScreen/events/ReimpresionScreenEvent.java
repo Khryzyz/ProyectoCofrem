@@ -26,6 +26,10 @@ public class ReimpresionScreenEvent {
     public final static int onVerifyClaveAdministradorSuccess = 17;
     public final static int onVerifyClaveAdministradorError = 18;
 
+    public final static int onCierreLoteSuccess = 19;
+    public final static int onCierreLoteError = 20;
+    public final static int onTransaccionWSConexionError = 21;
+
 
     // Variable que maneja los tipos de eventos
     private int eventType;
