@@ -29,6 +29,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 
 public class ReimpresionScreenRepositoryImpl implements ReimpresionScreenRepository {
@@ -64,6 +65,7 @@ public class ReimpresionScreenRepositoryImpl implements ReimpresionScreenReposit
 
         ArrayList<Transaccion> listaTransacciones = AppDatabase.getInstance(context).obtenerTransaccionesCierreLote();
 
+        ArrayList<TransacList> listaAnulaciones = new ArrayList<>();
 
         ArrayList<TransacList> transacLists = new ArrayList<>();
 
@@ -76,31 +78,110 @@ public class ReimpresionScreenRepositoryImpl implements ReimpresionScreenReposit
         }
 
 
-        ResultadoTransaccion resultadoTransaccion = registrarTransaccionConsumoWS(context ,transacLists);
-
-        //Registra mediante el WS la transaccion
-        if (resultadoTransaccion != null) {
-
-            MessageWS messageWS = resultadoTransaccion.getMessageWS();
-
-            if (messageWS.getCodigoMensaje() == MessageWS.statusConsultaExitosa) {
-
-                AppDatabase.getInstance(context).dropTransactions();
-
-                postEvent(ReimpresionScreenEvent.onCierreLoteSuccess);
+        ArrayList<ResultadoTransaccion> resultadoTransaccion = registrarTransaccionConsumoWS(context ,transacLists);
 
 
-                //Imprime el recibo
-                //imprimirRecibo(context);
+        ConfigurationPrinter configurationPrinter = AppDatabase.getInstance(context).getConfigurationPrinter();
 
+        int gray = configurationPrinter.getGray_level();
+
+        // creamos el ArrayList se que encarga de almacenar los rows del recibo
+        ArrayList<PrintRow> printRows = new ArrayList<PrintRow>();
+
+        //Se agrega el logo al primer renglon del recibo y se coloca en el centro
+        printRows.add(PrintRow.printLogo(context, gray));
+
+        PrintRow.printCofrem(context, printRows, gray, 10);
+
+        //se siguen agregando cado auno de los String a los renglones (Rows) del recibo para imprimir
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_title_cierre_lote), new StyleConfig(StyleConfig.Align.CENTER, gray,20)));
+
+
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_separador_operador), new StyleConfig(StyleConfig.Align.LEFT, gray, StyleConfig.FontSize.F1)));
+        PrintRow.printOperador(context, printRows, gray, 10);
+
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_fecha), getDateTime(), new StyleConfig(StyleConfig.Align.LEFT, gray, 20)));
+
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_separador_detalle), new StyleConfig(StyleConfig.Align.LEFT, gray, StyleConfig.FontSize.F1)));
+
+
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_title_transaccion_aprobadas), new StyleConfig(StyleConfig.Align.LEFT, gray, 10)));
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_text_transaccion), context.getResources().getString(
+                R.string.recibo_text_estado), new StyleConfig(StyleConfig.Align.LEFT, gray, 10)));
+
+//        AppDatabase.getInstance(context).dropTransactions("");
+
+
+        for(ResultadoTransaccion resultTransaccion : resultadoTransaccion){
+            //Registra mediante el WS la transaccion
+            if (resultTransaccion != null) {
+
+                MessageWS messageWS = resultTransaccion.getMessageWS();
+
+                TransacList transacList = resultTransaccion.getTransacList();
+
+                if (messageWS.getCodigoMensaje() == MessageWS.statusTransaccionExitosa) {
+
+                    String numCargo = transacList.getNumeroAprobacion();
+                    //String estado = (transacList.getEstado().equals("X") || transacList.getEstado().equals("Y"))?"Aprobada":((transacList.getEstado().equals("A") || transacList.getEstado().equals("D"))?"No Aprobada":"");
+                    String estado = transacList.getEstado();
+
+                    if(estado.equals("X")||estado.equals("A")){
+                        estado = (estado.equals("X"))?"Aprobada":"No Aprobada";
+                        printRows.add(new PrintRow(numCargo, estado, new StyleConfig(StyleConfig.Align.LEFT, gray, 4)));
+
+                        if (estado.equals("X"))
+                             AppDatabase.getInstance(context).dropTransactions(numCargo);
+                    }else{
+                        listaAnulaciones.add(transacList);
+                    }
+
+                } else {
+                    //Error en el registro de la transaccion del web service
+                    postEvent(ReimpresionScreenEvent.onCierreLoteError, messageWS.getDetalleMensaje(), null, null);
+                }
             } else {
-                //Error en el registro de la transaccion del web service
-                postEvent(ReimpresionScreenEvent.onCierreLoteError, messageWS.getDetalleMensaje(),null,null);
+                //Error en la conexion con el Web Service
+                postEvent(ReimpresionScreenEvent.onTransaccionWSConexionError);
             }
-        } else {
-            //Error en la conexion con el Web Service
-            postEvent(ReimpresionScreenEvent.onTransaccionWSConexionError);
         }
+
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_title_transaccion_anuladas), new StyleConfig(StyleConfig.Align.LEFT, gray, 10)));
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_text_transaccion), context.getResources().getString(
+                R.string.recibo_text_estado), new StyleConfig(StyleConfig.Align.LEFT, gray, 10)));
+
+
+        for(TransacList anulacionTransList : listaAnulaciones){
+
+            String numCargo = anulacionTransList.getNumeroAprobacion();
+            String estado = (anulacionTransList.getEstado().equals("Y"))?"Aprobada":"No Aprobada";
+
+
+            printRows.add(new PrintRow(numCargo, estado, new StyleConfig(StyleConfig.Align.LEFT, gray, 4)));
+
+            if (estado.equals("Y"))
+                AppDatabase.getInstance(context).dropTransactions(numCargo);
+
+        }
+
+        printRows.add(new PrintRow(".", new StyleConfig(StyleConfig.Align.LEFT, 1)));
+
+        int status = new PrinterHandler().imprimerTexto(printRows);
+
+        if (status == InfoGlobalSettingsPrint.PRINTER_OK) {
+            postEvent(ReimpresionScreenEvent.onCierreLoteSuccess);
+        } else {
+            postEvent(ReimpresionScreenEvent.onCierreLoteError, PrinterHandler.stringErrorPrinter(status, context), null, null);
+        }
+
     }
 
     /**
@@ -467,12 +548,15 @@ public class ReimpresionScreenRepositoryImpl implements ReimpresionScreenReposit
      * @param context     contexto desde la cual se realiza la transaccion
      * @return regreso del resultado de la transaccion
      */
-    private ResultadoTransaccion registrarTransaccionConsumoWS(Context context,ArrayList<TransacList> transacLists) {
+    private ArrayList<ResultadoTransaccion> registrarTransaccionConsumoWS(Context context,ArrayList<TransacList> transacLists) {
 
-        //Se crea una variable de estado de la transaccion
-        ResultadoTransaccion resultadoTransaccion = null;
+        ArrayList<ResultadoTransaccion> listaResultados = new ArrayList<>();
 
         for(TransacList modelTransation : transacLists){
+
+            //Se crea una variable de estado de la transaccion
+            ResultadoTransaccion resultadoTransaccion = null;
+
             //Inicializacion y declaracion de parametros para la peticion web service
             String[][] params = {
                     {InfoGlobalTransaccionSOAP.PARAM_NAME_CIERRE_CODIGO_TERMINAL, modelTransation.getCodigoTerminal()},
@@ -486,7 +570,7 @@ public class ReimpresionScreenRepositoryImpl implements ReimpresionScreenReposit
             TransactionWS transactionWS = new TransactionWS(
                     InfoGlobalTransaccionSOAP.HTTP + AppDatabase.getInstance(context).obtenerURLConfiguracionConexion() + InfoGlobalTransaccionSOAP.WEB_SERVICE_URI,
                     InfoGlobalTransaccionSOAP.HTTP + InfoGlobalTransaccionSOAP.NAME_SPACE,
-                    InfoGlobalTransaccionSOAP.METHOD_NAME_CIERRE_LOTE,
+                    InfoGlobalTransaccionSOAP.METHOD_NAME_CIERRE_LOTE_INDIVIDUAL,
                     params);
 
             //Inicializacion del objeto que sera devuelto por la transaccion del webservice
@@ -519,18 +603,21 @@ public class ReimpresionScreenRepositoryImpl implements ReimpresionScreenReposit
             //Si la transaccion no genero resultado regresa un establecimiento vacio
             if (soapTransaction != null) {
 
+                SoapObject transacResult =  (SoapObject) soapTransaction.getProperty(MessageWS.PROPERTY_TRANSAC_LISTS);
+
                 //Inicializacion del modelo MessageWS
                 MessageWS messageWS = new MessageWS(
-                        (SoapObject) soapTransaction.getProperty(MessageWS.PROPERTY_MESSAGE)
+                        (SoapObject) transacResult.getProperty(MessageWS.PROPERTY_MESSAGE)
                 );
+
 
                 switch (messageWS.getCodigoMensaje()) {
 
                     //Transaccion exitosa
                     case MessageWS.statusTransaccionExitosa:
 
-                        InformacionTransaccion informacionTransaccion = new InformacionTransaccion(
-                                (SoapObject) soapTransaction.getProperty(InformacionTransaccion.PROPERTY_TRANSAC_RESULT)
+                        TransacList informacionTransaccion = new TransacList(
+                                (SoapObject) transacResult.getProperty(TransacList.PROPERTY_TRANSAC_RESULT)
                         );
 
                         resultadoTransaccion = new ResultadoTransaccion(
@@ -547,11 +634,11 @@ public class ReimpresionScreenRepositoryImpl implements ReimpresionScreenReposit
                 }
 
             }
-
+            listaResultados.add(resultadoTransaccion);
         }
 
         //Retorno de estado de transaccion
-        return resultadoTransaccion;
+        return listaResultados;
     }
 
 
