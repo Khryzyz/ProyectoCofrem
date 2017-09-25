@@ -107,6 +107,11 @@ public class ReimpresionScreenPresenterImpl implements ReimpresionScreenPresente
         reimpresionScreenInteractor.cierreDeLote(context);
     }
 
+    @Override
+    public void imprimirCierreLote(Context context) {
+        reimpresionScreenInteractor.imprimirCierreLote(context);
+    }
+
     /**
      * Metodo para la verificacion de los datos
      */

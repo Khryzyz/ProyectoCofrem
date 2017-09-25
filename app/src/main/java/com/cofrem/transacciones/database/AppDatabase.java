@@ -1159,7 +1159,7 @@ public final class AppDatabase extends SQLiteOpenHelper {
     public void dropTransactions(String num) {
         getWritableDatabase().delete(
                 DatabaseManager.TableTransacciones.TABLE_NAME_TRANSACCIONES,
-                DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_NUMERO_CARGO + " = " + num,
+                DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_NUMERO_CARGO + " = '" + num +"'",
                 null
         );
     }

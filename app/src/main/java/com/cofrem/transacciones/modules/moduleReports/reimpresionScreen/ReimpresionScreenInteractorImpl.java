@@ -72,6 +72,12 @@ class ReimpresionScreenInteractorImpl implements ReimpresionScreenInteractor {
         reimpresionScreenRepository.cierreDeLote(context);
     }
 
+    @Override
+    public void imprimirCierreLote(Context context) {
+        reimpresionScreenRepository.imprimirCierreLote(context);
+    }
+
+
     /**
      * #############################################################################################
      * Metodos sobrecargados de la interface

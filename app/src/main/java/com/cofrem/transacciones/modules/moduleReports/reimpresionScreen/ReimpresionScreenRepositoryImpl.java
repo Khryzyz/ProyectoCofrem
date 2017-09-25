@@ -43,6 +43,10 @@ public class ReimpresionScreenRepositoryImpl implements ReimpresionScreenReposit
     // lista de las transacciones que estan para imprimir en el reporte de Detalles
     private ArrayList<Transaccion> listaDetalle;
 
+    private ArrayList<TransacList> listaAnulacionesCierre;
+
+    private ArrayList<TransacList> listaAprobadasCierre;
+
     /**
      * #############################################################################################
      * Constructor de la clase
@@ -65,7 +69,9 @@ public class ReimpresionScreenRepositoryImpl implements ReimpresionScreenReposit
 
         ArrayList<Transaccion> listaTransacciones = AppDatabase.getInstance(context).obtenerTransaccionesCierreLote();
 
-        ArrayList<TransacList> listaAnulaciones = new ArrayList<>();
+        listaAnulacionesCierre = new ArrayList<>();
+
+        listaAprobadasCierre = new ArrayList<>();
 
         ArrayList<TransacList> transacLists = new ArrayList<>();
 
@@ -77,45 +83,9 @@ public class ReimpresionScreenRepositoryImpl implements ReimpresionScreenReposit
             }
         }
 
-
         ArrayList<ResultadoTransaccion> resultadoTransaccion = registrarTransaccionConsumoWS(context ,transacLists);
 
-
-        ConfigurationPrinter configurationPrinter = AppDatabase.getInstance(context).getConfigurationPrinter();
-
-        int gray = configurationPrinter.getGray_level();
-
-        // creamos el ArrayList se que encarga de almacenar los rows del recibo
-        ArrayList<PrintRow> printRows = new ArrayList<PrintRow>();
-
-        //Se agrega el logo al primer renglon del recibo y se coloca en el centro
-        printRows.add(PrintRow.printLogo(context, gray));
-
-        PrintRow.printCofrem(context, printRows, gray, 10);
-
-        //se siguen agregando cado auno de los String a los renglones (Rows) del recibo para imprimir
-        printRows.add(new PrintRow(context.getResources().getString(
-                R.string.recibo_title_cierre_lote), new StyleConfig(StyleConfig.Align.CENTER, gray,20)));
-
-
-        printRows.add(new PrintRow(context.getResources().getString(
-                R.string.recibo_separador_operador), new StyleConfig(StyleConfig.Align.LEFT, gray, StyleConfig.FontSize.F1)));
-        PrintRow.printOperador(context, printRows, gray, 10);
-
-        printRows.add(new PrintRow(context.getResources().getString(
-                R.string.recibo_fecha), getDateTime(), new StyleConfig(StyleConfig.Align.LEFT, gray, 20)));
-
-        printRows.add(new PrintRow(context.getResources().getString(
-                R.string.recibo_separador_detalle), new StyleConfig(StyleConfig.Align.LEFT, gray, StyleConfig.FontSize.F1)));
-
-
-        printRows.add(new PrintRow(context.getResources().getString(
-                R.string.recibo_title_transaccion_aprobadas), new StyleConfig(StyleConfig.Align.LEFT, gray, 10)));
-        printRows.add(new PrintRow(context.getResources().getString(
-                R.string.recibo_text_transaccion), context.getResources().getString(
-                R.string.recibo_text_estado), new StyleConfig(StyleConfig.Align.LEFT, gray, 10)));
-
-//        AppDatabase.getInstance(context).dropTransactions("");
+        //AppDatabase.getInstance(context).dropTransactions("");
 
 
         for(ResultadoTransaccion resultTransaccion : resultadoTransaccion){
@@ -126,63 +96,45 @@ public class ReimpresionScreenRepositoryImpl implements ReimpresionScreenReposit
 
                 TransacList transacList = resultTransaccion.getTransacList();
 
-                if (messageWS.getCodigoMensaje() == MessageWS.statusTransaccionExitosa) {
+                if (messageWS.getCodigoMensaje() == MessageWS.statusTransaccionExitosa || messageWS.getCodigoMensaje() == MessageWS.statusTransaccionEstasdoDiferente) {
 
                     String numCargo = transacList.getNumeroAprobacion();
                     //String estado = (transacList.getEstado().equals("X") || transacList.getEstado().equals("Y"))?"Aprobada":((transacList.getEstado().equals("A") || transacList.getEstado().equals("D"))?"No Aprobada":"");
                     String estado = transacList.getEstado();
 
                     if(estado.equals("X")||estado.equals("A")){
-                        estado = (estado.equals("X"))?"Aprobada":"No Aprobada";
-                        printRows.add(new PrintRow(numCargo, estado, new StyleConfig(StyleConfig.Align.LEFT, gray, 4)));
+                        transacList.setEstado((estado.equals("X"))?"Aprobada":"No Aprobada");
+                        listaAprobadasCierre.add(transacList);
 
                         if (estado.equals("X"))
                              AppDatabase.getInstance(context).dropTransactions(numCargo);
                     }else{
-                        listaAnulaciones.add(transacList);
+                        transacList.setEstado((estado.equals("Y"))?"Aprobada":"No Aprobada");
+
+                        listaAnulacionesCierre.add(transacList);
+
+                        if (estado.equals("Y"))
+                            AppDatabase.getInstance(context).dropTransactions(numCargo);
                     }
 
                 } else {
                     //Error en el registro de la transaccion del web service
                     postEvent(ReimpresionScreenEvent.onCierreLoteError, messageWS.getDetalleMensaje(), null, null);
+                    return;
                 }
             } else {
                 //Error en la conexion con el Web Service
                 postEvent(ReimpresionScreenEvent.onTransaccionWSConexionError);
+                return;
             }
         }
 
-        printRows.add(new PrintRow(context.getResources().getString(
-                R.string.recibo_title_transaccion_anuladas), new StyleConfig(StyleConfig.Align.LEFT, gray, 10)));
-        printRows.add(new PrintRow(context.getResources().getString(
-                R.string.recibo_text_transaccion), context.getResources().getString(
-                R.string.recibo_text_estado), new StyleConfig(StyleConfig.Align.LEFT, gray, 10)));
 
-
-        for(TransacList anulacionTransList : listaAnulaciones){
-
-            String numCargo = anulacionTransList.getNumeroAprobacion();
-            String estado = (anulacionTransList.getEstado().equals("Y"))?"Aprobada":"No Aprobada";
-
-
-            printRows.add(new PrintRow(numCargo, estado, new StyleConfig(StyleConfig.Align.LEFT, gray, 4)));
-
-            if (estado.equals("Y"))
-                AppDatabase.getInstance(context).dropTransactions(numCargo);
-
-        }
-
-        printRows.add(new PrintRow(".", new StyleConfig(StyleConfig.Align.LEFT, 1)));
-
-        int status = new PrinterHandler().imprimerTexto(printRows);
-
-        if (status == InfoGlobalSettingsPrint.PRINTER_OK) {
-            postEvent(ReimpresionScreenEvent.onCierreLoteSuccess);
-        } else {
-            postEvent(ReimpresionScreenEvent.onCierreLoteError, PrinterHandler.stringErrorPrinter(status, context), null, null);
-        }
+        imprimirCierreLote(context);
 
     }
+
+
 
     /**
      *
@@ -615,6 +567,7 @@ public class ReimpresionScreenRepositoryImpl implements ReimpresionScreenReposit
 
                     //Transaccion exitosa
                     case MessageWS.statusTransaccionExitosa:
+                    case MessageWS.statusTransaccionEstasdoDiferente:
 
                         TransacList informacionTransaccion = new TransacList(
                                 (SoapObject) transacResult.getProperty(TransacList.PROPERTY_TRANSAC_RESULT)
@@ -747,6 +700,91 @@ public class ReimpresionScreenRepositoryImpl implements ReimpresionScreenReposit
         //retornamos el estado de la impresora tras enviar los rows para imprimir
         return new PrinterHandler().imprimerTexto(printRows);
     }
+
+
+    @Override
+    public void imprimirCierreLote(Context context){
+        ConfigurationPrinter configurationPrinter = AppDatabase.getInstance(context).getConfigurationPrinter();
+
+        int gray = configurationPrinter.getGray_level();
+
+        // creamos el ArrayList se que encarga de almacenar los rows del recibo
+        ArrayList<PrintRow> printRows = new ArrayList<PrintRow>();
+
+        //Se agrega el logo al primer renglon del recibo y se coloca en el centro
+        printRows.add(PrintRow.printLogo(context, gray));
+
+        PrintRow.printCofrem(context, printRows, gray, 10);
+
+        //se siguen agregando cado auno de los String a los renglones (Rows) del recibo para imprimir
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_title_cierre_lote), new StyleConfig(StyleConfig.Align.CENTER, gray,20)));
+
+
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_separador_operador), new StyleConfig(StyleConfig.Align.LEFT, gray, StyleConfig.FontSize.F1)));
+        PrintRow.printOperador(context, printRows, gray, 10);
+
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_fecha), getDateTime(), new StyleConfig(StyleConfig.Align.LEFT, gray, 20)));
+
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_separador_detalle), new StyleConfig(StyleConfig.Align.LEFT, gray, StyleConfig.FontSize.F1)));
+
+
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_title_transaccion_aprobadas), new StyleConfig(StyleConfig.Align.LEFT, gray, 10)));
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_text_transaccion), context.getResources().getString(
+                R.string.recibo_text_estado), new StyleConfig(StyleConfig.Align.LEFT, gray, 10)));
+
+
+
+        for(TransacList aprobadasTransList : listaAprobadasCierre){
+
+            String numCargo = aprobadasTransList.getNumeroAprobacion();
+            String estado = aprobadasTransList.getEstado();
+
+            printRows.add(new PrintRow(numCargo, estado, new StyleConfig(StyleConfig.Align.LEFT, gray, 4)));
+
+        }
+
+
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_title_transaccion_anuladas), new StyleConfig(StyleConfig.Align.LEFT, gray, 10)));
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_text_transaccion), context.getResources().getString(
+                R.string.recibo_text_estado), new StyleConfig(StyleConfig.Align.LEFT, gray, 10)));
+
+
+        for(TransacList anulacionTransList : listaAnulacionesCierre){
+
+            String numCargo = anulacionTransList.getNumeroAprobacion();
+            String estado = anulacionTransList.getEstado();
+
+            printRows.add(new PrintRow(numCargo, estado, new StyleConfig(StyleConfig.Align.LEFT, gray, 4)));
+
+        }
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_copia_comercio), new StyleConfig(StyleConfig.Align.CENTER, gray, StyleConfig.FontSize.F3, 60)));
+        printRows.add(new PrintRow(".", new StyleConfig(StyleConfig.Align.LEFT, 1)));
+
+        int status = new PrinterHandler().imprimerTexto(printRows);
+
+        if (status == InfoGlobalSettingsPrint.PRINTER_OK) {
+            postEvent(ReimpresionScreenEvent.onCierreLoteSuccess);
+        } else {
+            postEvent(ReimpresionScreenEvent.onCierreLoteError, PrinterHandler.stringErrorPrinter(status, context), null, null);
+        }
+
+
+
+
+    }
+
+
+
+
 
 
     /**

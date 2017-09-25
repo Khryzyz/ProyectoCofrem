@@ -392,7 +392,9 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
 
     @Override
     public void handleCierreDeLoteSuccess() {
-
+        hideProgress();
+        bodyContentCierreLoteClaveDispositivo.setVisibility(View.GONE);
+        bodyContentCierreLoteImpresion.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -404,7 +406,7 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
     @Override
     public void handleTransaccionWSConexionError(String error) {
         hideProgress();
-        Toast.makeText(this, error, Toast.LENGTH_LONG).show();
+        Toast.makeText(this, R.string.configuration_text_informacion_dispositivo_error_conexion, Toast.LENGTH_LONG).show();
     }
 
     /**
@@ -642,8 +644,16 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
 
     @Click(R.id.btnReportCierreLoteClaveDispositivoBotonAceptar)
     public  void  cierreDeLote(){
+        showProgress();
         reimpresionScreenPresenter.cierreDeLote(this);
     }
+
+    @Click(R.id.btnReportCierreLoteImpresionBotonImprimir)
+    public  void imprimirCierreLote(){
+        reimpresionScreenPresenter.imprimirCierreLote(this);
+    }
+
+
 
 
     @Click({R.id.btnTransactionScreenBack

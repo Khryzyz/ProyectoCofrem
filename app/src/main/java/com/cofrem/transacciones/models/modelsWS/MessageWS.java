@@ -73,6 +73,7 @@ public class MessageWS {
     public final static int statusTarjetaNoPermitidaEnTerminal = 30;
     public final static int statusTransaccionYaAnulada = 30;
     public final static int statusTransaccionNoFechaActual = 32;
+    public final static int statusTransaccionEstasdoDiferente = 36;
     public final static int statusErrorDatabase = 98;
     public final static int statusTerminalErrorException = 99;
 
