@@ -997,7 +997,7 @@ public final class AppDatabase extends SQLiteOpenHelper {
                 "SELECT " + DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_FECHA_SERVER + " , " +
                         DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_HORA_SERVER +
                         " FROM " + DatabaseManager.TableTransacciones.TABLE_NAME_TRANSACCIONES +
-                        " WHERE " + DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_NUMERO_CARGO + " = '" + cargo +"'"+
+                        " WHERE " + DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_NUMERO_CARGO + " = '" + cargo + "'" +
                         " AND " + DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_TIPO_TRANSACCION + " = " + Transaccion.TIPO_TRANSACCION_CONSUMO +
                         " ORDER BY " + DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_REGISTRO + " ASC " +
                         " LIMIT 1", null
@@ -1101,7 +1101,7 @@ public final class AppDatabase extends SQLiteOpenHelper {
 
         cursorQuery = getWritableDatabase().rawQuery(
                 "SELECT * FROM " + DatabaseManager.TableTransacciones.TABLE_NAME_TRANSACCIONES +
-                " WHERE " + DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_FECHA_SERVER + " = '"+ getDateTime().split(" ")[0] + "'"
+                        " WHERE " + DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_FECHA_SERVER + " = '" + getDateTime().split(" ")[0] + "'"
                 , null
         );
 
@@ -1132,7 +1132,7 @@ public final class AppDatabase extends SQLiteOpenHelper {
                         DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_CEDULA_USUARIO + " , " +
                         DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_VALOR + " , " +
                         DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_TIPO_TRANSACCION
-                        +" FROM " + DatabaseManager.TableTransacciones.TABLE_NAME_TRANSACCIONES
+                        + " FROM " + DatabaseManager.TableTransacciones.TABLE_NAME_TRANSACCIONES
 
                 , null
         );
@@ -1153,6 +1153,15 @@ public final class AppDatabase extends SQLiteOpenHelper {
         cursorQuery.close();
 
         return lista;
+    }
+    //DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_NUMERO_CARGO + " = " + num
+
+    public void dropTransactions(String num) {
+        getWritableDatabase().delete(
+                DatabaseManager.TableTransacciones.TABLE_NAME_TRANSACCIONES,
+                DatabaseManager.TableTransacciones.COLUMN_TRANSACCIONES_NUMERO_CARGO + " = '" + num +"'",
+                null
+        );
     }
 
     /**
@@ -1181,7 +1190,6 @@ public final class AppDatabase extends SQLiteOpenHelper {
 
         return lista;
     }
-
 
 
     /**
@@ -1243,7 +1251,7 @@ public final class AppDatabase extends SQLiteOpenHelper {
     }
 
 
-    private Transaccion getTransaccionDeCursor(Cursor cursorQuery){
+    private Transaccion getTransaccionDeCursor(Cursor cursorQuery) {
 
         Transaccion modelTransaccion = new Transaccion();
 
@@ -1263,7 +1271,6 @@ public final class AppDatabase extends SQLiteOpenHelper {
         return modelTransaccion;
 
     }
-
 
 
 }

@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/appMarginBottom"
-        android:text="@string/report_text_title_reporte_detalle" />
+        android:text="@string/report_text_title_cierre_lote" />
 
     <Button
         android:id="@+id/btnReportCierreLoteImpresionBotonImprimir"

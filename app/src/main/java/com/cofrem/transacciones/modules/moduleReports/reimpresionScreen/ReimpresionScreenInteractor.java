@@ -62,4 +62,6 @@ interface ReimpresionScreenInteractor {
 
     void cierreDeLote(Context context);
 
+    void imprimirCierreLote(Context context);
+
 }

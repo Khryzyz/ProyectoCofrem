@@ -9,6 +9,7 @@ public class MessageWS {
 
     //Modelado de Properties y Keys
     public static final String PROPERTY_MESSAGE = "mensaje";
+    public static final String PROPERTY_TRANSAC_LISTS= "transacListResult";
     public static final String KEY_CODIGO_MESSAGE = "codigoMensaje";
     public static final String KEY_DETALLE_MESSAGE = "detalleMensaje";
 
@@ -72,6 +73,7 @@ public class MessageWS {
     public final static int statusTarjetaNoPermitidaEnTerminal = 30;
     public final static int statusTransaccionYaAnulada = 30;
     public final static int statusTransaccionNoFechaActual = 32;
+    public final static int statusTransaccionEstasdoDiferente = 36;
     public final static int statusErrorDatabase = 98;
     public final static int statusTerminalErrorException = 99;
 

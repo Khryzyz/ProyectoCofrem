@@ -8,6 +8,7 @@ import com.cofrem.transacciones.lib.MD5;
 import com.cofrem.transacciones.models.ConfigurationPrinter;
 import com.cofrem.transacciones.models.modelsWS.MessageWS;
 import com.cofrem.transacciones.models.modelsWS.TransactionWS;
+import com.cofrem.transacciones.models.modelsWS.modelTransaccion.InformacionTransaccion;
 import com.cofrem.transacciones.models.modelsWS.modelTransaccion.ResultadoTransaccion;
 import com.cofrem.transacciones.models.modelsWS.modelTransaccion.TransacList;
 import com.cofrem.transacciones.modules.moduleConfiguration.testCommunicationScreen.events.TestCommunicationScreenEvent;
@@ -28,6 +29,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 
 public class ReimpresionScreenRepositoryImpl implements ReimpresionScreenRepository {
@@ -40,6 +42,10 @@ public class ReimpresionScreenRepositoryImpl implements ReimpresionScreenReposit
     private ArrayList<Transaccion> modelsTransaccion;
     // lista de las transacciones que estan para imprimir en el reporte de Detalles
     private ArrayList<Transaccion> listaDetalle;
+
+    private ArrayList<TransacList> listaAnulacionesCierre;
+
+    private ArrayList<TransacList> listaAprobadasCierre;
 
     /**
      * #############################################################################################
@@ -63,6 +69,9 @@ public class ReimpresionScreenRepositoryImpl implements ReimpresionScreenReposit
 
         ArrayList<Transaccion> listaTransacciones = AppDatabase.getInstance(context).obtenerTransaccionesCierreLote();
 
+        listaAnulacionesCierre = new ArrayList<>();
+
+        listaAprobadasCierre = new ArrayList<>();
 
         ArrayList<TransacList> transacLists = new ArrayList<>();
 
@@ -74,30 +83,58 @@ public class ReimpresionScreenRepositoryImpl implements ReimpresionScreenReposit
             }
         }
 
+        ArrayList<ResultadoTransaccion> resultadoTransaccion = registrarTransaccionConsumoWS(context ,transacLists);
 
-        ResultadoTransaccion resultadoTransaccion = registrarTransaccionConsumoWS(context ,transacLists);
+        //AppDatabase.getInstance(context).dropTransactions("");
 
-        //Registra mediante el WS la transaccion
-        if (resultadoTransaccion != null) {
 
-            MessageWS messageWS = resultadoTransaccion.getMessageWS();
+        for(ResultadoTransaccion resultTransaccion : resultadoTransaccion){
+            //Registra mediante el WS la transaccion
+            if (resultTransaccion != null) {
 
-            if (messageWS.getCodigoMensaje() == MessageWS.statusConsultaExitosa) {
+                MessageWS messageWS = resultTransaccion.getMessageWS();
 
-                postEvent(ReimpresionScreenEvent.onCierreLoteSuccess);
+                TransacList transacList = resultTransaccion.getTransacList();
 
-                //Imprime el recibo
-                //imprimirRecibo(context);
+                if (messageWS.getCodigoMensaje() == MessageWS.statusTransaccionExitosa || messageWS.getCodigoMensaje() == MessageWS.statusTransaccionEstasdoDiferente) {
 
+                    String numCargo = transacList.getNumeroAprobacion();
+                    //String estado = (transacList.getEstado().equals("X") || transacList.getEstado().equals("Y"))?"Aprobada":((transacList.getEstado().equals("A") || transacList.getEstado().equals("D"))?"No Aprobada":"");
+                    String estado = transacList.getEstado();
+
+                    if(estado.equals("X")||estado.equals("A")){
+                        transacList.setEstado((estado.equals("X"))?"Aprobada":"No Aprobada");
+                        listaAprobadasCierre.add(transacList);
+
+                        if (estado.equals("X"))
+                             AppDatabase.getInstance(context).dropTransactions(numCargo);
+                    }else{
+                        transacList.setEstado((estado.equals("Y"))?"Aprobada":"No Aprobada");
+
+                        listaAnulacionesCierre.add(transacList);
+
+                        if (estado.equals("Y"))
+                            AppDatabase.getInstance(context).dropTransactions(numCargo);
+                    }
+
+                } else {
+                    //Error en el registro de la transaccion del web service
+                    postEvent(ReimpresionScreenEvent.onCierreLoteError, messageWS.getDetalleMensaje(), null, null);
+                    return;
+                }
             } else {
-                //Error en el registro de la transaccion del web service
-                postEvent(ReimpresionScreenEvent.onCierreLoteError, messageWS.getDetalleMensaje(),null,null);
+                //Error en la conexion con el Web Service
+                postEvent(ReimpresionScreenEvent.onTransaccionWSConexionError);
+                return;
             }
-        } else {
-            //Error en la conexion con el Web Service
-            postEvent(ReimpresionScreenEvent.onTransaccionWSConexionError);
         }
+
+
+        imprimirCierreLote(context);
+
     }
+
+
 
     /**
      *
@@ -463,82 +500,98 @@ public class ReimpresionScreenRepositoryImpl implements ReimpresionScreenReposit
      * @param context     contexto desde la cual se realiza la transaccion
      * @return regreso del resultado de la transaccion
      */
-    private ResultadoTransaccion registrarTransaccionConsumoWS(Context context,ArrayList<TransacList> transacLists) {
+    private ArrayList<ResultadoTransaccion> registrarTransaccionConsumoWS(Context context,ArrayList<TransacList> transacLists) {
 
-        //Se crea una variable de estado de la transaccion
-        ResultadoTransaccion resultadoTransaccion = null;
+        ArrayList<ResultadoTransaccion> listaResultados = new ArrayList<>();
 
-        //TODO: nose como enviar ese array que esta llegando al metodo ya que params es un array de String 
+        for(TransacList modelTransation : transacLists){
 
-        //dejo este error aqui para que ud sepa en donde voy
+            //Se crea una variable de estado de la transaccion
+            ResultadoTransaccion resultadoTransaccion = null;
 
+            //Inicializacion y declaracion de parametros para la peticion web service
+            String[][] params = {
+                    {InfoGlobalTransaccionSOAP.PARAM_NAME_CIERRE_CODIGO_TERMINAL, modelTransation.getCodigoTerminal()},
+                    {InfoGlobalTransaccionSOAP.PARAM_NAME_CIERRE_CEDULA_USUARIO, modelTransation.getCedulaUsuario()},
+                    {InfoGlobalTransaccionSOAP.PARAM_NAME_CIERRE_NUMERO_APROBACION, modelTransation.getNumeroAprobacion()},
+                    {InfoGlobalTransaccionSOAP.PARAM_NAME_CIERRE_VALOR_APROBADO, modelTransation.getValorAprobado()},
+                    {InfoGlobalTransaccionSOAP.PARAM_NAME_CIERRE_ESTADO, modelTransation.getEstado()},
+            };
 
-        aqui
+            //Creacion del modelo TransactionWS para ser usado dentro del webservice
+            TransactionWS transactionWS = new TransactionWS(
+                    InfoGlobalTransaccionSOAP.HTTP + AppDatabase.getInstance(context).obtenerURLConfiguracionConexion() + InfoGlobalTransaccionSOAP.WEB_SERVICE_URI,
+                    InfoGlobalTransaccionSOAP.HTTP + InfoGlobalTransaccionSOAP.NAME_SPACE,
+                    InfoGlobalTransaccionSOAP.METHOD_NAME_CIERRE_LOTE_INDIVIDUAL,
+                    params);
 
-        //Inicializacion y declaracion de parametros para la peticion web service
-        String[][] params = {
-                {}
-        };
+            //Inicializacion del objeto que sera devuelto por la transaccion del webservice
+            SoapObject soapTransaction = null;
 
-        //Creacion del modelo TransactionWS para ser usado dentro del webservice
-        TransactionWS transactionWS = new TransactionWS(
-                InfoGlobalTransaccionSOAP.HTTP + AppDatabase.getInstance(context).obtenerURLConfiguracionConexion() + InfoGlobalTransaccionSOAP.WEB_SERVICE_URI,
-                InfoGlobalTransaccionSOAP.HTTP + InfoGlobalTransaccionSOAP.NAME_SPACE,
-                InfoGlobalTransaccionSOAP.METHOD_NAME_CIERRE_LOTE,
-                params);
+            try {
 
-        //Inicializacion del objeto que sera devuelto por la transaccion del webservice
-        SoapObject soapTransaction = null;
+                //Transaccion solicitada al web service
+                soapTransaction = new KsoapAsync(new KsoapAsync.ResponseKsoapAsync() {
 
-        try {
+                    /**
+                     * Metodo sobrecargado que maneja el callback de los datos
+                     *
+                     * @param soapResponse
+                     * @return
+                     */
+                    @Override
+                    public SoapObject processFinish(SoapObject soapResponse) {
+                        return soapResponse;
+                    }
 
-            //Transaccion solicitada al web service
-            soapTransaction = new KsoapAsync(new KsoapAsync.ResponseKsoapAsync() {
+                }).execute(transactionWS).get();
 
-                /**
-                 * Metodo sobrecargado que maneja el callback de los datos
-                 *
-                 * @param soapResponse
-                 * @return
-                 */
-                @Override
-                public SoapObject processFinish(SoapObject soapResponse) {
-                    return soapResponse;
-                }
+            } catch (InterruptedException | ExecutionException e) {
 
-            }).execute(transactionWS).get();
+                e.printStackTrace();
 
-        } catch (InterruptedException | ExecutionException e) {
-
-            e.printStackTrace();
-
-        }
-
-        //Si la transaccion no genero resultado regresa un establecimiento vacio
-        if (soapTransaction != null) {
-
-            //Inicializacion del modelo MessageWS
-            MessageWS messageWS = new MessageWS(
-                    (SoapObject) soapTransaction.getProperty(MessageWS.PROPERTY_MESSAGE)
-            );
-
-            switch (messageWS.getCodigoMensaje()) {
-
-                //Transaccion exitosa
-                case MessageWS.statusTransaccionExitosa:
-
-
-                    break;
-
-                default:
-
-                    break;
             }
 
+            //Si la transaccion no genero resultado regresa un establecimiento vacio
+            if (soapTransaction != null) {
+
+                SoapObject transacResult =  (SoapObject) soapTransaction.getProperty(MessageWS.PROPERTY_TRANSAC_LISTS);
+
+                //Inicializacion del modelo MessageWS
+                MessageWS messageWS = new MessageWS(
+                        (SoapObject) transacResult.getProperty(MessageWS.PROPERTY_MESSAGE)
+                );
+
+
+                switch (messageWS.getCodigoMensaje()) {
+
+                    //Transaccion exitosa
+                    case MessageWS.statusTransaccionExitosa:
+                    case MessageWS.statusTransaccionEstasdoDiferente:
+
+                        TransacList informacionTransaccion = new TransacList(
+                                (SoapObject) transacResult.getProperty(TransacList.PROPERTY_TRANSAC_RESULT)
+                        );
+
+                        resultadoTransaccion = new ResultadoTransaccion(
+                                informacionTransaccion,
+                                messageWS
+                        );
+                        break;
+
+                    default:
+                        resultadoTransaccion = new ResultadoTransaccion(
+                                messageWS
+                        );
+                        break;
+                }
+
+            }
+            listaResultados.add(resultadoTransaccion);
         }
 
         //Retorno de estado de transaccion
-        return resultadoTransaccion;
+        return listaResultados;
     }
 
 
@@ -647,6 +700,91 @@ public class ReimpresionScreenRepositoryImpl implements ReimpresionScreenReposit
         //retornamos el estado de la impresora tras enviar los rows para imprimir
         return new PrinterHandler().imprimerTexto(printRows);
     }
+
+
+    @Override
+    public void imprimirCierreLote(Context context){
+        ConfigurationPrinter configurationPrinter = AppDatabase.getInstance(context).getConfigurationPrinter();
+
+        int gray = configurationPrinter.getGray_level();
+
+        // creamos el ArrayList se que encarga de almacenar los rows del recibo
+        ArrayList<PrintRow> printRows = new ArrayList<PrintRow>();
+
+        //Se agrega el logo al primer renglon del recibo y se coloca en el centro
+        printRows.add(PrintRow.printLogo(context, gray));
+
+        PrintRow.printCofrem(context, printRows, gray, 10);
+
+        //se siguen agregando cado auno de los String a los renglones (Rows) del recibo para imprimir
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_title_cierre_lote), new StyleConfig(StyleConfig.Align.CENTER, gray,20)));
+
+
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_separador_operador), new StyleConfig(StyleConfig.Align.LEFT, gray, StyleConfig.FontSize.F1)));
+        PrintRow.printOperador(context, printRows, gray, 10);
+
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_fecha), getDateTime(), new StyleConfig(StyleConfig.Align.LEFT, gray, 20)));
+
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_separador_detalle), new StyleConfig(StyleConfig.Align.LEFT, gray, StyleConfig.FontSize.F1)));
+
+
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_title_transaccion_aprobadas), new StyleConfig(StyleConfig.Align.LEFT, gray, 10)));
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_text_transaccion), context.getResources().getString(
+                R.string.recibo_text_estado), new StyleConfig(StyleConfig.Align.LEFT, gray, 10)));
+
+
+
+        for(TransacList aprobadasTransList : listaAprobadasCierre){
+
+            String numCargo = aprobadasTransList.getNumeroAprobacion();
+            String estado = aprobadasTransList.getEstado();
+
+            printRows.add(new PrintRow(numCargo, estado, new StyleConfig(StyleConfig.Align.LEFT, gray, 4)));
+
+        }
+
+
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_title_transaccion_anuladas), new StyleConfig(StyleConfig.Align.LEFT, gray, 10)));
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_text_transaccion), context.getResources().getString(
+                R.string.recibo_text_estado), new StyleConfig(StyleConfig.Align.LEFT, gray, 10)));
+
+
+        for(TransacList anulacionTransList : listaAnulacionesCierre){
+
+            String numCargo = anulacionTransList.getNumeroAprobacion();
+            String estado = anulacionTransList.getEstado();
+
+            printRows.add(new PrintRow(numCargo, estado, new StyleConfig(StyleConfig.Align.LEFT, gray, 4)));
+
+        }
+        printRows.add(new PrintRow(context.getResources().getString(
+                R.string.recibo_copia_comercio), new StyleConfig(StyleConfig.Align.CENTER, gray, StyleConfig.FontSize.F3, 60)));
+        printRows.add(new PrintRow(".", new StyleConfig(StyleConfig.Align.LEFT, 1)));
+
+        int status = new PrinterHandler().imprimerTexto(printRows);
+
+        if (status == InfoGlobalSettingsPrint.PRINTER_OK) {
+            postEvent(ReimpresionScreenEvent.onCierreLoteSuccess);
+        } else {
+            postEvent(ReimpresionScreenEvent.onCierreLoteError, PrinterHandler.stringErrorPrinter(status, context), null, null);
+        }
+
+
+
+
+    }
+
+
+
+
 
 
     /**

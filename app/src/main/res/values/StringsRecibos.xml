@@ -34,6 +34,7 @@
     <string name="recibo_text_transaccion">Transaccion </string>
     <string name="recibo_text_transa">Transa.</string>
     <string name="recibo_text_valor">Valor</string>
+    <string name="recibo_text_estado">Estado</string>
     <string name="recibo_text_fecha">Fecha</string>
 
     <string name="recibo_ingresa_firma">FIRMA:________________________</string>
@@ -61,6 +62,7 @@
     <string name="recibo_title_informe_general">I N F O R M E  _  G E N R A L</string>
     <string name="recibo_title_consulta_saldo">C O N S U L T A   _  S A L D O</string>
     <string name="recibo_title_prueba_impresora">P R U E B A  _  I M P R E S O R A</string>
+    <string name="recibo_title_cierre_lote">C I E R R E _ L O T E </string>
 
 
     <string name="recibo_nit_cofrem"> 892000146-3 </string>

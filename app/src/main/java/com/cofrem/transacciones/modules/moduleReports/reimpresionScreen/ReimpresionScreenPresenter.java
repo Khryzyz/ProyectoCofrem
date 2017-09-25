@@ -84,6 +84,9 @@ public interface ReimpresionScreenPresenter {
 
     void cierreDeLote(Context context);
 
+
+    void imprimirCierreLote(Context context);
+
     /**
      * Metodo para recibir los eventos generados
      *

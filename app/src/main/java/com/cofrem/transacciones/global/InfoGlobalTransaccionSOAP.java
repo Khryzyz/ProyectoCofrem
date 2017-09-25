@@ -35,6 +35,14 @@ public class InfoGlobalTransaccionSOAP {
      * Datos para el Web Service Test
      */
     public final static String METHOD_NAME_CIERRE_LOTE = "Cierre";
+        public final static String METHOD_NAME_CIERRE_LOTE_INDIVIDUAL = "CierreIndividual";
+
+    public final static String PARAM_NAME_CIERRE_CODIGO_TERMINAL = "codigoTerminal";
+    public final static String PARAM_NAME_CIERRE_NUMERO_APROBACION = "numeroAprobacion";
+    public final static String PARAM_NAME_CIERRE_CEDULA_USUARIO = "cedulaUsuario";
+    public final static String PARAM_NAME_CIERRE_VALOR_APROBADO = "valorAprobado";
+    public final static String PARAM_NAME_CIERRE_ESTADO = "estado";
+
     /**
      * Datos para el Web Service Transaccion
      */
@@ -71,4 +79,9 @@ public class InfoGlobalTransaccionSOAP {
     public final static String PARAM_NAME_SALDO_NUMERO_TARJETA = "numeroTarjeta";
     public final static String PARAM_NAME_SALDO_CLAVE_USUARIO = "clave";
     public final static String PARAM_NAME_SALDO_TIPO_ENCRIPTACION = "tipoEncrip";
+
+
+
+
+
 }
