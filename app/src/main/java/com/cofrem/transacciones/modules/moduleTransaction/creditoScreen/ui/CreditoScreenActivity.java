@@ -779,7 +779,7 @@ public class CreditoScreenActivity extends Activity implements CreditoScreenView
         if (passwordUser.length() == 4) {
 
             //Se registra la contraseña en el modelo
-            modelTransaccion.setClave(Integer.valueOf(passwordUser));
+            modelTransaccion.setClave(passwordUser);
 
             //TODO: agregar las diferentes encriptaciones
             //Se registra el tipo de encriptacion en el modelo

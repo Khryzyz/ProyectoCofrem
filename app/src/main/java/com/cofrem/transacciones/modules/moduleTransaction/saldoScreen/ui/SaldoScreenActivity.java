@@ -653,7 +653,7 @@ public class SaldoScreenActivity extends Activity implements SaldoScreenView {
             showProgress();
 
             //Se registra la contraseña en el modelo
-            modelTransaccion.setClave(Integer.valueOf(passwordUser));
+            modelTransaccion.setClave(passwordUser);
 
             //TODO: agregar las diferentes encriptaciones
             //Se registra el tipo de encriptacion en el modelo

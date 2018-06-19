@@ -66,7 +66,7 @@ public class Transaccion {
     private String numero_cargo;
 
     private String numero_documento;
-    private int clave;
+    private String clave;
     private String numero_tarjeta;
 
     //Array de servicios
@@ -95,7 +95,7 @@ public class Transaccion {
             int id,
             String numero_cargo,
             String numero_documento,
-            int clave,
+            String clave,
             String numero_tarjeta,
             int tipo_servicio,
             int valor,
@@ -140,11 +140,11 @@ public class Transaccion {
         this.numero_documento = numero_documento;
     }
 
-    public int getClave() {
+    public String getClave() {
         return clave;
     }
 
-    public void setClave(int clave) {
+    public void setClave(String clave) {
         this.clave = clave;
     }
 
