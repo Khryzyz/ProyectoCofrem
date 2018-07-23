@@ -312,7 +312,7 @@ public class SaldoScreenActivity extends Activity implements SaldoScreenView {
 
         txvSaldoTransactionExitosaCedulaValor.setText(informacionSaldo.getCedulaUsuario());
 
-        int saldo = Integer.parseInt(informacionSaldo.getValorTotalSaldo().split(".0")[0]);
+        int saldo = Integer.parseInt(informacionSaldo.getValorTotalSaldo().split(".00")[0]);
 
         txvSaldoTransactionExitosaSaldoCantidad.setText(PrintRow.numberFormat(saldo));
 
