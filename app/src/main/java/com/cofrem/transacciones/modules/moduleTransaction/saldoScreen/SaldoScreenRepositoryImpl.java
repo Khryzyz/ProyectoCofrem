@@ -219,7 +219,7 @@ public class SaldoScreenRepositoryImpl implements SaldoScreenRepository {
         printRows.add(new PrintRow(context.getResources().getString(
                 R.string.recibo_separador_linea), new StyleConfig(StyleConfig.Align.LEFT, gray, StyleConfig.FontSize.F1, 10)));
 
-        int saldo = Integer.parseInt(resultadoTransaccionRecibo.getInformacionSaldo().getValor().split(".0")[0]);
+        int saldo = Integer.parseInt(resultadoTransaccionRecibo.getInformacionSaldo().getValor().split("\\.")[0]);
 
         printRows.add(new PrintRow(context.getResources().getString(
                 R.string.recibo_total), PrintRow.numberFormat(saldo), new StyleConfig(StyleConfig.Align.LEFT, gray)));
