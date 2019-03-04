@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -17,15 +16,15 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cofrem.transacciones.R;
 import com.cofrem.transacciones.ReportScreenActivity_;
 import com.cofrem.transacciones.global.InfoGlobalSettingsBlockButtons;
 import com.cofrem.transacciones.lib.KeyBoard;
 import com.cofrem.transacciones.models.InfoHeaderApp;
 import com.cofrem.transacciones.models.Reports;
+import com.cofrem.transacciones.models.Transaccion;
 import com.cofrem.transacciones.modules.moduleReports.reimpresionScreen.ReimpresionScreenPresenter;
 import com.cofrem.transacciones.modules.moduleReports.reimpresionScreen.ReimpresionScreenPresenterImpl;
-import com.cofrem.transacciones.R;
-import com.cofrem.transacciones.models.Transaccion;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
@@ -88,6 +87,9 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
 
     @ViewById
     Button btnReportReimpresionReciboImprimirRecibo;
+
+    @ViewById
+    Button btnReportCierreLoteClaveDispositivoBotonAceptar;
 
     @ViewById
     FrameLayout frlPgbHldReimpresionRecibo;
@@ -643,17 +645,16 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
     }
 
     @Click(R.id.btnReportCierreLoteClaveDispositivoBotonAceptar)
-    public  void  cierreDeLote(){
+    public void cierreDeLote() {
         showProgress();
+        btnReportCierreLoteClaveDispositivoBotonAceptar.setEnabled(false);
         reimpresionScreenPresenter.cierreDeLote(this);
     }
 
     @Click(R.id.btnReportCierreLoteImpresionBotonImprimir)
-    public  void imprimirCierreLote(){
+    public void imprimirCierreLote() {
         reimpresionScreenPresenter.imprimirCierreLote(this);
     }
-
-
 
 
     @Click({R.id.btnTransactionScreenBack
