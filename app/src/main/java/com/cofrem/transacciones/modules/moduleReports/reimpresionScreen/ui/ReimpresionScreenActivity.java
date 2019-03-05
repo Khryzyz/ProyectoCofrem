@@ -42,6 +42,10 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
      * #############################################################################################
      */
 
+    private static final int PASO_ULTIMO_RECIBO = 1;
+    private static final int PASO_NUMERO_CARGO = 2;
+    private static final int PASO_DETALLE = 3;
+    private static final int PASO_GENERAL = 4;
     /**
      * Declaracion de los Contoles
      */
@@ -56,7 +60,6 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
     TextView txvHeaderEstablecimiento;
     @ViewById
     TextView txvHeaderPunto;
-
     @ViewById
     RelativeLayout bodyContentReimpresionRecibo;
     @ViewById
@@ -77,39 +80,25 @@ public class ReimpresionScreenActivity extends Activity implements ReimpresionSc
     RelativeLayout bodyContentCierreLoteImpresion;
     @ViewById
     RelativeLayout bodyContentReimpresionReciboClaveAdministrador;
-
     @ViewById
     EditText edtReportReimprimeonReciboNummeroCargoContenidoClave;
     @ViewById
     TextView txvReportReimprimeonReciboImpresionSaldoCantidad;
     @ViewById
     EditText edtReportReimpresionReciboClaveAdministradorContenidoClave;
-
     @ViewById
     Button btnReportReimpresionReciboImprimirRecibo;
-
     @ViewById
     Button btnReportCierreLoteClaveDispositivoBotonAceptar;
-
     @ViewById
     FrameLayout frlPgbHldReimpresionRecibo;
-
     Transaccion modelTransaccion;
-
     String passwordAdmin = "";
-
     String numeroCargo = "";
-
     /**
      * Pasos definidos
      */
     private int pasoReporte;
-
-    private static final int PASO_ULTIMO_RECIBO = 1;
-    private static final int PASO_NUMERO_CARGO = 2;
-    private static final int PASO_DETALLE = 3;
-    private static final int PASO_GENERAL = 4;
-
     /**
      * #############################################################################################
      * Instanciamientos de las clases
